@@ -1,0 +1,133 @@
+export class characters.Character {
+    constructor(name, maxHitpoints, hitpointRegen, maxMana, manaRegen, maxStress, stressAccumulation, strength, knowledge, defense, resilience, spirit, luck, damageMod, image, animationValues, width, height, hitbox, sound, movementHorizontal, gold, learnableAbilities, obtainableTraits) {
+        this.id = generateId();
+        this.name = name;
+        this.type = objTypes.character;
+        this.maxHitpoints = maxHitpoints;
+        this.hitpoints = this.maxHitpoints;
+        this.hitpointRegen = hitpointRegen;
+        this.maxMana = maxMana;
+        this.mana = this.maxMana;
+        this.manaRegen = manaRegen;
+        this.maxCurses = 10;
+        this.maxStress = maxStress;
+        this.stress = 0;
+        this.stressAccumulation = stressAccumulation;
+        this.strength = strength;
+        this.knowledge = knowledge;
+        this.defense = defense;
+        this.resilience = resilience;
+        this.spirit = spirit;
+        this.luck = luck;
+        this.damageMod = damageMod;
+        this.image = image;
+        this.animationValues = animationValues;
+        this.width = width;
+        this.height = height;
+        this.originalWidth = width;
+        this.originalHeight = height;
+        this.hitbox = hitbox;
+        this.animationFrames = characterAnimationFrames;
+        this.sound = sound;
+        this.xPosition = CANVAS_WIDTH / 2;
+        this.yPosition = CANVAS_HEIGHT - 50;
+        this.movementHorizontal = movementHorizontal;
+        this.originalMovementHorizontal = movementHorizontal;
+        this.canAttack = true;
+        this.isInvulnerable = false;
+        this.level = 1;
+        this.experience = 0;
+        this.gold = gold;
+        this.knownAbilities = [];
+        this.learnableAbilities = learnableAbilities;
+        this.companions = [];
+        this.consumables = [];
+        this.items = [];
+        this.equipment = {
+            accessoryOne: emptyEquipmentObj.emptyAccessoryOne,
+            head: emptyEquipmentObj.emptyHead,
+            accessoryTwo: emptyEquipmentObj.emptyAccessoryTwo,
+            weapon: emptyEquipmentObj.emptyWeapon,
+            torso: emptyEquipmentObj.emptyTorso,
+            offhand: emptyEquipmentObj.emptyOffhand,
+            hands: emptyEquipmentObj.emptyHands,
+            legs: emptyEquipmentObj.emptyLegs,
+            feet: emptyEquipmentObj.emptyFeet,
+
+        };
+        this.equipmentArr = [
+            this.equipment.accessoryOne,
+            this.equipment.head,
+            this.equipment.accessoryTwo,
+            this.equipment.weapon,
+            this.equipment.torso,
+            this.equipment.offhand,
+            this.equipment.hands,
+            this.equipment.legs,
+            this.equipment.feet,
+        ];
+        this.miscItems = [
+            new Gold('gold', 'Gold Coins', this.gold, miscItemImages.goldIconImage, 'The amount of Gold Coins you are carrying, to be used for puchasing items from various merchants.')
+        ];
+        // working on this (need to make a class for this)
+        this.proficiencies = [
+            {
+                name: abilityTypes.melee,
+                description: 'Determines how quickly you can recover from striking, as well as how far you can reach with melee abilities.',
+                experience: 0,
+                experienceToNextLevel: 130,
+                image: proficiencyImages.melee,
+                level: 1,
+            },
+            {
+                name: abilityTypes.projectile,
+                description: 'Determines the number of projectiles you create when you use projectile-based abilities.',
+                experience: 0,
+                experienceToNextLevel: 100,
+                image: proficiencyImages.projectile,
+                level: 1,
+            },
+            {
+                name: abilityTypes.ranged,
+                description: 'Determines the size of ranged ability impact areas and how quickly they are cast.',
+                experience: 0,
+                experienceToNextLevel: 160,
+                image: proficiencyImages.ranged,
+                level: 1,
+            },
+            {
+                name: abilityTypes.self,
+                description: 'Determines the mana cost of abilities that you use on yourself.',
+                experience: 0,
+                experienceToNextLevel: 80,
+                image: proficiencyImages.self,
+                level: 1,
+            },
+        ];
+        this.activeTraits = [];
+        this.obtainableTraits = obtainableTraits;
+        this.selectableTraits = [];
+        this.injuryStatus = 0;
+        this.statusConditions = new CharacterStatusConditions();
+        this.attributes = [
+            new Attribute(attributes.level, 'Level', this.level, 100, attributeImages.level, 'A characters level, an indication of power without the use of items.'),
+            new Attribute(attributes.experience, 'Experience', this.experience, 999999, attributeImages.experience, 'How much experience the character has obtained. The higher this is, the higher the characters level will be.'),
+            new Attribute(attributes.injuryStatus, 'Injury', this.injuryStatus, 5, attributeImages.injury, 'The severity of your injuries, once this reaches five the game is over. Each additional injury applies a special debuff.'),
+            new Attribute(attributes.hitpoints, 'Hitpoints', this.hitpoints, this.maxHitpoints, attributeImages.hitpoints, 'Health measures a characters remaining vitality. When this reaches 0, you become more injured and your health returns to the maximum health value.'),
+            new Attribute(attributes.maxHitpoints, 'Max Hitpoints', this.maxHitpoints, this.maxHitpoints, attributeImages.maxHitpoints, 'The most hitpoints you can have at one time.'),
+            new Attribute(attributes.hitpointRegen, 'Hitpoint Regen', this.hitpointsRegen, null, attributeImages.hitpointsRegen, 'The amount of health a character regenerates each tick.'),
+            new Attribute(attributes.mana, 'Mana', this.mana, this.maxMana, attributeImages.mana, 'Mana is used to utilize abilities or spells. This is how a a character can optimally fight.'),
+            new Attribute(attributes.maxMana, 'Max Mana', this.maxMana, this.maxMana, attributeImages.maxMana, 'The most mana you can have at one time.'),
+            new Attribute(attributes.manaRegen, 'Mana Regen', this.manaRegen, null, attributeImages.manaRegen, 'The amount of mana a character regenerates each tick.'),
+            new Attribute(attributes.stress, 'Stress', this.stress, this.maxStress, attributeImages.stress, 'The more stressed you are, the more powerful the curse grows.'),
+            new Attribute(attributes.maxStress, 'Max Stress', this.maxStress, this.maxStress, attributeImages.maxStress, 'The most stress you can have at one time.'),
+            new Attribute(attributes.stressAccumulation, 'Stress Accumulation', this.stressAccumulation, null, attributeImages.stressAccumulation, 'The amount of stress a character gains each tick.'),
+            new Attribute(attributes.strength, 'Strength', this.strength, null, attributeImages.strength, 'The damage modifier for physical abilities. The higher the strength, the more damage that is dealt from physical attacks.'),
+            new Attribute(attributes.knowledge, 'Knowledge', this.knowledge, null, attributeImages.knowledge, 'The damage modifier for magical spells and abilities. The higher the knowledge, the more damage that is dealt from magical attacks.'),
+            new Attribute(attributes.defense, 'Defense', this.defense, null, attributeImages.defense, 'A characters base defense against weapon attacks.'),
+            new Attribute(attributes.resilience, 'Resilience', this.resilience, null, attributeImages.resilience, 'A characters base defense against elemental attacks.'),
+            new Attribute(attributes.spirit, 'Spirit', this.spirit, null, attributeImages.spirit, 'A characters base defense against light and darkness attacks as well as the characters damage with spiritual spells and abilities.'),
+            new Attribute(attributes.luck, 'Luck', this.luck, null, attributeImages.luck, 'A measure of how often a character may obtain item drops.'),
+        ];
+    }
+}

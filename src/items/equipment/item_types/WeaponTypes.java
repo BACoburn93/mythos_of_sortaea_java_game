@@ -1,0 +1,31 @@
+package items.equipment.item_types;
+
+public enum WeaponTypes implements ItemType {
+    BATTLEAXE,
+    BROADSWORD,
+    CLAYMORE,
+    CROSSBOW,
+    DAGGER,
+    FISTICUFFS,
+    FLAIL,
+    HALBERD,
+    JAVELIN,
+    KATANA,
+    LONGBOW,
+    LONGSWORD,
+    MACE,
+    ORB,
+    RAPIER,
+    ROD,
+    SCIMITAR,
+    SCYTHE,
+    SHORTBOW,
+    SHORTSWORD,
+    SPEAR,
+    STAFF,
+    TOME,
+    TRIDENT,
+    WAND,
+    WARHAMMER,
+    WHIP
+}

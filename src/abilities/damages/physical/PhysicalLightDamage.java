@@ -1,0 +1,33 @@
+package abilities.damages.physical;
+
+import abilities.damages.Damage;
+import abilities.damages.DamageClassificationTypes;
+import abilities.damages.DamageTypes;
+import abilities.status_conditions.Blind;
+import abilities.status_conditions.Confused;
+import abilities.status_conditions.StatusCondition;
+
+public class PhysicalLightDamage extends Damage {
+    public PhysicalLightDamage(int minDamage, int maxDamage) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.PHYSICAL,
+                DamageTypes.LIGHT,
+                new StatusCondition[] {
+                        new Blind(100, 100, 2),
+                        new Confused(100, 100, 2)
+                }
+        );
+    }
+
+    public PhysicalLightDamage(int minDamage, int maxDamage, StatusCondition[] statusConditions) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.PHYSICAL,
+                DamageTypes.LIGHT,
+                statusConditions
+        );
+    }
+}

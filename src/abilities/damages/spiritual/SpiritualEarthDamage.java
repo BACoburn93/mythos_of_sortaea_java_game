@@ -1,0 +1,33 @@
+package abilities.damages.spiritual;
+
+import abilities.damages.Damage;
+import abilities.damages.DamageClassificationTypes;
+import abilities.damages.DamageTypes;
+import abilities.status_conditions.Poison;
+import abilities.status_conditions.StatusCondition;
+import abilities.status_conditions.Weak;
+
+public class SpiritualEarthDamage extends Damage {
+    public SpiritualEarthDamage(int minDamage, int maxDamage) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.SPIRITUAL,
+                DamageTypes.EARTH,
+                new StatusCondition[] {
+                        new Poison(10, 1, 1),
+                        new Weak(10, 1, 1),
+                }
+        );
+    }
+
+    public SpiritualEarthDamage(int minDamage, int maxDamage, StatusCondition[] statusConditions) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.SPIRITUAL,
+                DamageTypes.EARTH,
+                statusConditions
+        );
+    }
+}

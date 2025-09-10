@@ -1,0 +1,31 @@
+package abilities.damages.magical;
+
+import abilities.damages.Damage;
+import abilities.damages.DamageClassificationTypes;
+import abilities.damages.DamageTypes;
+import abilities.status_conditions.StatusCondition;
+import abilities.status_conditions.Wet;
+
+public class MagicalWaterDamage extends Damage {
+    public MagicalWaterDamage(int minDamage, int maxDamage) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.MAGICAL,
+                DamageTypes.WATER,
+                new StatusCondition[] {
+                        new Wet(10, 1, 1),
+                }
+        );
+    }
+
+    public MagicalWaterDamage(int minDamage, int maxDamage, StatusCondition[] statusConditions) {
+        super(
+                minDamage,
+                maxDamage,
+                DamageClassificationTypes.MAGICAL,
+                DamageTypes.WATER,
+                statusConditions
+        );
+    }
+}
