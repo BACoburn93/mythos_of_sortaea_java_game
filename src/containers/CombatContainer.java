@@ -368,10 +368,8 @@ public class CombatContainer {
     }
 
     public boolean isEnemyAlive() {
-        for (int i = 0; i < actors.size(); i++) {
-            if (actors.get(i).getHealth() > 0 && Objects.equals(actors.get(i).getActorType(), "enemy")) {
-                return true;
-            }
+        for (Enemy enemy : enemies) {
+            if (enemy.getHealth() > 0) return true;
         }
         return false;
     }

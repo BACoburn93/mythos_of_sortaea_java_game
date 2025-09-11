@@ -97,7 +97,7 @@ public class Character extends Actor {
 
     public void addExperience(int expToAdd) {
         this.experience += expToAdd;
-        levelUp();
+        // levelUp();
     }
 
     public void allocateAttributePoints() {

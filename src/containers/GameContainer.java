@@ -17,10 +17,7 @@ public class GameContainer {
 
 
     public GameContainer() {
-//        this.combatContainer = combatContainer;
         party = getPartyDetails();
-//        gameLoop();
-//        startCommandListener();
     }
 
     private Party getPartyDetails() {

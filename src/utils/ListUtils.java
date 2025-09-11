@@ -21,4 +21,14 @@ public class ListUtils {
         }
         return null;
     }
+
+    public static boolean isInt(String input) {
+        if (input == null) return false;
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

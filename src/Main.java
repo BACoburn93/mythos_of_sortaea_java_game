@@ -11,17 +11,19 @@ public class Main {
         CombatContainer combat = new CombatContainer(newGame.party, enemies);
         InputHandler inputHandler = new InputHandler();
 
+        // Boolean to handle stopping the game state
         boolean gameIsRunning = true;
+
         while (gameIsRunning) {
-            // Render (show main menu or game state)
+            // Render the game state
             StringUtils.stringDivider("Mythos of Sortaea - Main Menu", "=", 50);
             System.out.println("1. Start Combat");
             System.out.println("2. Exit");
 
-            // Input
+            // Input handling
             String choice = inputHandler.getInput("Choose an option: ");
 
-            // Update
+            // Update the game state based on input
             switch (choice) {
                 case "1":
                     combat.startCombat(newGame.party, enemies);
@@ -37,6 +39,7 @@ public class Main {
         inputHandler.close();
     }
 
+    // Entry point of the application
     public static void main(String[] args) {
         new Main().run();
     }
