@@ -6,8 +6,9 @@ import items.Item;
 import items.equipment.item_types.ItemType;
 
 import java.util.Comparator;
+import abilities.interfaces.NameableWithQuantity;
 
-public class Equipment extends Item implements Comparator<Equipment> {
+public abstract class Equipment extends Item implements Comparator<Equipment>, NameableWithQuantity {
     private EquipmentTypes equipmentType;
     private ItemType itemType;
     private Attributes attributes;
@@ -29,6 +30,7 @@ public class Equipment extends Item implements Comparator<Equipment> {
         this.attributes = attributes;
         this.resistances = resistances;
     }
+
     public EquipmentTypes getEquipmentType() {
         return equipmentType;
     }
@@ -45,7 +47,6 @@ public class Equipment extends Item implements Comparator<Equipment> {
         return resistances;
     }
 
-
     @Override
     public int compare(Equipment o1, Equipment o2) {
         return 0;
@@ -54,5 +55,15 @@ public class Equipment extends Item implements Comparator<Equipment> {
     @Override
     public Comparator<Equipment> reversed() {
         return Comparator.super.reversed();
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public int getQuantity() {
+        return super.getQuantity();
     }
 }

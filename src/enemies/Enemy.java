@@ -1,6 +1,8 @@
 package enemies;
 
 import abilities.Ability;
+import abilities.damages.Damage;
+import abilities.interfaces.ActorInterface;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
 import actors.ActorTypes;
@@ -121,5 +123,23 @@ public class Enemy extends Actor {
         sb.append(divider);
 
         return sb.toString();
+    }
+
+    @Override
+    public void attack(ActorInterface attacker, ActorInterface target, Ability ability) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'attack'");
+    }
+
+    @Override
+    public void takeDamage(ActorInterface attacker, Ability ability) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
+    }
+
+    @Override
+    public void applyStatusCondition(ActorInterface attacker, Damage damage) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'applyStatusCondition'");
     }
 }

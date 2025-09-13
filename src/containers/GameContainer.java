@@ -17,15 +17,20 @@ public class GameContainer {
 
 
     public GameContainer() {
+        // Handle the Title on startup
+        // int titleStrWidth = 30;
+        // String titleStr = StringUtils.titleDivider("Mythos of Sortaea", titleStrWidth);
+        // StringUtils.stringDivider(titleStr, "=", titleStrWidth);
+
         party = getPartyDetails();
     }
 
     private Party getPartyDetails() {
-        // Create a number of characters for your party
-        System.out.println("Welcome to Mythos of Sortaea!");
+        // System.out.println("Create a number of characters for your party");
         System.out.println("After choosing your characters, you may type GUIDE at any time " +
                 "in order to get a general list of instructions in different situations to help" +
                 " you know what to type in different circumstances.");
+                System.out.println("");
 
         int numCharacters = getNumCharacters();
 
@@ -76,9 +81,9 @@ public class GameContainer {
 
                 if(!validJob) {
                     StringUtils.stringDivider(jobInput + " is not a valid class you silly goose, " +
-                            "please try again.", "=", 50);
+                            "please try again.", "=", 100);
                     StringUtils.stringDivider("Remember, the valid jobs are Mage, Warrior, Rogue, and Ranger.",
-                            "=", 50);
+                            "=", 100);
                 }
             }
             characterParty.add(new Character(name, job));

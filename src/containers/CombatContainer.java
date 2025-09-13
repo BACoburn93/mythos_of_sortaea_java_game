@@ -2,6 +2,7 @@ package containers;
 
 import abilities.Ability;
 import abilities.actions.ActionTypes;
+import abilities.interfaces.ActorInterface;
 import abilities.reactions.Reaction;
 import actors.Actor;
 import actors.ActorTypes;
@@ -15,6 +16,7 @@ import utils.StringUtils;
 import utils.ListUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CombatContainer {
     public ArrayList<Actor> actors = new ArrayList<>();
@@ -34,27 +36,35 @@ public class CombatContainer {
             System.out.println("Enemy " + (i + 1) + " " + enemies.get(i).getName());
         }
 
-        while (isCharacterAlive() && !enemies.isEmpty()) {
-            for (Actor actor : this.actors) {
-                if (actor.getHealth() > 0) {
-                    handleStartTurn(actor);
-                    if (actor instanceof Character) {
-                        ((Character) actor).setActionPoints(((Character) actor).getMaxActionPoints());
-                        StringUtils.twoStringDivider("The valiant " + ((Character) actor).getJob() + ", " + actor.getName() + " is ready to act!",
-                                "Type the action you would like to use or type HELP to get a list of actions that you have access to.",
-                                "=", 50);
+while (isCharacterAlive() && !enemies.isEmpty()) {
+    for (ActorInterface actor : this.actors) {
+        if (actor.getHealth() > 0) {
+            handleStartTurn(actor);
 
-                        handleCharacterActions(combatLoop, (Character) actor);
-                    } else if (actor instanceof Enemy enemy) {
-                        StringUtils.stringDivider("The wretched " + enemy.getName() + " looks menacing...", "=", 50);
+            if (actor instanceof Character character) {
+                character.setActionPoints(character.getMaxActionPoints());
+                StringUtils.twoStringDivider(
+                    "The valiant " + character.getJob() + ", " + actor.getName() + " is ready to act!",
+                    "Type the action you would like to use or type HELP to get a list of actions that you have access to.",
+                    "=", 100
+                );
 
-                        handleCharacterReactions(combatLoop);
-                        enemy.chooseEnemyAbility(party);
-                    }
-                    handleEndTurn(actor);
-                }
+                handleCharacterActions(combatLoop, character);
+
+            } else if (actor instanceof Enemy enemy) {
+                StringUtils.stringDivider(
+                    "The wretched " + enemy.getName() + " looks menacing...", "=", 100
+                );
+
+                handleCharacterReactions(combatLoop);
+                enemy.chooseEnemyAbility(party);
             }
+
+            handleEndTurn(actor);
         }
+    }
+}
+
         if (!isCharacterAlive()) {
             StringUtils.stringDivider("You have been defeated!", "*", 50);
         }
@@ -62,15 +72,6 @@ public class CombatContainer {
             StringUtils.stringDivider("All enemies are defeated! You are victorious!", "*", 50);
         }
         combatLoop.close();
-    }
-
-    private Character chooseCharacter(String target) {
-        for (Character character : this.party.characters) {
-            if (Objects.equals(target.toLowerCase(), character.getName().toLowerCase())) {
-                return character;
-            }
-        }
-        return null;
     }
 
     private static ArrayList<Actor> chooseOrder(Party party, ArrayList<Enemy> enemies) {
@@ -88,7 +89,7 @@ public class CombatContainer {
                 "Initiative Order: " + initiativeOrder.stream()
                         .map(Actor::getName)
                         .toList()
-                , "=", 50);
+                , "=", 100);
 
         return initiativeOrder;
     }
@@ -114,24 +115,6 @@ public class CombatContainer {
         }
     }
 
-    private void printEquipmentList(List<Equipment> equipment) {
-        for (Equipment eq : equipment) {
-            System.out.println(eq.getName() + ": " + eq.getQuantity());
-        }
-    }
-
-    private void printEquippedItems(Map<EquipmentTypes, Equipment> equipmentSlots) {
-        for (Map.Entry<EquipmentTypes, Equipment> entry : equipmentSlots.entrySet()) {
-            EquipmentTypes key = entry.getKey();
-            Equipment value = entry.getValue();
-
-            if (value != null) {
-                System.out.printf("%-8s: %s%n", key, value.getName());
-            } else {
-                System.out.printf("%-8s: Empty%n", key);
-            }
-        }
-    }
 
     private void handleCharacterActions(GameScanner combatLoop, Character character) {
         while (character.getActionPoints() > 0) {
@@ -143,12 +126,16 @@ public class CombatContainer {
 
             String action = combatLoop.nextLine();
 
-            if (action.equalsIgnoreCase("end") || action.equalsIgnoreCase("end turn")) {
+            if (
+                action.equalsIgnoreCase("end") || 
+                action.equalsIgnoreCase("end turn") ||
+                action.equalsIgnoreCase("pass")
+                ) {
                 System.out.println("Ending turn.");
                 break;
             } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
                 System.out.println("=".repeat(50));
-                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 50);
+                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 100);
             } else if (character.isValidAction(action)) {
                 character.handleItem(action);
 
@@ -177,7 +164,7 @@ public class CombatContainer {
                     handleUnequip(combatLoop, character);
                 }
 
-                // Will eventually view surrounding area
+                // Will maybe eventually view surrounding area
                 if (Objects.equals(action.toUpperCase(), ActionTypes.OBSERVE.toString()) &&
                         character.getStatusConditions().getBlind().getDuration() <= 0) {
                     System.out.println(character);
@@ -200,11 +187,24 @@ public class CombatContainer {
                 } else {
                     while (!validTarget) {
                         System.out.println("Which enemy would you like to target?");
-                        String target = combatLoop.nextLine();
+                        System.out.print(StringUtils.formatNumberedList(getEnemyTargets(this.actors)));
+                        
+                        String input = combatLoop.nextLine();
+                        List<Actor> enemies = getEnemyTargets(this.actors);
 
-                        if (isValidTarget(target)) {
-                            Actor chosenTarget = chooseTarget(target);
-                            assert chosenTarget != null;
+                        Actor chosenTarget = null;
+
+                        // Check if input is a valid number within enemy list range
+                        if (input.matches("\\d+")) {
+                            int index = Integer.parseInt(input) - 1;
+                            if (index >= 0 && index < enemies.size()) {
+                                chosenTarget = enemies.get(index);
+                            }
+                        } else if (isValidTarget(input)) {
+                            chosenTarget = chooseTarget(input);
+                        }
+
+                        if (chosenTarget != null) {
                             Random random = new Random();
                             boolean missedTarget = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();
 
@@ -212,14 +212,14 @@ public class CombatContainer {
                                 character.attack(character, chosenTarget, chosenAbility);
                             } else {
                                 System.out.println(character.getName() + " missed " + chosenTarget.getName() +
-                                        " with " + chosenAbility.getName());
+                                                " with " + chosenAbility.getName());
                             }
 
                             character.spendMana(chosenAbility);
                             character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
 
                             System.out.println(chosenTarget.getName() + " has " + chosenTarget.getHealthValues().getValue()
-                                    + " hit points remaining.");
+                                            + " hit points remaining.");
 
                             if (chosenTarget.getHealthValues().getValue() < 0) {
                                 this.actors = handleKillEnemy((Enemy) chosenTarget);
@@ -227,17 +227,7 @@ public class CombatContainer {
 
                             validTarget = true;
                         } else {
-                            StringUtils.stringTitle("Available Targets", "=", 10);
-                            for (Actor value : this.actors) {
-                                if (!Objects.equals(value.getActorType(), ActorTypes.CHARACTER.toString())) {
-                                    if (this.actors.size() <= 2) {
-                                        System.out.print(value.getName());
-                                        break;
-                                    }
-                                    System.out.print(" | " + value.getName() + " | ");
-                                }
-                            }
-                            System.out.println();
+                            System.out.println("Invalid target. Please enter a valid enemy name or number.");
                         }
                     }
                 }
@@ -285,7 +275,7 @@ public class CombatContainer {
                         System.out.println("Optional actions are: Defend, Parry, Item, Observe, or Pass.");
                     } else if (chosenCharacter.isValidReaction(reaction)) {
                         chosenCharacter.setActionPoints(chosenCharacter.getActionPoints() - chosenReaction.getActionCost());
-                        chosenCharacter.handleReaction(actors, reaction.toLowerCase());
+                        chosenCharacter.handleReaction(reaction.toLowerCase());
                         validReaction = true;
                     } else {
                         assert chosenReaction != null;
@@ -338,11 +328,11 @@ public class CombatContainer {
         return this.actors;
     }
 
-    private void handleEndTurn(Actor actor) {
+    private void handleEndTurn(ActorInterface actor) {
         actor.handleStatusConditions();
     }
 
-    private void handleStartTurn(Actor actor) {
+    private void handleStartTurn(ActorInterface actor) {
         if (actor.getHealthValues().getRegenValue() > 0) {
             actor.getHealthValues().setValue(
                     actor.getHealthValues().getValue() +
@@ -449,10 +439,8 @@ public class CombatContainer {
 
     private void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment(); // Use party inventory
-        for (int i = 0; i < equipmentList.size(); i++) {
-            Equipment eq = equipmentList.get(i);
-            System.out.printf("%d. %-20s (x%d)%n", i + 1, eq.getName(), eq.getQuantity());
-        }
+
+        System.out.print(StringUtils.formatQNumberedList(equipmentList));
         System.out.println("Type the equipment name, slot, or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 
@@ -491,5 +479,11 @@ public class CombatContainer {
         } else {
             System.out.println("No such equipped item found.");
         }
+    }
+
+    private List<Actor> getEnemyTargets(List<Actor> allActors) {
+        return allActors.stream()
+            .filter(a -> a.getActorType() != ActorTypes.CHARACTER)
+            .collect(Collectors.toList());
     }
 }

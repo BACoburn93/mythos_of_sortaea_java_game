@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+import actors.Actor;
 import containers.CombatContainer;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
@@ -6,9 +9,13 @@ import utils.StringUtils;
 
 public class Main {
     public void run() {
-        GameContainer newGame = new GameContainer();
-        java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
-        CombatContainer combat = new CombatContainer(newGame.party, enemies);
+        int titleStrWidth = 30;
+        String titleStr = StringUtils.titleDivider("Mythos of Sortaea", titleStrWidth);
+        StringUtils.stringDivider(titleStr, "=", titleStrWidth);
+
+        // GameContainer newGame = new GameContainer();
+        // java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
+        // CombatContainer combat = new CombatContainer(newGame.party, enemies);
         InputHandler inputHandler = new InputHandler();
 
         // Boolean to handle stopping the game state
@@ -16,19 +23,47 @@ public class Main {
 
         while (gameIsRunning) {
             // Render the game state
-            StringUtils.stringDivider("Mythos of Sortaea - Main Menu", "=", 50);
-            System.out.println("1. Start Combat");
-            System.out.println("2. Exit");
+            System.out.println(StringUtils.titleDivider("Main Menu", 30));
+            System.out.println("1. Start Game");
+            System.out.println("2. Combat Test");
+            System.out.println("3. Exit");
 
             // Input handling
             String choice = inputHandler.getInput("Choose an option: ");
 
+            // Container to initialize the game state
+            // GameContainer newGame = new GameContainer();
+
             // Update the game state based on input
             switch (choice) {
                 case "1":
-                    combat.startCombat(newGame.party, enemies);
+                    GameContainer testGame = new GameContainer();
+                    ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();
+                    ArrayList<Actor> allActors = new ArrayList<>(testGame.party.characters);  // add characters
+                    allActors.addAll(testEnemies);  // add enemies
+
+                    // Instantiate scanner and handlers
+                    utils.GameScanner gameScanner = new utils.GameScanner();
+                    handlers.ActionHandler actionHandler = new handlers.ActionHandler(gameScanner, allActors, testEnemies);
+                    handlers.ReactionHandler reactionHandler = new handlers.ReactionHandler(gameScanner);
+                    handlers.EquipmentHandler equipmentHandler = new handlers.EquipmentHandler(testGame.party);
+
+                    // Create and start combat manager
+                    managers.CombatManager combatManager = new managers.CombatManager(
+                        testGame.party, testEnemies, actionHandler, reactionHandler, equipmentHandler
+                    );
+                    combatManager.startCombat();
                     break;
+
                 case "2":
+                    // combat.startCombat(newGame.party, enemies);
+                    GameContainer newGame = new GameContainer();
+                    java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
+                    CombatContainer combat = new CombatContainer(newGame.party, enemies);
+                    combat.startCombat(newGame.party, enemies);
+                    System.out.println("Scenario not implemented yet.");
+                    break;
+                case "3":
                     gameIsRunning = false;
                     System.out.println("Goodbye!");
                     break;

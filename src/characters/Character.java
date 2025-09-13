@@ -3,6 +3,7 @@ package characters;
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
+import abilities.interfaces.ActorInterface;
 import abilities.reactions.*;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
@@ -138,7 +139,7 @@ public class Character extends Actor {
             }
         }
 
-        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "=", 50);
+        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "=", 100);
     }
 
     public void changeStance(Stances stance) {
@@ -201,6 +202,16 @@ public class Character extends Actor {
         }
     }
 
+    public boolean equipItem(String itemName) {
+        for (Equipment item : equipment) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                this.equipItem(item);
+                return true;
+            }
+        }
+        return false; // item not found
+    }
+
     public void unequipItem(EquipmentTypes type) {
         Equipment item = equipmentSlots.get(type);
         System.out.println("Unequipping " + item.getName());
@@ -217,6 +228,29 @@ public class Character extends Actor {
             equipment.sort(Comparator.comparing(Equipment::getName, String.CASE_INSENSITIVE_ORDER));
             equipmentSlots.put(type, null);
         }
+    }
+
+    public boolean unequipItem(String itemName) {
+        for (Map.Entry<EquipmentTypes, Equipment> entry : equipmentSlots.entrySet()) {
+            Equipment item = entry.getValue();
+            if (item != null && item.getName().equalsIgnoreCase(itemName)) {
+                unequipItem(entry.getKey());
+                return true;
+            }
+        }
+        return false; // item not equipped
+    }
+
+
+    public List<String> getEquippedItems() {
+        List<String> equipped = new ArrayList<>();
+        for (Map.Entry<EquipmentTypes, Equipment> entry : equipmentSlots.entrySet()) {
+            Equipment item = entry.getValue();
+            if (item != null) {
+                equipped.add(entry.getKey().name() + ": " + item.getName());
+            }
+        }
+        return equipped;
     }
 
     private void addItemAttributesAndResistances(Equipment item) {
@@ -251,7 +285,7 @@ public class Character extends Actor {
         }
     }
 
-    public void handleObserve(ArrayList<Actor> actors) {
+    public void handleObserve(ArrayList<Character> actors) {
         String actorNames = actors.stream()
                 .map(Actor::getName)
                 .collect(java.util.stream.Collectors.joining(", "));
@@ -260,7 +294,7 @@ public class Character extends Actor {
                 actorNames, "-", 50);
     }
 
-    public void handleReaction(ArrayList<Actor> actors, String reaction) {
+    public void handleReaction(ArrayList<Character> actors, String reaction) {
         ReactionTypes reactionType;
         try {
             reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
@@ -283,6 +317,36 @@ public class Character extends Actor {
                 break;
             case OBSERVE:
                 handleObserve(actors);
+                break;
+            default:
+                System.out.println("Unhandled reaction: " + reaction);
+                break;
+        }
+    }
+
+    public void handleReaction(String reaction) {
+        ReactionTypes reactionType;
+        try {
+            reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid reaction: " + reaction);
+            return;
+        }
+
+        switch (reactionType) {
+            case DEFEND:
+                System.out.println(this.getName() + " is now in a defending stance.");
+                this.handleDefend();
+                break;
+            case PARRY:
+                System.out.println(this.getName() + " is now in a parrying stance.");
+                this.setStance(Stances.PARRYING);
+                break;
+            case ITEM:
+                this.handleItem(reaction);
+                break;
+            case OBSERVE:
+                System.out.println(this.getName() + " is observing the surrounding area.");
                 break;
             default:
                 System.out.println("Unhandled reaction: " + reaction);
@@ -566,5 +630,23 @@ public class Character extends Actor {
         sb.append(divider);
     
         return sb.toString();
+    }
+
+    @Override
+    public void attack(ActorInterface attacker, ActorInterface target, Ability ability) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'attack'");
+    }
+
+    @Override
+    public void takeDamage(ActorInterface attacker, Ability ability) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
+    }
+
+    @Override
+    public void applyStatusCondition(ActorInterface attacker, Damage damage) {
+        
+        throw new UnsupportedOperationException("Unimplemented method 'applyStatusCondition'");
     }
 }

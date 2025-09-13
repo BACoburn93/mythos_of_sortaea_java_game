@@ -3,6 +3,8 @@ package actors;
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
+import abilities.interfaces.ActorInterface;
+import abilities.interfaces.Nameable;
 import abilities.status_conditions.StatusCondition;
 import abilities.status_conditions.StatusConditions;
 import actors.attributes.Attributes;
@@ -17,8 +19,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class Actor {
-//    public int actionPoints;
+public abstract class Actor implements ActorInterface, Nameable {
     private String name;
     private ActorTypes actorType;
     private HealthValues healthValues;
@@ -161,14 +162,6 @@ public abstract class Actor {
     private int getDamageToAdd(Actor attacker, Damage damage) {
         int damageToAdd = 0;
 
-//        abilities.reactions.Reaction[] charReactions = {
-//                new abilities.reactions.Reaction("Defend", 1, "Reduce damage from physical attacks, based on defense."),
-//                new abilities.reactions.Reaction("Parry", 1, "Chance to prevent physical damage, based on defense."),
-//                new abilities.reactions.Reaction("items.Item", 1, "Utilize an item to restore, buff, or remove conditions."),
-//                new abilities.reactions.Reaction("Observe", 1, "Observe your surroundings to determine everything is relative to you."),
-//                new abilities.reactions.Reaction("Pass", 0, "Conserve or recuperate."),
-//        };
-
         if (Objects.equals(damage.getDamageClassification(), DamageClassificationTypes.PHYSICAL)) {
             damageToAdd += (int) Math.floor((double) attacker.attributes.getStrength().getValue() / 2);
         }
@@ -263,7 +256,7 @@ public abstract class Actor {
             applyStatusCondition(attacker, damage);
         }
 
-        StringUtils.stringDividerTop(damageMessage.toString(), "=", 50);
+        StringUtils.stringDividerTop(damageMessage.toString(), "=", 100);
     }
 
     public void applyStatusCondition(Actor attacker, Damage damage) {
@@ -423,29 +416,6 @@ public abstract class Actor {
             }
         }
 
-//        if(statusConditions.getBlind().getDuration() > 0) {
-//            statusConditions.getBlind().setDuration(statusConditions.getBlind().getDuration() - 1);
-//            System.out.println(this.getName() + " has their vision obscured and is struggling to see.");
-//        } else {
-//            statusConditions.getBlind().setValue(0);
-//        }
-
-//        if(statusConditions.getRot().getDuration() > 0) {
-//            statusConditions.getRot().setDuration(statusConditions.getRot().getDuration() - 1);
-//            resistances.getBludgeoning().setValue(
-//                    resistances.getBludgeoning().getValue() - statusConditions.getRot().getValue()
-//            );
-//            statusConditions.getRot().setTotalAdjustment(
-//                    statusConditions.getRot().getTotalAdjustment() + statusConditions.getRot().getValue()
-//            );
-//            System.out.println(this.getName() + " is slowly deteriorating.");
-//        } else {
-//            statusConditions.getRot().setValue(0);
-//            resistances.getBludgeoning().setValue(
-//                    resistances.getBludgeoning().getValue() + statusConditions.getRot().getTotalAdjustment()
-//            );
-//            statusConditions.getRot().setTotalAdjustment(0);
-//        }
     }
 
     public StatusConditions getStatusConditions() {
