@@ -13,6 +13,7 @@ import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.stances.Stances;
 import utils.StringUtils;
+import ui.CombatUIStrings;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -97,37 +98,37 @@ public abstract class Actor implements ActorInterface, Nameable {
         target.takeDamage(attacker, ability);
     }
 
-    private boolean startsWithVowel(String name) {
-        char firstChar = Character.toUpperCase(name.charAt(0));
-        return firstChar == 'A' || firstChar == 'E' || firstChar == 'I' || firstChar == 'O' || firstChar == 'U';
-    }
+    // private boolean startsWithVowel(String name) {
+    //     char firstChar = Character.toUpperCase(name.charAt(0));
+    //     return firstChar == 'A' || firstChar == 'E' || firstChar == 'I' || firstChar == 'O' || firstChar == 'U';
+    // }
 
-    private void appendDamageMessage(StringBuilder damageMessage, Actor attacker, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
-        String article = startsWithVowel(ability.getName()) ? "an " : "a ";
+    // private void appendDamageMessage(StringBuilder damageMessage, Actor attacker, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
+    //     String article = startsWithVowel(ability.getName()) ? "an " : "a ";
 
-        if (isFirstDamage) {
-            damageMessage.append(this.getName())
-                    .append(" was hit by ")
-                    .append(article)
-                    .append(ability.getName())
-                    .append(" from ")
-                    .append(attacker.getName())
-                    .append(" and received: | ")
-                    .append(totalDamage)
-                    .append(" ")
-                    .append(damage.getDamageClassification())
-                    .append(" ")
-                    .append(damage.getDamageType())
-                    .append(" damage | ");
-        } else {
-            damageMessage.append(totalDamage)
-                    .append(" ")
-                    .append(damage.getDamageClassification())
-                    .append(" ")
-                    .append(damage.getDamageType())
-                    .append(" damage | ");
-        }
-    }
+    //     if (isFirstDamage) {
+    //         damageMessage.append(this.getName())
+    //                 .append(" was hit by ")
+    //                 .append(article)
+    //                 .append(ability.getName())
+    //                 .append(" from ")
+    //                 .append(attacker.getName())
+    //                 .append(" and received: | ")
+    //                 .append(totalDamage)
+    //                 .append(" ")
+    //                 .append(damage.getDamageClassification())
+    //                 .append(" ")
+    //                 .append(damage.getDamageType())
+    //                 .append(" damage | ");
+    //     } else {
+    //         damageMessage.append(totalDamage)
+    //                 .append(" ")
+    //                 .append(damage.getDamageClassification())
+    //                 .append(" ")
+    //                 .append(damage.getDamageType())
+    //                 .append(" damage | ");
+    //     }
+    // }
 
 
     private int calculateMitigation(Actor attacker, Ability ability, Damage damage, int resistance) {
@@ -252,11 +253,11 @@ public abstract class Actor implements ActorInterface, Nameable {
             int totalDamage = Math.max(baseDamage - damageToMitigate + damageToAdd, 0);
             healthValues.setValue(healthValues.getValue() - totalDamage);
 
-            appendDamageMessage(damageMessage, attacker, ability, damage, totalDamage, isFirstDamage);
+            CombatUIStrings.appendDamageMessage(damageMessage, attacker, this, ability, damage, totalDamage, isFirstDamage);
             applyStatusCondition(attacker, damage);
         }
 
-        StringUtils.stringDividerTop(damageMessage.toString(), "=", 100);
+        StringUtils.stringDividerTop(damageMessage.toString(), "=", 50);
     }
 
     public void applyStatusCondition(Actor attacker, Damage damage) {

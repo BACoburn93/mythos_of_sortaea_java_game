@@ -96,8 +96,13 @@ public abstract class Ability {
 
     @Override
     public String toString() {
-        return String.format("| %-20s | %-30s |",
+        return String.format("| %-15s | %-5s |  %-5s | %-20s | %-20s | %-20s | %-20s |",
                 name,
+                manaCost + " MP",
+                actionCost + " AP",
+                weaponRequirement != null ? Arrays.toString(weaponRequirement) : "No Weapon Requirement",
+                armorRequirement != null ? Arrays.toString(armorRequirement) : "No Armor Requirement",
+                shieldRequirement != null ? Arrays.toString(shieldRequirement) : "No Shield Requirement",
                 Arrays.toString(damages));
     }
 }

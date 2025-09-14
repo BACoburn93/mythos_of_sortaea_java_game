@@ -11,7 +11,7 @@ import characters.Party;
 import enemies.Enemy;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
-import ui.FormattedStrings;
+import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.StringUtils;
 import utils.ListUtils;
@@ -47,14 +47,14 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 StringUtils.twoStringDivider(
                     "The valiant " + character.getJob() + ", " + actor.getName() + " is ready to act!",
                     "Type the action you would like to use or type HELP to get a list of actions that you have access to.",
-                    "=", 100
+                    "=", 50
                 );
 
                 handleCharacterActions(combatLoop, character);
 
             } else if (actor instanceof Enemy enemy) {
                 StringUtils.stringDivider(
-                    "The wretched " + enemy.getName() + " looks menacing...", "=", 100
+                    "The wretched " + enemy.getName() + " looks menacing...", "=", 50
                 );
 
                 handleCharacterReactions(combatLoop);
@@ -90,7 +90,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 "Initiative Order: " + initiativeOrder.stream()
                         .map(Actor::getName)
                         .toList()
-                , "=", 100);
+                , "=", 50);
 
         return initiativeOrder;
     }
@@ -136,7 +136,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 break;
             } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
                 System.out.println("=".repeat(50));
-                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 100);
+                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 50);
             } else if (character.isValidAction(action)) {
                 character.handleItem(action);
 
@@ -188,7 +188,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 } else {
                     while (!validTarget) {
                         System.out.println("Which enemy would you like to target?");
-                        System.out.print(FormattedStrings.formatNumberedList(getEnemyTargets(this.actors)));
+                        System.out.print(CombatUIStrings.formatTargetEnemyList(getEnemyTargets(this.actors)));
                         
                         String input = combatLoop.nextLine();
                         List<Actor> enemies = getEnemyTargets(this.actors);
@@ -441,7 +441,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
     private void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment(); // Use party inventory
 
-        System.out.print(FormattedStrings.formatQNumberedList(equipmentList));
+        System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
         System.out.println("Type the equipment name, slot, or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 

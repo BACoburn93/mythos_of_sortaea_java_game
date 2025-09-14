@@ -9,7 +9,7 @@ import characters.Party;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import utils.GameScanner;
-import ui.FormattedStrings;
+import ui.CombatUIStrings;
 
 public class EquipmentHandler {
     private Party party;
@@ -21,7 +21,7 @@ public class EquipmentHandler {
     public void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment();
 
-        System.out.print(FormattedStrings.formatQNumberedList(equipmentList));
+        System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
         System.out.println("Type the equipment name or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 

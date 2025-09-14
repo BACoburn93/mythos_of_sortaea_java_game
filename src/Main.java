@@ -4,15 +4,17 @@ import actors.Actor;
 import containers.CombatContainer;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
-import ui.FormattedStrings;
+import ui.MenuUIStrings;
 import utils.InputHandler;
-import utils.StringUtils;
 
 public class Main {
     public void run() {
-        int titleStrWidth = 30;
-        String titleStr = FormattedStrings.titleDivider("Mythos of Sortaea", titleStrWidth);
-        StringUtils.stringDivider(titleStr, "=", titleStrWidth);
+        // Render Title Screen
+        MenuUIStrings.titleScreen();
+
+        // int titleStrWidth = 30;
+        // String titleStr = MenuUIStrings.titleDivider("Mythos of Sortaea", titleStrWidth);
+        // StringUtils.stringDivider(titleStr, "=", titleStrWidth);
 
         // GameContainer newGame = new GameContainer();
         // java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
@@ -24,10 +26,7 @@ public class Main {
 
         while (gameIsRunning) {
             // Render the game state
-            System.out.println(FormattedStrings.titleDivider("Main Menu", 30));
-            System.out.println("1. Start Game");
-            System.out.println("2. Combat Test");
-            System.out.println("3. Exit");
+            MenuUIStrings.mainMenu();
 
             // Input handling
             String choice = inputHandler.getInput("Choose an option: ");

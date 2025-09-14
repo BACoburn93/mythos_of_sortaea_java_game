@@ -44,7 +44,7 @@ public class GameScanner {
         System.out.printf("%-20s %s%n", "'Item Name':", "Uses an item of the chosen name if you have at least one.");
         System.out.println();
         System.out.println("-----TARGETS-----");
-        System.out.printf("%-20s %s%n", "'Target Name':", "Targets the specified creature with the ability you chose.");
+        System.out.printf("%-20s %s%n", "'Target Name':", "Targets the specified creature with the ability you chose. Alternatively, you can use the target's index number.");
         System.out.println();
         System.out.println("-----REACTIONS-----");
         System.out.printf("%-20s %s%n", "'Character Name':", "When asked to choose a character, type that characters name in order to");

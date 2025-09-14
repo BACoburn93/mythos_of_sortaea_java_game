@@ -46,7 +46,7 @@ public class ActionHandler {
                 break;
             } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
                 System.out.println("=".repeat(50));
-                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 100);
+                StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 50);
             } else if (character.isValidAction(action)) {
                 character.handleItem(action);
 

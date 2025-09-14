@@ -81,9 +81,9 @@ public class GameContainer {
 
                 if(!validJob) {
                     StringUtils.stringDivider(jobInput + " is not a valid class you silly goose, " +
-                            "please try again.", "=", 100);
+                            "please try again.", "=", 50);
                     StringUtils.stringDivider("Remember, the valid jobs are Mage, Warrior, Rogue, and Ranger.",
-                            "=", 100);
+                            "=", 50);
                 }
             }
             characterParty.add(new Character(name, job));

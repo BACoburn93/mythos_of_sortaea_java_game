@@ -139,7 +139,7 @@ public class Character extends Actor {
             }
         }
 
-        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "=", 100);
+        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "=", 50);
     }
 
     public void changeStance(Stances stance) {
