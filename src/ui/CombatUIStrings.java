@@ -61,4 +61,16 @@ public class CombatUIStrings {
         }
     }
 
+    public static void printAbilitiesWithDivider(List<Ability> abilities) {
+        for (Ability ability : abilities) {
+            StringUtils.stringDividerTop(String.valueOf(ability), "-", 50);
+        }
+    }
+
+    public static void printAbilitiesWithDescription(List<Ability> abilities) {
+        for (Ability ability : abilities) {
+            StringUtils.stringDividerTop(ability.getName() + ": " + ability.getDescription(), "-", 50);
+        }
+    }
+
 }

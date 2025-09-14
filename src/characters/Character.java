@@ -444,7 +444,7 @@ public class Character extends Actor {
 
         java.util.List<String> validActions = java.util.Arrays.asList(
                 "item", "ability", "abildesc", "ability description", "observe", "equip", "unequip",
-                "guide", "combat guide"
+                "guide", "combat guide", "sort"
         );
 
         return validActions.contains(action.toLowerCase()) || isValidItem;

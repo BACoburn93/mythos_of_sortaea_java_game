@@ -3,11 +3,13 @@ package handlers;
 import actors.Actor;
 import characters.Character;
 import enemies.Enemy;
+import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.StringUtils;
 import abilities.Ability;
 import abilities.actions.ActionTypes;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class ActionHandler {
@@ -56,12 +58,45 @@ public class ActionHandler {
                 }
 
                 if (Objects.equals(action.toUpperCase(), ActionTypes.ABILITY.toString())) {
-                    printAbilitiesWithDivider(character.getAbilities());
+                    sortAbilities(character.getAbilities(), AbilitySortKey.NAME, true);
+                    CombatUIStrings.printAbilitiesWithDivider(character.getAbilities());
                 }
+
+                if (Objects.equals(action.toUpperCase(), "SORT")) {
+                    System.out.println("What would you like to sort? (Abilities):");
+                    String sortTarget = scanner.nextLine().trim().toLowerCase();
+
+                    if (sortTarget.equals("abilities") || sortTarget.equals("ability")) {
+                        System.out.println("Sort Abilities by: Name, Mana Cost, Action Cost, Damages");
+                        String sortBy = scanner.nextLine().trim().toLowerCase();
+
+                        AbilitySortKey sortKey;
+                        switch (sortBy) {
+                            case "name" -> sortKey = AbilitySortKey.NAME;
+                            case "mana cost" -> sortKey = AbilitySortKey.MANA_COST;
+                            case "action cost" -> sortKey = AbilitySortKey.ACTION_COST;
+                            case "damages" -> sortKey = AbilitySortKey.DAMAGES;
+                            default -> {
+                                System.out.println("Invalid sort key. Defaulting to Name.");
+                                sortKey = AbilitySortKey.NAME;
+                            }
+                        }
+
+                        System.out.println("Ascending? (yes/no):");
+                        String ascendingInput = scanner.nextLine().trim().toLowerCase();
+                        boolean ascending = ascendingInput.equals("yes") || ascendingInput.equals("y");
+
+                        sortAbilities(character.getAbilities(), sortKey, ascending);
+                        CombatUIStrings.printAbilitiesWithDivider(character.getAbilities());
+                    } else {
+                        System.out.println("Unknown sort target: " + sortTarget);
+                    }
+                }
+
 
                 if (Objects.equals(action.toUpperCase(), ActionTypes.ABILDESC.toString()) ||
                         Objects.equals(action.toLowerCase(), "ability description")) {
-                    printAbilitiesWithDescription(character.getAbilities());
+                    CombatUIStrings.printAbilitiesWithDescription(character.getAbilities());
                 }
 
                 if (Objects.equals(action.toUpperCase(), ActionTypes.EQUIP.toString())) {
@@ -123,17 +158,52 @@ public class ActionHandler {
         }
     }
 
-    private void printAbilitiesWithDivider(List<Ability> abilities) {
-        for (Ability ability : abilities) {
-            StringUtils.stringDividerTop(String.valueOf(ability), "-", 50);
-        }
+    public enum AbilitySortKey {
+        NAME,
+        MANA_COST,
+        ACTION_COST,
+        WEAPON_TYPES,
+        ARMOR_TYPES,
+        SHIELD_TYPES,
+        DAMAGES
     }
 
-    private void printAbilitiesWithDescription(List<Ability> abilities) {
-        for (Ability ability : abilities) {
-            StringUtils.stringDividerTop(ability.getName() + ": " + ability.getDescription(), "-", 50);
+    private void sortAbilities(List<Ability> abilities, AbilitySortKey sortKey, boolean ascending) {
+        Comparator<Ability> comparator;
+
+        switch (sortKey) {
+            case NAME:
+                comparator = Comparator.comparing(Ability::getName);
+                break;
+            case MANA_COST:
+                comparator = Comparator.comparingInt(Ability::getManaCost);
+                break;
+            case ACTION_COST:
+                comparator = Comparator.comparingInt(Ability::getActionCost);
+                break;
+            // case WEAPON_TYPES:
+            //     comparator = Comparator.comparing(a -> a.getWeaponTypes().toString());
+            //     break;
+            // case ARMOR_TYPES:
+            //     comparator = Comparator.comparing(a -> a.getArmorTypes().toString());
+            //     break;
+            // case SHIELD_TYPES:
+            //     comparator = Comparator.comparing(a -> a.getShieldTypes().toString());
+            //     break;
+            case DAMAGES:
+                comparator = Comparator.comparing(a -> a.getDamages().toString());
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported sort key: " + sortKey);
         }
+
+        if (!ascending) {
+            comparator = comparator.reversed();
+        }
+
+        abilities.sort(comparator);
     }
+
 
     private ArrayList<Actor> handleKillEnemy(Enemy enemy) {
         System.out.println(enemy.getName() + " has been slain.");
