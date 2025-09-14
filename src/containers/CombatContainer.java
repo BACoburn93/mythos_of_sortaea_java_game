@@ -11,6 +11,7 @@ import characters.Party;
 import enemies.Enemy;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
+import ui.FormattedStrings;
 import utils.GameScanner;
 import utils.StringUtils;
 import utils.ListUtils;
@@ -187,7 +188,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 } else {
                     while (!validTarget) {
                         System.out.println("Which enemy would you like to target?");
-                        System.out.print(StringUtils.formatNumberedList(getEnemyTargets(this.actors)));
+                        System.out.print(FormattedStrings.formatNumberedList(getEnemyTargets(this.actors)));
                         
                         String input = combatLoop.nextLine();
                         List<Actor> enemies = getEnemyTargets(this.actors);
@@ -245,12 +246,12 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
 
         while (!validReaction && !validCharacter) {
             while (!validCharacter) {
-                
                 System.out.println("Party Members:");
                 for (int i = 0; i < party.characters.size(); i++) {
                     Character c = party.characters.get(i);
                     System.out.printf("%d. %s (%d/%d HP)\n", i + 1, c.getName(), c.getHealth(), c.getHealthValues().getMaxValue());
                 }
+
                 System.out.println("Choose a character to use a reaction (by name or number), or hit ENTER to pass.");
                 String characterToChoose = combatLoop.nextLine();
                 if (characterToChoose.isEmpty()) {
@@ -440,7 +441,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
     private void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment(); // Use party inventory
 
-        System.out.print(StringUtils.formatQNumberedList(equipmentList));
+        System.out.print(FormattedStrings.formatQNumberedList(equipmentList));
         System.out.println("Type the equipment name, slot, or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 

@@ -12,20 +12,24 @@ import java.util.*;
 
 public class ActionHandler {
     private final GameScanner scanner;
+    private final EquipmentHandler equipmentHandler;
     private final TargetSelector targetSelector;
     private ArrayList<Actor> actors;
     private ArrayList<Enemy> enemies;
 
-    public ActionHandler(GameScanner scanner, ArrayList<Actor> actors, ArrayList<Enemy> enemies) {
+    public ActionHandler(GameScanner scanner, ArrayList<Actor> actors, ArrayList<Enemy> enemies, EquipmentHandler equipmentHandler) {
         this.scanner = scanner;
         this.actors = actors;
         this.enemies = enemies;
+        this.equipmentHandler = equipmentHandler;
         this.targetSelector = new TargetSelector(actors);
     }
 
     public void handleTurn(Character character) {
+        character.setActionPoints(character.getMaxActionPoints());
+        
         while (character.getActionPoints() > 0) {
-            boolean validTarget = false;
+            // boolean validTarget = false;
 
             StringUtils.stringDivider(character.getActionPoints() + "/" +
                     character.getMaxActionPoints() + " Action Points.",
@@ -60,13 +64,12 @@ public class ActionHandler {
                     printAbilitiesWithDescription(character.getAbilities());
                 }
 
-                // For now, these can be no-ops or printed messages.
                 if (Objects.equals(action.toUpperCase(), ActionTypes.EQUIP.toString())) {
-                    System.out.println("Equip not yet implemented in ActionHandler.");
+                    equipmentHandler.handleEquip(scanner, character);
                 }
 
                 if (Objects.equals(action.toUpperCase(), ActionTypes.UNEQUIP.toString())) {
-                    System.out.println("Unequip not yet implemented in ActionHandler.");
+                    equipmentHandler.handleUnequip(scanner, character);
                 }
 
                 if (Objects.equals(action.toUpperCase(), ActionTypes.OBSERVE.toString()) &&
@@ -82,7 +85,7 @@ public class ActionHandler {
 
                     if (character.getActionPoints() <= 0) {
                         System.out.println("No Ability Points remaining, ending turn.");
-                        validTarget = true;
+                        // validTarget = true;
                     } else if (!character.canUseAbility(chosenAbility)) {
                         System.out.println("Insufficient Mana, please use another ability.");
                     } else {

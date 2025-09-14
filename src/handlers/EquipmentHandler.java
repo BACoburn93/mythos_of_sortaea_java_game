@@ -7,9 +7,9 @@ import java.util.Map;
 import characters.Character;
 import characters.Party;
 import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;  // Assuming this exists
+import items.equipment.EquipmentTypes;
 import utils.GameScanner;
-import utils.StringUtils;
+import ui.FormattedStrings;
 
 public class EquipmentHandler {
     private Party party;
@@ -21,7 +21,7 @@ public class EquipmentHandler {
     public void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment();
 
-        System.out.print(StringUtils.formatQNumberedList(equipmentList));
+        System.out.print(FormattedStrings.formatQNumberedList(equipmentList));
         System.out.println("Type the equipment name or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 

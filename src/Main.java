@@ -4,13 +4,14 @@ import actors.Actor;
 import containers.CombatContainer;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
+import ui.FormattedStrings;
 import utils.InputHandler;
 import utils.StringUtils;
 
 public class Main {
     public void run() {
         int titleStrWidth = 30;
-        String titleStr = StringUtils.titleDivider("Mythos of Sortaea", titleStrWidth);
+        String titleStr = FormattedStrings.titleDivider("Mythos of Sortaea", titleStrWidth);
         StringUtils.stringDivider(titleStr, "=", titleStrWidth);
 
         // GameContainer newGame = new GameContainer();
@@ -23,7 +24,7 @@ public class Main {
 
         while (gameIsRunning) {
             // Render the game state
-            System.out.println(StringUtils.titleDivider("Main Menu", 30));
+            System.out.println(FormattedStrings.titleDivider("Main Menu", 30));
             System.out.println("1. Start Game");
             System.out.println("2. Combat Test");
             System.out.println("3. Exit");
@@ -44,9 +45,10 @@ public class Main {
 
                     // Instantiate scanner and handlers
                     utils.GameScanner gameScanner = new utils.GameScanner();
-                    handlers.ActionHandler actionHandler = new handlers.ActionHandler(gameScanner, allActors, testEnemies);
-                    handlers.ReactionHandler reactionHandler = new handlers.ReactionHandler(gameScanner);
                     handlers.EquipmentHandler equipmentHandler = new handlers.EquipmentHandler(testGame.party);
+                    handlers.ActionHandler actionHandler = new handlers.ActionHandler(gameScanner, allActors, testEnemies, equipmentHandler);
+                    handlers.ReactionHandler reactionHandler = new handlers.ReactionHandler(gameScanner);
+                    
 
                     // Create and start combat manager
                     managers.CombatManager combatManager = new managers.CombatManager(
@@ -69,7 +71,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid option. Try again.");
-            }
+            } 
         }
         inputHandler.close();
     }
