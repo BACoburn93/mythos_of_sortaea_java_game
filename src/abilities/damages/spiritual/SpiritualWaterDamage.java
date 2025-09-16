@@ -14,7 +14,7 @@ public class SpiritualWaterDamage extends Damage {
                 DamageClassificationTypes.SPIRITUAL,
                 DamageTypes.WATER,
                 new StatusCondition[] {
-                        new Wet(10, 1, 1),
+                        new Wet(),
                 }
         );
     }

@@ -14,7 +14,7 @@ public class PhysicalWaterDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.WATER,
                 new StatusCondition[] {
-                        new Wet(10, 1, 1),
+                        new Wet(),
                 }
         );
     }

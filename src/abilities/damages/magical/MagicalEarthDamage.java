@@ -15,8 +15,8 @@ public class MagicalEarthDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.EARTH,
                 new StatusCondition[] {
-                        new Poison(10, 1, 1),
-                        new Weak(10, 1, 1),
+                        new Poison(),
+                        new Weak(),
                 }
         );
     }

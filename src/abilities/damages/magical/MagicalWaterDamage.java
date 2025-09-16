@@ -14,7 +14,7 @@ public class MagicalWaterDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.WATER,
                 new StatusCondition[] {
-                        new Wet(10, 1, 1),
+                        new Wet(),
                 }
         );
     }

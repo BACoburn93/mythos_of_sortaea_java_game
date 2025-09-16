@@ -11,6 +11,10 @@ public abstract class StatusCondition {
     private int duration;
     private int totalAdjustment;
 
+    public StatusCondition() {
+        this(10, 1, 1);
+    }
+
     public StatusCondition(int value, int duration, int chanceToTrigger) {
         this.value = value;
         this.duration = duration;

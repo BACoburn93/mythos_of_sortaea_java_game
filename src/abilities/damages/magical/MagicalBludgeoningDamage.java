@@ -15,8 +15,8 @@ public class MagicalBludgeoningDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.BLUDGEONING,
                 new StatusCondition[] {
-                        new Confused(10, 1, 1),
-                        new Stun(10, 1, 1),
+                        new Confused(),
+                        new Stun(),
                 }
         );
     }

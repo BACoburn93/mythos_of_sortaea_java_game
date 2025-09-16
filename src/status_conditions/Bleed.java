@@ -3,6 +3,10 @@ package status_conditions;
 import actors.Actor;
 
 public class Bleed extends DamageOverTime {
+    public Bleed() {
+        super(StatusTypes.BLEED); // Default constructor with default values
+    }
+    
     public Bleed(int value, int resistance) {
         super(StatusTypes.BLEED, value, resistance, 0, 0);
     }

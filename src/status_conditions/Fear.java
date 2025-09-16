@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Fear extends StatusCondition {
+    public Fear() {
+        super(); 
+        setName(status_conditions.StatusTypes.FEAR);
+    }
+
     public Fear(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.FEAR, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }

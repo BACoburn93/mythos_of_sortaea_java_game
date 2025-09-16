@@ -16,9 +16,9 @@ public class PhysicalDarknessDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.DARKNESS,
                 new StatusCondition[] {
-                        new Fear(10, 1, 1),
-                        new Manipulate(10, 1, 1),
-                        new Rot(10, 1, 1),
+                        new Fear(),
+                        new Manipulate(),
+                        new Rot(),
                 }
         );
     }

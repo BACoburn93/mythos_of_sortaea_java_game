@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Stun extends StatusCondition {
+    public Stun() {
+        super(); 
+        setName(status_conditions.StatusTypes.STUN);
+    }
+    
     public Stun(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.STUN, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }

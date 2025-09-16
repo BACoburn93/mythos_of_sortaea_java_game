@@ -11,6 +11,10 @@ public class Rot extends DamageOverTime {
     //     super(StatusTypes.ROT, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
     // }
 
+    public Rot() {
+        super(StatusTypes.ROT); // Default constructor with default values
+    }
+
     public Rot(int value, int resistance) {
         super(StatusTypes.ROT, value, resistance, 0, 0);
     }

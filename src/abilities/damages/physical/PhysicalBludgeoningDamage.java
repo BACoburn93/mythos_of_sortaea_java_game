@@ -16,8 +16,8 @@ public class PhysicalBludgeoningDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.BLUDGEONING,
                 new StatusCondition[] {
-                        new Confused(10, 1, 1),
-                        new Stun(10, 1, 1),
+                        new Confused(),
+                        new Stun(),
                 }
         );
     }

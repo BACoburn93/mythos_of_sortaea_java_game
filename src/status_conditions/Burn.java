@@ -11,6 +11,10 @@ public class Burn extends DamageOverTime {
     //     super(StatusTypes.BURN, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
     // }
 
+    public Burn() {
+        super(StatusTypes.BURN); // Default constructor with default values
+    }
+
     public Burn(int value, int resistance) {
         super(StatusTypes.BURN, value, resistance, 0, 0);
     }

@@ -15,8 +15,8 @@ public class MagicalWindDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.WIND,
                 new StatusCondition[] {
-                        new Bleed(10, 1, 1),
-                        new Dry(10, 1, 1),
+                        new Bleed(),
+                        new Dry(),
                 }
         );
     }

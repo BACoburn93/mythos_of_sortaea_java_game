@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Paralyze extends StatusCondition{
+    public Paralyze() {
+        super(); 
+        setName(status_conditions.StatusTypes.PARALYZE);
+    }
+
     public Paralyze(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.PARALYZE, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }

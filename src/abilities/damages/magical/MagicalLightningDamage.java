@@ -15,8 +15,8 @@ public class MagicalLightningDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.LIGHTNING,
                 new StatusCondition[] {
-                        new Confused(10, 1, 1),
-                        new Paralyze(10, 1, 1),
+                        new Confused(),
+                        new Paralyze(),
                 }
         );
     }

@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Dry extends StatusCondition {
+    public Dry() {
+        super(); 
+        setName(status_conditions.StatusTypes.DRY);
+    }
+
     public Dry(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.DRY, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }

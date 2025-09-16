@@ -11,6 +11,10 @@ public class Poison extends DamageOverTime {
     //     super(StatusTypes.POISON, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
     // }
 
+    public Poison() {
+        super(StatusTypes.POISON); // Default constructor with default values
+    }
+
     public Poison(int value, int resistance) {
         super(StatusTypes.POISON, value, resistance, 0, 0);
     }

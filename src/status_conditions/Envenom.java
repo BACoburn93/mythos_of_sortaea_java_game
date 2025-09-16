@@ -11,6 +11,10 @@ public class Envenom extends DamageOverTime {
     //     super(StatusTypes.ENVENOM, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
     // }
 
+    public Envenom() {
+        super(StatusTypes.ENVENOM); // Default constructor with default values
+    }
+
     public Envenom(int value, int resistance) {
         super(StatusTypes.ENVENOM, value, resistance, 0, 0);
     }

@@ -14,7 +14,7 @@ public class SpiritualVenomDamage extends Damage {
                 DamageClassificationTypes.SPIRITUAL,
                 DamageTypes.VENOM,
                 new StatusCondition[] {
-                        new Envenom(10, 1, 1)
+                        new Envenom()
                 }
         );
     }

@@ -15,8 +15,8 @@ public class SpiritualLightDamage extends Damage {
                 DamageClassificationTypes.SPIRITUAL,
                 DamageTypes.LIGHT,
                 new StatusCondition[] {
-                        new Blind(10, 1, 1),
-                        new Confused(10, 1, 1)
+                        new Blind(),
+                        new Confused()
                 }
         );
     }

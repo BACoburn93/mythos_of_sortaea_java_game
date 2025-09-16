@@ -15,8 +15,8 @@ public class SpiritualFireDamage extends Damage {
                 DamageClassificationTypes.SPIRITUAL,
                 DamageTypes.FIRE,
                 new StatusCondition[] {
-                        new Burn(10, 5, 1),
-                        new Dry(10, 1, 1),
+                        new Burn(),
+                        new Dry(),
                 }
         );
     }

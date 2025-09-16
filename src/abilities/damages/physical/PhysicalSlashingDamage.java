@@ -16,9 +16,9 @@ public class PhysicalSlashingDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.SLASHING,
                 new StatusCondition[] {
-                        new Bleed(10, 1, 1),
-                        new Slow(10, 1, 1),
-                        new Weak(10, 1, 1),
+                        new Bleed(),
+                        new Slow(),
+                        new Weak(),
                 }
         );
     }

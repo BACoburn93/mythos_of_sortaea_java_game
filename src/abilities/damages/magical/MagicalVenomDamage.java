@@ -14,7 +14,7 @@ public class MagicalVenomDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.VENOM,
                 new StatusCondition[] {
-                        new Envenom(10, 1, 1)
+                        new Envenom()
                 }
         );
     }

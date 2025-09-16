@@ -3,6 +3,11 @@ package status_conditions;
 import actors.Actor;
 
 public abstract class DamageOverTime extends StatusCondition {
+    public DamageOverTime(StatusTypes name) {
+        super();
+        setName(name);
+    }
+
     public DamageOverTime(StatusTypes name, int value, int duration, int chanceToTrigger) {
         super(value, duration, chanceToTrigger);
         setName(name);

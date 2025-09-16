@@ -13,10 +13,10 @@ public class MagicalIceDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.ICE,
                 new StatusCondition[] {
-                        new Freeze(10, 1, 1),
-                        new Sick(10, 1, 1),
-                        new Slow(10, 1, 1),
-                        new Weak(10, 1, 1),
+                        new Freeze(),
+                        new Sick(),
+                        new Slow(),
+                        new Weak(),
                 }
         );
     }

@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Slow extends StatusCondition {
+    public Slow() {
+        super(); 
+        setName(status_conditions.StatusTypes.SLOW);
+    }
+    
     public Slow(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.SLOW, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }

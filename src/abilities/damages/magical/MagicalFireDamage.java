@@ -15,8 +15,8 @@ public class MagicalFireDamage extends Damage {
                 DamageClassificationTypes.MAGICAL,
                 DamageTypes.FIRE,
                 new StatusCondition[] {
-                        new Burn(10, 1, 1),
-                        new Dry(10, 1, 1),
+                        new Burn(),
+                        new Dry(),
                 }
         );
     }

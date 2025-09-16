@@ -1,6 +1,11 @@
 package status_conditions;
 
 public class Freeze extends StatusCondition {
+    public Freeze() {
+        super(); 
+        setName(status_conditions.StatusTypes.FREEZE);
+    }
+
     public Freeze(int value, int chanceToTrigger, int duration) {
         super(StatusTypes.FREEZE, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
     }
