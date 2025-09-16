@@ -395,6 +395,10 @@ public abstract class Actor implements ActorInterface, Nameable {
     }
 
     public void handleStartTurn() {
+        System.out.println("=".repeat(50));
+        System.out.println(this.getName() + "'s turn has started.");
+        System.out.println("=".repeat(50));
+
         if (this.getHealthValues().getRegenValue() > 0) {
             this.getHealthValues().setValue(
                     this.getHealthValues().getValue() +
