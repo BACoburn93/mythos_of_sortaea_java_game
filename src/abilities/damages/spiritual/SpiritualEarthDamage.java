@@ -3,9 +3,9 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Poison;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Weak;
+import status_conditions.Poison;
+import status_conditions.StatusCondition;
+import status_conditions.Weak;
 
 public class SpiritualEarthDamage extends Damage {
     public SpiritualEarthDamage(int minDamage, int maxDamage) {

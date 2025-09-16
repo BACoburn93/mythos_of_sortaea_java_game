@@ -3,9 +3,9 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Blind;
-import abilities.status_conditions.Confused;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Blind;
+import status_conditions.Confused;
+import status_conditions.StatusCondition;
 
 public class PhysicalLightDamage extends Damage {
     public PhysicalLightDamage(int minDamage, int maxDamage) {
@@ -15,8 +15,8 @@ public class PhysicalLightDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.LIGHT,
                 new StatusCondition[] {
-                        new Blind(10, 100, 2),
-                        new Confused(10, 100, 2)
+                        new Blind(10, 1, 2),
+                        new Confused(10, 1, 2)
                 }
         );
     }

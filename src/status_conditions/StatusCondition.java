@@ -1,4 +1,6 @@
-package abilities.status_conditions;
+package status_conditions;
+
+import actors.Actor;
 
 public abstract class StatusCondition {
     private StatusTypes name;
@@ -8,6 +10,12 @@ public abstract class StatusCondition {
     private int resistance;
     private int duration;
     private int totalAdjustment;
+
+    public StatusCondition(int value, int duration, int chanceToTrigger) {
+        this.value = value;
+        this.duration = duration;
+        this.chanceToTrigger = chanceToTrigger;
+    }
 
     public StatusCondition(StatusTypes name, int value, int attribute, int duration, StatusAttributeTypes type) {
         this.name = name;
@@ -96,6 +104,10 @@ public abstract class StatusCondition {
     public void setTotalAdjustment(int totalAdjustment) {
         this.totalAdjustment = totalAdjustment;
     }
+
+    public void applyEffect(Actor actor) { }
+
+    public void endEffect(Actor actor) { }
 
     @Override
     public String toString() {

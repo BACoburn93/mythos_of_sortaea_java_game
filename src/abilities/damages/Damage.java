@@ -1,6 +1,6 @@
 package abilities.damages;
 
-import abilities.status_conditions.StatusCondition;
+import status_conditions.StatusCondition;
 
 public abstract class Damage {
     private int minDamage;

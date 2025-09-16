@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 
 public enum StatusAttributeTypes {

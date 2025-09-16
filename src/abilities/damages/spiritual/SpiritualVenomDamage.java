@@ -3,8 +3,8 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Envenom;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Envenom;
+import status_conditions.StatusCondition;
 
 public class SpiritualVenomDamage extends Damage {
     public SpiritualVenomDamage(int minDamage, int maxDamage) {

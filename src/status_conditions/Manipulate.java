@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Manipulate extends StatusCondition {
     public Manipulate(int value, int chanceToTrigger, int duration) {

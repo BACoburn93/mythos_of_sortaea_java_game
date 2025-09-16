@@ -1,8 +1,6 @@
-package abilities.interfaces;
+package interfaces;
 
 import abilities.Ability;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.StatusConditions;
 import abilities.damages.Damage;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
@@ -10,6 +8,8 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.stances.Stances;
+import status_conditions.StatusCondition;
+import status_conditions.StatusConditions;
 
 public interface ActorInterface {
     String getName();
@@ -35,6 +35,9 @@ public interface ActorInterface {
     void takeDamage(ActorInterface attacker, Ability ability);
     void takeDamage(StatusCondition statusCondition);
     void applyStatusCondition(ActorInterface attacker, Damage damage);
+    
+    void handleStartTurn();
+    void handleEndTurn();
 
     void preventOverloadingResourceValues();
     void handleStatusConditions();

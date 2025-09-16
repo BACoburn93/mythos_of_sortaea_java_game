@@ -3,9 +3,9 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Confused;
-import abilities.status_conditions.Paralyze;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Confused;
+import status_conditions.Paralyze;
+import status_conditions.StatusCondition;
 
 public class PhysicalLightningDamage extends Damage {
     public PhysicalLightningDamage(int minDamage, int maxDamage) {
@@ -15,8 +15,8 @@ public class PhysicalLightningDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.LIGHTNING,
                 new StatusCondition[] {
-                        new Confused(10, 100, 1),
-                        new Paralyze(10, 100, 1),
+                        new Confused(10, 1, 1),
+                        new Paralyze(10, 1, 1),
                 }
         );
     }

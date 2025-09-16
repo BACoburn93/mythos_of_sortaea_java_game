@@ -2,11 +2,11 @@ package items.equipment;
 
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
+import interfaces.NameableWithQuantity;
 import items.Item;
 import items.equipment.item_types.ItemType;
 
 import java.util.Comparator;
-import abilities.interfaces.NameableWithQuantity;
 
 public abstract class Equipment extends Item implements Comparator<Equipment>, NameableWithQuantity {
     private EquipmentTypes equipmentType;

@@ -4,9 +4,9 @@ import java.util.List;
 
 import abilities.Ability;
 import abilities.damages.Damage;
-import abilities.interfaces.Nameable;
-import abilities.interfaces.NameableWithQuantity;
 import actors.Actor;
+import interfaces.Nameable;
+import interfaces.NameableWithQuantity;
 import utils.StringUtils;
 
 public class CombatUIStrings {
@@ -34,6 +34,7 @@ public class CombatUIStrings {
         return String.format("%-20s %s%n", command, description);
     }
 
+    // Appends a detailed damage message to the provided StringBuilder
     public static void appendDamageMessage(StringBuilder damageMessage, Actor attacker, Actor defender, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
         String article = StringUtils.startsWithVowel(ability.getName()) ? "an " : "a ";
 

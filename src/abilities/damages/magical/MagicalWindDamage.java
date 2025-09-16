@@ -3,9 +3,9 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Bleed;
-import abilities.status_conditions.Dry;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Bleed;
+import status_conditions.Dry;
+import status_conditions.StatusCondition;
 
 public class MagicalWindDamage extends Damage {
     public MagicalWindDamage(int minDamage, int maxDamage) {

@@ -3,7 +3,6 @@ package characters;
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
-import abilities.interfaces.ActorInterface;
 import abilities.reactions.*;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
@@ -13,6 +12,7 @@ import actors.attributes.Attributes;
 import actors.resources.ResourceTypes;
 import actors.stances.Stances;
 import characters.jobs.Job;
+import interfaces.ActorInterface;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
@@ -473,7 +473,7 @@ public class Character extends Actor {
             this.level++;
             this.experience -= this.experienceToLevel;
             this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
-            if(this.level % 4 == 0) this.actionPoints++;
+            if(this.level % 4 == 0) this.maxActionPoints++;
 
             System.out.println("=".repeat(50));
             System.out.println(this.getName() + " has leveled up!");

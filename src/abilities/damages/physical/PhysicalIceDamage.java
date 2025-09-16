@@ -3,7 +3,7 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.*;
+import status_conditions.*;
 
 public class PhysicalIceDamage extends Damage {
     public PhysicalIceDamage(int minDamage, int maxDamage) {
@@ -13,10 +13,10 @@ public class PhysicalIceDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.ICE,
                 new StatusCondition[] {
-                        new Freeze(10, 100, 1),
-                        new Sick(10, 100, 1),
-                        new Slow(10, 100, 1),
-                        new Weak(10, 100, 1),
+                        new Freeze(10, 1, 1),
+                        new Sick(10, 1, 1),
+                        new Slow(10, 1, 1),
+                        new Weak(10, 1, 1),
                 }
         );
     }

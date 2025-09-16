@@ -3,15 +3,16 @@ package actors;
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
-import abilities.interfaces.ActorInterface;
-import abilities.interfaces.Nameable;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.StatusConditions;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.stances.Stances;
+import interfaces.ActorInterface;
+import interfaces.Nameable;
+import status_conditions.DamageOverTime;
+import status_conditions.StatusCondition;
+import status_conditions.StatusConditions;
 import utils.StringUtils;
 import ui.CombatUIStrings;
 
@@ -97,39 +98,6 @@ public abstract class Actor implements ActorInterface, Nameable {
     public void attack(Actor attacker, Actor target, Ability ability) {
         target.takeDamage(attacker, ability);
     }
-
-    // private boolean startsWithVowel(String name) {
-    //     char firstChar = Character.toUpperCase(name.charAt(0));
-    //     return firstChar == 'A' || firstChar == 'E' || firstChar == 'I' || firstChar == 'O' || firstChar == 'U';
-    // }
-
-    // private void appendDamageMessage(StringBuilder damageMessage, Actor attacker, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
-    //     String article = startsWithVowel(ability.getName()) ? "an " : "a ";
-
-    //     if (isFirstDamage) {
-    //         damageMessage.append(this.getName())
-    //                 .append(" was hit by ")
-    //                 .append(article)
-    //                 .append(ability.getName())
-    //                 .append(" from ")
-    //                 .append(attacker.getName())
-    //                 .append(" and received: | ")
-    //                 .append(totalDamage)
-    //                 .append(" ")
-    //                 .append(damage.getDamageClassification())
-    //                 .append(" ")
-    //                 .append(damage.getDamageType())
-    //                 .append(" damage | ");
-    //     } else {
-    //         damageMessage.append(totalDamage)
-    //                 .append(" ")
-    //                 .append(damage.getDamageClassification())
-    //                 .append(" ")
-    //                 .append(damage.getDamageType())
-    //                 .append(" damage | ");
-    //     }
-    // }
-
 
     private int calculateMitigation(Actor attacker, Ability ability, Damage damage, int resistance) {
         int damageToMitigate = resistance;
@@ -234,7 +202,6 @@ public abstract class Actor implements ActorInterface, Nameable {
             default -> throw new IllegalArgumentException("Unexpected value: " + statusCondition.getName());
         }
 
-
     }
 
     public void takeDamage(Actor attacker, Ability ability) {
@@ -263,7 +230,8 @@ public abstract class Actor implements ActorInterface, Nameable {
     public void applyStatusCondition(Actor attacker, Damage damage) {
         for(StatusCondition status : damage.getStatusConditions()) {
             Random random = new Random();
-            boolean triggerStatusCondition = status.getChanceToTrigger() > random.nextInt(1, 100);
+            int roll = random.nextInt(1, 101);
+            boolean triggerStatusCondition = status.getChanceToTrigger() >= roll;
 
             StatusCondition currStatus = this.getStatusConditions().getStatus(status.getName());
 
@@ -281,143 +249,185 @@ public abstract class Actor implements ActorInterface, Nameable {
         }
     }
 
-    public void handleStatusConditions() {
-        // List of status condition getters
-        String[] allStatusMethods = {
-                "getBleed", "getBlind", "getBurn", "getConfused", "getDry", "getPoison", "getEnvenom",
-                "getFear", "getFreeze", "getManipulate", "getParalyze", "getRot", "getSick", "getSlow",
-                "getWeak", "getWet",
-        };
+    // public void handleStatusConditions() {
+    //     // List of status condition getters
+    //     String[] allStatusMethods = {
+    //             "getBleed", "getBlind", "getBurn", "getConfused", "getDry", "getPoison", "getEnvenom",
+    //             "getFear", "getFreeze", "getManipulate", "getParalyze", "getRot", "getSick", "getSlow",
+    //             "getWeak", "getWet",
+    //     };
 
-        String[] dotMethods = {
-                "getBleed", "getBurn", "getEnvenom", "getPoison", "getRot"
-        };
+    //     String[] dotMethods = {
+    //             "getBleed", "getBurn", "getEnvenom", "getPoison", "getRot"
+    //     };
 
-        String[] debuffMethods = {
-                "getEnvenom", "getPoison", "getRot", "getSick", "getSlow", "getWeak",
-        };
+    //     String[] debuffMethods = {
+    //             "getEnvenom", "getPoison", "getRot", "getSick", "getSlow", "getWeak",
+    //     };
 
-        // Work on wet/dry logic and conditionally set relatable conditions to only trigger when wet or dry
+    //     // Work on wet/dry logic and conditionally set relatable conditions to only trigger when wet or dry
 
-        for (String methodName : allStatusMethods) {
-            try {
-                Method method = StatusConditions.class.getMethod(methodName);
-                StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
+    //     for (String methodName : allStatusMethods) {
+    //         try {
+    //             Method method = StatusConditions.class.getMethod(methodName);
+    //             StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
 
-                if (statusCondition.getDuration() > 0) {
-                    statusCondition.setDuration(statusCondition.getDuration() - 1);
-                } else {
-                    statusCondition.setValue(0);
-                }
-            } catch (Exception e) {
-                System.out.println("Error with all methods");
-            }
-        }
+    //             if (statusCondition.getDuration() > 0) {
+    //                 statusCondition.setDuration(statusCondition.getDuration() - 1);
+    //             } else {
+    //                 statusCondition.setValue(0);
+    //             }
+    //         } catch (Exception e) {
+    //             System.out.println("Error with all methods");
+    //         }
+    //     }
 
-        for (String methodName : dotMethods) {
-            try {
-                Method method = StatusConditions.class.getMethod(methodName);
-                StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
+    //     for (String methodName : dotMethods) {
+    //         try {
+    //             Method method = StatusConditions.class.getMethod(methodName);
+    //             StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
 
-                if (statusCondition.getDuration() > 0) {
-                    takeDamage(statusCondition);
-                }
-            } catch (Exception e) {
-                System.out.println("Error with DoT Method");
-            }
-        }
+    //             if (statusCondition.getDuration() > 0) {
+    //                 takeDamage(statusCondition);
+    //             }
+    //         } catch (Exception e) {
+    //             System.out.println("Error with DoT Method");
+    //         }
+    //     }
 
-        for (String methodName : debuffMethods) {
-            try {
-                Method method = StatusConditions.class.getMethod(methodName);
-                StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
+    //     for (String methodName : debuffMethods) {
+    //         try {
+    //             Method method = StatusConditions.class.getMethod(methodName);
+    //             StatusCondition statusCondition = (StatusCondition) method.invoke(statusConditions);
 
-                if (statusCondition.getDuration() > 0) {
-                    switch(statusCondition.getName()) {
-                        case ENVENOM, WEAK -> {
-                            attributes.getStrength().setValue(
-                                    attributes.getStrength().getValue() - statusCondition.getValue()
-                            );
-                            System.out.println(this.getName() + " is weakened.");
-                        }
-                        case POISON, SLOW -> {
-                            attributes.getAgility().setValue(
-                                    attributes.getAgility().getValue() - statusCondition.getValue()
-                            );
-                            System.out.println(this.getName() + " is feeling slow.");
-                        }
-                        case ROT -> {
-                            resistances.getBludgeoning().setValue(
-                                    resistances.getBludgeoning().getValue() - statusCondition.getValue()
-                            );
-                            resistances.getPiercing().setValue(
-                                    resistances.getPiercing().getValue() - statusCondition.getValue()
-                            );
-                            resistances.getSlashing().setValue(
-                                    resistances.getSlashing().getValue() - statusCondition.getValue()
-                            );
-                            System.out.println(this.getName() + " is deteriorating.");
-                        }
-                        case SICK -> {
-                            attributes.getStrength().setValue(
-                                    attributes.getStrength().getValue() - statusCondition.getValue()
-                            );
-                            attributes.getAgility().setValue(
-                                    attributes.getAgility().getValue() - statusCondition.getValue()
-                            );
-                            System.out.println(this.getName() + " is feeling ill.");
-                        }
-                        default -> throw new IllegalArgumentException("Unexpected value: " + statusCondition.getName());
-                    }
+    //             if (statusCondition.getDuration() > 0) {
+    //                 switch(statusCondition.getName()) {
+    //                     case ENVENOM, WEAK -> {
+    //                         attributes.getStrength().setValue(
+    //                                 attributes.getStrength().getValue() - statusCondition.getValue()
+    //                         );
+    //                         System.out.println(this.getName() + " is weakened.");
+    //                     }
+    //                     case POISON, SLOW -> {
+    //                         attributes.getAgility().setValue(
+    //                                 attributes.getAgility().getValue() - statusCondition.getValue()
+    //                         );
+    //                         System.out.println(this.getName() + " is feeling slow.");
+    //                     }
+    //                     case ROT -> {
+    //                         resistances.getBludgeoning().setValue(
+    //                                 resistances.getBludgeoning().getValue() - statusCondition.getValue()
+    //                         );
+    //                         resistances.getPiercing().setValue(
+    //                                 resistances.getPiercing().getValue() - statusCondition.getValue()
+    //                         );
+    //                         resistances.getSlashing().setValue(
+    //                                 resistances.getSlashing().getValue() - statusCondition.getValue()
+    //                         );
+    //                         System.out.println(this.getName() + " is deteriorating.");
+    //                     }
+    //                     case SICK -> {
+    //                         attributes.getStrength().setValue(
+    //                                 attributes.getStrength().getValue() - statusCondition.getValue()
+    //                         );
+    //                         attributes.getAgility().setValue(
+    //                                 attributes.getAgility().getValue() - statusCondition.getValue()
+    //                         );
+    //                         System.out.println(this.getName() + " is feeling ill.");
+    //                     }
+    //                     default -> throw new IllegalArgumentException("Unexpected value: " + statusCondition.getName());
+    //                 }
 
-                    statusCondition.setTotalAdjustment(
-                            statusCondition.getTotalAdjustment() + statusCondition.getValue()
-                    );
-                } else if (statusCondition.getTotalAdjustment() > 0 && statusCondition.getDuration() <= 0) {
-                    switch(statusCondition.getName()) {
-                        case ENVENOM, WEAK -> {
-                            attributes.getStrength().setValue(
-                                    attributes.getStrength().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            System.out.println(this.getName() + " has regained their strength.");
-                        }
-                        case POISON, SLOW -> {
-                            attributes.getAgility().setValue(
-                                    attributes.getAgility().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            System.out.println(this.getName() + " can maneuver normally.");
-                        }
-                        case ROT -> {
-                            resistances.getBludgeoning().setValue(
-                                    resistances.getBludgeoning().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            resistances.getPiercing().setValue(
-                                    resistances.getPiercing().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            resistances.getSlashing().setValue(
-                                    resistances.getSlashing().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            System.out.println(this.getName() + " is no longer deteriorating.");
-                        }
-                        case SICK -> {
-                            attributes.getStrength().setValue(
-                                    attributes.getStrength().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            attributes.getAgility().setValue(
-                                    attributes.getAgility().getValue() + statusCondition.getTotalAdjustment()
-                            );
-                            System.out.println(this.getName() + " has recovered from their sickness.");
-                        }
-                        default -> throw new IllegalArgumentException("Unexpected value: " + statusCondition.getName());
-                    }
-                    statusCondition.setTotalAdjustment(0);
-                }
-            } catch (Exception e) {
-                System.out.println("Error with Debuff Method");
-            }
-        }
+    //                 statusCondition.setTotalAdjustment(
+    //                         statusCondition.getTotalAdjustment() + statusCondition.getValue()
+    //                 );
+    //             } else if (statusCondition.getTotalAdjustment() > 0 && statusCondition.getDuration() <= 0) {
+    //                 switch(statusCondition.getName()) {
+    //                     case ENVENOM, WEAK -> {
+    //                         attributes.getStrength().setValue(
+    //                                 attributes.getStrength().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         System.out.println(this.getName() + " has regained their strength.");
+    //                     }
+    //                     case POISON, SLOW -> {
+    //                         attributes.getAgility().setValue(
+    //                                 attributes.getAgility().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         System.out.println(this.getName() + " can maneuver normally.");
+    //                     }
+    //                     case ROT -> {
+    //                         resistances.getBludgeoning().setValue(
+    //                                 resistances.getBludgeoning().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         resistances.getPiercing().setValue(
+    //                                 resistances.getPiercing().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         resistances.getSlashing().setValue(
+    //                                 resistances.getSlashing().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         System.out.println(this.getName() + " is no longer deteriorating.");
+    //                     }
+    //                     case SICK -> {
+    //                         attributes.getStrength().setValue(
+    //                                 attributes.getStrength().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         attributes.getAgility().setValue(
+    //                                 attributes.getAgility().getValue() + statusCondition.getTotalAdjustment()
+    //                         );
+    //                         System.out.println(this.getName() + " has recovered from their sickness.");
+    //                     }
+    //                     default -> throw new IllegalArgumentException("Unexpected value: " + statusCondition.getName());
+    //                 }
+    //                 statusCondition.setTotalAdjustment(0);
+    //             }
+    //         } catch (Exception e) {
+    //             System.out.println("Error with Debuff Method");
+    //         }
+    //     }
 
+    // }
+
+    public void handleEndTurn() {
+        System.out.println("=".repeat(50));
+        this.handleStatusConditions();
+        System.out.println(this.getName() + "'s turn has ended.");
+        System.out.println("=".repeat(50));
     }
+
+    public void handleStartTurn() {
+        if (this.getHealthValues().getRegenValue() > 0) {
+            this.getHealthValues().setValue(
+                    this.getHealthValues().getValue() +
+                            this.getHealthValues().getRegenValue()
+            );
+        }
+        if (this.getManaValues().getRegenValue() > 0) {
+            this.getManaValues().setValue(
+                    this.getManaValues().getValue() +
+                            this.getManaValues().getRegenValue()
+            );
+        }
+        this.preventOverloadingResourceValues();
+    }
+
+    public void handleStatusConditions() {
+        for (StatusCondition condition : statusConditions.getAll()) {
+
+            if (condition.getDuration() > 0) {
+                condition.setDuration(condition.getDuration() - 1);
+
+                if (condition instanceof DamageOverTime dot) {
+                    dot.applyDamage(this);
+                } else {
+                    condition.applyEffect(this); 
+                }
+
+            } else {
+                condition.endEffect(this); 
+            }
+        }
+    }
+
 
     public StatusConditions getStatusConditions() {
         return statusConditions;

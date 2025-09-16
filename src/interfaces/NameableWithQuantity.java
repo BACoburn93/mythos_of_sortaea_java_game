@@ -1,4 +1,4 @@
-package abilities.interfaces;
+package interfaces;
 
 public interface NameableWithQuantity {
     String getName();

@@ -3,9 +3,9 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Confused;
-import abilities.status_conditions.Paralyze;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Confused;
+import status_conditions.Paralyze;
+import status_conditions.StatusCondition;
 
 public class MagicalLightningDamage extends Damage {
     public MagicalLightningDamage(int minDamage, int maxDamage) {

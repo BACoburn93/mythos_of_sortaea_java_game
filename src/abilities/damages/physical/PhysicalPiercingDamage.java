@@ -3,10 +3,10 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Bleed;
-import abilities.status_conditions.Slow;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Weak;
+import status_conditions.Bleed;
+import status_conditions.Slow;
+import status_conditions.StatusCondition;
+import status_conditions.Weak;
 
 public class PhysicalPiercingDamage extends Damage {
     public PhysicalPiercingDamage(int minDamage, int maxDamage) {
@@ -16,9 +16,9 @@ public class PhysicalPiercingDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.PIERCING,
                 new StatusCondition[] {
-                        new Bleed(10, 100, 2),
-                        new Slow(10, 100, 2),
-                        new Weak(10, 100, 2),
+                        new Bleed(10, 1, 2),
+                        new Slow(10, 1, 2),
+                        new Weak(10, 1, 2),
                 }
         );
     }

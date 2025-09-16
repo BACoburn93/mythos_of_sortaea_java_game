@@ -72,12 +72,14 @@ public class CombatManager {
                     break; // exit early if combat ended mid-round
                 }
                 if (actor.getHealth() > 0) {
+                    actor.handleStartTurn();
                     if (actor instanceof Character c) {
                         actionHandler.handleTurn(c);
                     } else if (actor instanceof Enemy e) {
                         reactionHandler.handleReaction(party.characters, turnOrder);
                         e.chooseEnemyAbility(party);
                     }
+                    actor.handleEndTurn();
                 }
             }
         }

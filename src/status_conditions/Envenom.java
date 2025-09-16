@@ -1,0 +1,30 @@
+package status_conditions;
+
+import actors.Actor;
+
+public class Envenom extends DamageOverTime {
+    // public Envenom(int value, int chanceToTrigger, int duration) {
+    //     super(StatusTypes.ENVENOM, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
+    // }
+
+    // public Envenom(int value, int resistance) {
+    //     super(StatusTypes.ENVENOM, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
+    // }
+
+    public Envenom(int value, int resistance) {
+        super(StatusTypes.ENVENOM, value, resistance, 0, 0);
+    }
+
+    public Envenom(int value, int chanceToTrigger, int duration) {
+        super(StatusTypes.ENVENOM, value, duration, chanceToTrigger);
+    }
+
+    @Override
+    public void applyDamage(Actor actor) {
+        int totalValue = actor.getResistances().getVenom().getValue();
+
+        actor.getHealthValues().setValue(actor.getHealthValues().getValue() - totalValue);
+
+        System.out.println(actor.getName() + " is taking " + totalValue + " venom damage due to the envenom condition.");
+    }
+}

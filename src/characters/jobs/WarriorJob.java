@@ -1,9 +1,9 @@
 package characters.jobs;
 
 import abilities.AbilityInitializer;
-import abilities.status_conditions.StatusConditions;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import status_conditions.StatusConditions;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 

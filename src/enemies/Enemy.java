@@ -2,7 +2,6 @@ package enemies;
 
 import abilities.Ability;
 import abilities.damages.Damage;
-import abilities.interfaces.ActorInterface;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
 import actors.ActorTypes;
@@ -12,6 +11,7 @@ import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import characters.Character;
 import characters.Party;
+import interfaces.ActorInterface;
 
 import java.util.Random;
 

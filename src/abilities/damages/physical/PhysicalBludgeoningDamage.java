@@ -3,9 +3,9 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Confused;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Stun;
+import status_conditions.Confused;
+import status_conditions.StatusCondition;
+import status_conditions.Stun;
 
 
 public class PhysicalBludgeoningDamage extends Damage {
@@ -16,8 +16,8 @@ public class PhysicalBludgeoningDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.BLUDGEONING,
                 new StatusCondition[] {
-                        new Confused(10, 100, 1),
-                        new Stun(10, 100, 1),
+                        new Confused(10, 1, 1),
+                        new Stun(10, 1, 1),
                 }
         );
     }

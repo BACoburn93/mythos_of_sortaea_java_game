@@ -3,9 +3,9 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Bleed;
-import abilities.status_conditions.Dry;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Bleed;
+import status_conditions.Dry;
+import status_conditions.StatusCondition;
 
 public class PhysicalWindDamage extends Damage {
     public PhysicalWindDamage(int minDamage, int maxDamage) {
@@ -15,8 +15,8 @@ public class PhysicalWindDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.WIND,
                 new StatusCondition[] {
-                        new Bleed(10, 100, 1),
-                        new Dry(10, 100, 1),
+                        new Bleed(10, 1, 1),
+                        new Dry(10, 1, 1),
                 }
         );
     }

@@ -3,7 +3,7 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.*;
+import status_conditions.*;
 
 public class MagicalIceDamage extends Damage {
     public MagicalIceDamage(int minDamage, int maxDamage) {

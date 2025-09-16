@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Paralyze extends StatusCondition{
     public Paralyze(int value, int chanceToTrigger, int duration) {

@@ -3,7 +3,7 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.*;
+import status_conditions.*;
 
 public class SpiritualIceDamage extends Damage {
     public SpiritualIceDamage(int minDamage, int maxDamage) {

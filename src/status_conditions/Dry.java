@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Dry extends StatusCondition {
     public Dry(int value, int chanceToTrigger, int duration) {

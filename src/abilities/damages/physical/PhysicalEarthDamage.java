@@ -3,9 +3,9 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Poison;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Weak;
+import status_conditions.Poison;
+import status_conditions.StatusCondition;
+import status_conditions.Weak;
 
 public class PhysicalEarthDamage extends Damage {
     public PhysicalEarthDamage(int minDamage, int maxDamage) {
@@ -15,8 +15,8 @@ public class PhysicalEarthDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.EARTH,
                 new StatusCondition[] {
-                        new Poison(10, 100, 2),
-                        new Weak(10, 100, 2),
+                        new Poison(10, 1, 1),
+                        new Weak(10, 1, 1),
                 }
         );
     }

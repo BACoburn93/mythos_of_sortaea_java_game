@@ -13,6 +13,8 @@ import abilities.damages.spiritual.SpiritualFireDamage;
 import abilities.single_target.SingleTargetAbility;
 import characters.jobs.JobTypes;
 import items.equipment.item_types.WeaponTypes;
+import status_conditions.Burn;
+import status_conditions.StatusCondition;
 
 import java.util.*;
 
@@ -34,7 +36,11 @@ public class AbilityInitializer {
         mageAbilities.add(new SingleTargetAbility("Fireball",
                 12, 1,
                 new Damage[]{
-                        new MagicalFireDamage(10, 18),
+                        new MagicalFireDamage(
+                                10, 
+                                18, 
+                                new StatusCondition[]{new Burn(10, 100, 2)}
+                        ),
                         new SpiritualFireDamage(3, 5)
                 },
                 spellCastingWeapons,
@@ -42,7 +48,14 @@ public class AbilityInitializer {
 
         mageAbilities.add(new SingleTargetAbility("Ice Spike",
                 13, 1,
-                new Damage[]{new MagicalIceDamage(4, 8), new MagicalPiercingDamage(12, 14)},
+                new Damage[]{
+                        new MagicalIceDamage(
+                                4, 
+                                8,
+                                new StatusCondition[]{new Burn(10, 100, 2)}
+                        ), 
+                        new MagicalPiercingDamage(12, 14)
+                },
                 spellCastingWeapons,
                 "An ice spire that guides itself to impale it's target."));
 

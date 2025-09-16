@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Blind extends StatusCondition {
     public Blind(int value, int chanceToTrigger, int duration) {

@@ -3,8 +3,8 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Envenom;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Envenom;
+import status_conditions.StatusCondition;
 
 public class PhysicalVenomDamage extends Damage {
     public PhysicalVenomDamage(int minDamage, int maxDamage) {
@@ -14,7 +14,7 @@ public class PhysicalVenomDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.VENOM,
                 new StatusCondition[] {
-                        new Envenom(10, 100, 2)
+                        new Envenom(10, 1, 2)
                 }
         );
     }

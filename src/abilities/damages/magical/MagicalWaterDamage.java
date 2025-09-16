@@ -3,8 +3,8 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Wet;
+import status_conditions.StatusCondition;
+import status_conditions.Wet;
 
 public class MagicalWaterDamage extends Damage {
     public MagicalWaterDamage(int minDamage, int maxDamage) {

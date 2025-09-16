@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Freeze extends StatusCondition {
     public Freeze(int value, int chanceToTrigger, int duration) {

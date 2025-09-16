@@ -3,10 +3,10 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Bleed;
-import abilities.status_conditions.Slow;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Weak;
+import status_conditions.Bleed;
+import status_conditions.Slow;
+import status_conditions.StatusCondition;
+import status_conditions.Weak;
 
 public class MagicalSlashingDamage extends Damage {
     public MagicalSlashingDamage(int minDamage, int maxDamage) {

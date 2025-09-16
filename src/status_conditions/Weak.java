@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Weak extends StatusCondition {
     public Weak(int value, int chanceToTrigger, int duration) {

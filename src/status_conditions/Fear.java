@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Fear extends StatusCondition {
     public Fear(int value, int chanceToTrigger, int duration) {

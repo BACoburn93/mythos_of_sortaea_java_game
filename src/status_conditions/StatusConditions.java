@@ -1,4 +1,6 @@
-package abilities.status_conditions;
+package status_conditions;
+
+import java.util.List;
 
 public class StatusConditions {
     private Bleed bleed;
@@ -194,6 +196,13 @@ public class StatusConditions {
             case WEAK -> " is feeling weak.";
             case WET -> " has been soaked.";
         };
+    }
+
+    public List<StatusCondition> getAll() {
+        return List.of(
+            bleed, blind, burn, confused, dry, envenom, fear, freeze,
+            manipulate, paralyze, poison, rot, sick, slow, stun, weak, wet
+        );
     }
 
     @Override

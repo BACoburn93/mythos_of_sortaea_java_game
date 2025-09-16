@@ -3,9 +3,9 @@ package abilities.damages.magical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Confused;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Stun;
+import status_conditions.Confused;
+import status_conditions.StatusCondition;
+import status_conditions.Stun;
 
 public class MagicalBludgeoningDamage extends Damage {
     public MagicalBludgeoningDamage(int minDamage, int maxDamage) {

@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Sick extends StatusCondition {
     public Sick(int value, int chanceToTrigger, int duration) {

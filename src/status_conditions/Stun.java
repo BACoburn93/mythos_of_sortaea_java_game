@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Stun extends StatusCondition {
     public Stun(int value, int chanceToTrigger, int duration) {

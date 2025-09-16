@@ -1,4 +1,4 @@
-package abilities.status_conditions;
+package status_conditions;
 
 public class Slow extends StatusCondition {
     public Slow(int value, int chanceToTrigger, int duration) {

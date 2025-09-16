@@ -3,8 +3,8 @@ package abilities.damages.physical;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Wet;
+import status_conditions.StatusCondition;
+import status_conditions.Wet;
 
 public class PhysicalWaterDamage extends Damage {
     public PhysicalWaterDamage(int minDamage, int maxDamage) {
@@ -14,7 +14,7 @@ public class PhysicalWaterDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.WATER,
                 new StatusCondition[] {
-                        new Wet(10, 100, 1),
+                        new Wet(10, 1, 1),
                 }
         );
     }

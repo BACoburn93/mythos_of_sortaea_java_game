@@ -3,8 +3,8 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.StatusCondition;
-import abilities.status_conditions.Wet;
+import status_conditions.StatusCondition;
+import status_conditions.Wet;
 
 public class SpiritualWaterDamage extends Damage {
     public SpiritualWaterDamage(int minDamage, int maxDamage) {

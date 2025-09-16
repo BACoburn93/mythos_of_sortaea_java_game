@@ -3,9 +3,9 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Burn;
-import abilities.status_conditions.Dry;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Burn;
+import status_conditions.Dry;
+import status_conditions.StatusCondition;
 
 public class SpiritualFireDamage extends Damage {
     public SpiritualFireDamage(int minDamage, int maxDamage) {

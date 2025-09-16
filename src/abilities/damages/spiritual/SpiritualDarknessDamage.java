@@ -3,10 +3,10 @@ package abilities.damages.spiritual;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
-import abilities.status_conditions.Fear;
-import abilities.status_conditions.Manipulate;
-import abilities.status_conditions.Rot;
-import abilities.status_conditions.StatusCondition;
+import status_conditions.Fear;
+import status_conditions.Manipulate;
+import status_conditions.Rot;
+import status_conditions.StatusCondition;
 
 public class SpiritualDarknessDamage extends Damage {
     public SpiritualDarknessDamage(int minDamage, int maxDamage) {

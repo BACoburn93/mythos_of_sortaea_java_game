@@ -2,13 +2,13 @@ package containers;
 
 import abilities.Ability;
 import abilities.actions.ActionTypes;
-import abilities.interfaces.ActorInterface;
 import abilities.reactions.Reaction;
 import actors.Actor;
 import actors.ActorTypes;
 import characters.Character;
 import characters.Party;
 import enemies.Enemy;
+import interfaces.ActorInterface;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import ui.CombatUIStrings;
@@ -132,7 +132,6 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
                 action.equalsIgnoreCase("end turn") ||
                 action.equalsIgnoreCase("pass")
                 ) {
-                System.out.println("Ending turn.");
                 break;
             } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
                 System.out.println("=".repeat(50));
