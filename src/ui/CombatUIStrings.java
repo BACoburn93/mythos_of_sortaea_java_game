@@ -5,6 +5,7 @@ import java.util.List;
 import abilities.Ability;
 import abilities.damages.Damage;
 import actors.Actor;
+import characters.Character;
 import interfaces.Nameable;
 import interfaces.NameableWithQuantity;
 import utils.StringUtils;
@@ -72,6 +73,12 @@ public class CombatUIStrings {
         for (Ability ability : abilities) {
             StringUtils.stringDividerTop(ability.getName() + ": " + ability.getDescription(), "-", 50);
         }
+    }
+
+    public static void printActionPoints(Character character) {
+                    StringUtils.stringDivider(character.getActionPoints() + "/" +
+                    character.getMaxActionPoints() + " Action Points.",
+                    "-", 50);
     }
 
 }

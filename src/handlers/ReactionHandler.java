@@ -3,6 +3,7 @@ package handlers;
 import abilities.reactions.Reaction;
 import actors.Actor;
 import characters.Character;
+import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.StringUtils;
 import utils.ListUtils;
@@ -63,10 +64,7 @@ public class ReactionHandler {
                     System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
                 }
 
-                StringUtils.stringDivider(
-                        chosenCharacter.getActionPoints() + "/" + chosenCharacter.getMaxActionPoints() + " Action Points.",
-                        "-", 50
-                );
+                CombatUIStrings.printActionPoints(chosenCharacter);
             }
         }
     }

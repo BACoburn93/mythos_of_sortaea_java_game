@@ -121,9 +121,7 @@ while (isCharacterAlive() && !enemies.isEmpty()) {
         while (character.getActionPoints() > 0) {
             boolean validTarget = false;
 
-            StringUtils.stringDivider(character.getActionPoints() + "/" +
-                    character.getMaxActionPoints() + " Action Points.",
-                    "-", 50);
+            CombatUIStrings.printActionPoints(character);
 
             String action = combatLoop.nextLine();
 
