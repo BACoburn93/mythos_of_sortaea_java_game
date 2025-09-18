@@ -1,6 +1,6 @@
 package status_conditions;
 
-import actors.CombatActor;
+import actors.types.CombatActor;
 
 public class Envenom extends DamageOverTime {
     // public Envenom(int value, int chanceToTrigger, int duration) {

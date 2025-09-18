@@ -1,7 +1,7 @@
 package handlers;
 
 import actors.ActorTypes;
-import actors.CombatActor;
+import actors.types.CombatActor;
 import utils.GameScanner;
 
 import java.util.*;

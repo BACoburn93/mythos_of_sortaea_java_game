@@ -1,6 +1,6 @@
 package status_conditions;
 
-import actors.CombatActor;
+import actors.types.CombatActor;
 
 public class Bleed extends DamageOverTime {
     public Bleed() {

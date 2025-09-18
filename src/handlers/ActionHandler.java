@@ -1,6 +1,5 @@
 package handlers;
 
-import actors.CombatActor;
 import characters.Character;
 import characters.Party;
 import enemies.Enemy;
@@ -9,6 +8,7 @@ import utils.GameScanner;
 import utils.StringUtils;
 import abilities.Ability;
 import abilities.actions.ActionTypes;
+import actors.types.CombatActor;
 
 import java.util.*;
 

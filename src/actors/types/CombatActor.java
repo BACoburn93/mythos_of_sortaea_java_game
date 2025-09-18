@@ -1,10 +1,12 @@
-package actors;
+package actors.types;
 
 import java.util.Random;
 
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
+import actors.Actor;
+import actors.ActorTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;

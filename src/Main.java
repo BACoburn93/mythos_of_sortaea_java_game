@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-import actors.CombatActor;
+import actors.types.CombatActor;
 // import containers.CombatContainer;
 import containers.GameContainer;
 import enemies.EnemyDatabase;

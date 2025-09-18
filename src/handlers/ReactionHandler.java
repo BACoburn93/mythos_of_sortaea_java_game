@@ -1,7 +1,7 @@
 package handlers;
 
 import abilities.reactions.Reaction;
-import actors.CombatActor;
+import actors.types.CombatActor;
 import characters.Character;
 import ui.CombatUIStrings;
 import utils.GameScanner;

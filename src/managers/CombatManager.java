@@ -3,7 +3,7 @@ package managers;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import actors.CombatActor;
+import actors.types.CombatActor;
 import characters.Party;
 import characters.Character;
 import enemies.Enemy;
