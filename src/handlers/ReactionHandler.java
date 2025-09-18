@@ -1,12 +1,10 @@
 package handlers;
 
 import abilities.reactions.Reaction;
-import actors.Actor;
 import actors.CombatActor;
 import characters.Character;
 import ui.CombatUIStrings;
 import utils.GameScanner;
-import utils.StringUtils;
 import utils.ListUtils;
 
 import java.util.ArrayList;

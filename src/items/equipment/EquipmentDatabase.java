@@ -10,7 +10,6 @@ import items.equipment.torso.HeavyTorso;
 import items.equipment.torso.LightTorso;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class EquipmentDatabase {
@@ -55,7 +54,6 @@ public class EquipmentDatabase {
                 new Resistances(10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         ));
 
-        // EQUIPMENT_LIST.sort(Comparator.comparing(Equipment::getName));
     }
 
     public static List<Equipment> getEquipmentList() {

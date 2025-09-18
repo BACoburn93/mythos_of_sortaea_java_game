@@ -1,9 +1,7 @@
 package enemies;
 
 import abilities.Ability;
-import abilities.damages.Damage;
 import abilities.single_target.SingleTargetAbility;
-import actors.Actor;
 import actors.ActorTypes;
 import actors.CombatActor;
 import actors.attributes.Attributes;
@@ -12,7 +10,6 @@ import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import characters.Character;
 import characters.Party;
-import interfaces.ActorInterface;
 import ui.CombatUIStrings;
 
 import java.util.Random;
@@ -20,7 +17,7 @@ import java.util.Random;
 public class Enemy extends CombatActor {
     private Ability[] abilities;
     private int experience;
-    
+
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
                  Attributes attributes, Resistances resistances, SingleTargetAbility[] abilities, int experience) {
         super(name, healthValues, manaValues, attributes, resistances);

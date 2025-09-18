@@ -1,7 +1,5 @@
 package actors;
 
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 import abilities.Ability;
@@ -12,7 +10,6 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.stances.Stances;
-import actors.ActorTypes;
 import interfaces.ActorInterface;
 import status_conditions.DamageOverTime;
 import status_conditions.StatusCondition;

@@ -13,7 +13,6 @@ import actors.attributes.Attributes;
 import actors.resources.ResourceTypes;
 import actors.stances.Stances;
 import characters.jobs.Job;
-import interfaces.ActorInterface;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;

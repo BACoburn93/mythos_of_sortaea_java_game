@@ -1,6 +1,5 @@
 package status_conditions;
 
-import actors.Actor;
 import actors.CombatActor;
 
 public class Burn extends DamageOverTime {

@@ -1,6 +1,5 @@
 package handlers;
 
-import actors.Actor;
 import actors.ActorTypes;
 import actors.CombatActor;
 import utils.GameScanner;

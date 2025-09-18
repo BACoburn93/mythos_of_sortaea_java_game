@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-import actors.Actor;
 import actors.CombatActor;
 // import containers.CombatContainer;
 import containers.GameContainer;
@@ -52,7 +51,7 @@ public class Main {
 
                     // Create and start combat manager
                     managers.CombatManager combatManager = new managers.CombatManager(
-                        testGame.party, testEnemies, actionHandler, reactionHandler, equipmentHandler
+                        testGame.party, testEnemies, actionHandler, reactionHandler
                     );
                     combatManager.startCombat();
 

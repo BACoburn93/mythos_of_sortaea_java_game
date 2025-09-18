@@ -1,12 +1,9 @@
 package handlers;
 
-import actors.Actor;
 import actors.CombatActor;
 import characters.Character;
 import characters.Party;
 import enemies.Enemy;
-import items.consumables.Consumable;
-import items.equipment.Equipment;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.StringUtils;

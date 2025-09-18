@@ -3,14 +3,12 @@ package managers;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import actors.Actor;
 import actors.CombatActor;
 import characters.Party;
 import characters.Character;
 import enemies.Enemy;
 import handlers.ActionHandler;
 import handlers.ReactionHandler;
-import handlers.EquipmentHandler;
 
 public class CombatManager {
     private ArrayList<CombatActor> turnOrder;
@@ -18,17 +16,14 @@ public class CombatManager {
     private ArrayList<Enemy> enemies;
     private ActionHandler actionHandler;
     private ReactionHandler reactionHandler;
-    private EquipmentHandler equipmentHandler;
 
     public CombatManager(Party party, ArrayList<Enemy> enemies,
                          ActionHandler actionHandler,
-                         ReactionHandler reactionHandler,
-                         EquipmentHandler equipmentHandler) {
+                         ReactionHandler reactionHandler) {
         this.party = party;
         this.enemies = enemies;
         this.actionHandler = actionHandler;
         this.reactionHandler = reactionHandler;
-        this.equipmentHandler = equipmentHandler;
     }
 
     private ArrayList<CombatActor> chooseOrder(Party party, ArrayList<Enemy> enemies) {

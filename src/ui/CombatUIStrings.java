@@ -4,7 +4,6 @@ import java.util.List;
 
 import abilities.Ability;
 import abilities.damages.Damage;
-import actors.Actor;
 import actors.CombatActor;
 import characters.Character;
 import interfaces.Nameable;
