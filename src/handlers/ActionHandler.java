@@ -4,6 +4,7 @@ import characters.Character;
 import characters.Party;
 import enemies.Enemy;
 import ui.CombatUIStrings;
+import ui.GeneralUIStrings;
 import utils.GameScanner;
 import utils.StringUtils;
 import abilities.Ability;
@@ -88,7 +89,7 @@ public class ActionHandler {
                 handleUseAbility(character, chosenAbility);
 
             } else {
-                handleInvalidAction();
+                GeneralUIStrings.handleInvalidAction();
             }
         }
     }
@@ -117,20 +118,12 @@ public class ActionHandler {
                 if (chosenTarget.getHealthValues().getValue() < 0) {
                     actors = handleKillEnemy(chosenTarget);
                 }
-            } else {
-                System.out.println("No valid target selected, ability cancelled.");
-            }
+            } 
         }
     }
 
     private void handleSortAction(Party party, Character character) {
         sortHandler.handleSortAction(party, character);
-    }
-
-    private void handleInvalidAction() {
-        System.out.println("=".repeat(50));
-        System.out.println("Invalid Action, please try again. If you need help, type HELP.");
-        System.out.println("=".repeat(50));
     }
 
 

@@ -11,12 +11,19 @@ import utils.GameScanner;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SortHandler {
     private final GameScanner scanner;
 
     public SortHandler(GameScanner scanner) {
         this.scanner = scanner;
+    }
+
+    public enum SortTarget {
+        ABILITIES,
+        EQUIPMENT,
+        CONSUMABLES
     }
 
     // Enums for sort keys
@@ -36,14 +43,41 @@ public class SortHandler {
     }
 
     public void handleSortAction(Party party, Character character) {
-        System.out.println("What would you like to sort? (Abilities, Equipment, Consumables):");
-        String sortTarget = scanner.nextLine().trim().toLowerCase();
+        System.out.println("Available sort targets:");
+        SortTarget[] targets = SortTarget.values();
 
-        switch (sortTarget) {
-            case "abilities", "ability" -> handleSortAbilities(character);
-            case "equipment" -> handleSortEquipment(party);
-            case "consumables" -> handleSortConsumables(character);
-            default -> System.out.println("Unknown sort target: " + sortTarget);
+        for (int i = 0; i < targets.length; i++) {
+            System.out.printf("%d. %s%n", i + 1, targets[i].name().toUpperCase());
+        }
+
+        System.out.println("What would you like to sort?");
+        String input = scanner.nextLine().trim().toLowerCase();
+
+        SortTarget selectedTarget = null;
+
+        try {
+            int index = Integer.parseInt(input);
+            if (index >= 1 && index <= targets.length) {
+                selectedTarget = targets[index - 1];
+            }
+        } catch (NumberFormatException e) {
+            for (SortTarget target : targets) {
+                if (target.name().toLowerCase().startsWith(input)) { 
+                    selectedTarget = target;
+                    break;
+                }
+            }
+        }
+
+        if (selectedTarget == null) {
+            System.out.println("Unknown sort target: " + input);
+            return;
+        }
+
+        switch (selectedTarget) {
+            case ABILITIES -> handleSortAbilities(character);
+            case EQUIPMENT -> handleSortEquipment(party);
+            case CONSUMABLES -> handleSortConsumables(character);
         }
     }
 
@@ -73,6 +107,7 @@ public class SortHandler {
         };
     }
 
+    // TODO -- Allow selecting sort to allow for indexed input
 
     public void handleSortEquipment(Party party) {
         EquipmentSortKey sortKey = promptEquipmentSortKey();
