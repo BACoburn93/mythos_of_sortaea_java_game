@@ -1,6 +1,7 @@
 package status_conditions;
 
 import actors.Actor;
+import actors.CombatActor;
 
 public abstract class DamageOverTime extends StatusCondition {
     public DamageOverTime(StatusTypes name) {
@@ -20,7 +21,7 @@ public abstract class DamageOverTime extends StatusCondition {
     }
 
 
-    public abstract void applyDamage(Actor actor);
+    public abstract void applyDamage(CombatActor actor);
     // {
         // int damageToMitigate = 0;
 

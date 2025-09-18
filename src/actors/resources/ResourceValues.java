@@ -43,10 +43,9 @@ public abstract class ResourceValues {
 
     @Override
     public String toString() {
-        return "ResourceValues{" +
+        return "Remaining: " +
                 value + "/" + maxValue +
-                " regenValue=" + regenValue +
-                '}';
+                " Regen: " + regenValue;
     }
 }
 

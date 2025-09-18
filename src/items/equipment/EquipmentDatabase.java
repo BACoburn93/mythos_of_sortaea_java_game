@@ -55,7 +55,7 @@ public class EquipmentDatabase {
                 new Resistances(10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         ));
 
-        EQUIPMENT_LIST.sort(Comparator.comparing(Equipment::getName));
+        // EQUIPMENT_LIST.sort(Comparator.comparing(Equipment::getName));
     }
 
     public static List<Equipment> getEquipmentList() {

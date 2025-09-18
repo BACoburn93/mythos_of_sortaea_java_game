@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import actors.Actor;
+import actors.CombatActor;
 import characters.Party;
 import characters.Character;
 import enemies.Enemy;
@@ -12,7 +13,7 @@ import handlers.ReactionHandler;
 import handlers.EquipmentHandler;
 
 public class CombatManager {
-    private ArrayList<Actor> turnOrder;
+    private ArrayList<CombatActor> turnOrder;
     private Party party;
     private ArrayList<Enemy> enemies;
     private ActionHandler actionHandler;
@@ -30,8 +31,8 @@ public class CombatManager {
         this.equipmentHandler = equipmentHandler;
     }
 
-    private ArrayList<Actor> chooseOrder(Party party, ArrayList<Enemy> enemies) {
-        ArrayList<Actor> initiativeOrder = new ArrayList<>();
+    private ArrayList<CombatActor> chooseOrder(Party party, ArrayList<Enemy> enemies) {
+        ArrayList<CombatActor> initiativeOrder = new ArrayList<>();
 
         for (int i = 0; i < party.partySize; i++) {
             initiativeOrder.add(party.characters.get(i));
@@ -39,11 +40,11 @@ public class CombatManager {
 
         initiativeOrder.addAll(enemies);
 
-        initiativeOrder.sort(Comparator.comparingInt(Actor::getInitiative).reversed());
+        initiativeOrder.sort(Comparator.comparingInt(CombatActor::getInitiative).reversed());
 
         utils.StringUtils.stringDivider(
                 "Initiative Order: " + initiativeOrder.stream()
-                        .map(Actor::getName)
+                        .map(CombatActor::getName)
                         .toList()
                 , "=", 50);
 
@@ -67,7 +68,7 @@ public class CombatManager {
         setupTurnOrder();
 
         while (partyAlive() && !enemies.isEmpty()) {
-            for (Actor actor : turnOrder) {
+            for (CombatActor actor : turnOrder) {
                 if (!partyAlive() || enemies.isEmpty()) {
                     break; // exit early if combat ended mid-round
                 }

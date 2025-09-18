@@ -7,6 +7,7 @@ import abilities.reactions.*;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
 import actors.ActorTypes;
+import actors.CombatActor;
 import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resources.ResourceTypes;
@@ -21,12 +22,12 @@ import items.equipment.item_types.ItemType;
 import items.equipment.item_types.ShieldTypes;
 import items.equipment.item_types.WeaponTypes;
 import items.equipment.mainhand.Mainhand;
-
+import utils.InputHandler;
 import utils.StringUtils;
 
 import java.util.*;
 
-public class Character extends Actor {
+public class Character extends CombatActor {
     private Job job;
     private int level;
     private int experience;
@@ -96,6 +97,7 @@ public class Character extends Actor {
         this.abilities.addAll(this.job.getJobAbilities());
     }
 
+
     public void addExperience(int expToAdd) {
         this.experience += expToAdd;
         // levelUp();
@@ -147,16 +149,15 @@ public class Character extends Actor {
             this.setStance(stance);
         }
     }
-    public Ability chooseAbility(String action) {
-        Ability pass = new SingleTargetAbility("pass", 0,
-                0, null, "Conserve or recuperate.");
 
-        for(int i = 0; i < this.getAbilities().size(); i++) {
-            if(Objects.equals(action.toLowerCase(), this.getAbilities().get(i).getName().toLowerCase())) {
-                return this.getAbilities().get(i);
-            }
+    public Ability chooseAbility(String action) {
+        Ability selected = InputHandler.getItemByInput(action, this.getAbilities(), Ability::getName);
+
+        if (selected != null) {
+            return selected;
         }
-        return pass;
+
+        return new SingleTargetAbility("pass", 0, 0, null, "Conserve or recuperate.");
     }
 
 
@@ -355,63 +356,55 @@ public class Character extends Actor {
     }
 
     public boolean isValidAbility(String action) {
+        List<Ability> abilities = this.getAbilities();
+
+        Ability selectedAbility = InputHandler.getItemByInput(action, abilities, Ability::getName);
+        if (selectedAbility == null) return false;
+
         boolean armorRequired = false;
         boolean shieldRequired = false;
         boolean weaponRequired = false;
 
-        for(int i = 0; i < this.getAbilities().size(); i++) {
-            if(Objects.equals(action.toLowerCase(), this.getAbilities().get(i).getName().toLowerCase())) {
-                Ability selectedAbility = this.getAbilities().get(i);
-
-                for(Equipment equipment : this.getEquipmentSlots().values()) {
-                        if(selectedAbility.getArmorRequirement() != null) {
-                            for(ArmorTypes armorType : selectedAbility.getArmorRequirement()) {
-                                if(equipment != null) {
-                                    if(armorType.equals(equipment.getItemType())) {
-                                        return true;
-                                    }
-                                }
-                            }
-                            armorRequired = true;
-                        }
-                        if (selectedAbility.getShieldRequirement() != null) {
-                            for (ShieldTypes shieldType : selectedAbility.getShieldRequirement()) {
-                                if(equipment != null) {
-                                    if(shieldType.equals(equipment.getItemType())) {
-                                        return true;
-                                    }
-                                }
-                            }
-                            shieldRequired = true;
-                        }
-                        if (selectedAbility.getWeaponRequirement() != null) {
-                            for (WeaponTypes weaponType : selectedAbility.getWeaponRequirement()) {
-                                if(equipment != null) {
-                                    if(weaponType.equals(equipment.getItemType())) {
-                                        return true;
-                                    }
-                                }
-                            }
-                            weaponRequired = true;
-                        }
+        for (Equipment equipment : this.getEquipmentSlots().values()) {
+            if (selectedAbility.getArmorRequirement() != null) {
+                for (ArmorTypes armorType : selectedAbility.getArmorRequirement()) {
+                    if (equipment != null && armorType.equals(equipment.getItemType())) {
+                        return true;
                     }
-
-
-                if (armorRequired) {
-                    displayEquipmentRequirements("armor", selectedAbility.getArmorRequirement(), EquipmentTypes.TORSO);
                 }
-                if (shieldRequired) {
-                    displayEquipmentRequirements("shield", selectedAbility.getShieldRequirement(), EquipmentTypes.MAINHAND, EquipmentTypes.OFFHAND);
+                armorRequired = true;
+            }
+            if (selectedAbility.getShieldRequirement() != null) {
+                for (ShieldTypes shieldType : selectedAbility.getShieldRequirement()) {
+                    if (equipment != null && shieldType.equals(equipment.getItemType())) {
+                        return true;
+                    }
                 }
-                if (weaponRequired) {
-                    displayEquipmentRequirements("weapon", selectedAbility.getWeaponRequirement(), EquipmentTypes.MAINHAND, EquipmentTypes.OFFHAND);
+                shieldRequired = true;
+            }
+            if (selectedAbility.getWeaponRequirement() != null) {
+                for (WeaponTypes weaponType : selectedAbility.getWeaponRequirement()) {
+                    if (equipment != null && weaponType.equals(equipment.getItemType())) {
+                        return true;
+                    }
                 }
-
-                if(!armorRequired && !shieldRequired && !weaponRequired && selectedAbility != null) return true;
+                weaponRequired = true;
             }
         }
-        return false;
+
+        if (armorRequired) {
+            displayEquipmentRequirements("armor", selectedAbility.getArmorRequirement(), EquipmentTypes.TORSO);
+        }
+        if (shieldRequired) {
+            displayEquipmentRequirements("shield", selectedAbility.getShieldRequirement(), EquipmentTypes.MAINHAND, EquipmentTypes.OFFHAND);
+        }
+        if (weaponRequired) {
+            displayEquipmentRequirements("weapon", selectedAbility.getWeaponRequirement(), EquipmentTypes.MAINHAND, EquipmentTypes.OFFHAND);
+        }
+
+        return !armorRequired && !shieldRequired && !weaponRequired;
     }
+
 
     private void displayEquipmentRequirements(String type, ItemType[] requirements, EquipmentTypes... slots) {
         System.out.println("You do not have the required " + type + " to use this ability.");
@@ -630,23 +623,5 @@ public class Character extends Actor {
         sb.append(divider);
     
         return sb.toString();
-    }
-
-    @Override
-    public void attack(ActorInterface attacker, ActorInterface target, Ability ability) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'attack'");
-    }
-
-    @Override
-    public void takeDamage(ActorInterface attacker, Ability ability) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
-    }
-
-    @Override
-    public void applyStatusCondition(ActorInterface attacker, Damage damage) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'applyStatusCondition'");
     }
 }

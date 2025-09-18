@@ -5,7 +5,4 @@ public class ManaValues extends ResourceValues {
         super(maxValue, maxValue, regenValue);
     }
 
-//    public ManaValues() {
-//        super(100, 100, 5);
-//    }
 }

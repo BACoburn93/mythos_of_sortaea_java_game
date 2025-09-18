@@ -42,4 +42,12 @@ public class Party {
     public List<Equipment> getSharedEquipment() {
         return sharedEquipment;
     }
+
+    public String toString() {
+        return "Party{" +
+                "characters=" + characters +
+                ", partySize=" + partySize +
+                ", sharedEquipment=" + sharedEquipment +
+                '}';
+    }
 }

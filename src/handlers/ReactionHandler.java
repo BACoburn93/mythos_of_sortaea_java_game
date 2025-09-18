@@ -2,6 +2,7 @@ package handlers;
 
 import abilities.reactions.Reaction;
 import actors.Actor;
+import actors.CombatActor;
 import characters.Character;
 import ui.CombatUIStrings;
 import utils.GameScanner;
@@ -17,7 +18,7 @@ public class ReactionHandler {
         this.scanner = scanner;
     }
 
-    public void handleReaction(ArrayList<Character> partyCharacters, ArrayList<Actor> turnOrder) {
+    public void handleReaction(ArrayList<Character> partyCharacters, ArrayList<CombatActor> turnOrder) {
         boolean validCharacter = false;
         boolean validReaction = false;
         Character chosenCharacter = null;

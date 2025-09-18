@@ -1,6 +1,7 @@
 package status_conditions;
 
 import actors.Actor;
+import actors.CombatActor;
 
 public class Rot extends DamageOverTime {
     // public Rot(int value, int chanceToTrigger, int duration) {
@@ -24,7 +25,7 @@ public class Rot extends DamageOverTime {
     }
 
     @Override
-    public void applyDamage(Actor actor) {
+    public void applyDamage(CombatActor actor) {
         int totalValue = actor.getResistances().getDarkness().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - totalValue);

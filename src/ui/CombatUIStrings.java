@@ -5,6 +5,7 @@ import java.util.List;
 import abilities.Ability;
 import abilities.damages.Damage;
 import actors.Actor;
+import actors.CombatActor;
 import characters.Character;
 import interfaces.Nameable;
 import interfaces.NameableWithQuantity;
@@ -36,7 +37,7 @@ public class CombatUIStrings {
     }
 
     // Appends a detailed damage message to the provided StringBuilder
-    public static void appendDamageMessage(StringBuilder damageMessage, Actor attacker, Actor defender, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
+    public static void appendDamageMessage(StringBuilder damageMessage, CombatActor attacker, CombatActor defender, Ability ability, Damage damage, int totalDamage, boolean isFirstDamage) {
         String article = StringUtils.startsWithVowel(ability.getName()) ? "an " : "a ";
 
         if (isFirstDamage) {
@@ -64,21 +65,52 @@ public class CombatUIStrings {
     }
 
     public static void printAbilitiesWithDivider(List<Ability> abilities) {
+        int idx = 1;
         for (Ability ability : abilities) {
-            StringUtils.stringDividerTop(String.valueOf(ability), "-", 50);
+            String header = idx + ". " + String.valueOf(ability); 
+            StringUtils.stringDividerTop(header, "-", 50);
+            idx++;
         }
     }
 
     public static void printAbilitiesWithDescription(List<Ability> abilities) {
+        int idx = 1;
         for (Ability ability : abilities) {
-            StringUtils.stringDividerTop(ability.getName() + ": " + ability.getDescription(), "-", 50);
+            String header = idx + ". " + ability.getName() + ": " + ability.getDescription();
+            StringUtils.stringDividerTop(header, "-", 50);
+            idx++;
         }
     }
 
     public static void printActionPoints(Character character) {
-                    StringUtils.stringDivider(character.getActionPoints() + "/" +
-                    character.getMaxActionPoints() + " Action Points.",
-                    "-", 50);
+        StringUtils.stringDivider(character.getActionPoints() + "/" +
+        character.getMaxActionPoints() + " Action Points.",
+        "-", 50);
+    }
+
+    public static void printAbilityPointUsage(Character character, Ability chosenAbility) {
+        if(chosenAbility != null) {
+            if (character.getActionPoints() <= 0) {
+                System.out.println("No Ability Points remaining, ending turn.");
+            } else if (!character.canUseAbility(chosenAbility)) {
+                System.out.println("Insufficient Mana, please use another ability.");
+            } else {
+                System.out.println("Insufficient Ability Points, please use another ability.");
+            }
+        } else {
+            if (character.getActionPoints() <= 0) {
+                System.out.println("No Ability Points remaining, ending turn.");
+            }
+        }
+    }
+
+    public static void printHitPointsRemaining(CombatActor actor) {
+        System.out.println(actor.getName() + " has " + actor.getHealth() + " hit points remaining.");
+    }
+
+    public static void printMissedAttack(CombatActor attacker, CombatActor defender, Ability ability) {
+        // String article = StringUtils.startsWithVowel(ability.getName()) ? "an " : "a ";
+        System.out.println(attacker.getName() + "'s " + ability.getName() + " missed " + defender.getName() + "!");
     }
 
 }

@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 import actors.Actor;
-import containers.CombatContainer;
+import actors.CombatActor;
+// import containers.CombatContainer;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
 import ui.MenuUIStrings;
@@ -39,13 +40,13 @@ public class Main {
                 case "1":
                     GameContainer testGame = new GameContainer();
                     ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();
-                    ArrayList<Actor> allActors = new ArrayList<>(testGame.party.characters);  // add characters
+                    ArrayList<CombatActor> allActors = new ArrayList<>(testGame.party.characters);  // add characters
                     allActors.addAll(testEnemies);  // add enemies
 
                     // Instantiate scanner and handlers
                     utils.GameScanner gameScanner = new utils.GameScanner();
                     handlers.EquipmentHandler equipmentHandler = new handlers.EquipmentHandler(testGame.party);
-                    handlers.ActionHandler actionHandler = new handlers.ActionHandler(gameScanner, allActors, testEnemies, equipmentHandler);
+                    handlers.ActionHandler actionHandler = new handlers.ActionHandler(gameScanner, allActors, testGame.party, testEnemies, equipmentHandler);
                     handlers.ReactionHandler reactionHandler = new handlers.ReactionHandler(gameScanner);
                     
 
@@ -54,14 +55,15 @@ public class Main {
                         testGame.party, testEnemies, actionHandler, reactionHandler, equipmentHandler
                     );
                     combatManager.startCombat();
+
                     break;
 
                 case "2":
                     // combat.startCombat(newGame.party, enemies);
-                    GameContainer newGame = new GameContainer();
-                    java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
-                    CombatContainer combat = new CombatContainer(newGame.party, enemies);
-                    combat.startCombat(newGame.party, enemies);
+                    // GameContainer newGame = new GameContainer();
+                    // java.util.ArrayList<enemies.Enemy> enemies = EnemyDatabase.getDefaultEnemies();
+                    // CombatContainer combat = new CombatContainer(newGame.party, enemies);
+                    // combat.startCombat(newGame.party, enemies);
                     System.out.println("Scenario not implemented yet.");
                     break;
                 case "3":

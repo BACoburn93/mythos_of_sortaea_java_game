@@ -1,6 +1,7 @@
 package status_conditions;
 
 import actors.Actor;
+import actors.CombatActor;
 
 public class Poison extends DamageOverTime {
     // public Poison(int value, int chanceToTrigger, int duration) {
@@ -24,7 +25,7 @@ public class Poison extends DamageOverTime {
     }
 
     @Override
-    public void applyDamage(Actor actor) {
+    public void applyDamage(CombatActor actor) {
         int resistance = actor.getResistances().getEarth().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - (getValue() - resistance));

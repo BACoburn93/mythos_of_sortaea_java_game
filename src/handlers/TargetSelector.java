@@ -2,20 +2,21 @@ package handlers;
 
 import actors.Actor;
 import actors.ActorTypes;
+import actors.CombatActor;
 import utils.GameScanner;
 
 import java.util.*;
 
 public class TargetSelector {
-    private final ArrayList<Actor> actors;
+    private final ArrayList<CombatActor> actors;
 
-    public TargetSelector(ArrayList<Actor> actors) {
+    public TargetSelector(ArrayList<CombatActor> actors) {
         this.actors = actors;
     }
 
-    public Actor chooseEnemyTarget(GameScanner scanner) {
-        ArrayList<Actor> enemies = new ArrayList<>();
-        for (Actor actor : actors) {
+    public CombatActor chooseEnemyTarget(GameScanner scanner) {
+        ArrayList<CombatActor> enemies = new ArrayList<>();
+        for (CombatActor actor : actors) {
             if (actor.getActorType() != ActorTypes.CHARACTER) {
                 enemies.add(actor);
             }
@@ -29,7 +30,7 @@ public class TargetSelector {
         while (true) {
             System.out.println("Available targets:");
             for (int i = 0; i < enemies.size(); i++) {
-                Actor enemy = enemies.get(i);
+                CombatActor enemy = enemies.get(i);
                 System.out.printf("%d. %s (%d HP)%n", i + 1, enemy.getName(), enemy.getHealthValues().getValue());
             }
 
@@ -45,7 +46,7 @@ public class TargetSelector {
             }
 
             // Try name match
-            for (Actor enemy : enemies) {
+            for (CombatActor enemy : enemies) {
                 if (enemy.getName().equalsIgnoreCase(input)) {
                     return enemy;
                 }

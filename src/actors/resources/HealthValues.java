@@ -5,9 +5,5 @@ public class HealthValues extends ResourceValues {
         super(maxValue, maxValue, regenValue);
     }
 
-//    public HealthValues() {
-//        super(100, 100, 5);
-//    }
-
 }
 

@@ -1,6 +1,7 @@
 package status_conditions;
 
 import actors.Actor;
+import actors.CombatActor;
 
 public class Bleed extends DamageOverTime {
     public Bleed() {
@@ -16,7 +17,7 @@ public class Bleed extends DamageOverTime {
     }
 
     @Override
-    public void applyDamage(Actor actor) {
+    public void applyDamage(CombatActor actor) {
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - getValue());
 
         System.out.println(actor.getName() + " is bleeding for " + getValue() + " unmitigated damage due to the bleed condition.");

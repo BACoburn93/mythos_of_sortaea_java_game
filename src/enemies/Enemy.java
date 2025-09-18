@@ -5,6 +5,7 @@ import abilities.damages.Damage;
 import abilities.single_target.SingleTargetAbility;
 import actors.Actor;
 import actors.ActorTypes;
+import actors.CombatActor;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -12,12 +13,14 @@ import actors.resources.ManaValues;
 import characters.Character;
 import characters.Party;
 import interfaces.ActorInterface;
+import ui.CombatUIStrings;
 
 import java.util.Random;
 
-public class Enemy extends Actor {
+public class Enemy extends CombatActor {
     private Ability[] abilities;
     private int experience;
+    
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
                  Attributes attributes, Resistances resistances, SingleTargetAbility[] abilities, int experience) {
         super(name, healthValues, manaValues, attributes, resistances);
@@ -45,15 +48,14 @@ public class Enemy extends Actor {
                 if(!missedTarget) {
                     this.attack(this, target, ability);
                 } else {
-                    System.out.println(this.getName() + " missed " + target.getName() +
-                            " with " + ability.getName());
+                    CombatUIStrings.printMissedAttack(this, target, ability);
                 }
 
 //                this.attack(this, target, ability);
                 this.spendMana(ability);
                 abilityChosen = true;
 
-                System.out.println(target.getName() + " has " + target.getHealth() + " hit points remaining.");
+                CombatUIStrings.printHitPointsRemaining(target);
 
                 break;
             } else {
@@ -125,21 +127,4 @@ public class Enemy extends Actor {
         return sb.toString();
     }
 
-    @Override
-    public void attack(ActorInterface attacker, ActorInterface target, Ability ability) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attack'");
-    }
-
-    @Override
-    public void takeDamage(ActorInterface attacker, Ability ability) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
-    }
-
-    @Override
-    public void applyStatusCondition(ActorInterface attacker, Damage damage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyStatusCondition'");
-    }
 }

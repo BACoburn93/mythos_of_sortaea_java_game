@@ -13,20 +13,15 @@ import java.util.Set;
 public class GameContainer {
     public Party party;
     GameScanner gameLoop = new GameScanner();
-    public CombatContainer combatContainer;
+    // public CombatContainer combatContainer;
 
 
     public GameContainer() {
-        // Handle the Title on startup
-        // int titleStrWidth = 30;
-        // String titleStr = StringUtils.titleDivider("Mythos of Sortaea", titleStrWidth);
-        // StringUtils.stringDivider(titleStr, "=", titleStrWidth);
 
         party = getPartyDetails();
     }
 
     private Party getPartyDetails() {
-        // System.out.println("Create a number of characters for your party");
         System.out.println("After choosing your characters, you may type GUIDE at any time " +
                 "in order to get a general list of instructions in different situations to help" +
                 " you know what to type in different circumstances.");
@@ -36,6 +31,7 @@ public class GameContainer {
 
         ArrayList<Character> characterParty = new ArrayList<>();
         Set<String> characterNames = new HashSet<>();
+
 
         // Get Characters Info
         for (int i = 1; i <= numCharacters; i++) {
