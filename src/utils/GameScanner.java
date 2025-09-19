@@ -63,8 +63,15 @@ public class GameScanner {
     }
 
     public void exitGame() {
-        System.out.println("Exiting game...");
-        System.exit(0);
+        System.out.print("Are you sure you wish to quit? All unsaved progress will be lost. :(Yes or No): ");
+        String input = scanner.nextLine().trim().toLowerCase();
+
+        if (input.equals("yes") || input.equals("y")) {
+            System.out.println("Exiting game...");
+            System.exit(0);
+        } else {
+            System.out.println("Exit cancelled. Returning to game...");
+        }
     }
 
     public void close() {

@@ -1,5 +1,8 @@
 package utils;
 
+import actors.attributes.Attributes;
+import actors.resistances.Resistances;
+
 public class StringUtils {
     public static String capitalize(String string) {
         if(string == null || string.isEmpty()) {
@@ -78,5 +81,48 @@ public class StringUtils {
         }
         if (!text.isEmpty()) lines.add(text);
         return lines;
+    }
+
+    public static String formatAttributes(Attributes attrs) {
+        StringBuilder sb = new StringBuilder();
+
+        if (attrs.getStrength().getValue() != 0) sb.append(formatAttr("STR", attrs.getStrength().getValue()));
+        if (attrs.getAgility().getValue() != 0) sb.append(formatAttr("AGI", attrs.getAgility().getValue()));
+        if (attrs.getKnowledge().getValue() != 0) sb.append(formatAttr("KNOW", attrs.getKnowledge().getValue()));
+        if (attrs.getDefense().getValue() != 0) sb.append(formatAttr("DEF", attrs.getDefense().getValue()));
+        if (attrs.getResilience().getValue() != 0) sb.append(formatAttr("RES", attrs.getResilience().getValue()));
+        if (attrs.getSpirit().getValue() != 0) sb.append(formatAttr("SPIR", attrs.getSpirit().getValue()));
+        if (attrs.getLuck().getValue() != 0) sb.append(formatAttr("LUCK", attrs.getLuck().getValue()));
+
+        return sb.toString().replaceAll(", $", ""); // Trim trailing comma
+    }
+
+
+    public static String formatResistances(Resistances res) {
+        StringBuilder sb = new StringBuilder();
+
+        if (res.getBludgeoning().getValue() != 0) sb.append(formatRes("BLUDGE", res.getBludgeoning().getValue()));
+        if (res.getPiercing().getValue() != 0) sb.append(formatRes("PIERC", res.getPiercing().getValue()));
+        if (res.getSlashing().getValue() != 0) sb.append(formatRes("SLASH", res.getSlashing().getValue()));
+        if (res.getEarth().getValue() != 0) sb.append(formatRes("EARTH", res.getEarth().getValue()));
+        if (res.getFire().getValue() != 0) sb.append(formatRes("FIRE", res.getFire().getValue()));
+        if (res.getIce().getValue() != 0) sb.append(formatRes("ICE", res.getIce().getValue()));
+        if (res.getLightning().getValue() != 0) sb.append(formatRes("LGTN", res.getLightning().getValue()));
+        if (res.getVenom().getValue() != 0) sb.append(formatRes("VENOM", res.getVenom().getValue()));
+        if (res.getWater().getValue() != 0) sb.append(formatRes("WATER", res.getWater().getValue()));
+        if (res.getWind().getValue() != 0) sb.append(formatRes("WIND", res.getWind().getValue()));
+        if (res.getDarkness().getValue() != 0) sb.append(formatRes("DARK", res.getDarkness().getValue()));
+        if (res.getLight().getValue() != 0) sb.append(formatRes("LIGHT", res.getLight().getValue()));
+
+        return sb.toString().replaceAll(", $", ""); // Trim trailing comma
+    }
+
+
+    private static String formatAttr(String name, int value) {
+        return String.format("%+d %s, ", value, name);
+    }
+
+    private static String formatRes(String name, int value) {
+        return String.format("%+d %s, ", value, name);
     }
 }

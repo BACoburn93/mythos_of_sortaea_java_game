@@ -10,6 +10,7 @@ import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import utils.GameScanner;
 import utils.InputHandler;
+import utils.StringUtils;
 import ui.CombatUIStrings;
 
 public class EquipmentHandler {
@@ -23,7 +24,7 @@ public class EquipmentHandler {
         List<Equipment> equipmentList = party.getSharedEquipment();
 
         // System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
-        System.out.print(CombatUIStrings.formatEquipItemListDetailed(equipmentList));
+        System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
         System.out.println("Type the equipment name or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 
@@ -34,8 +35,11 @@ public class EquipmentHandler {
         if (eq != null) {
             System.out.println("Equipping " + eq.getName());
             character.equipItem(eq);
-            System.out.println("Character's Attributes after equipping: " + character.getAttributes());
-            System.out.println("Character's Resistances after equipping: " + character.getResistances());
+            CombatUIStrings.printCombatActorStats(character);
+            // StringUtils.formatAttributes(character.getAttributes());
+            // StringUtils.formatResistances(character.getResistances());
+            // System.out.println(character.getAttributes());
+            // System.out.println(character.getResistances());
         } else {
             System.out.println("No such equipment found.");
         }
