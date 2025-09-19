@@ -43,4 +43,37 @@ public class InputHandler {
 
         return null;
     }
+
+    public <E extends Enum<E>> E promptEnumSelection(Class<E> enumClass, String prompt) {
+        E[] values = enumClass.getEnumConstants();
+
+        System.out.println(prompt);
+        
+        for (int i = 0; i < values.length; i++) {
+            System.out.printf("%d. %s%n", i + 1, formatEnumName(values[i].name()));
+        }
+
+        String input = scanner.nextLine().trim().toLowerCase();
+
+        try {
+            int index = Integer.parseInt(input);
+            if (index >= 1 && index <= values.length) {
+                return values[index - 1];
+            }
+        } catch (NumberFormatException ignored) {
+            for (E value : values) {
+                if (value.name().toLowerCase().startsWith(input)) {
+                    return value;
+                }
+            }
+        }
+
+        System.out.println("Invalid input. Defaulting to: " + formatEnumName(values[0].name()));
+        return values[0]; // Default fallback
+    }
+
+    public String formatEnumName(String name) {
+        return name.charAt(0) + name.substring(1).toLowerCase().replace('_', ' ');
+    }
+
 }

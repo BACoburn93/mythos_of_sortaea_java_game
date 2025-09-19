@@ -6,6 +6,7 @@ import enemies.Enemy;
 import ui.CombatUIStrings;
 import ui.GeneralUIStrings;
 import utils.GameScanner;
+import utils.InputHandler;
 import utils.StringUtils;
 import abilities.Ability;
 import abilities.actions.ActionTypes;
@@ -17,6 +18,7 @@ public class ActionHandler {
     private final GameScanner scanner;
     private final EquipmentHandler equipmentHandler;
     private final SortHandler sortHandler;
+    private final InputHandler inputHandler;
     private final TargetSelector targetSelector;
     private ArrayList<CombatActor> actors;
     private Party party;
@@ -24,7 +26,8 @@ public class ActionHandler {
 
     public ActionHandler(GameScanner scanner, ArrayList<CombatActor> actors, Party party, ArrayList<Enemy> enemies, EquipmentHandler equipmentHandler) {
         this.scanner = scanner;
-        this.sortHandler = new SortHandler(scanner);
+        this.inputHandler = new InputHandler();
+        this.sortHandler = new SortHandler(scanner, inputHandler);
         this.actors = actors;
         this.party = party;
         this.enemies = enemies;

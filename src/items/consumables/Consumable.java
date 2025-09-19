@@ -38,8 +38,10 @@ public class Consumable extends Item {
             character.preventOverloadingResourceValues();
             System.out.println(character.getManaValues());
         }
+    }
 
-
+    public ResourceTypes getEffectType() {
+        return effectType;
     }
 
     public String toString() {

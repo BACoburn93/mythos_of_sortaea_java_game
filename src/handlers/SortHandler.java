@@ -7,6 +7,7 @@ import items.consumables.Consumable;
 import items.equipment.Equipment;
 import ui.CombatUIStrings;
 import utils.GameScanner;
+import utils.InputHandler;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -15,9 +16,11 @@ import java.util.stream.Collectors;
 
 public class SortHandler {
     private final GameScanner scanner;
+    private final InputHandler inputHandler;
 
-    public SortHandler(GameScanner scanner) {
+    public SortHandler(GameScanner scanner, InputHandler inputHandler) {
         this.scanner = scanner;
+        this.inputHandler = new InputHandler();
     }
 
     public enum SortTarget {
@@ -35,12 +38,24 @@ public class SortHandler {
     }
 
     public enum EquipmentSortKey {
-        NAME
+        NAME,
+        TYPE,
+        VALUE,
+        QUANTITY
     }
 
     public enum ConsumableSortKey {
-        NAME
+        NAME,
+        TYPE,
+        VALUE,
+        QUANTITY
     }
+
+    public enum YesOrNo {
+        YES,
+        NO
+    }
+
 
     public void handleSortAction(Party party, Character character) {
         System.out.println("Available sort targets:");
@@ -92,20 +107,17 @@ public class SortHandler {
     }
 
     private AbilitySortKey promptAbilitySortKey() {
-        System.out.println("Sort Abilities by: Name, Mana Cost, Action Cost, Damages");
-        String input = scanner.nextLine().trim().toLowerCase();
-
-        return switch (input) {
-            case "name" -> AbilitySortKey.NAME;
-            case "mana cost" -> AbilitySortKey.MANA_COST;
-            case "action cost" -> AbilitySortKey.ACTION_COST;
-            case "damages" -> AbilitySortKey.DAMAGES;
-            default -> {
-                System.out.println("Invalid sort key. Defaulting to Name.");
-                yield AbilitySortKey.NAME;
-            }
-        };
+        return inputHandler.promptEnumSelection(AbilitySortKey.class, "Sort Abilities by:");
     }
+
+    private EquipmentSortKey promptEquipmentSortKey() {
+        return inputHandler.promptEnumSelection(EquipmentSortKey.class, "Sort Equipment by:");
+    }
+
+    private ConsumableSortKey promptConsumableSortKey() {
+        return inputHandler.promptEnumSelection(ConsumableSortKey.class, "Sort Consumables by:");
+    }
+
 
     // TODO -- Allow selecting sort to allow for indexed input
 
@@ -114,21 +126,8 @@ public class SortHandler {
         boolean ascending = promptAscending();
 
         sortAnything(party.getSharedEquipment(), sortKey, ascending);
-
-        // CombatUIStrings.printEquipmentWithDivider(character.getEquipment());
     }
 
-    private EquipmentSortKey promptEquipmentSortKey() {
-        System.out.println("Sort Equipment by: Name");
-        String input = scanner.nextLine().trim().toLowerCase();
-
-        if ("name".equals(input)) {
-            return EquipmentSortKey.NAME;
-        } else {
-            System.out.println("Invalid sort key. Defaulting to Name.");
-            return EquipmentSortKey.NAME;
-        }
-    }
 
     public void handleSortConsumables(Character character) {
         ConsumableSortKey sortKey = promptConsumableSortKey();
@@ -137,29 +136,15 @@ public class SortHandler {
         List<Consumable> consumables = Arrays.asList(character.getItems());
 
         sortAnything(consumables, sortKey, ascending);
-
-        // CombatUIStrings.printConsumablesWithDivider(consumables);
-    }
-
-    private ConsumableSortKey promptConsumableSortKey() {
-        System.out.println("Sort Consumables by: Name");
-        String input = scanner.nextLine().trim().toLowerCase();
-
-        if ("name".equals(input)) {
-            return ConsumableSortKey.NAME;
-        } else {
-            System.out.println("Invalid sort key. Defaulting to Name.");
-            return ConsumableSortKey.NAME;
-        }
     }
 
     // Utility method to prompt for ascending/descending
 
     private boolean promptAscending() {
-        System.out.println("Ascending? (yes/no):");
-        String input = scanner.nextLine().trim().toLowerCase();
-        return input.equals("yes") || input.equals("y");
+        YesOrNo result = inputHandler.promptEnumSelection(YesOrNo.class, "Ascending?");
+        return result == YesOrNo.YES;
     }
+
 
     @SuppressWarnings("unchecked")
     public <T> void sortAnything(List<T> items, Object sortKey, boolean ascending) {
@@ -197,12 +182,18 @@ public class SortHandler {
     private Comparator<Equipment> getEquipmentComparator(EquipmentSortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Equipment::getName);
+            case VALUE -> Comparator.comparingInt(Equipment::getGoldValue);
+            case QUANTITY -> Comparator.comparingInt(Equipment::getQuantity);   
+            case TYPE -> Comparator.comparing(e -> e.getEquipmentType().toString());
         };
     }
 
     private Comparator<Consumable> getConsumableComparator(ConsumableSortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Consumable::getName);
+            case VALUE -> Comparator.comparingInt(Consumable::getGoldValue);
+            case QUANTITY -> Comparator.comparingInt(Consumable::getQuantity);
+            case TYPE -> Comparator.comparing(e -> e.getEffectType().toString());
         };
     }
 }
