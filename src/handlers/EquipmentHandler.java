@@ -22,7 +22,8 @@ public class EquipmentHandler {
     public void handleEquip(GameScanner combatLoop, Character character) {
         List<Equipment> equipmentList = party.getSharedEquipment();
 
-        System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
+        // System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
+        System.out.print(CombatUIStrings.formatEquipItemListDetailed(equipmentList));
         System.out.println("Type the equipment name or its number to equip:");
         String chosenEquipment = combatLoop.nextLine();
 
