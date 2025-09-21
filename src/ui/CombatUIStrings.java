@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import abilities.Ability;
@@ -64,6 +65,32 @@ public class CombatUIStrings {
     // Formats a command and its description into a consistent layout
     public static String formatKeyValue(String command, String description) {
         return String.format("%-20s %s%n", command, description);
+    }
+
+    public static void formatPartyStat(ArrayList<Character> partyCharacters) {
+        // Print Name row
+        for (Character c : partyCharacters) {
+            System.out.printf("%-15s", c.getName());
+        }
+        System.out.println();
+
+        // Print HP row
+        for (Character c : partyCharacters) {
+            System.out.printf("HP: %-11s", c.getHealth() + "/" + c.getHealthValues().getMaxValue());
+        }
+        System.out.println();
+
+        // Print MP row
+        for (Character c : partyCharacters) {
+            System.out.printf("MP: %-11s", c.getManaValues().getValue() + "/" + c.getManaValues().getMaxValue());
+        }
+        System.out.println();
+
+        // Print AP row
+        for (Character c : partyCharacters) {
+            System.out.printf("AP: %-11s", c.getActionPoints() + "/" + c.getMaxActionPoints());
+        }
+        System.out.println();
     }
 
     // Appends a detailed damage message to the provided StringBuilder

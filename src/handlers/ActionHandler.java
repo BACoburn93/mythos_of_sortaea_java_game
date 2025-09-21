@@ -39,10 +39,12 @@ public class ActionHandler {
         character.setActionPoints(character.getMaxActionPoints());
 
         while (character.getActionPoints() > 0) {
+            CombatUIStrings.formatPartyStat(party.getCharacters());
+
             CombatUIStrings.printActionPoints(character);
 
             // Use enum selection instead of raw string input
-            ActionTypes action = inputHandler.promptEnumSelection(ActionTypes.class, "Choose an action:");
+            ActionTypes action = inputHandler.promptEnumSelection(ActionTypes.class, "Choose an action for " + character.getName());
 
             if (action == null) {
                 System.out.println("Invalid action. Try again.");

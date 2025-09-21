@@ -23,12 +23,10 @@ public class ReactionHandler {
 
         while (!validReaction && !validCharacter) {
             while (!validCharacter) {
-                System.out.println("Party Members:");
-                for (int i = 0; i < partyCharacters.size(); i++) {
-                    Character c = partyCharacters.get(i);
-                    System.out.printf("%d. %s (%d/%d HP)\n", i + 1, c.getName(), c.getHealth(), c.getHealthValues().getMaxValue());
-                }
-
+                // System.out.println("Party Members:");
+                CombatUIStrings.formatPartyStat(partyCharacters);
+                
+                System.out.println("");
                 System.out.println("Choose a character to use a reaction (by name or number), or hit ENTER to pass.");
                 String characterToChoose = scanner.nextLine();
                 if (characterToChoose.isEmpty()) {

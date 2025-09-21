@@ -25,6 +25,10 @@ public class Party {
         this.partySize = characters.size();
     }
 
+    public ArrayList<Character> getCharacters() {
+        return characters;
+    }
+
     public Party validTargetsInParty() {
         ArrayList<Character> validCharacters = new ArrayList<>();
 
