@@ -1,4 +1,4 @@
-package enemies;
+package enemies.abilities;
 
 import abilities.damages.Damage;
 import abilities.damages.physical.*;

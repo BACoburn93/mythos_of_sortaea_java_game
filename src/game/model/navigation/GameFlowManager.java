@@ -2,7 +2,13 @@ package model.navigation;
 
 import characters.Party;
 import containers.GameContainer;
+import enemies.Enemy;
 import enemies.EnemyDatabase;
+import enemies.EnemyFactory;
+import enemies.modifiers.Prefix;
+import enemies.modifiers.Suffix;
+import enemies.modifiers.prefixes.Wrathful;
+import enemies.modifiers.suffixes.Cryomancer;
 import handlers.ActionHandler;
 import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
@@ -11,11 +17,19 @@ import utils.GameScanner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import actors.types.CombatActor;
 
 public class GameFlowManager {
     private GameScanner scanner = new GameScanner();
+    private static final Random rng = new Random();
+
+    public static <T> T getRandomOrNull(List<T> list) {
+        int index = rng.nextInt(list.size());
+        return list.get(index);
+    }
 
     // Entry point for exploration
     public void startExploration(Party party) {
@@ -48,7 +62,28 @@ public class GameFlowManager {
             if (node.getDescription().contains("battle") && choice == 1) {
 
                 // Create enemies and actors
-                ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.goblinScenario();
+                // ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.goblinScenario();
+                ArrayList<enemies.Enemy> testEnemies = new ArrayList<>();
+
+                List<Prefix> prefixes = new ArrayList<>(Arrays.asList(
+                    new Wrathful(),
+                    null // allow possibility of no prefix
+                ));
+
+                List<Suffix> suffixes = new ArrayList<>(Arrays.asList(
+                    new Cryomancer(),
+                    null // allow possibility of no suffix
+                ));
+
+
+                for (int i = 0; i < 3; i++) {
+                    Prefix randomPrefix = getRandomOrNull(prefixes);
+                    Suffix randomSuffix = getRandomOrNull(suffixes);
+
+                    Enemy goblin = EnemyFactory.createEnemy("goblin", randomPrefix, randomSuffix);
+                    testEnemies.add(goblin);
+                }
+
                 ArrayList<CombatActor> allActors = new ArrayList<>(party.characters);
                 allActors.addAll(testEnemies);
 

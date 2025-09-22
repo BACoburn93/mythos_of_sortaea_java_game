@@ -10,7 +10,6 @@ public class Wrathful implements Prefix {
         enemy.getAttributes().increaseStrength(15);
         enemy.getAttributes().increaseAgility(5);
         enemy.getAttributes().decreaseDefense(10);
-        enemy.setName("Wrathful " + enemy.getName());
     }
 
     @Override

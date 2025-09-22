@@ -1,25 +1,30 @@
 package enemies;
 
+import enemies.abilities.AbilityPool;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
 import enemies.types.*;
+import enemies.util.EnemyNameFormatter;
+import enemies.util.EnemyNameTracker;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Random;
+
+import abilities.single_target.SingleTargetAbility;
 
 public class EnemyFactory {
-    private static final Map<String, Integer> enemyTypeCount = new HashMap<>();
+    private static final Random rng = new Random();
 
     public static Enemy createEnemy(String baseType, Prefix prefix, Suffix suffix) {
-        String key = baseType.toLowerCase();
-        int count = enemyTypeCount.getOrDefault(key, 0) + 1;
-        enemyTypeCount.put(key, count);
+        String prefixName = (prefix != null) ? prefix.getName() : "";
+        String suffixName = (suffix != null) ? suffix.getName() : "";
 
-        String displayName = formatEnemyName(baseType, count);
+        int count = EnemyNameTracker.getNextCount(baseType, prefixName, suffixName);
+        String displayName = EnemyNameFormatter.format(baseType, prefixName, suffixName, count);
+
         Enemy enemy;
 
-        // Instantiate base enemy
-        switch (key) {
+        switch (baseType.toLowerCase()) {
             case "goblin" -> enemy = new Goblin(displayName);
             case "orc" -> enemy = new Orc(displayName);
             case "red dragon" -> enemy = new Dragon(displayName);
@@ -30,15 +35,24 @@ public class EnemyFactory {
         if (prefix != null) prefix.apply(enemy);
         if (suffix != null) suffix.apply(enemy);
 
+        // Add randomized and exclusive abilities
+        AbilityPool pool = EnemyAbilityPools.getPool(baseType.toLowerCase());
+        int maxAbilities = pool.getWeightedAbilities().size();
+        int numAbilities = maxAbilities == 0 ? 0 : rng.nextInt(maxAbilities) + 1;
+
+        List<SingleTargetAbility> abilitiesToAdd = pool.getRandomUniqueAbilities(rng, numAbilities);
+        for (SingleTargetAbility ability : abilitiesToAdd) {
+            enemy.addAbility(ability);
+        }
+
+        for (var exclusive : pool.getExclusiveAbilities()) {
+            enemy.addAbility(exclusive);
+        }
+
         return enemy;
     }
 
-    private static String formatEnemyName(String baseType, int count) {
-        int existingCount = enemyTypeCount.getOrDefault(baseType.toLowerCase(), 0);
-        return existingCount > 1 ? baseType + " #" + existingCount : baseType;
-    }
-
     public static void resetCounters() {
-        enemyTypeCount.clear();
+        EnemyNameTracker.reset();
     }
 }
