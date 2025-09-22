@@ -12,16 +12,18 @@ import characters.Character;
 import characters.Party;
 import ui.CombatUIStrings;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Enemy extends CombatActor {
-    private Ability[] abilities;
+    private List<SingleTargetAbility> abilities;
     private int experience;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
-                 Attributes attributes, Resistances resistances, SingleTargetAbility[] abilities, int experience) {
+                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int experience) {
         super(name, healthValues, manaValues, attributes, resistances);
-        this.abilities = abilities;
+        this.abilities = new ArrayList<>(List.of(baseAbilities));;
         this.experience = experience;
         this.setActorType(ActorTypes.ENEMY);
     }
@@ -36,7 +38,7 @@ public class Enemy extends CombatActor {
         int targetRoll = random.nextInt(0, validTargets.partySize);
 
         for (Ability ability : this.abilities) {
-            if (abilityRoll < (double) 100 / this.abilities.length &&
+            if (abilityRoll < (double) 100 / this.abilities.size() &&
                     this.getManaValues().getValue() >= ability.getManaCost()) {
                 Character target = validTargets.characters.get(targetRoll);
 
@@ -56,7 +58,7 @@ public class Enemy extends CombatActor {
 
                 break;
             } else {
-                abilityRoll -= (double) 100 / this.abilities.length;
+                abilityRoll -= (double) 100 / this.abilities.size();
             }
         }
 
@@ -64,13 +66,18 @@ public class Enemy extends CombatActor {
             System.out.println(this.getName() + " has insufficient mana.");
         }
     }
-    
 
-    public Ability[] getAbilities() {
+    public void addAbility(SingleTargetAbility ability) {
+        if (!abilities.contains(ability)) {
+            abilities.add(ability);
+        }
+    }
+    
+    public List<SingleTargetAbility> getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(Ability[] abilities) {
+    public void setAbilities(List<SingleTargetAbility> abilities) {
         this.abilities = abilities;
     }
 

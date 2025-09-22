@@ -105,6 +105,65 @@ public class Attributes {
         System.out.println(attribute + " " + value);
     }
 
+    // Increase methods
+    public void increaseStrength(int amount) {
+        strength.setValue(strength.getValue() + amount);
+    }
+
+    public void increaseAgility(int amount) {
+        agility.setValue(agility.getValue() + amount);
+    }
+
+    public void increaseKnowledge(int amount) {
+        knowledge.setValue(knowledge.getValue() + amount);
+    }
+
+    public void increaseDefense(int amount) {
+        defense.setValue(defense.getValue() + amount);
+    }
+
+    public void increaseResilience(int amount) {
+        resilience.setValue(resilience.getValue() + amount);
+    }
+
+    public void increaseSpirit(int amount) {
+        spirit.setValue(spirit.getValue() + amount);
+    }
+
+    public void increaseLuck(int amount) {
+        luck.setValue(luck.getValue() + amount);
+    }
+
+    // Decrease methods
+    public void decreaseStrength(int amount) {
+        strength.setValue(strength.getValue() - amount);
+    }
+
+    public void decreaseAgility(int amount) {
+        agility.setValue(agility.getValue() - amount);
+    }
+
+    public void decreaseKnowledge(int amount) {
+        knowledge.setValue(knowledge.getValue() - amount);
+    }
+
+    public void decreaseDefense(int amount) {
+        defense.setValue(defense.getValue() - amount);
+    }
+
+    public void decreaseResilience(int amount) {
+        resilience.setValue(resilience.getValue() - amount);
+    }
+
+    public void decreaseSpirit(int amount) {
+        spirit.setValue(spirit.getValue() - amount);
+    }
+
+    public void decreaseLuck(int amount) {
+        luck.setValue(luck.getValue() - amount);
+    }
+
+
     public void add(Attributes other) {
         this.strength.setValue(this.strength.getValue() + other.strength.getValue());
         this.agility.setValue(this.agility.getValue() + other.agility.getValue());

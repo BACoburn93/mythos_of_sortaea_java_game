@@ -10,6 +10,15 @@ import actors.resources.ManaValues;
 import java.util.ArrayList;
 
 public class EnemyDatabase {
+    private static Enemy goblin = new Enemy(
+                       "Goblin",
+                       new HealthValues(30, 3),
+                       new ManaValues(10, 3),
+                       new Attributes(10, 12, 8, 10, 8, 8, 8),
+                       new Resistances(),
+                       new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
+                       20);
+
     public static ArrayList<Enemy> getDefaultEnemies() {
         ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -55,6 +64,16 @@ public class EnemyDatabase {
                                5, 5, 2, 5, 3, 3),
                        new SingleTargetAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE, AbilityDatabase.FIRE_BREATH },
                        200));
+
+        return enemies;
+    }
+
+    public static ArrayList<Enemy> goblinScenario() {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        enemies.add(goblin);
+        enemies.add(goblin);
+        enemies.add(goblin);
 
         return enemies;
     }

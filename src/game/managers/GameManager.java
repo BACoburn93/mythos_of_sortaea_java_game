@@ -4,6 +4,7 @@ import actors.types.CombatActor;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
 import handlers.*;
+import model.navigation.GameFlowManager;
 import ui.MenuUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
@@ -48,6 +49,9 @@ public class GameManager {
         GameContainer newGame = new GameContainer();
         System.out.println("Your party is ready:");
         System.out.println(newGame.party.printPartySummary());
+
+        GameFlowManager flowManager = new GameFlowManager();
+        flowManager.startExploration(newGame.party);
     }
 
     private void runTestCombat() {
