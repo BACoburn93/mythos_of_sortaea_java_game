@@ -7,6 +7,7 @@ import abilities.Ability;
 import abilities.damages.Damage;
 import actors.types.CombatActor;
 import characters.Character;
+import characters.jobs.Job;
 import interfaces.Nameable;
 import items.equipment.Equipment;
 import status_conditions.StatusCondition;
@@ -58,6 +59,16 @@ public class CombatUIStrings {
         for (int i = 0; i < list.size(); i++) {
             var item = list.get(i);
             sb.append(String.format("%d. %-20s%n", i + 1, item.getName()));
+        }
+        return sb.toString();
+    }
+
+    
+    public static String formatJobList(List<Job> list) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            var job = list.get(i);
+            sb.append(String.format("%d. %-20s%n", i + 1, job.getName()));
         }
         return sb.toString();
     }

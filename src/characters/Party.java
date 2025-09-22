@@ -47,6 +47,15 @@ public class Party {
         return sharedEquipment;
     }
 
+    public String printPartySummary() {
+        StringBuilder summary = new StringBuilder("=== Your Party ===\n");
+        for (int i = 0; i < characters.size(); i++) {
+            Character c = characters.get(i);
+            summary.append(String.format("%d. %s - %s\n", i + 1, c.getName(), c.getJob()));
+        }
+        return summary.toString();
+    }
+
     public String toString() {
         return "Party{" +
                 "characters=" + characters +
