@@ -10,7 +10,6 @@ import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import utils.GameScanner;
 import utils.InputHandler;
-import utils.StringUtils;
 import ui.CombatUIStrings;
 
 public class EquipmentHandler {

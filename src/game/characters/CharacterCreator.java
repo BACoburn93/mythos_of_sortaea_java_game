@@ -75,12 +75,24 @@ public class CharacterCreator {
             System.out.println("What is Character Number " + index + "'s name?");
             name = StringUtils.capitalize(this.gameLoop.nextLine());
 
-            if (!usedNames.contains(name.toLowerCase()) && !name.isEmpty()) {
+            boolean isNumericIndex = false;
+            try {
+                int num = Integer.parseInt(name);
+                if (num >= 1 && num <= 6) {
+                    isNumericIndex = true;
+                }
+            } catch (NumberFormatException e) {
+               // Not a number, so it's fine
+            }
+
+            if (!usedNames.contains(name.toLowerCase()) && !name.isEmpty() && !isNumericIndex) {
                 usedNames.add(name.toLowerCase());
                 validName = true;
             } else {
                 if (usedNames.contains(name.toLowerCase())) {
                     System.out.println("This name is already taken. Please choose a different name.");
+                } else if (isNumericIndex) {
+                    System.out.println("Names cannot be a number from 1 to 6. Please choose a different name.");
                 } else {
                     System.out.println("This name must contain characters.");
                 }

@@ -4,7 +4,6 @@ import characters.Character;
 import characters.Party;
 import enemies.Enemy;
 import ui.CombatUIStrings;
-import ui.GeneralUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;
