@@ -226,7 +226,7 @@ public class CombatUIStrings {
 
             if (totalPages <= 1) break;
 
-            System.out.println("[N]ext page | [P]revious page | [I]ndex (jump to page) | Any other key to choose ability");
+            System.out.println("[N]ext page | [P]revious page | [I]ndex (jump to page) | Any other key to proceed");
             String input = scanner.nextLine().trim().toLowerCase();
             if (input.equals("n") && page < totalPages - 1) {
                 page++;
