@@ -3,11 +3,7 @@ package utils;
 import java.util.Scanner;
 
 public class GameScanner {
-    private Scanner scanner;
-
-    public GameScanner() {
-        this.scanner = new Scanner(System.in);
-    }
+    private final Scanner scanner = new Scanner(System.in);
 
     public String nextLine() {
         String input = scanner.nextLine();
@@ -76,5 +72,9 @@ public class GameScanner {
 
     public void close() {
         scanner.close();
+    }
+
+    public Scanner getScanner() {
+        return scanner;
     }
 }

@@ -140,15 +140,6 @@ public class CombatUIStrings {
         }
     }
 
-    public static void printAbilitiesWithDescription(List<Ability> abilities) {
-        int idx = 1;
-        for (Ability ability : abilities) {
-            String header = idx + ". " + ability.getName() + ": " + ability.getDescription();
-            StringUtils.stringDividerTop(header, "-", 80);
-            idx++;
-        }
-    }
-
     public static void printAbilityPointUsage(Character character, Ability chosenAbility) {
         if(chosenAbility != null) {
             if (character.getActionPoints() <= 0) {
@@ -219,5 +210,45 @@ public class CombatUIStrings {
         }
     }
 
+    public static <T> void displayPaginatedList(List<T> items, int pageSize, java.util.Scanner scanner, java.util.function.Function<T, String> stringifier) {
+        int page = 0;
+        int totalPages = (int) Math.ceil(items.size() / (double) pageSize);
+
+        while (true) {
+            int start = page * pageSize;
+            int end = Math.min(start + pageSize, items.size());
+            System.out.println("");
+            System.out.println("Page " + (page + 1) + " of " + totalPages);
+
+            for (int i = start; i < end; i++) {
+                System.out.println((i + 1) + ". " + stringifier.apply(items.get(i)));
+            }
+
+            if (totalPages <= 1) break;
+
+            System.out.println("[N]ext page | [P]revious page | [I]ndex (jump to page) | Any other key to choose ability");
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("n") && page < totalPages - 1) {
+                page++;
+            } else if (input.equals("p") && page > 0) {
+                page--;
+            } else if (input.equals("i")) {
+                System.out.print("Enter page number (1-" + totalPages + "): ");
+                String pageInput = scanner.nextLine().trim();
+                try {
+                    int pageNum = Integer.parseInt(pageInput);
+                    if (pageNum >= 1 && pageNum <= totalPages) {
+                        page = pageNum - 1;
+                    } else {
+                        System.out.println("Invalid page number.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input.");
+                }
+            } else {
+                break;
+            }
+        }
+    }
 
 }

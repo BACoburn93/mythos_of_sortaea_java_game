@@ -96,14 +96,50 @@ public abstract class Ability {
 
     @Override
     public String toString() {
-        return String.format("| %-15s | %-5s |  %-5s | %-20s | %-20s | %-20s | %-20s |",
-                name,
-                manaCost + " MP",
-                actionCost + " AP",
-                weaponRequirement != null ? Arrays.toString(weaponRequirement) : "No Weapon Requirement",
-                armorRequirement != null ? Arrays.toString(armorRequirement) : "No Armor Requirement",
-                shieldRequirement != null ? Arrays.toString(shieldRequirement) : "No Shield Requirement",
-                Arrays.toString(damages));
+        int totalWidth = 90;
+        String divider = "+" + "-".repeat(totalWidth - 2) + "+\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(divider);
+
+        // Wrap description to fit within 35 characters
+        String desc = description != null ? description : "";
+        java.util.List<String> descLines = utils.StringUtils.wrapText(desc, 35);
+
+        // First row: name, mana, action, first line of description
+        sb.append(String.format(
+            "| %-25s | %-8s | %-8s | %-35s |\n",
+            name,
+            manaCost + " MP",
+            actionCost + " AP",
+            descLines.size() > 0 ? descLines.get(0) : ""
+        ));
+
+        // Additional description lines (if any)
+        for (int i = 1; i < descLines.size(); i++) {
+            sb.append(String.format(
+                "| %-25s | %-8s | %-8s | %-35s |\n",
+                "", "", "", descLines.get(i)
+            ));
+        }
+
+        sb.append(divider);
+        sb.append(String.format(
+            "| %-86s |\n",
+            "Damage: " + (damages != null ? Arrays.toString(damages) : "None")
+        ));
+        sb.append(divider);
+        sb.append(String.format(
+            "| %-86s |\n",
+            "Weapon Requirement: " + (weaponRequirement != null ? String.join(", ", Arrays.stream(weaponRequirement).map(Enum::name).toArray(String[]::new)) : "No Weapon")
+        ));
+        sb.append(divider);
+        sb.append(String.format(
+            "| %-43s | %-42s |\n",
+            "Armor Requirement: " + (armorRequirement != null ? String.join(", ", Arrays.stream(armorRequirement).map(Enum::name).toArray(String[]::new)) : "No Armor"),
+            "Shield Requirement: " + (shieldRequirement != null ? String.join(", ", Arrays.stream(shieldRequirement).map(Enum::name).toArray(String[]::new)) : "No Shield")
+        ));
+        sb.append(divider);
+        return sb.toString();
     }
 }
 

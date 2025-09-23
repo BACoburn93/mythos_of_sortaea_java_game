@@ -71,7 +71,7 @@ public class Attributes {
         System.out.println(attribute + " " + value);
     }
 
-    // Increase methods
+    // Increment methods
     public void increaseStrength(double amount) { strength.setValue(strength.getValue() + amount); }
     public void increaseAgility(double amount) { agility.setValue(agility.getValue() + amount); }
     public void increaseKnowledge(double amount) { knowledge.setValue(knowledge.getValue() + amount); }
@@ -80,7 +80,7 @@ public class Attributes {
     public void increaseSpirit(double amount) { spirit.setValue(spirit.getValue() + amount); }
     public void increaseLuck(double amount) { luck.setValue(luck.getValue() + amount); }
 
-    // Decrease methods
+    // Deduct methods
     public void decreaseStrength(double amount) { strength.setValue(strength.getValue() - amount); }
     public void decreaseAgility(double amount) { agility.setValue(agility.getValue() - amount); }
     public void decreaseKnowledge(double amount) { knowledge.setValue(knowledge.getValue() - amount); }
@@ -89,11 +89,24 @@ public class Attributes {
     public void decreaseSpirit(double amount) { spirit.setValue(spirit.getValue() - amount); }
     public void decreaseLuck(double amount) { luck.setValue(luck.getValue() - amount); }
 
-    // Duplicate add(Attributes other) method removed.
+    // Multiply methods
+    public void multiplyStrength(double factor) { strength.setValue(strength.getValue() * factor); }
+    public void multiplyAgility(double factor) { agility.setValue(agility.getValue() * factor); }
+    public void multiplyKnowledge(double factor) { knowledge.setValue(knowledge.getValue() * factor); }
+    public void multiplyDefense(double factor) { defense.setValue(defense.getValue() * factor); }
+    public void multiplyResilience(double factor) { resilience.setValue(resilience.getValue() * factor); }
+    public void multiplySpirit(double factor) { spirit.setValue(spirit.getValue() * factor); }
+    public void multiplyLuck(double factor) { luck.setValue(luck.getValue() * factor); }
 
-    // Removed duplicate subtract(Attributes other) method.
+    // Divide methods
+    public void divideStrength(double divisor) { strength.setValue(strength.getValue() / divisor); }
+    public void divideAgility(double divisor) { agility.setValue(agility.getValue() / divisor); }
+    public void divideKnowledge(double divisor) { knowledge.setValue(knowledge.getValue() / divisor); }
+    public void divideDefense(double divisor) { defense.setValue(defense.getValue() / divisor); }
+    public void divideResilience(double divisor) { resilience.setValue(resilience.getValue() / divisor); }
+    public void divideSpirit(double divisor) { spirit.setValue(spirit.getValue() / divisor); }
+    public void divideLuck(double divisor) { luck.setValue(luck.getValue() / divisor ); }
 
-    // Remove duplicate toString() method here.
 
     public void increaseDefense(int amount) {
         defense.setValue(defense.getValue() + amount);

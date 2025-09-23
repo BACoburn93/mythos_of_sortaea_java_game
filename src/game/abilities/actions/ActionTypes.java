@@ -3,7 +3,6 @@ package abilities.actions;
 public enum ActionTypes {
     HELP,
     ABILITY,
-    ABILDESC,
     ITEM,
     SORT,
     OBSERVE,

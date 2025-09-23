@@ -2,13 +2,15 @@ package enemies.modifiers.prefixes;
 
 import enemies.Enemy;
 import enemies.modifiers.Prefix;
+import utils.MathUtils;
 
 public class Wrathful implements Prefix {
     @Override
     public void apply(Enemy enemy) {
-        enemy.getAttributes().increaseStrength(15);
-        enemy.getAttributes().increaseAgility(10.0);
-        enemy.getAttributes().decreaseDefense(10.0);
+        enemy.getAttributes().multiplyStrength(MathUtils.randomInRange(1.3)); 
+        enemy.getAttributes().multiplyAgility(MathUtils.randomInRange(1.3)); 
+        enemy.getAttributes().multiplyDefense(MathUtils.randomInRange(0.85));
+        enemy.getHealthValues().multiplyMaxValue(MathUtils.randomInRange(0.85));
     }
 
     @Override

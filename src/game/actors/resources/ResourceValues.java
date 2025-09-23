@@ -35,6 +35,16 @@ public abstract class ResourceValues {
         this.regenValue = regenValue;
     }
 
+    public void multiplyMaxValue(double multiplier) {
+        this.maxValue *= multiplier;
+    }
+
+    public void divideMaxValue(double divisor) {
+        if (divisor != 0) {
+            this.maxValue /= divisor;
+        }
+    }
+
     public ResourceValues() {
         this.maxValue = 0;
         this.value = 0;

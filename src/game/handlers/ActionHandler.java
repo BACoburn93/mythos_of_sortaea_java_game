@@ -61,20 +61,29 @@ public class ActionHandler {
                     CombatUIStrings.printAbilityPointUsage(character, null);
                 }
                 case ABILITY -> {
-                    CombatUIStrings.printAbilitiesWithDivider(character.getAbilities());
-
-                    System.out.print("Type the ability name to use: ");
-                    String abilityInput = scanner.nextLine().trim();
-
-                    if (character.isValidAbility(abilityInput)) {
-                        Ability chosenAbility = character.chooseAbility(abilityInput);
-                        handleUseAbility(character, chosenAbility);
-                    } else {
-                        System.out.println("Invalid ability name.");
+                    // Paginated ability display with selection
+                    Ability chosenAbility = null;
+                    while (chosenAbility == null) {
+                        CombatUIStrings.displayPaginatedList(
+                            character.getAbilities(),
+                            3,
+                            scanner.getScanner(),
+                            Ability::toString
+                        );
+                        System.out.print("Type the ability name to use or [Q]uit: ");
+                        String abilityInput = scanner.nextLine().trim();
+                        if (abilityInput.equalsIgnoreCase("q")) {
+                            break;
+                        }
+                        if (character.isValidAbility(abilityInput)) {
+                            chosenAbility = character.chooseAbility(abilityInput);
+                        } else {
+                            System.out.println("Invalid ability name.");
+                        }
                     }
-                }
-                case ABILDESC -> {
-                    CombatUIStrings.printAbilitiesWithDescription(character.getAbilities());
+                    if (chosenAbility != null) {
+                        handleUseAbility(character, chosenAbility);
+                    }
                 }
                 case EQUIP -> {
                     equipmentHandler.handleEquip(scanner, character);
@@ -141,65 +150,3 @@ public class ActionHandler {
         return actors;
     }
 }
-
-    // public void handleTurn(Character character) {
-    //     character.setActionPoints(character.getMaxActionPoints());
-        
-    //     while (character.getActionPoints() > 0) {
-
-    //         CombatUIStrings.printActionPoints(character);
-
-    //         String action = scanner.nextLine();
-
-    //         if (
-    //                 action.equalsIgnoreCase("end") ||
-    //                 action.equalsIgnoreCase("end turn") ||
-    //                 action.equalsIgnoreCase("pass")
-    //         ) {
-    //             System.out.println("Ending turn.");
-    //             break;
-    //         } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
-    //             System.out.println("=".repeat(50));
-    //             StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "", 50);
-    //         } else if (character.isValidAction(action)) {
-    //             character.handleItem(action);
-
-    //             CombatUIStrings.printAbilityPointUsage(character, null);
-
-    //             if (Objects.equals(action.toUpperCase(), ActionTypes.ABILITY.toString())) {
-    //                 CombatUIStrings.printAbilitiesWithDivider(character.getAbilities());
-    //             }
-
-    //             if (Objects.equals(action.toUpperCase(), "SORT")) {
-    //                 handleSortAction(party, character);
-    //             }
-
-
-    //             if (Objects.equals(action.toUpperCase(), ActionTypes.ABILDESC.toString()) ||
-    //                     Objects.equals(action.toLowerCase(), "ability description")) {
-    //                 CombatUIStrings.printAbilitiesWithDescription(character.getAbilities());
-    //             }
-
-    //             if (Objects.equals(action.toUpperCase(), ActionTypes.EQUIP.toString())) {
-    //                 equipmentHandler.handleEquip(scanner, character);
-    //             }
-
-    //             if (Objects.equals(action.toUpperCase(), ActionTypes.UNEQUIP.toString())) {
-    //                 equipmentHandler.handleUnequip(scanner, character);
-    //             }
-
-    //             if (Objects.equals(action.toUpperCase(), ActionTypes.OBSERVE.toString()) &&
-    //                     character.getStatusConditions().getBlind().getDuration() <= 0) {
-    //                 System.out.println(character);
-    //             }
-
-    //         } else if (character.isValidAbility(action)) {
-    //             Ability chosenAbility = character.chooseAbility(action);
-
-    //             handleUseAbility(character, chosenAbility);
-
-    //         } else {
-    //             GeneralUIStrings.handleInvalidAction();
-    //         }
-    //     }
-    // }
