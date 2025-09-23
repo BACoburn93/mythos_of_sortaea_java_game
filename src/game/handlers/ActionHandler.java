@@ -58,33 +58,9 @@ public class ActionHandler {
                 }
                 case ITEM -> {
                     character.handleItem("ITEM");
-                    CombatUIStrings.printAbilityPointUsage(character, null);
                 }
                 case ABILITY -> {
-                    Ability chosenAbility = null;
-
-                    while (chosenAbility == null) {
-                        CombatUIStrings.displayPaginatedList(
-                            character.getAbilities(),
-                            3,
-                            scanner.getScanner(),
-                            Ability::toString
-                        );
-                        System.out.print("Type the ability name to use or [Q]uit: ");
-                        String abilityInput = scanner.nextLine().trim();
-                        if (abilityInput.equalsIgnoreCase("q")) {
-                            break;
-                        }
-                        if (character.isValidAbility(abilityInput)) {
-                            chosenAbility = character.chooseAbility(abilityInput);
-                        } else {
-                            System.out.println("Invalid ability name.");
-                        }
-                    }
-                    
-                    if (chosenAbility != null) {
-                        handleUseAbility(character, chosenAbility);
-                    }
+                    handleAbilityAction(character);
                 }
                 case EQUIP -> {
                     equipmentHandler.handleEquip(scanner, character);
@@ -107,6 +83,34 @@ public class ActionHandler {
                 }
                 default -> throw new IllegalArgumentException("Unexpected value: " + action);
             }
+        }
+    }
+
+    private void handleAbilityAction(Character character) {
+        Ability chosenAbility = null;
+
+        while (chosenAbility == null) {
+            System.out.print("Type the ability name to use, [L]ist to see abilities, or [Q]uit: ");
+            String abilityInput = scanner.nextLine().trim();
+
+            if (abilityInput.equalsIgnoreCase("q") || abilityInput.equalsIgnoreCase("quit")) {
+                break;
+            }
+            if (abilityInput.equalsIgnoreCase("l") || abilityInput.equalsIgnoreCase("list")) {
+                CombatUIStrings.displayPaginatedList(
+                    character.getAbilities(),
+                    3,
+                    scanner.getScanner(),
+                    Ability::toString
+                );
+            }
+            if (character.isValidAbility(abilityInput)) {
+                chosenAbility = character.chooseAbility(abilityInput);
+            }
+        }
+        
+        if (chosenAbility != null) {
+            handleUseAbility(character, chosenAbility);
         }
     }
 
