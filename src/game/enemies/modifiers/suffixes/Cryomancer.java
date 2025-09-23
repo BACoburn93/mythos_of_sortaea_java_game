@@ -13,6 +13,6 @@ public class Cryomancer implements Suffix {
 
     @Override
     public String getName() {
-        return "Cryomancer";
+        return " Cryomancer";
     }
 }

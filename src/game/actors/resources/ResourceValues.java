@@ -45,6 +45,21 @@ public abstract class ResourceValues {
         }
     }
 
+    public void multiplyMaxAndSetToMax(double multiplier) {
+        this.maxValue *= multiplier;
+        this.value = this.maxValue;
+    }
+
+    public void multiplyRegenValue(double multiplier) {
+        this.regenValue *= multiplier;
+    }
+
+    public void divideRegenValue(double divisor) {
+        if (divisor != 0) {
+            this.regenValue /= divisor;
+        }
+    }
+
     public ResourceValues() {
         this.maxValue = 0;
         this.value = 0;

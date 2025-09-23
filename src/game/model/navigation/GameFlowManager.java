@@ -1,14 +1,12 @@
 package model.navigation;
 
 import characters.Party;
-import containers.GameContainer;
 import enemies.Enemy;
-import enemies.EnemyDatabase;
 import enemies.EnemyFactory;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
-import enemies.modifiers.prefixes.Wrathful;
-import enemies.modifiers.suffixes.Cryomancer;
+import enemies.modifiers.prefixes.*;
+import enemies.modifiers.suffixes.*;
 import handlers.ActionHandler;
 import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
@@ -66,6 +64,7 @@ public class GameFlowManager {
                 ArrayList<enemies.Enemy> testEnemies = new ArrayList<>();
 
                 List<Prefix> prefixes = new ArrayList<>(Arrays.asList(
+                    new Arch(),
                     new Wrathful(),
                     null // allow possibility of no prefix
                 ));

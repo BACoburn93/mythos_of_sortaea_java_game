@@ -151,6 +151,58 @@ public class Resistances {
         this.light.setValue(this.light.getValue() - other.light.getValue());
     }
 
+    public void multiplyAll(double factor) {
+        bludgeoning.setValue(bludgeoning.getValue() * factor);
+        piercing.setValue(piercing.getValue() * factor);
+        slashing.setValue(slashing.getValue() * factor);
+        earth.setValue(earth.getValue() * factor);
+        fire.setValue(fire.getValue() * factor);
+        ice.setValue(ice.getValue() * factor);
+        lightning.setValue(lightning.getValue() * factor);
+        venom.setValue(venom.getValue() * factor);
+        water.setValue(water.getValue() * factor);
+        wind.setValue(wind.getValue() * factor);
+        darkness.setValue(darkness.getValue() * factor);
+        light.setValue(light.getValue() * factor);
+    }
+
+    public void multiplyBludgeoning(double factor) {
+        bludgeoning.setValue(bludgeoning.getValue() * factor);
+    }
+    public void multiplyPiercing(double factor) {
+        piercing.setValue(piercing.getValue() * factor);
+    }
+    public void multiplySlashing(double factor) {
+        slashing.setValue(slashing.getValue() * factor);
+    }
+    public void multiplyEarth(double factor) {
+        earth.setValue(earth.getValue() * factor);
+    }
+    public void multiplyFire(double factor) {
+        fire.setValue(fire.getValue() * factor);
+    }
+    public void multiplyIce(double factor) {
+        ice.setValue(ice.getValue() * factor);
+    }
+    public void multiplyLightning(double factor) {
+        lightning.setValue(lightning.getValue() * factor);
+    }
+    public void multiplyVenom(double factor) {
+        venom.setValue(venom.getValue() * factor);
+    }
+    public void multiplyWater(double factor) {
+        water.setValue(water.getValue() * factor);
+    }
+    public void multiplyWind(double factor) {
+        wind.setValue(wind.getValue() * factor);
+    }
+    public void multiplyDarkness(double factor) {
+        darkness.setValue(darkness.getValue() * factor);
+    }
+    public void multiplyLight(double factor) {
+        light.setValue(light.getValue() * factor);
+    }
+
     @Override
     public String toString() {
         return bludgeoning + ", " + piercing + ", " + slashing + ", " +

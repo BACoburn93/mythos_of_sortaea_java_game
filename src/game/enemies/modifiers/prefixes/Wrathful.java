@@ -10,11 +10,12 @@ public class Wrathful implements Prefix {
         enemy.getAttributes().multiplyStrength(MathUtils.randomInRange(1.3)); 
         enemy.getAttributes().multiplyAgility(MathUtils.randomInRange(1.3)); 
         enemy.getAttributes().multiplyDefense(MathUtils.randomInRange(0.85));
-        enemy.getHealthValues().multiplyMaxValue(MathUtils.randomInRange(0.85));
+
+        enemy.getHealthValues().multiplyMaxAndSetToMax(MathUtils.randomInRange(0.85));
     }
 
     @Override
     public String getName() {
-        return "Wrathful";
+        return "Wrathful ";
     }
 }

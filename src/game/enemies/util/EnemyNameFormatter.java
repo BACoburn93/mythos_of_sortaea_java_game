@@ -7,13 +7,13 @@ public class EnemyNameFormatter {
         StringBuilder name = new StringBuilder();
 
         if (prefix != null && !prefix.isBlank()) {
-            name.append(prefix).append(" ");
+            name.append(prefix).append("");
         }
 
         name.append(StringUtils.capitalize(baseType));
 
         if (suffix != null && !suffix.isBlank()) {
-            name.append(" ").append(suffix);
+            name.append("").append(suffix);
         }
 
         if (count > 1) {
