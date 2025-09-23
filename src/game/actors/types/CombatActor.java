@@ -176,7 +176,7 @@ public class CombatActor extends Actor {
             applyStatusCondition(attacker, damage);
         }
 
-        StringUtils.stringDividerTop(damageMessage.toString(), "=", 50);
+        StringUtils.stringDividerTop(damageMessage.toString(), "", 50);
     }
 
     public void applyStatusCondition(ActorInterface attacker, Damage damage) {
@@ -243,9 +243,7 @@ public class CombatActor extends Actor {
     }
 
     public void handleStartTurn() {
-        System.out.println("=".repeat(50));
-        System.out.println(super.getName() + "'s turn has started.");
-        System.out.println("=".repeat(50));
+        StringUtils.stringDivider(super.getName() + "'s turn has started.", "=", 50);
 
         if (healthValues.getRegenValue() > 0) {
             healthValues.setValue(healthValues.getValue() + healthValues.getRegenValue());
@@ -259,10 +257,8 @@ public class CombatActor extends Actor {
     }
 
     public void handleEndTurn() {
-        System.out.println("=".repeat(50));
         handleStatusConditions();
-        System.out.println(super.getName() + "'s turn has ended.");
-        System.out.println("=".repeat(50));
+        StringUtils.stringDivider(super.getName() + "'s turn has ended.", "=", 50);
     }
 
     public StatusConditions getStatusConditions() {

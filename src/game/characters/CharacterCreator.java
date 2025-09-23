@@ -104,7 +104,7 @@ public class CharacterCreator {
             if (job != null) {
                 validJob = true;
             } else {
-                StringUtils.stringDivider(jobInput + " is not a valid class, please try again.", "=", 50);
+                StringUtils.stringDivider(jobInput + " is not a valid class, please try again.", "", 50);
                 System.out.println(CombatUIStrings.formatJobList(validJobs));
             }
         }

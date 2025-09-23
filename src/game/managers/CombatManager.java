@@ -41,7 +41,7 @@ public class CombatManager {
                 "Initiative Order: " + initiativeOrder.stream()
                         .map(CombatActor::getName)
                         .toList()
-                , "=", 50);
+                , "", 50);
 
         return initiativeOrder;
     }

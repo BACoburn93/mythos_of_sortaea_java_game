@@ -140,7 +140,7 @@ public class Character extends CombatActor {
             }
         }
 
-        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "=", 50);
+        StringUtils.stringDivider(String.valueOf(this.getAttributes()), "", 50);
     }
 
     public void changeStance(Stances stance) {
@@ -291,7 +291,7 @@ public class Character extends CombatActor {
                 .collect(java.util.stream.Collectors.joining(", "));
 
         StringUtils.twoStringDivider(this.getName() + " is observing the surrounding area.",
-                actorNames, "-", 50);
+                actorNames, "", 50);
     }
 
     public void handleReaction(ArrayList<Character> actors, String reaction) {
@@ -467,8 +467,7 @@ public class Character extends CombatActor {
             this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
             if(this.level % 4 == 0) this.maxActionPoints++;
 
-            System.out.println("=".repeat(50));
-            System.out.println(this.getName() + " has leveled up!");
+            StringUtils.stringDivider(this.getName() + " has leveled up!", "* ", 10);
             allocateAttributePoints();
         }
     }

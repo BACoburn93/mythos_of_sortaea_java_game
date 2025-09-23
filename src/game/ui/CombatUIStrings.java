@@ -135,7 +135,7 @@ public class CombatUIStrings {
         int idx = 1;
         for (Ability ability : abilities) {
             String header = idx + ". " + String.valueOf(ability); 
-            StringUtils.stringDividerTop(header, "-", 50);
+            StringUtils.stringDividerTop(header, "-", 80);
             idx++;
         }
     }
@@ -144,15 +144,9 @@ public class CombatUIStrings {
         int idx = 1;
         for (Ability ability : abilities) {
             String header = idx + ". " + ability.getName() + ": " + ability.getDescription();
-            StringUtils.stringDividerTop(header, "-", 50);
+            StringUtils.stringDividerTop(header, "-", 80);
             idx++;
         }
-    }
-
-    public static void printActionPoints(Character character) {
-        StringUtils.stringDivider(character.getActionPoints() + "/" +
-        character.getMaxActionPoints() + " Action Points.",
-        "-", 50);
     }
 
     public static void printAbilityPointUsage(Character character, Ability chosenAbility) {
@@ -181,7 +175,7 @@ public class CombatUIStrings {
     }
 
     public static void printCombatActorStats(CombatActor combatActor) {
-        StringUtils.stringDivider(combatActor.getName() + "'s Stats", "=", 60);
+        StringUtils.stringDivider(combatActor.getName() + "'s Stats", "", 50);
 
         // Health and Mana
         System.out.println("Health:       " + StringUtils.formatInt(combatActor.getHealthValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getHealthValues().getMaxValue()));

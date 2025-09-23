@@ -41,8 +41,6 @@ public class ActionHandler {
         while (character.getActionPoints() > 0) {
             CombatUIStrings.formatPartyStat(party.getCharacters());
 
-            CombatUIStrings.printActionPoints(character);
-
             // Use enum selection instead of raw string input
             ActionTypes action = inputHandler.promptEnumSelection(ActionTypes.class, "Choose an action for " + character.getName());
 
@@ -57,7 +55,7 @@ public class ActionHandler {
                     return;
                 }
                 case HELP -> {
-                    StringUtils.stringDivider("There's no helping you now.", "=", 50);
+                    StringUtils.stringDivider("There's no helping you now.", "", 50);
                 }
                 case ITEM -> {
                     character.handleItem("ITEM");
@@ -163,7 +161,7 @@ public class ActionHandler {
     //             break;
     //         } else if (Objects.equals(action.toUpperCase(), ActionTypes.HELP.toString())) {
     //             System.out.println("=".repeat(50));
-    //             StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "=", 50);
+    //             StringUtils.stringDivider("Ability, Ability Description/Abildesc, Item, or End", "", 50);
     //         } else if (character.isValidAction(action)) {
     //             character.handleItem(action);
 

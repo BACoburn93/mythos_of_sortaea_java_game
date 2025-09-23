@@ -47,7 +47,7 @@ public class ReactionHandler {
                 String reactionInput = scanner.nextLine();
 
                 Reaction chosenReaction = chosenCharacter.chooseReaction(reactionInput);
-                System.out.println("=".repeat(50));
+                System.out.println("");
 
                 if (chosenCharacter.isValidReaction(reactionInput)) {
                     if (reactionInput.equalsIgnoreCase("help")) {
@@ -60,8 +60,6 @@ public class ReactionHandler {
                 } else {
                     System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
                 }
-
-                CombatUIStrings.printActionPoints(chosenCharacter);
             }
         }
     }
