@@ -61,8 +61,8 @@ public class ActionHandler {
                     CombatUIStrings.printAbilityPointUsage(character, null);
                 }
                 case ABILITY -> {
-                    // Paginated ability display with selection
                     Ability chosenAbility = null;
+
                     while (chosenAbility == null) {
                         CombatUIStrings.displayPaginatedList(
                             character.getAbilities(),
@@ -81,6 +81,7 @@ public class ActionHandler {
                             System.out.println("Invalid ability name.");
                         }
                     }
+                    
                     if (chosenAbility != null) {
                         handleUseAbility(character, chosenAbility);
                     }
