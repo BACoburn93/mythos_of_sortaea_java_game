@@ -1,7 +1,7 @@
 package actors.resources;
 
 public class HealthValues extends ResourceValues {
-    public HealthValues(int maxValue, int regenValue) {
+    public HealthValues(double maxValue, double regenValue) {
         super(maxValue, maxValue, regenValue);
     }
 

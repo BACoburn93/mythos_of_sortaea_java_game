@@ -1,7 +1,7 @@
 package actors.attributes;
 
 public class AgilityAttribute extends Attribute {
-    public AgilityAttribute(int value) {
+    public AgilityAttribute(double value) {
         super(AttributeTypes.AGILITY, value);
     }
 }

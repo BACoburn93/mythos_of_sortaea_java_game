@@ -25,7 +25,7 @@ public class Envenom extends DamageOverTime {
 
     @Override
     public void applyDamage(CombatActor actor) {
-        int totalValue = actor.getResistances().getVenom().getValue();
+        double totalValue = actor.getResistances().getVenom().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - totalValue);
 

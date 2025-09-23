@@ -2,7 +2,7 @@ package actors.attributes;
 
 public class KnowledgeAttribute extends Attribute {
 
-    public KnowledgeAttribute(int value) {
+    public KnowledgeAttribute(double value) {
         super(AttributeTypes.KNOWLEDGE, value);
     }
 }

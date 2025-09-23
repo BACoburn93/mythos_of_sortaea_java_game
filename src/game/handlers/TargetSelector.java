@@ -3,6 +3,7 @@ package handlers;
 import actors.ActorTypes;
 import actors.types.CombatActor;
 import utils.GameScanner;
+import utils.StringUtils;
 
 import java.util.*;
 
@@ -30,7 +31,7 @@ public class TargetSelector {
             System.out.println("Available targets:");
             for (int i = 0; i < enemies.size(); i++) {
                 CombatActor enemy = enemies.get(i);
-                System.out.printf("%d. %s (%d HP)%n", i + 1, enemy.getName(), enemy.getHealthValues().getValue());
+                System.out.printf("%d. %s (%s HP)%n", i + 1, enemy.getName(), StringUtils.formatInt(enemy.getHealthValues().getValue()));
             }
 
             System.out.println("Choose a target by name or number:");

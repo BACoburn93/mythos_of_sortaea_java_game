@@ -3,7 +3,7 @@ package actors.resistances;
 import abilities.damages.DamageTypes;
 
 public class SlashingResistance extends Resistance {
-    public SlashingResistance(int value) {
+    public SlashingResistance(double value) {
         super(DamageTypes.SLASHING, value);
     }
 }

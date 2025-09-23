@@ -1,7 +1,7 @@
 package actors.attributes;
 
 public class DefenseAttribute extends Attribute {
-    public DefenseAttribute(int value) {
+    public DefenseAttribute(double value) {
         super(AttributeTypes.DEFENSE, value);
     }
 }

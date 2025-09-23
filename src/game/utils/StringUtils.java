@@ -118,11 +118,15 @@ public class StringUtils {
     }
 
 
-    private static String formatAttr(String name, int value) {
-        return String.format("%+d %s, ", value, name);
+    private static String formatAttr(String name, double value) {
+        return String.format("%+.2f %s, ", value, name);
     }
 
-    private static String formatRes(String name, int value) {
-        return String.format("%+d %s, ", value, name);
+    private static String formatRes(String name, double value) {
+        return String.format("%+.2f %s, ", value, name);
+    }
+
+    public static String formatInt(double value) {
+        return String.valueOf((int) value);
     }
 }

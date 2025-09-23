@@ -3,7 +3,7 @@ package actors.resistances;
 import abilities.damages.DamageTypes;
 
 public class WindResistance extends Resistance {
-    public WindResistance(int value) {
+    public WindResistance(double value) {
         super(DamageTypes.WIND, value);
     }
 }

@@ -25,7 +25,7 @@ public class Burn extends DamageOverTime {
 
     @Override
     public void applyDamage(CombatActor actor) {
-        int totalValue = actor.getResistances().getFire().getValue();
+        double totalValue = actor.getResistances().getFire().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - totalValue);
 

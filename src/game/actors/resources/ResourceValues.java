@@ -1,33 +1,33 @@
 package actors.resources;
 
 public abstract class ResourceValues {
-    private int maxValue;
-    private int value;
-    private int regenValue;
+    private double maxValue;
+    private double value;
+    private double regenValue;
 
-    public ResourceValues(int maxValue, int value, int regenValue) {
+    public ResourceValues(double maxValue, double value, double regenValue) {
         this.maxValue = maxValue;
         this.value = value;
         this.regenValue = regenValue;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public int getMaxValue() {
+    public double getMaxValue() {
         return maxValue;
     }
 
-    public void setMaxValue(int maxValue) {
+    public void setMaxValue(double maxValue) {
         this.maxValue = maxValue;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
-    public int getRegenValue() {
+    public double getRegenValue() {
         return regenValue;
     }
 

@@ -2,7 +2,7 @@ package actors.attributes;
 
 public class SpiritAttribute extends Attribute {
 
-    public SpiritAttribute(int value) {
+    public SpiritAttribute(double value) {
         super(AttributeTypes.SPIRIT, value);
     }
 }

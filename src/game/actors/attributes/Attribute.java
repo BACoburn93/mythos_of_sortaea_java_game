@@ -2,9 +2,9 @@ package actors.attributes;
 
 public abstract class Attribute {
     private AttributeTypes name;
-    private int value;
+    private double value;
 
-    public Attribute(AttributeTypes name, int value) {
+    public Attribute(AttributeTypes name, double value) {
         this.name = name;
         this.value = value;
     }
@@ -17,11 +17,11 @@ public abstract class Attribute {
         this.name = name;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

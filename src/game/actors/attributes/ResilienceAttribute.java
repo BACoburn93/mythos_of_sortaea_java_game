@@ -2,7 +2,7 @@ package actors.attributes;
 
 public class ResilienceAttribute extends Attribute {
 
-    public ResilienceAttribute(int value) {
+    public ResilienceAttribute(double value) {
         super(AttributeTypes.RESILIENCE, value);
     }
 }

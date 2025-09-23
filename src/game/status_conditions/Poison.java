@@ -25,7 +25,7 @@ public class Poison extends DamageOverTime {
 
     @Override
     public void applyDamage(CombatActor actor) {
-        int resistance = actor.getResistances().getEarth().getValue();
+        double resistance = actor.getResistances().getEarth().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - (getValue() - resistance));
 

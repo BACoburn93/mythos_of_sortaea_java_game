@@ -83,12 +83,12 @@ public class CombatActor extends Actor {
         this.stance = stance;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return healthValues.getValue();
     }
 
     public int getInitiative() {
-        return new Random().nextInt(this.attributes.getAgility().getValue());
+        return new Random().nextInt(Math.max(1, (int) attributes.getAgility().getValue()));
     }
 
     public boolean canUseAbility(Ability ability) {
@@ -98,7 +98,7 @@ public class CombatActor extends Actor {
     public void spendMana(Ability ability) {
         if (canUseAbility(ability)) {
             manaValues.setValue(manaValues.getValue() - ability.getManaCost());
-            System.out.println(manaValues.getValue() + " / " + manaValues.getMaxValue() + " Mana Remaining");
+            System.out.println(StringUtils.formatInt(manaValues.getValue()) + " / " + StringUtils.formatInt(manaValues.getMaxValue()) + " Mana Remaining");
         }
     }
 
@@ -114,16 +114,14 @@ public class CombatActor extends Actor {
     private int getDamageToAdd(CombatActor attacker, Damage damage) {
         int damageToAdd = 0;
 
-        // if (!(attacker instanceof CombatActor ca)) return 0;
-
         if (damage.getDamageClassification() == DamageClassificationTypes.PHYSICAL) {
-            damageToAdd += attacker.attributes.getStrength().getValue() / 2;
+            damageToAdd += (int) (attacker.attributes.getStrength().getValue() / 2.0);
         }
         if (damage.getDamageClassification() == DamageClassificationTypes.MAGICAL) {
-            damageToAdd += attacker.attributes.getKnowledge().getValue() / 2;
+            damageToAdd += (int) (attacker.attributes.getKnowledge().getValue() / 2.0);
         }
         if (damage.getDamageClassification() == DamageClassificationTypes.SPIRITUAL) {
-            damageToAdd += attacker.attributes.getSpirit().getValue() / 2;
+            damageToAdd += (int) (attacker.attributes.getSpirit().getValue() / 2.0);
         }
 
         return damageToAdd;
@@ -134,14 +132,14 @@ public class CombatActor extends Actor {
 
         if (stance != null && stance == Stances.DEFENDING &&
                 damage.getDamageClassification() == DamageClassificationTypes.PHYSICAL) {
-            damageToMitigate += attributes.getDefense().getValue() / 2 + resistance;
+            damageToMitigate += (int) (attributes.getDefense().getValue() / 2.0) + resistance;
         }
 
         if (stance == Stances.PARRYING &&
                 damage.getDamageClassification() == DamageClassificationTypes.PHYSICAL) {
             Random random = new Random();
-            int parryRoll = random.nextInt(attributes.getAgility().getValue());
-            int attackRoll = random.nextInt(this.attributes.getLuck().getValue()) + this.attributes.getStrength().getValue() * 2;
+            int parryRoll = random.nextInt(Math.max(1, (int) attributes.getAgility().getValue()));
+            int attackRoll = random.nextInt(Math.max(1, (int) attributes.getLuck().getValue())) + (int) attributes.getStrength().getValue() * 2;
 
             if (parryRoll > attackRoll) {
                 damageToMitigate += 99999;
@@ -153,20 +151,19 @@ public class CombatActor extends Actor {
         return damageToMitigate;
     }
 
-    // public void attack(CombatActor attacker, CombatActor target, Ability ability) {
-    //         target.takeDamage(attacker, ability);
+    public void attack(CombatActor attacker, CombatActor target, Ability ability) {
+            target.takeDamage(attacker, ability);
 
-    // }
+    }
 
     public void takeDamage(CombatActor attacker, Ability ability) {
-
         StringBuilder damageMessage = new StringBuilder();
 
         for (Damage damage : ability.getDamages()) {
             int damageToAdd = getDamageToAdd(attacker, damage);
             boolean isFirstDamage = damage == ability.getDamages()[0];
 
-            int resistanceValue = resistances.getResistance(damage.getDamageType());
+            int resistanceValue = resistances.getResistance(damage.getDamageType()).intValue();
             int damageToMitigate = calculateMitigation(attacker, ability, damage, resistanceValue);
 
             int baseDamage = (int) (Math.floor(Math.random() * (damage.getMaxDamage() - damage.getMinDamage()))
@@ -194,9 +191,9 @@ public class CombatActor extends Actor {
 
             StatusCondition currStatus = statusConditions.getStatus(status.getName());
 
-            int attackerRoll = random.nextInt(Math.max(1, a.attributes.getLuck().getValue()));
+            int attackerRoll = random.nextInt(Math.max(1, (int) a.attributes.getLuck().getValue()));
             int targetRoll = random.nextInt(
-                    Math.max(1, attributes.getResilience().getValue() * 2 + currStatus.getResistance())
+                    Math.max(1, (int) (attributes.getResilience().getValue() * 2.0 + currStatus.getResistance()))
             );
 
             if (trigger && attackerRoll > targetRoll) {
@@ -207,17 +204,12 @@ public class CombatActor extends Actor {
         }
     }
 
-    
-    public void attack(CombatActor attacker, CombatActor target, Ability ability) {
-        target.takeDamage(attacker, ability);
-    }
-
     public void takeDamage(StatusCondition statusCondition) {
         int mitigation = switch (statusCondition.getName()) {
-            case BURN -> resistances.getFire().getValue();
-            case ENVENOM -> resistances.getVenom().getValue();
-            case POISON -> resistances.getEarth().getValue();
-            case ROT -> resistances.getDarkness().getValue();
+            case BURN -> (int) resistances.getFire().getValue();
+            case ENVENOM -> (int) resistances.getVenom().getValue();
+            case POISON -> (int) resistances.getEarth().getValue();
+            case ROT -> (int) resistances.getDarkness().getValue();
             default -> 0;
         };
 

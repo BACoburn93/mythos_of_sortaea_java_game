@@ -35,8 +35,8 @@ public class Resistances {
         this.light = light;
     }
 
-    public Resistances(int bludgeoning, int piercing, int slashing, int earth, int fire, int ice, int lightning,
-    int venom, int water, int wind, int darkness, int light) {
+    public Resistances(double bludgeoning, double piercing, double slashing, double earth, double fire, double ice, double lightning,
+    double venom, double water, double wind, double darkness, double light) {
         this.bludgeoning = new BludgeoningResistance(bludgeoning);
         this.piercing = new PiercingResistance(piercing);
         this.slashing = new SlashingResistance(slashing);
@@ -52,10 +52,10 @@ public class Resistances {
     }
 
     public Resistances() {
-        this(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+        this(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0);
     }
 
-    public int getResistance(DamageTypes type) {
+    public Double getResistance(DamageTypes type) {
         return switch (type) {
             case BLUDGEONING -> bludgeoning.getValue();
             case PIERCING -> piercing.getValue();

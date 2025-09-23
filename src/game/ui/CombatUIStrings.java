@@ -26,10 +26,10 @@ public class CombatUIStrings {
         for (int i = 0; i < list.size(); i++) {
             Equipment item = list.get(i);
 
-            sb.append(String.format("%-3d | %-20s | %-5d | %-3d | %-10s | %-9s%n",
+            sb.append(String.format("%-3d | %-20s | %-5s | %-3d | %-10s | %-9s%n",
                     i + 1,
                     item.getName(),
-                    item.getGoldValue(),
+                    StringUtils.formatInt(item.getGoldValue()),
                     item.getQuantity(),
                     item.getEquipmentType(),
                     item.getItemType()
@@ -38,13 +38,12 @@ public class CombatUIStrings {
             // Attributes line
             String attrLine = StringUtils.formatAttributes(item.getAttributes());
             if (!attrLine.isEmpty()) {
-                sb.append("    | Attributes:   ").append(attrLine).append("\n");
+                sb.append("    | Attributes:   ").append(attrLine.replaceAll("\\.00", "")).append("\n");
             }
 
-            // Resistances line
             String resLine = StringUtils.formatResistances(item.getResistances());
             if (!resLine.isEmpty()) {
-                sb.append("    | Resistances:  ").append(resLine).append("\n");
+                sb.append("    | Resistances:  ").append(resLine.replaceAll("\\.00", "")).append("\n");
             }
 
             // Spacer between items
@@ -87,13 +86,13 @@ public class CombatUIStrings {
 
         // Print HP row
         for (Character c : partyCharacters) {
-            System.out.printf("HP: %-11s", c.getHealth() + "/" + c.getHealthValues().getMaxValue());
+            System.out.printf("HP: %-11s", StringUtils.formatInt(c.getHealth()) + "/" + StringUtils.formatInt(c.getHealthValues().getMaxValue()));
         }
         System.out.println();
 
         // Print MP row
         for (Character c : partyCharacters) {
-            System.out.printf("MP: %-11s", c.getManaValues().getValue() + "/" + c.getManaValues().getMaxValue());
+            System.out.printf("MP: %-11s", StringUtils.formatInt(c.getManaValues().getValue()) + "/" + StringUtils.formatInt(c.getManaValues().getMaxValue()));
         }
         System.out.println();
 
@@ -173,7 +172,7 @@ public class CombatUIStrings {
     }
 
     public static void printHitPointsRemaining(CombatActor actor) {
-        System.out.println(actor.getName() + " has " + actor.getHealth() + " hit points remaining.");
+        System.out.println(actor.getName() + " has " + StringUtils.formatInt(actor.getHealth()) + " hit points remaining.");
     }
 
     public static void printMissedAttack(CombatActor attacker, CombatActor defender, Ability ability) {
@@ -185,12 +184,12 @@ public class CombatUIStrings {
         StringUtils.stringDivider(combatActor.getName() + "'s Stats", "=", 60);
 
         // Health and Mana
-        System.out.println("Health:       " + + combatActor.getHealthValues().getValue() + " / " + combatActor.getHealthValues().getMaxValue());
-        System.out.println("Mana:         " + combatActor.getManaValues().getValue() + " / " + combatActor.getManaValues().getMaxValue());
+        System.out.println("Health:       " + StringUtils.formatInt(combatActor.getHealthValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getHealthValues().getMaxValue()));
+        System.out.println("Mana:         " + StringUtils.formatInt(combatActor.getManaValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getManaValues().getMaxValue()));
 
         // Attributes and Resistances
-        System.out.println("Attributes:   " + StringUtils.formatAttributes(combatActor.getAttributes()));
-        System.out.println("Resistances:  " + StringUtils.formatResistances(combatActor.getResistances()));
+        System.out.println("Attributes:   " + StringUtils.formatAttributes(combatActor.getAttributes()).replaceAll("\\.00", ""));
+        System.out.println("Resistances:  " + StringUtils.formatResistances(combatActor.getResistances()).replaceAll("\\.00", ""));
 
         // Status Conditions
         StatusConditions status = combatActor.getStatusConditions();
@@ -218,8 +217,11 @@ public class CombatUIStrings {
 
     private static void printStatusCondition(String name, StatusCondition condition) {
         if (condition != null) {
-            System.out.printf("  - %-12s | Value: %-3d | Resistance: %-5d | Duration: %d turns%n",
-                    name, condition.getValue(), condition.getResistance(), condition.getDuration());
+            System.out.printf("  - %-12s | Value: %-3s | Resistance: %-5s | Duration: %d turns%n",
+                    name,
+                    StringUtils.formatInt(condition.getValue()),
+                    StringUtils.formatInt(condition.getResistance()),
+                    condition.getDuration());
         }
     }
 

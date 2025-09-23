@@ -25,7 +25,7 @@ public class Rot extends DamageOverTime {
 
     @Override
     public void applyDamage(CombatActor actor) {
-        int totalValue = actor.getResistances().getDarkness().getValue();
+        double totalValue = actor.getResistances().getDarkness().getValue();
 
         actor.getHealthValues().setValue(actor.getHealthValues().getValue() - totalValue);
 

@@ -4,9 +4,9 @@ import abilities.damages.DamageTypes;
 
 public abstract class Resistance {
     private DamageTypes name;
-    private int value;
+    private double value;
 
-    public Resistance(DamageTypes name, int value) {
+    public Resistance(DamageTypes name, double value) {
         this.name = name;
         this.value = value;
     }
@@ -19,11 +19,11 @@ public abstract class Resistance {
         this.name = name;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
