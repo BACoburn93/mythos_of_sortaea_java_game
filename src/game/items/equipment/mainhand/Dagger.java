@@ -5,11 +5,8 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.WeaponTypes;
 
 public class Dagger extends Mainhand{
-    public Dagger(String name, int goldValue, int quantity, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, quantity, WeaponTypes.DAGGER, false, attributes, resistances);
-    }
-
     public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances) {
         super(name, goldValue, WeaponTypes.DAGGER, false, attributes, resistances);
     }
+
 }

@@ -32,14 +32,9 @@ public class EquipmentHandler {
         );
 
         if (eq != null) {
-            if(eq.getQuantity() > 0) {
-                System.out.println("Equipping " + eq.getName());
-            } else {
-                System.out.println("No more " + eq.getName() + " left in inventory.");
-                return;
-            }
-            
+            System.out.println("Equipping " + eq.getName());
             character.equipItem(eq);
+            equipmentList.remove(eq);
             ui.CombatUIStrings.printCombatActorStats(character);
         }
     }
@@ -77,8 +72,9 @@ public class EquipmentHandler {
 
         if (slot != null && eq != null) {
             character.unequipItem(slot);
-            System.out.println("Character's Attributes after unequipping: " + character.getAttributes());
-            System.out.println("Character's Resistances after unequipping: " + character.getResistances());
+            party.getSharedEquipment().add(eq);
+            System.out.println("Unequipped " + eq.getName() + " from " + slot);
+            ui.CombatUIStrings.printCombatActorStats(character);
         } else {
             System.out.println("No such equipped item found.");
         }

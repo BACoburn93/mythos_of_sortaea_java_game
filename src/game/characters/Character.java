@@ -178,28 +178,23 @@ public class Character extends CombatActor {
         EquipmentTypes type = EquipmentTypes.valueOf(item.getEquipmentType().toString());
         Equipment currentItem = equipmentSlots.get(type);
 
-        if (item.getQuantity() > 0) {
-            if (currentItem != null) {
-                unequipItem(currentItem.getEquipmentType());
-            }
+        if (currentItem != null) {
+            unequipItem(currentItem.getEquipmentType());
+        }
 
-            if (item instanceof Mainhand mainhandItem) {
-                if (mainhandItem.isTwoHanded()) {
-                    Equipment offhandItem = equipmentSlots.get(EquipmentTypes.OFFHAND);
-                    if (offhandItem != null) {
-                        unequipItem(EquipmentTypes.OFFHAND);
-                    }
+        if (item instanceof Mainhand mainhandItem) {
+            if (mainhandItem.isTwoHanded()) {
+                Equipment offhandItem = equipmentSlots.get(EquipmentTypes.OFFHAND);
+                if (offhandItem != null) {
+                    unequipItem(EquipmentTypes.OFFHAND);
                 }
             }
-
-            item.decrementQuantity();
-            equipmentSlots.put(type, item);
-            addItemAttributesAndResistances(item);
-
-            if (item.getQuantity() < 1) {
-                equipment.remove(item);
-            }
         }
+
+        equipmentSlots.put(type, item);
+        addItemAttributesAndResistances(item);
+
+        equipment.remove(item);
     }
 
     public boolean equipItem(String itemName) {
@@ -218,12 +213,7 @@ public class Character extends CombatActor {
 
         if (item != null) {
             removeItemAttributesAndResistances(item);
-            if(item.getQuantity() <= 0) {
-                equipment.add(item);
-                item.setQuantity(1);
-            } else {
-                item.incrementQuantity();
-            }
+            equipment.add(item);
             
             equipment.sort(Comparator.comparing(Equipment::getName, String.CASE_INSENSITIVE_ORDER));
             equipmentSlots.put(type, null);

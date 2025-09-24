@@ -25,7 +25,6 @@ public class EquipmentDatabase {
         EQUIPMENT_LIST.add(new LightTorso(
                 "Leather Armor",
                 10,
-                3,
                 new Attributes(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0),
                 new Resistances(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
         ));

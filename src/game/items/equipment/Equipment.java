@@ -2,34 +2,39 @@ package items.equipment;
 
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
-import interfaces.NameableWithQuantity;
-import items.Item;
 import items.equipment.item_types.ItemType;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
-public abstract class Equipment extends Item implements Comparator<Equipment>, NameableWithQuantity {
+public abstract class Equipment implements Comparator<Equipment> {
+    private String name;
+    private int value;
     private EquipmentTypes equipmentType;
     private ItemType itemType;
     private Attributes attributes;
     private Resistances resistances;
 
-    public Equipment(String name, int value, int quantity, EquipmentTypes equipmentType,
+    public Equipment(String name, int value, EquipmentTypes equipmentType,
                      ItemType itemType, Attributes attributes, Resistances resistances) {
-        super(name, value, quantity);
+        this.name = name;
+        this.value = value;
         this.equipmentType = equipmentType;
         this.itemType = itemType;
         this.attributes = attributes;
         this.resistances = resistances;
     }
 
-    public Equipment(String name, int value, int quantity, EquipmentTypes equipmentType,
+    public Equipment(String name, int value, EquipmentTypes equipmentType,
                      Attributes attributes, Resistances resistances) {
-        super(name, value, quantity);
-        this.equipmentType = equipmentType;
-        this.attributes = attributes;
-        this.resistances = resistances;
+        this(name, value, equipmentType, null, attributes, resistances);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGoldValue() {
+        return value;
     }
 
     public EquipmentTypes getEquipmentType() {
@@ -50,22 +55,13 @@ public abstract class Equipment extends Item implements Comparator<Equipment>, N
 
     @Override
     public int compare(Equipment o1, Equipment o2) {
-        return 0;
+        // You can implement a more meaningful comparison if needed
+        return o1.getName().compareToIgnoreCase(o2.getName());
     }
 
     @Override
     public Comparator<Equipment> reversed() {
         return Comparator.super.reversed();
-    }
-
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public int getQuantity() {
-        return super.getQuantity();
     }
 
     @Override
@@ -99,13 +95,6 @@ public abstract class Equipment extends Item implements Comparator<Equipment>, N
         // Third row: Resistances (as integers)
         String resText = "Resistances: " + (resistances != null ? resistancesToIntString(resistances) : "None");
         for (String line : utils.StringUtils.wrapText(resText, contentWidth)) {
-            sb.append(String.format("| %-86s |\n", line));
-        }
-        sb.append(divider);
-
-        // Fourth row: Quantity
-        String qtyText = "Quantity: " + getQuantity();
-        for (String line : utils.StringUtils.wrapText(qtyText, contentWidth)) {
             sb.append(String.format("| %-86s |\n", line));
         }
         sb.append(divider);

@@ -3,8 +3,6 @@ package utils;
 import java.util.List;
 import java.util.function.Function;
 import ui.CombatUIStrings;
-import utils.GameScanner;
-
 public class SelectionUtils {
     public static <T> T selectFromList(
             List<T> list,

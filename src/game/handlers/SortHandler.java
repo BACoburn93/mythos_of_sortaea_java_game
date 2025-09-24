@@ -39,8 +39,7 @@ public class SortHandler {
     public enum EquipmentSortKey {
         NAME,
         TYPE,
-        VALUE,
-        QUANTITY
+        VALUE
     }
 
     public enum ConsumableSortKey {
@@ -181,8 +180,7 @@ public class SortHandler {
     private Comparator<Equipment> getEquipmentComparator(EquipmentSortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Equipment::getName);
-            case VALUE -> Comparator.comparingInt(Equipment::getGoldValue);
-            case QUANTITY -> Comparator.comparingInt(Equipment::getQuantity);   
+            case VALUE -> Comparator.comparingInt(Equipment::getGoldValue); 
             case TYPE -> Comparator.comparing(e -> e.getEquipmentType().toString());
         };
     }

@@ -19,18 +19,17 @@ public class CombatUIStrings {
     public static String formatEquipItemList(List<Equipment> list) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("%-3s | %-20s | %-5s | %-3s | %-10s | %-9s%n",
-                "#", "Name", "Value", "Qty", "Type", "ItemType"));
+        sb.append(String.format("%-3s | %-20s | %-5s | %-10s | %-9s%n",
+                "#", "Name", "Value", "Type", "ItemType"));
         sb.append("-".repeat(80)).append("\n");
 
         for (int i = 0; i < list.size(); i++) {
             Equipment item = list.get(i);
 
-            sb.append(String.format("%-3d | %-20s | %-5s | %-3d | %-10s | %-9s%n",
+            sb.append(String.format("%-3d | %-20s | %-5s | %-10s | %-9s%n",
                     i + 1,
                     item.getName(),
                     StringUtils.formatInt(item.getGoldValue()),
-                    item.getQuantity(),
                     item.getEquipmentType(),
                     item.getItemType()
             ));
