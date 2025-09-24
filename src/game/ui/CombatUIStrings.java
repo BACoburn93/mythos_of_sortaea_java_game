@@ -78,6 +78,7 @@ public class CombatUIStrings {
     }
 
     public static void formatPartyStat(ArrayList<Character> partyCharacters) {
+        System.out.println(" ");
         // Print Name row
         for (Character c : partyCharacters) {
             System.out.printf("%-15s", c.getName());

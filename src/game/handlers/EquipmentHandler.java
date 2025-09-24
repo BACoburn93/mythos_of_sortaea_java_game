@@ -11,62 +11,12 @@ import items.equipment.EquipmentTypes;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.SelectionUtils;
-import ui.CombatUIStrings;
 
 public class EquipmentHandler {
     private Party party;
 
     public EquipmentHandler(Party party) {
         this.party = party;
-    }
-
-    /**
-     * Universal selection method for any list of items by name or index.
-     * Returns the selected item or null if not found or quit.
-     */
-    public static <T> T selectFromList(
-            List<T> list,
-            GameScanner scanner,
-            java.util.function.Function<T, String> nameGetter,
-            java.util.function.Function<T, String> toStringer,
-            String prompt,
-            String listCommand,
-            int pageSize
-    ) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
-
-            if (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) {
-                return null;
-            }
-            if (input.equalsIgnoreCase(listCommand) || input.equalsIgnoreCase("list")) {
-                ui.CombatUIStrings.displayPaginatedList(
-                    list,
-                    pageSize,
-                    scanner.getScanner(),
-                    toStringer
-                );
-                continue;
-            }
-
-            // Try index
-            if (input.matches("\\d+")) {
-                int idx = Integer.parseInt(input) - 1;
-                if (idx >= 0 && idx < list.size()) {
-                    return list.get(idx);
-                }
-            }
-
-            // Try name match
-            for (T item : list) {
-                if (nameGetter.apply(item).equalsIgnoreCase(input)) {
-                    return item;
-                }
-            }
-
-            System.out.println("No such item found.");
-        }
     }
 
     public void handleEquip(GameScanner scanner, Character character) {
@@ -82,7 +32,13 @@ public class EquipmentHandler {
         );
 
         if (eq != null) {
-            System.out.println("Equipping " + eq.getName());
+            if(eq.getQuantity() > 0) {
+                System.out.println("Equipping " + eq.getName());
+            } else {
+                System.out.println("No more " + eq.getName() + " left in inventory.");
+                return;
+            }
+            
             character.equipItem(eq);
             ui.CombatUIStrings.printCombatActorStats(character);
         }

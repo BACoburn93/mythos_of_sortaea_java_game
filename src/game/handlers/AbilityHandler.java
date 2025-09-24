@@ -4,6 +4,7 @@ import java.util.Random;
 
 import ui.CombatUIStrings;
 import utils.GameScanner;
+import utils.SelectionUtils;
 import characters.Character;
 import enemies.Enemy;
 import abilities.Ability;
@@ -25,28 +26,16 @@ public class AbilityHandler {
     }
 
     public void handleAbilityAction(Character character) {
-        Ability chosenAbility = null;
+        Ability chosenAbility = SelectionUtils.selectFromList(
+            character.getAbilities(),
+            scanner,
+            Ability::getName,
+            Ability::toString,
+            "Type the ability name to use, [L]ist to see abilities, or [Q]uit: ",
+            "l",
+            3
+        );
 
-        while (chosenAbility == null) {
-            System.out.print("Type the ability name to use, [L]ist to see abilities, or [Q]uit: ");
-            String abilityInput = scanner.nextLine().trim();
-            if (abilityInput.equalsIgnoreCase("q") || abilityInput.equalsIgnoreCase("quit")) {
-                break;
-            }
-            if (abilityInput.equalsIgnoreCase("l") || abilityInput.equalsIgnoreCase("list")) {
-                CombatUIStrings.displayPaginatedList(
-                    character.getAbilities(),
-                    3,
-                    scanner.getScanner(),
-                    ability -> ability.toString()
-                );
-            }
-            if (character.isValidAbility(abilityInput)) {
-                chosenAbility = character.chooseAbility(abilityInput);
-            } else {
-                break;
-            }
-        }
         if (chosenAbility != null) {
             handleUseAbility(character, chosenAbility);
         }
