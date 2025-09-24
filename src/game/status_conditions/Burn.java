@@ -3,14 +3,6 @@ package status_conditions;
 import actors.types.CombatActor;
 
 public class Burn extends DamageOverTime {
-    // public Burn(int value, int chanceToTrigger, int duration) {
-    //     super(StatusTypes.BURN, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
-    // }
-
-    // public Burn(int value, int resistance) {
-    //     super(StatusTypes.BURN, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
-    // }
-
     public Burn() {
         super(StatusTypes.BURN); // Default constructor with default values
     }

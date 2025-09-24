@@ -4,6 +4,7 @@ import abilities.damages.Damage;
 import abilities.damages.physical.*;
 import abilities.damages.spiritual.SpiritualFireDamage;
 import abilities.single_target.SingleTargetAbility;
+import status_conditions.*;
 
 public class AbilityDatabase {
     public static final SingleTargetAbility PUNCH = new SingleTargetAbility(
@@ -16,7 +17,7 @@ public class AbilityDatabase {
             "Claw", 5, 30, new Damage[]{new PhysicalSlashingDamage(15, 16)}, ""
     );
     public static final SingleTargetAbility FLASH_BANG = new SingleTargetAbility(
-            "Flash Bang", 5, 30, new Damage[]{new PhysicalLightDamage(15, 16)}, ""
+            "Flash Bang", 5, 30, new Damage[]{new PhysicalLightDamage(15, 16, new StatusCondition[]{new Blind(50, 100, 5), new Confused(50, 100, 5)})}, ""
     );
     public static final SingleTargetAbility ROTTING_TENTACLE = new SingleTargetAbility(
             "Rotting Tentacle", 1, 30, new Damage[]{new PhysicalDarknessDamage(15, 16)}, ""

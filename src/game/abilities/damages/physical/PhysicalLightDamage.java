@@ -15,8 +15,8 @@ public class PhysicalLightDamage extends Damage {
                 DamageClassificationTypes.PHYSICAL,
                 DamageTypes.LIGHT,
                 new StatusCondition[] {
-                        new Blind(10, 1, 2),
-                        new Confused(10, 1, 2)
+                        new Blind(),
+                        new Confused()
                 }
         );
     }
