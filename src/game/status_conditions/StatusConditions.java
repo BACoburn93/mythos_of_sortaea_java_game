@@ -21,6 +21,7 @@ public class StatusConditions {
     private Weak weak;
     private Wet wet;
 
+    // Handle initialization of status conditions by passing in specific status condition objects
     public StatusConditions(Bleed bleed, Blind blind, Burn burn, Confused confused,
                             Dry dry, Envenom envenom, Fear fear, Freeze freeze,
                             Manipulate manipulate, Paralyze paralyze, Poison poison,
@@ -43,6 +44,8 @@ public class StatusConditions {
         this.weak = weak;
         this.wet = wet;
     }
+
+    // Handle initialization of status conditions by resistance values
     public StatusConditions(int bleed, int blind, int burn, int confused,
                             int dry, int envenom, int fear, int freeze,
                             int manipulate, int paralyze, int poison,
@@ -66,6 +69,7 @@ public class StatusConditions {
         this.wet = new Wet(0, wet);
     }
 
+    // Default constructor initializing all status conditions with default values set to 0
     public StatusConditions() {
         this.bleed = new Bleed(0, 0);
         this.blind = new Blind(0, 0);
