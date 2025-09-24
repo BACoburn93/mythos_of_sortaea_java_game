@@ -20,7 +20,7 @@ import items.equipment.item_types.ArmorTypes;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.ShieldTypes;
 import items.equipment.item_types.WeaponTypes;
-import items.equipment.mainhand.Mainhand;
+import items.equipment.item_types.mainhand.Mainhand;
 import utils.InputHandler;
 import utils.StringUtils;
 

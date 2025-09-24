@@ -2,12 +2,12 @@ package items.equipment;
 
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
-import items.equipment.mainhand.Dagger;
-import items.equipment.mainhand.Longbow;
-import items.equipment.mainhand.Staff;
-import items.equipment.offhand.LargeShield;
-import items.equipment.torso.HeavyTorso;
-import items.equipment.torso.LightTorso;
+import items.equipment.item_types.mainhand.Dagger;
+import items.equipment.item_types.mainhand.Longbow;
+import items.equipment.item_types.mainhand.Staff;
+import items.equipment.item_types.offhand.LargeShield;
+import items.equipment.item_types.torso.HeavyTorso;
+import items.equipment.item_types.torso.LightTorso;
 
 import java.util.ArrayList;
 import java.util.List;
