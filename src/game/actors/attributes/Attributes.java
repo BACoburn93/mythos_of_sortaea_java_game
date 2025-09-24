@@ -176,7 +176,12 @@ public class Attributes {
 
     @Override
     public String toString() {
-        return strength + ", " + agility + ", " + knowledge + ", " + defense
-                + ", " + resilience + ", " + spirit + ", " + luck;
+        return "STR " + strength.getValue() + ", " +
+               "AGI " + agility.getValue() + ", " +
+               "KNO " + knowledge.getValue() + ", " +
+               "DEF " + defense.getValue() + ", " +
+               "RES " + resilience.getValue() + ", " +
+               "SPI " + spirit.getValue() + ", " +
+               "LUC " + luck.getValue();
     }
 }

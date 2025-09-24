@@ -7,7 +7,6 @@ import abilities.Ability;
 import abilities.damages.Damage;
 import actors.types.CombatActor;
 import characters.Character;
-import characters.jobs.Job;
 import interfaces.Nameable;
 import items.equipment.Equipment;
 import status_conditions.StatusCondition;
@@ -60,16 +59,6 @@ public class CombatUIStrings {
         }
         return sb.toString();
     }
-
-    
-    // public static String formatJobList(List<Job> list) {
-    //     StringBuilder sb = new StringBuilder();
-    //     for (int i = 0; i < list.size(); i++) {
-    //         var job = list.get(i);
-    //         sb.append(String.format("%d. %-20s%n", i + 1, job.getName()));
-    //     }
-    //     return sb.toString();
-    // }
 
     // Formats a command and its description into a consistent layout
     public static String formatKeyValue(String command, String description) {
@@ -168,45 +157,69 @@ public class CombatUIStrings {
     public static void printCombatActorStats(CombatActor combatActor) {
         StringUtils.stringDivider(combatActor.getName() + "'s Stats", "", 50);
 
-        // Health and Mana
-        System.out.println("Health:       " + StringUtils.formatInt(combatActor.getHealthValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getHealthValues().getMaxValue()));
-        System.out.println("Mana:         " + StringUtils.formatInt(combatActor.getManaValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getManaValues().getMaxValue()));
+        // Grid header
+        String divider = "+----------------+----------------------+";
+        System.out.println(divider);
+        System.out.printf("| %-14s | %-20s |%n", "Health", "Mana");
+        System.out.println(divider);
 
-        // Attributes and Resistances
-        System.out.println("Attributes:   " + StringUtils.formatAttributes(combatActor.getAttributes()).replaceAll("\\.00", ""));
-        System.out.println("Resistances:  " + StringUtils.formatResistances(combatActor.getResistances()).replaceAll("\\.00", ""));
+        // Grid values
+        System.out.printf("| %-14s | %-20s |%n",
+            StringUtils.formatInt(combatActor.getHealthValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getHealthValues().getMaxValue()),
+            StringUtils.formatInt(combatActor.getManaValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getManaValues().getMaxValue())
+        );
+        System.out.println(divider);
+
+        // Attributes and Resistances as two columns
+        List<String> attrLines = splitKeyValuePairs(StringUtils.formatAttributes(combatActor.getAttributes()).replaceAll("\\.00", ""));
+        List<String> resLines = splitKeyValuePairs(StringUtils.formatResistances(combatActor.getResistances()).replaceAll("\\.00", ""));
+        int maxRows = Math.max(attrLines.size(), resLines.size());
+        System.out.printf("| %-14s | %-20s |%n", "Attributes", "Resistances");
+        System.out.println(divider);
+        for (int i = 0; i < maxRows; i++) {
+            String attr = i < attrLines.size() ? attrLines.get(i) : "";
+            String res = i < resLines.size() ? resLines.get(i) : "";
+            System.out.printf("| %-14s | %-20s |%n", attr, res);
+        }
+        System.out.println(divider);
 
         // Status Conditions
         StatusConditions status = combatActor.getStatusConditions();
         if (status != null) {
+            String statusDivider = "+--------------+----------+------------+----------+";
             System.out.println("\nStatus Effects:");
-            printStatusCondition("Bleed", status.getBleed());
-            printStatusCondition("Blind", status.getBlind());
-            printStatusCondition("Burn", status.getBurn());
-            printStatusCondition("Confused", status.getConfused());
-            printStatusCondition("Dry", status.getDry());
-            printStatusCondition("Envenom", status.getEnvenom());
-            printStatusCondition("Fear", status.getFear());
-            printStatusCondition("Freeze", status.getFreeze());
-            printStatusCondition("Manipulate", status.getManipulate());
-            printStatusCondition("Paralyze", status.getParalyze());
-            printStatusCondition("Poison", status.getPoison());
-            printStatusCondition("Rot", status.getRot());
-            printStatusCondition("Sick", status.getSick());
-            printStatusCondition("Slow", status.getSlow());
-            printStatusCondition("Stun", status.getStun());
-            printStatusCondition("Weak", status.getWeak());
-            printStatusCondition("Wet", status.getWet());
+            System.out.println(statusDivider);
+            System.out.printf("| %-12s | %-8s | %-10s | %-8s |%n", "Effect", "Severity", "Resistance", "Duration");
+            System.out.println(statusDivider);
+            printStatusConditionGrid("Bleed", status.getBleed());
+            printStatusConditionGrid("Blind", status.getBlind());
+            printStatusConditionGrid("Burn", status.getBurn());
+            printStatusConditionGrid("Confused", status.getConfused());
+            printStatusConditionGrid("Dry", status.getDry());
+            printStatusConditionGrid("Envenom", status.getEnvenom());
+            printStatusConditionGrid("Fear", status.getFear());
+            printStatusConditionGrid("Freeze", status.getFreeze());
+            printStatusConditionGrid("Manipulate", status.getManipulate());
+            printStatusConditionGrid("Paralyze", status.getParalyze());
+            printStatusConditionGrid("Poison", status.getPoison());
+            printStatusConditionGrid("Rot", status.getRot());
+            printStatusConditionGrid("Sick", status.getSick());
+            printStatusConditionGrid("Slow", status.getSlow());
+            printStatusConditionGrid("Stun", status.getStun());
+            printStatusConditionGrid("Weak", status.getWeak());
+            printStatusConditionGrid("Wet", status.getWet());
+            System.out.println(statusDivider);
         }
     }
 
-    private static void printStatusCondition(String name, StatusCondition condition) {
+    // Helper for grid-style status condition printing
+    private static void printStatusConditionGrid(String name, StatusCondition condition) {
         if (condition != null) {
-            System.out.printf("  - %-12s | Value: %-3s | Resistance: %-5s | Duration: %d turns%n",
-                    name,
-                    StringUtils.formatInt(condition.getValue()),
-                    StringUtils.formatInt(condition.getResistance()),
-                    condition.getDuration());
+            System.out.printf("| %-12s | %-8s | %-10s | %-8d |%n",
+                name,
+                StringUtils.formatInt(condition.getValue()),
+                StringUtils.formatInt(condition.getResistance()),
+                condition.getDuration());
         }
     }
 
@@ -249,6 +262,54 @@ public class CombatUIStrings {
                 break;
             }
         }
+    }
+
+    // Helper to split comma-separated key-value pairs into lines
+    private static List<String> splitKeyValuePairs(String input) {
+        List<String> result = new ArrayList<>();
+        if (input == null || input.isEmpty()) return result;
+        String[] pairs = input.split(",");
+        for (String pair : pairs) {
+            result.add(pair.trim());
+        }
+        return result;
+    }
+
+    // Helper to wrap long grid rows
+    private static void printWrappedGridRow(String label, String value, int width) {
+        List<String> lines = wrapString(value, width);
+        for (int i = 0; i < lines.size(); i++) {
+            if (i == 0) {
+                System.out.printf("| %-14s | %-"+width+"s |%n", label, lines.get(i));
+            } else {
+                System.out.printf("| %-14s | %-"+width+"s |%n", "", lines.get(i));
+            }
+        }
+    }
+
+    // Simple word wrap helper
+    private static List<String> wrapString(String text, int width) {
+        List<String> lines = new ArrayList<>();
+        if (text == null || text.isEmpty()) {
+            lines.add("");
+            return lines;
+        }
+        int start = 0;
+        while (start < text.length()) {
+            int end = Math.min(start + width, text.length());
+            // Try to break at last comma or space before width
+            if (end < text.length()) {
+                int lastComma = text.lastIndexOf(',', end);
+                int lastSpace = text.lastIndexOf(' ', end);
+                int breakPos = Math.max(lastComma, lastSpace);
+                if (breakPos > start) {
+                    end = breakPos + 1;
+                }
+            }
+            lines.add(text.substring(start, end).trim());
+            start = end;
+        }
+        return lines;
     }
 
 }

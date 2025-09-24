@@ -104,29 +104,25 @@ public class StringUtils {
     public static String formatResistances(Resistances res) {
         StringBuilder sb = new StringBuilder();
 
-        if (res.getBludgeoning().getValue() != 0) sb.append(formatRes("BLUDGE", res.getBludgeoning().getValue()));
-        if (res.getPiercing().getValue() != 0) sb.append(formatRes("PIERC", res.getPiercing().getValue()));
-        if (res.getSlashing().getValue() != 0) sb.append(formatRes("SLASH", res.getSlashing().getValue()));
-        if (res.getEarth().getValue() != 0) sb.append(formatRes("EARTH", res.getEarth().getValue()));
-        if (res.getFire().getValue() != 0) sb.append(formatRes("FIRE", res.getFire().getValue()));
-        if (res.getIce().getValue() != 0) sb.append(formatRes("ICE", res.getIce().getValue()));
-        if (res.getLightning().getValue() != 0) sb.append(formatRes("LGTN", res.getLightning().getValue()));
-        if (res.getVenom().getValue() != 0) sb.append(formatRes("VENOM", res.getVenom().getValue()));
-        if (res.getWater().getValue() != 0) sb.append(formatRes("WATER", res.getWater().getValue()));
-        if (res.getWind().getValue() != 0) sb.append(formatRes("WIND", res.getWind().getValue()));
-        if (res.getDarkness().getValue() != 0) sb.append(formatRes("DARK", res.getDarkness().getValue()));
-        if (res.getLight().getValue() != 0) sb.append(formatRes("LIGHT", res.getLight().getValue()));
+        if (res.getBludgeoning().getValue() != 0) sb.append(formatAttr("BLUDGE", res.getBludgeoning().getValue()));
+        if (res.getPiercing().getValue() != 0) sb.append(formatAttr("PIERC", res.getPiercing().getValue()));
+        if (res.getSlashing().getValue() != 0) sb.append(formatAttr("SLASH", res.getSlashing().getValue()));
+        if (res.getEarth().getValue() != 0) sb.append(formatAttr("EARTH", res.getEarth().getValue()));
+        if (res.getFire().getValue() != 0) sb.append(formatAttr("FIRE", res.getFire().getValue()));
+        if (res.getIce().getValue() != 0) sb.append(formatAttr("ICE", res.getIce().getValue()));
+        if (res.getLightning().getValue() != 0) sb.append(formatAttr("LGTN", res.getLightning().getValue()));
+        if (res.getVenom().getValue() != 0) sb.append(formatAttr("VENOM", res.getVenom().getValue()));
+        if (res.getWater().getValue() != 0) sb.append(formatAttr("WATER", res.getWater().getValue()));
+        if (res.getWind().getValue() != 0) sb.append(formatAttr("WIND", res.getWind().getValue()));
+        if (res.getDarkness().getValue() != 0) sb.append(formatAttr("DARK", res.getDarkness().getValue()));
+        if (res.getLight().getValue() != 0) sb.append(formatAttr("LIGHT", res.getLight().getValue()));
 
         return sb.toString().replaceAll(", $", ""); // Trim trailing comma
     }
 
 
     private static String formatAttr(String name, double value) {
-        return String.format("%+.2f %s, ", value, name);
-    }
-
-    private static String formatRes(String name, double value) {
-        return String.format("%+.2f %s, ", value, name);
+        return String.format("%-7s %6.2f, ", name, value);
     }
 
     public static String formatInt(double value) {
