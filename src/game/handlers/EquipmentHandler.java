@@ -10,6 +10,7 @@ import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import utils.GameScanner;
 import utils.InputHandler;
+import utils.SelectionUtils;
 import ui.CombatUIStrings;
 
 public class EquipmentHandler {
@@ -19,32 +20,75 @@ public class EquipmentHandler {
         this.party = party;
     }
 
-    public void handleEquip(GameScanner combatLoop, Character character) {
-        List<Equipment> equipmentList = party.getSharedEquipment();
+    /**
+     * Universal selection method for any list of items by name or index.
+     * Returns the selected item or null if not found or quit.
+     */
+    public static <T> T selectFromList(
+            List<T> list,
+            GameScanner scanner,
+            java.util.function.Function<T, String> nameGetter,
+            java.util.function.Function<T, String> toStringer,
+            String prompt,
+            String listCommand,
+            int pageSize
+    ) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
 
-        // System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
-        System.out.print(CombatUIStrings.formatEquipItemList(equipmentList));
-        System.out.println("Type the equipment name or its number to equip:");
-        String chosenEquipment = combatLoop.nextLine();
+            if (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) {
+                return null;
+            }
+            if (input.equalsIgnoreCase(listCommand) || input.equalsIgnoreCase("list")) {
+                ui.CombatUIStrings.displayPaginatedList(
+                    list,
+                    pageSize,
+                    scanner.getScanner(),
+                    toStringer
+                );
+                continue;
+            }
 
-        // Equipment eq = getEquipmentByInput(chosenEquipment, equipmentList);
-        Equipment eq = null;
-        eq = InputHandler.getItemByInput(chosenEquipment, equipmentList, Equipment::getName);
-        
-        if (eq != null) {
-            System.out.println("Equipping " + eq.getName());
-            character.equipItem(eq);
-            CombatUIStrings.printCombatActorStats(character);
-            // StringUtils.formatAttributes(character.getAttributes());
-            // StringUtils.formatResistances(character.getResistances());
-            // System.out.println(character.getAttributes());
-            // System.out.println(character.getResistances());
-        } else {
-            System.out.println("No such equipment found.");
+            // Try index
+            if (input.matches("\\d+")) {
+                int idx = Integer.parseInt(input) - 1;
+                if (idx >= 0 && idx < list.size()) {
+                    return list.get(idx);
+                }
+            }
+
+            // Try name match
+            for (T item : list) {
+                if (nameGetter.apply(item).equalsIgnoreCase(input)) {
+                    return item;
+                }
+            }
+
+            System.out.println("No such item found.");
         }
     }
 
-    public void handleUnequip(GameScanner combatLoop, Character character) {
+    public void handleEquip(GameScanner scanner, Character character) {
+        List<Equipment> equipmentList = party.getSharedEquipment();
+        Equipment eq = SelectionUtils.selectFromList(
+            equipmentList,
+            scanner,
+            Equipment::getName,
+            Equipment::toString,
+            "Type the equipment name to use, [L]ist to see party equipment, or [Q]uit: ",
+            "l",
+            3
+        );
+
+        if (eq != null) {
+            System.out.println("Equipping " + eq.getName());
+            character.equipItem(eq);
+            ui.CombatUIStrings.printCombatActorStats(character);
+        }
+    }
+
+    public void handleUnequip(GameScanner scanner, Character character) {
         Map<EquipmentTypes, Equipment> slots = character.getEquipmentSlots();
         List<EquipmentTypes> orderedSlots = new ArrayList<>(slots.keySet());
         List<Map.Entry<EquipmentTypes, Equipment>> entries = new ArrayList<>(slots.entrySet());
@@ -59,7 +103,7 @@ public class EquipmentHandler {
             System.out.printf("%d. %-8s: %s%n", i + 1, slot, eqName);
         }
         System.out.println("Type the item name, slot name (e.g., HEAD), or its number to unequip:");
-        String input = combatLoop.nextLine();
+        String input = scanner.nextLine();
 
         Map.Entry<EquipmentTypes, Equipment> selectedEntry = InputHandler.getItemByInput(
             input,

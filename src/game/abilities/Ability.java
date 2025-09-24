@@ -105,7 +105,6 @@ public abstract class Ability {
         String desc = description != null ? description : "";
         java.util.List<String> descLines = utils.StringUtils.wrapText(desc, 35);
 
-        // First row: name, mana, action, first line of description
         sb.append(String.format(
             "| %-25s | %-8s | %-8s | %-35s |\n",
             name,
@@ -114,7 +113,6 @@ public abstract class Ability {
             descLines.size() > 0 ? descLines.get(0) : ""
         ));
 
-        // Additional description lines (if any)
         for (int i = 1; i < descLines.size(); i++) {
             sb.append(String.format(
                 "| %-25s | %-8s | %-8s | %-35s |\n",

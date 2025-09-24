@@ -1,7 +1,6 @@
 package handlers;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import ui.CombatUIStrings;
 import utils.GameScanner;
@@ -44,6 +43,8 @@ public class AbilityHandler {
             }
             if (character.isValidAbility(abilityInput)) {
                 chosenAbility = character.chooseAbility(abilityInput);
+            } else {
+                break;
             }
         }
         if (chosenAbility != null) {

@@ -65,7 +65,7 @@ public class GameFlowManager {
 
                 List<Prefix> prefixes = new ArrayList<>(Arrays.asList(
                     new Arch(),
-                    new Wrathful(),
+                    new Berserker(),
                     null // allow possibility of no prefix
                 ));
 

@@ -34,8 +34,12 @@ public class TargetSelector {
                 System.out.printf("%d. %s (%s HP)%n", i + 1, enemy.getName(), StringUtils.formatInt(enemy.getHealthValues().getValue()));
             }
 
-            System.out.println("Choose a target by name or number:");
+            System.out.println("Choose a target by name or number or type [Q]uit to go back:");
             String input = scanner.nextLine();
+
+            if(input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit")) {
+                return null;
+            }
 
             // Try numeric index
             if (input.matches("\\d+")) {
@@ -52,7 +56,7 @@ public class TargetSelector {
                 }
             }
 
-            System.out.println("Invalid target. Try again.");
+            System.out.println("Invalid target. Try again or type [Q]uit to go back.");
         }
     }
 }

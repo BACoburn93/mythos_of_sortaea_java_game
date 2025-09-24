@@ -4,7 +4,7 @@ import enemies.Enemy;
 import enemies.modifiers.Prefix;
 import utils.MathUtils;
 
-public class Wrathful implements Prefix {
+public class Berserker implements Prefix {
     @Override
     public void apply(Enemy enemy) {
         enemy.getAttributes().multiplyStrength(MathUtils.randomInRange(1.3)); 
@@ -16,6 +16,6 @@ public class Wrathful implements Prefix {
 
     @Override
     public String getName() {
-        return "Wrathful ";
+        return "Berserker ";
     }
 }
