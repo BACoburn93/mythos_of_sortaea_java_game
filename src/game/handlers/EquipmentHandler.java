@@ -11,6 +11,7 @@ import items.equipment.EquipmentTypes;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.SelectionUtils;
+import utils.StringUtils;
 
 public class EquipmentHandler {
     private Party party;
@@ -47,12 +48,17 @@ public class EquipmentHandler {
         orderedSlots.remove(EquipmentTypes.HEAD);
         orderedSlots.add(0, EquipmentTypes.HEAD);
 
-        for (int i = 0; i < orderedSlots.size(); i++) {
-            EquipmentTypes slot = orderedSlots.get(i);
-            Equipment eq = slots.get(slot);
-            String eqName = (eq != null) ? eq.getName() : "Empty";
-            System.out.printf("%d. %-8s: %s%n", i + 1, slot, eqName);
-        }
+        StringUtils.printOptionsGrid(
+            orderedSlots,
+            slot -> {
+                Equipment eq = slots.get(slot);
+                String eqName = (eq != null && eq.getName() != null) ? eq.getName() : "Empty";
+                return slot.toString() + ": " + eqName;
+            },
+            3,
+            5
+        );
+
         System.out.println("Type the item name, slot name (e.g., HEAD), or its number to unequip:");
         String input = scanner.nextLine();
 

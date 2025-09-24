@@ -4,8 +4,8 @@ import enemies.abilities.AbilityPool;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
 import enemies.types.*;
-import enemies.util.EnemyNameFormatter;
-import enemies.util.EnemyNameTracker;
+// import enemies.util.EnemyNameTracker;
+import utils.StringUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -19,8 +19,8 @@ public class EnemyFactory {
         String prefixName = (prefix != null) ? prefix.getName() : "";
         String suffixName = (suffix != null) ? suffix.getName() : "";
 
-        int count = EnemyNameTracker.getNextCount(baseType, prefixName, suffixName);
-        String displayName = EnemyNameFormatter.format(baseType, prefixName, suffixName, count);
+        int count = StringUtils.getNextCount(baseType, prefixName, suffixName);
+        String displayName = StringUtils.formatName(baseType, prefixName, suffixName, count);
 
         Enemy enemy;
 
@@ -52,7 +52,7 @@ public class EnemyFactory {
         return enemy;
     }
 
-    public static void resetCounters() {
-        EnemyNameTracker.reset();
-    }
+    // public static void resetCounters() {
+    //     EnemyNameTracker.reset();
+    // }
 }

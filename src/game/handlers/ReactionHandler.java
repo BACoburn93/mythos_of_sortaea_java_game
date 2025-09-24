@@ -6,6 +6,8 @@ import characters.Character;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.ListUtils;
+import utils.StringUtils;
+import utils.InputHandler;
 
 import java.util.ArrayList;
 
@@ -21,45 +23,47 @@ public class ReactionHandler {
         boolean validReaction = false;
         Character chosenCharacter = null;
 
-        while (!validReaction && !validCharacter) {
-            while (!validCharacter) {
-                // System.out.println("Party Members:");
-                CombatUIStrings.formatPartyStat(partyCharacters);
-                
-                System.out.println("");
-                System.out.println("Choose a character to use a reaction (by name or number), or hit ENTER to pass.");
-                String characterToChoose = scanner.nextLine();
-                if (characterToChoose.isEmpty()) {
-                    return;
-                }
-
-                chosenCharacter = ListUtils.getByInput(characterToChoose, partyCharacters, Character::getName);
-                if (chosenCharacter != null && chosenCharacter.getActionPoints() > 0) {
-                    validCharacter = true;
-                } else if (chosenCharacter != null) {
-                    System.out.println(chosenCharacter.getName() + " is out of Action Points and will pass by default.");
-                    return;
-                }
+        while (!validCharacter) {
+            CombatUIStrings.formatPartyStat(partyCharacters);
+            
+            System.out.println("");
+            System.out.println("Choose a character to use a reaction (by name or number), or hit ENTER to pass.");
+            String characterToChoose = scanner.nextLine();
+            if (characterToChoose.isEmpty()) {
+                return;
             }
 
-            if (validCharacter) {
-                System.out.println("Defend, Parry, Item, Observe, or Pass?");
-                String reactionInput = scanner.nextLine();
+            chosenCharacter = ListUtils.getByInput(characterToChoose, partyCharacters, Character::getName);
+            if (chosenCharacter != null && chosenCharacter.getActionPoints() > 0) {
+                validCharacter = true;
+            } else if (chosenCharacter != null) {
+                System.out.println(chosenCharacter.getName() + " is out of Action Points and will pass by default.");
+                return;
+            }
+        }
 
-                Reaction chosenReaction = chosenCharacter.chooseReaction(reactionInput);
-                System.out.println("");
+            
+        while (!validReaction) {
+            java.util.List<String> reactions = java.util.List.of("Defend", "Parry", "Item", "Observe", "Pass");
+            
+            StringUtils.printOptionsGrid(reactions, s -> s, 3, 4);
 
-                if (chosenCharacter.isValidReaction(reactionInput)) {
-                    if (reactionInput.equalsIgnoreCase("help")) {
-                        System.out.println("Optional actions are: Defend, Parry, Item, Observe, or Pass.");
-                    } else {
-                        chosenCharacter.setActionPoints(chosenCharacter.getActionPoints() - chosenReaction.getActionCost());
-                        chosenCharacter.handleReaction(reactionInput.toLowerCase());
-                        validReaction = true;
-                    }
-                } else {
-                    System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
-                }
+            System.out.println("Choose a reaction (by name or number), or type HELP for options:");
+            String reactionInput = scanner.nextLine();
+
+            String selectedReaction = InputHandler.getItemByInput(reactionInput, reactions, s -> s);
+
+            String reactionToUse = selectedReaction != null ? selectedReaction : reactionInput;
+
+            Reaction chosenReaction = chosenCharacter.chooseReaction(reactionToUse);
+            System.out.println("");
+
+            if (chosenCharacter.isValidReaction(reactionToUse)) {
+                chosenCharacter.setActionPoints(chosenCharacter.getActionPoints() - chosenReaction.getActionCost());
+                chosenCharacter.handleReaction(partyCharacters, reactionToUse.toLowerCase());
+                validReaction = true;
+            } else {
+                System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
             }
         }
     }

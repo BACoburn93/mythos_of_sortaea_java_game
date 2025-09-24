@@ -12,6 +12,7 @@ import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
 import managers.CombatManager;
 import utils.GameScanner;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +43,13 @@ public class GameFlowManager {
             System.out.println("\n" + node.getDescription());
 
             var options = node.getOptions();
-            for (int i = 0; i < options.size(); i++) {
-                System.out.printf("%d. %s\n", i + 1, options.get(i));
-            }
+
+            StringUtils.printOptionsGrid(
+                options,
+                o -> o,
+                1,
+                0
+            );
 
             int choice = -1;
             while (choice < 1 || choice > options.size()) {

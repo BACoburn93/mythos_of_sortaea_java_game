@@ -8,6 +8,7 @@ import model.navigation.GameFlowManager;
 import ui.MenuUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
+import utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,15 @@ public class GameManager {
 
         while (gameIsRunning) {
             MenuUIStrings.mainMenu();
+
+            // Define menu options
+            java.util.List<String> menuOptions = java.util.List.of(
+                "Start New Game",
+                "Test Combat",
+                "Quit"
+            );
+            StringUtils.printOptionsGrid(menuOptions, s -> s, 1, 4);
+
             String choice = inputHandler.getInput("Choose an option: ");
 
             switch (choice) {

@@ -8,6 +8,7 @@ import items.equipment.Equipment;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
+import utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -58,10 +59,14 @@ public class SortHandler {
     public void handleSortAction(Party party, Character character) {
         System.out.println("Available sort targets:");
         SortTarget[] targets = SortTarget.values();
+        java.util.ArrayList<SortTarget> targetList = new java.util.ArrayList<>(java.util.Arrays.asList(targets));
 
-        for (int i = 0; i < targets.length; i++) {
-            System.out.printf("%d. %s%n", i + 1, targets[i].name().toUpperCase());
-        }
+        StringUtils.printOptionsGrid(
+            targetList,
+            t -> StringUtils.capitalize(t.name().toLowerCase()),
+            2,
+            4
+        );
 
         System.out.println("What would you like to sort?");
         String input = scanner.nextLine().trim().toLowerCase();

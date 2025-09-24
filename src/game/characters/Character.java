@@ -308,41 +308,43 @@ public class Character extends CombatActor {
             case OBSERVE:
                 handleObserve(actors);
                 break;
-            default:
-                System.out.println("Unhandled reaction: " + reaction);
+            case PASS:
+                System.out.println(this.getName() + " is passing their turn.");
                 break;
+            default:
+                System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
         }
     }
 
-    public void handleReaction(String reaction) {
-        ReactionTypes reactionType;
-        try {
-            reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid reaction: " + reaction);
-            return;
-        }
+    // public void handleReaction(String reaction) {
+    //     ReactionTypes reactionType;
+    //     try {
+    //         reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
+    //     } catch (IllegalArgumentException e) {
+    //         System.out.println("Invalid reaction: " + reaction);
+    //         return;
+    //     }
 
-        switch (reactionType) {
-            case DEFEND:
-                System.out.println(this.getName() + " is now in a defending stance.");
-                this.handleDefend();
-                break;
-            case PARRY:
-                System.out.println(this.getName() + " is now in a parrying stance.");
-                this.setStance(Stances.PARRYING);
-                break;
-            case ITEM:
-                this.handleItem(reaction);
-                break;
-            case OBSERVE:
-                System.out.println(this.getName() + " is observing the surrounding area.");
-                break;
-            default:
-                System.out.println("Unhandled reaction: " + reaction);
-                break;
-        }
-    }
+    //     switch (reactionType) {
+    //         case DEFEND:
+    //             System.out.println(this.getName() + " is now in a defending stance.");
+    //             this.handleDefend();
+    //             break;
+    //         case PARRY:
+    //             System.out.println(this.getName() + " is now in a parrying stance.");
+    //             this.setStance(Stances.PARRYING);
+    //             break;
+    //         case ITEM:
+    //             this.handleItem(reaction);
+    //             break;
+    //         case OBSERVE:
+    //             System.out.println(this.getName() + " is observing the surrounding area.");
+    //             break;
+    //         default:
+    //             System.out.println("Unhandled reaction: " + reaction);
+    //             break;
+    //     }
+    // }
 
     public boolean isValidAbility(String action) {
         List<Ability> abilities = this.getAbilities();

@@ -29,10 +29,8 @@ public class TargetSelector {
 
         while (true) {
             System.out.println("Available targets:");
-            for (int i = 0; i < enemies.size(); i++) {
-                CombatActor enemy = enemies.get(i);
-                System.out.printf("%d. %s (%s HP)%n", i + 1, enemy.getName(), StringUtils.formatInt(enemy.getHealthValues().getValue()));
-            }
+
+            StringUtils.printOptionsGrid(enemies, CombatActor::getName, 2, 4);
 
             System.out.println("Choose a target by name or number or type [Q]uit to go back:");
             String input = scanner.nextLine();

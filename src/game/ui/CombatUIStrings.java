@@ -62,14 +62,14 @@ public class CombatUIStrings {
     }
 
     
-    public static String formatJobList(List<Job> list) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            var job = list.get(i);
-            sb.append(String.format("%d. %-20s%n", i + 1, job.getName()));
-        }
-        return sb.toString();
-    }
+    // public static String formatJobList(List<Job> list) {
+    //     StringBuilder sb = new StringBuilder();
+    //     for (int i = 0; i < list.size(); i++) {
+    //         var job = list.get(i);
+    //         sb.append(String.format("%d. %-20s%n", i + 1, job.getName()));
+    //     }
+    //     return sb.toString();
+    // }
 
     // Formats a command and its description into a consistent layout
     public static String formatKeyValue(String command, String description) {

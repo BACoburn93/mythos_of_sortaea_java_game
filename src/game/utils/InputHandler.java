@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -46,12 +47,9 @@ public class InputHandler {
 
     public <E extends Enum<E>> E promptEnumSelection(Class<E> enumClass, String prompt) {
         E[] values = enumClass.getEnumConstants();
+        ArrayList<E> valuesList = new ArrayList<>(java.util.Arrays.asList(values));
 
-        System.out.println(prompt);
-        
-        for (int i = 0; i < values.length; i++) {
-            System.out.printf("%d. %s%n", i + 1, formatEnumName(values[i].name()));
-        }
+        StringUtils.printOptionsGrid(valuesList, e -> formatEnumName(e.name()), 3, 5);
 
         String input = scanner.nextLine().trim().toLowerCase();
 

@@ -104,7 +104,7 @@ public class CharacterCreator {
 
     private Job chooseJobForCharacter(String name) {
         System.out.println("What is " + name + "'s job?");
-        System.out.println(CombatUIStrings.formatJobList(validJobs));
+        StringUtils.printOptionsGrid(validJobs, Job::getName, 4, 5);
 
         Job job = null;
         boolean validJob = false;
@@ -116,8 +116,8 @@ public class CharacterCreator {
             if (job != null) {
                 validJob = true;
             } else {
-                StringUtils.stringDivider(jobInput + " is not a valid class, please try again.", "", 50);
-                System.out.println(CombatUIStrings.formatJobList(validJobs));
+                StringUtils.stringDivider(jobInput + " is not a valid class, please try again.", "", 1);
+                StringUtils.printOptionsGrid(validJobs, Job::getName, 4, 5);
             }
         }
 

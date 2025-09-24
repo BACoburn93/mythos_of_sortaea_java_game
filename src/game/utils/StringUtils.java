@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 
@@ -129,4 +132,77 @@ public class StringUtils {
     public static String formatInt(double value) {
         return String.valueOf((int) value);
     }
+
+    public static String formatName(String baseType, String prefix, String suffix, int count) {
+        StringBuilder name = new StringBuilder();
+
+        if (prefix != null && !prefix.isBlank()) {
+            name.append(prefix);
+        }
+
+        boolean prefixEndsWithSpace = prefix != null && !prefix.isBlank() && prefix.endsWith(" ");
+
+        if (prefixEndsWithSpace || prefix == null || prefix.isBlank()) {
+            name.append(capitalize(baseType));
+        } else {
+            name.append(baseType);
+        }
+
+        if (suffix != null && !suffix.isBlank()) {
+            name.append(suffix);
+        }
+
+        if (count > 1) {
+            name.append(" #").append(count);
+        }
+
+        return name.toString();
+    }
+
+    public static int getNextCount(String baseType, String prefix, String suffix) {
+        Map<String, Integer> comboCounts = new HashMap<>();
+
+        String key = (baseType + "|" + prefix + "|" + suffix).toLowerCase();
+        int count = comboCounts.getOrDefault(key, 0) + 1;
+        comboCounts.put(key, count);
+        
+        return count;
+    }
+
+    public static <T> void printOptionsGrid
+    (
+        java.util.List<T> options,
+        java.util.function.Function<T, String> displayMapper,
+        int columns,
+        int spacing
+    ) 
+    {
+        System.out.println();
+        
+        if (options == null || options.isEmpty()) return;
+        int col = 0;
+        String format = "%%%ds) %%-%ds";
+        int maxIndexWidth = String.valueOf(options.size()).length();
+        int maxOptionWidth = options.stream()
+            .map(displayMapper)
+            .mapToInt(String::length)
+            .max()
+            .orElse(10);
+
+        String colFormat = String.format(format, maxIndexWidth, maxOptionWidth + spacing);
+
+        for (int i = 0; i < options.size(); i++) {
+            String display = displayMapper.apply(options.get(i));
+            System.out.printf(colFormat, i + 1, display);
+            col++;
+            if (col == columns) {
+                System.out.println();
+                col = 0;
+            }
+        }
+        if (col != 0) System.out.println();
+
+        System.out.println();
+    }
+
 }

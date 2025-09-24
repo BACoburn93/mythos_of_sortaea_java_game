@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameScanner {
@@ -59,10 +61,18 @@ public class GameScanner {
     }
 
     public void exitGame() {
-        System.out.print("Are you sure you wish to quit? All unsaved progress will be lost. :(Yes or No): ");
-        String input = scanner.nextLine().trim().toLowerCase();
+        List<String> res = new ArrayList<>();
+        res.add("Yes");
+        res.add("No");
 
-        if (input.equals("yes") || input.equals("y")) {
+        System.out.println("Are you sure you wish to quit? All unsaved progress will be lost.");
+
+        StringUtils.printOptionsGrid(res, s -> s, 2, 4);
+
+        String input = scanner.nextLine().trim();
+        String selected = InputHandler.getItemByInput(input, res, s -> s);
+
+        if (selected != null && (selected.equalsIgnoreCase("Yes") || selected.equalsIgnoreCase("Y") || selected.equals("1"))) {
             System.out.println("Exiting game...");
             System.exit(0);
         } else {
