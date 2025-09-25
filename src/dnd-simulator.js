@@ -399,7 +399,7 @@ const bareth = new Character({
 
 // Bareth with Firebolt for spell example
 const barethWithFirebolt = new Character({
-    name: "Bareth",
+    name: "Bareth Firebolt",
     hp: 21,
     ac: 16,
     spells: [fireBolt],
