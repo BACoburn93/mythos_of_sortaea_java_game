@@ -31,9 +31,10 @@ public class Arch implements Prefix {
         enemy.getResistances().multiplyDarkness(factor);
         enemy.getResistances().multiplyLight(factor);
 
-        // Multiply both maxValue and current value for health and mana
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);
+
+        enemy.setName("Arch" + enemy.getName());
     }
 
     @Override

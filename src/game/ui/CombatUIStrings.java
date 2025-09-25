@@ -169,8 +169,10 @@ public class CombatUIStrings {
             StringUtils.formatInt(combatActor.getManaValues().getValue()) + " / " + StringUtils.formatInt(combatActor.getManaValues().getMaxValue())
         );
         System.out.println(divider);
+        System.out.println("");
 
         // Attributes and Resistances as two columns
+        System.out.println(divider);
         List<String> attrLines = splitKeyValuePairs(StringUtils.formatAttributes(combatActor.getAttributes()).replaceAll("\\.00", ""));
         List<String> resLines = splitKeyValuePairs(StringUtils.formatResistances(combatActor.getResistances()).replaceAll("\\.00", ""));
         int maxRows = Math.max(attrLines.size(), resLines.size());

@@ -6,6 +6,8 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import enemies.modifiers.prefixes.*;
+import enemies.modifiers.suffixes.*;
 import enemies.Enemy;
 
 public class Goblin extends Enemy {
@@ -19,5 +21,13 @@ public class Goblin extends Enemy {
             new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
             20
         );
+        setupModifiers();
+    }
+
+    @Override
+    protected void setupModifiers() {
+        addAvailablePrefix(new Arch(), 0.05);
+        addAvailablePrefix(new Berserker(), 0.25);
+        addAvailableSuffix(new Cryomancer(), 0.15);
     }
 }

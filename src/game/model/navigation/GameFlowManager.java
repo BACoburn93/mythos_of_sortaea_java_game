@@ -3,10 +3,6 @@ package model.navigation;
 import characters.Party;
 import enemies.Enemy;
 import enemies.EnemyFactory;
-import enemies.modifiers.Prefix;
-import enemies.modifiers.Suffix;
-import enemies.modifiers.prefixes.*;
-import enemies.modifiers.suffixes.*;
 import handlers.ActionHandler;
 import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
@@ -17,6 +13,7 @@ import utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import actors.types.CombatActor;
@@ -24,10 +21,21 @@ import actors.types.CombatActor;
 public class GameFlowManager {
     private GameScanner scanner = new GameScanner();
     private static final Random rng = new Random();
+    private Region currentRegion;
 
     public static <T> T getRandomOrNull(List<T> list) {
         int index = rng.nextInt(list.size());
         return list.get(index);
+    }
+
+    // Example: initialize region with a pool
+    public GameFlowManager() {
+        // Example region setup
+        Map<String, Double> forestEnemies = new java.util.HashMap<>();
+        forestEnemies.put("goblin", 0.4);
+        forestEnemies.put("orc", 0.15);
+        forestEnemies.put("dragon", 0.1);
+        currentRegion = new Region("Dark Forest", forestEnemies);
     }
 
     // Entry point for exploration
@@ -63,46 +71,23 @@ public class GameFlowManager {
 
             // Example: Hook for battle nodes
             if (node.getDescription().contains("battle") && choice == 1) {
-
-                // Create enemies and actors
-                // ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.goblinScenario();
-                ArrayList<enemies.Enemy> testEnemies = new ArrayList<>();
-
-                List<Prefix> prefixes = new ArrayList<>(Arrays.asList(
-                    new Arch(),
-                    new Berserker(),
-                    null // allow possibility of no prefix
-                ));
-
-                List<Suffix> suffixes = new ArrayList<>(Arrays.asList(
-                    new Cryomancer(),
-                    null // allow possibility of no suffix
-                ));
-
-
-                for (int i = 0; i < 3; i++) {
-                    Prefix randomPrefix = getRandomOrNull(prefixes);
-                    Suffix randomSuffix = getRandomOrNull(suffixes);
-
-                    Enemy goblin = EnemyFactory.createEnemy("goblin", randomPrefix, randomSuffix);
-                    testEnemies.add(goblin);
-                }
-
-                ArrayList<CombatActor> allActors = new ArrayList<>(party.characters);
-                allActors.addAll(testEnemies);
+                // Set up actors for combat based on region
+                ArrayList<enemies.Enemy> enemies = currentRegion.generateEnemies();
+                ArrayList<CombatActor> allActors = currentRegion.setupCombatActors(party, enemies);
 
                 // Create handlers
                 EquipmentHandler equipmentHandler = new EquipmentHandler(party);
-                ActionHandler actionHandler = new ActionHandler(scanner, allActors, party, testEnemies, equipmentHandler);
+                ActionHandler actionHandler = new ActionHandler(scanner, allActors, party, enemies, equipmentHandler);
                 ReactionHandler reactionHandler = new ReactionHandler(scanner);
 
                 // Start combat
                 CombatManager combatManager = new CombatManager(
                         party,
-                        testEnemies,
+                        enemies,
                         actionHandler,
                         reactionHandler
                 );
+                
                 combatManager.startCombat();
             }
 
