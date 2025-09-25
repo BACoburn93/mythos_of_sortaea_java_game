@@ -486,7 +486,6 @@ const simulateFight = (charA, charB) => {
 function simulateFightNTimes(charA, charB, n) {
     const results = { [charA.name]: 0, [charB.name]: 0, draws: 0 };
     for (let i = 0; i < n; i++) {
-        // Defensive clone: only clone weapon if it exists
         const a = Object.assign(
             Object.create(Object.getPrototypeOf(charA)),
             JSON.parse(JSON.stringify(charA))
