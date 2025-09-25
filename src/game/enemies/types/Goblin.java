@@ -19,7 +19,7 @@ public class Goblin extends Enemy {
             new Attributes(10, 12, 8, 10, 8, 8, 8),
             new Resistances(),
             new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
-            20
+            1
         );
         setupModifiers();
     }
@@ -27,7 +27,7 @@ public class Goblin extends Enemy {
     @Override
     protected void setupModifiers() {
         addAvailablePrefix(new Arch(), 0.05);
-        addAvailablePrefix(new Berserker(), 0.25);
+        addAvailablePrefix(new Wrathful(), 0.25);
         addAvailableSuffix(new Cryomancer(), 0.15);
     }
 }

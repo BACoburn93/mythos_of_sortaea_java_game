@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class Enemy extends CombatActor {
     private List<SingleTargetAbility> abilities;
-    private int experience;
+    private int experience = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));
 
     private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
     private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
@@ -34,24 +34,77 @@ public class Enemy extends CombatActor {
     private int spawnWeight = 1;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
-                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int experience) {
-        super(name, healthValues, manaValues, attributes, resistances);
+                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int level) {
+        super(name, healthValues, manaValues, attributes, resistances, level);
         this.setActorType(ActorTypes.ENEMY);
-        this.abilities = new ArrayList<>(List.of(baseAbilities));;
-        this.experience = experience;
+        this.abilities = new ArrayList<>(List.of(baseAbilities));
     }
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
-                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int experience, int spawnWeight) {
-        super(name, healthValues, manaValues, attributes, resistances);
+                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int level, int spawnWeight) {
+        super(name, healthValues, manaValues, attributes, resistances, level);
         this.setActorType(ActorTypes.ENEMY);
-        this.abilities = new ArrayList<>(List.of(baseAbilities));;
-        this.experience = experience;
+        this.abilities = new ArrayList<>(List.of(baseAbilities));
         this.spawnWeight = spawnWeight;
     }
 
     protected void setupModifiers() {
 
+    }
+
+    // Getters and Setters
+    public int getExperience() { return experience; }
+    public void setExperience(int experience) { this.experience = experience; }
+
+    public List<SingleTargetAbility> getAbilities() { return abilities; }
+    public void setAbilities(List<SingleTargetAbility> abilities) { this.abilities = abilities; }
+
+    public Prefix getPrefix() { return prefix; }
+    public void setPrefix(Prefix prefix) { this.prefix = prefix; }
+
+    public Suffix getSuffix() { return suffix; }
+    public void setSuffix(Suffix suffix) { this.suffix = suffix; }
+
+    public int getSpawnWeight() { return spawnWeight; }
+    public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
+
+    // Suffixes and Prefixes
+    public void addAvailablePrefix(Prefix prefix, double chance) {
+        availablePrefixes.add(prefix);
+        prefixChances.put(prefix.getClass(), chance);
+    }
+
+    public void addAvailableSuffix(Suffix suffix, double chance) {
+        availableSuffixes.add(suffix);
+        suffixChances.put(suffix.getClass(), chance);
+    }
+
+    public Prefix acquirePrefix() {
+        Random rng = new Random();
+        for (Prefix prefix : availablePrefixes) {
+            double chance = prefixChances.getOrDefault(prefix.getClass(), 0.0);
+            if (rng.nextDouble() < chance) {
+                return prefix;
+            }
+        }
+        return null;
+    }
+
+    public Suffix acquireSuffix() {
+        Random rng = new Random();
+        for (Suffix suffix : availableSuffixes) {
+            double chance = suffixChances.getOrDefault(suffix.getClass(), 0.0);
+            if (rng.nextDouble() < chance) {
+                return suffix;
+            }
+        }
+        return null;
+    }
+
+    public void addAbility(SingleTargetAbility ability) {
+        if (!abilities.contains(ability)) {
+            abilities.add(ability);
+        }
     }
 
     public void chooseEnemyAbility(Party targetsToChooseFrom) {
@@ -91,60 +144,6 @@ public class Enemy extends CombatActor {
         if(abilityRoll <= 0 && !abilityChosen) {
             System.out.println(this.getName() + " has insufficient mana.");
         }
-    }
-
-    public void addAbility(SingleTargetAbility ability) {
-        if (!abilities.contains(ability)) {
-            abilities.add(ability);
-        }
-    }
-    
-    public List<SingleTargetAbility> getAbilities() {
-        return abilities;
-    }
-
-    public void setAbilities(List<SingleTargetAbility> abilities) {
-        this.abilities = abilities;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
-    public void addAvailablePrefix(Prefix prefix, double chance) {
-        availablePrefixes.add(prefix);
-        prefixChances.put(prefix.getClass(), chance);
-    }
-
-    public void addAvailableSuffix(Suffix suffix, double chance) {
-        availableSuffixes.add(suffix);
-        suffixChances.put(suffix.getClass(), chance);
-    }
-
-    public Prefix acquirePrefix() {
-        Random rng = new Random();
-        for (Prefix prefix : availablePrefixes) {
-            double chance = prefixChances.getOrDefault(prefix.getClass(), 0.0);
-            if (rng.nextDouble() < chance) {
-                return prefix;
-            }
-        }
-        return null;
-    }
-
-    public Suffix acquireSuffix() {
-        Random rng = new Random();
-        for (Suffix suffix : availableSuffixes) {
-            double chance = suffixChances.getOrDefault(suffix.getClass(), 0.0);
-            if (rng.nextDouble() < chance) {
-                return suffix;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -187,29 +186,5 @@ public class Enemy extends CombatActor {
         sb.append(divider);
 
         return sb.toString();
-    }
-
-    public void setPrefix(Prefix prefix) {
-        this.prefix = prefix;
-    }
-
-    public void setSuffix(Suffix suffix) {
-        this.suffix = suffix;
-    }
-
-    public void setSpawnWeight(int weight) {
-        this.spawnWeight = weight;
-    }
-
-    public Prefix getPrefix() {
-        return prefix;
-    }
-
-    public Suffix getSuffix() {
-        return suffix;
-    }
-
-    public int getSpawnWeight() {
-        return spawnWeight;
     }
 }

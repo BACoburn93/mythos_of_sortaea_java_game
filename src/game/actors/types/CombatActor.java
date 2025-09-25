@@ -27,6 +27,18 @@ public class CombatActor extends Actor {
     private Resistances resistances;
     private StatusConditions statusConditions;
     private Stances stance;
+    private int level;
+
+    public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
+                    Resistances resistances, StatusConditions statusConditions, int level) {
+        super(name, ActorTypes.COMBAT); 
+        this.healthValues = healthValues;
+        this.manaValues = manaValues;
+        this.attributes = attributes;
+        this.resistances = resistances;
+        this.statusConditions = statusConditions;
+        this.level = level;
+    }
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
                     Resistances resistances, StatusConditions statusConditions) {
@@ -36,13 +48,26 @@ public class CombatActor extends Actor {
         this.attributes = attributes;
         this.resistances = resistances;
         this.statusConditions = statusConditions;
+        this.level = 1;
     }
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
-                       Resistances resistances) {
-        this(name, healthValues, manaValues, attributes, resistances, new StatusConditions());
+                       Resistances resistances, int level) {
+        this(name, healthValues, manaValues, attributes, resistances, new StatusConditions(), level);
     }
 
+    public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
+            Resistances resistances) {
+        super(name, ActorTypes.COMBAT);
+        this.healthValues = healthValues;
+        this.manaValues = manaValues;
+        this.attributes = attributes;
+        this.resistances = resistances;
+        this.statusConditions = new StatusConditions();
+        this.level = 1;
+    }
+
+    // Getters and Setters
     public String getName() {
         return super.getName();
     }
@@ -81,6 +106,18 @@ public class CombatActor extends Actor {
 
     public void setStance(Stances stance) {
         this.stance = stance;
+    }
+
+    public StatusConditions getStatusConditions() {
+        return statusConditions;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public double getHealth() {
@@ -259,10 +296,6 @@ public class CombatActor extends Actor {
     public void handleEndTurn() {
         handleStatusConditions();
         StringUtils.stringDivider(super.getName() + "'s turn has ended.", "=", 50);
-    }
-
-    public StatusConditions getStatusConditions() {
-        return statusConditions;
     }
 
     @Override

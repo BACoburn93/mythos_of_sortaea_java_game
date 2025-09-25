@@ -446,8 +446,9 @@ const simulateFight = (charA, charB) => {
     while (attacker.isAlive() && defender.isAlive() && round <= 50) {
         console.log(`--- Round ${round} ---`);
         let result;
+        let maxRounds = 50;
 
-        if (attacker.spells && attacker.spells.length > 0) {
+        if (attacker.spells && attacker.spells.length > maxRounds) {
             result = attacker.spellAttack(defender, attacker.spells[0]);
             if (result.hit) {
                 console.log(`${result.caster} hits ${result.target} with ${attacker.spells[0].name} for ${result.finalDamage} damage! (${result.target} HP: ${result.hp})`);
@@ -478,7 +479,7 @@ const simulateFight = (charA, charB) => {
         console.log(`\n${defender.name} wins!`);
         return defender.name;
     } else {
-        console.log("\nNo winner after 100 rounds.");
+        console.log(`\nNo winner after ${maxRounds} rounds.`);
         return null;
     }
 }

@@ -34,6 +34,9 @@ public class Arch implements Prefix {
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);
 
+        int lvl = enemy.getLevel();
+        enemy.setLevel(lvl + lvl / 2);
+
         enemy.setName("Arch" + enemy.getName());
     }
 

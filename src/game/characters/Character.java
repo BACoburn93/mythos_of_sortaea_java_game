@@ -78,7 +78,7 @@ public class Character extends CombatActor {
     };
 
     public Character(String name, Job job) {
-        super(name, job.getHealthValues(), job.getManaValues(), job.getAttributes(), job.getResistances(), job.getStatusConditions());
+        super(name, job.getHealthValues(), job.getManaValues(), job.getAttributes(), job.getResistances());
         this.setActorType(ActorTypes.CHARACTER);
         this.job = job;
         this.level = 1;

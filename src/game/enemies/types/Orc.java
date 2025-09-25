@@ -19,7 +19,7 @@ public class Orc extends Enemy {
             new Attributes(15, 9,15, 13, 14, 10, 8),
             new Resistances(),
             new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
-            35
+            3
         );
     }
 }
