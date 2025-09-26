@@ -20,11 +20,13 @@ import items.equipment.item_types.ArmorTypes;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.ShieldTypes;
 import items.equipment.item_types.WeaponTypes;
-import items.equipment.item_types.mainhand.Mainhand;
+import items.equipment.equipment_slots.*;
+
 import utils.InputHandler;
 import utils.StringUtils;
 
 import java.util.*;
+import characters.initializers.*;
 
 public class Character extends CombatActor {
     private Job job;
@@ -37,45 +39,9 @@ public class Character extends CombatActor {
     private Reaction[] reactions;
     private ArrayList<Ability> abilities;
     private ArrayList<Equipment> equipment = new ArrayList<>();
-    private Map<EquipmentTypes, Equipment> equipmentSlots;
+    private Map<String, EquipmentSlot> equipmentSlots; 
     private Consumable[] items;
     private ArrayList<Ability> charAbilities = new ArrayList<>();
-
-    {
-        charAbilities.add(new SingleTargetAbility("Punch",
-                0, 1,
-                new Damage[]{new PhysicalBludgeoningDamage(6, 12)},
-                "A clenched fist, followed by a world of hurt."));
-
-        charAbilities.add(new SingleTargetAbility("Kick",
-                2, 1,
-                new Damage[]{new PhysicalBludgeoningDamage(5, 18)},
-                "Extend the leg to cause ample pain."));
-
-        charAbilities.add(new SingleTargetAbility("Kill",
-                0, 3,
-                new Damage[]{new PhysicalBludgeoningDamage(9999, 99999)},
-                "Instant death to all who fall victim."));
-    }
-
-    Reaction[] charReactions = {
-            new DefendReaction(),
-            new ParryReaction(),
-            new ItemReaction(),
-            new ObserveReaction(),
-            new PassReaction()
-    };
-
-    Consumable[] charItems = {
-        new Consumable("Minor Health Potion", 10, 10, ResourceTypes.HEALTH, 20),
-        new Consumable("Moderate Health Potion", 30, 10, ResourceTypes.HEALTH, 50),
-        new Consumable("Supreme Health Potion", 100, 10, ResourceTypes.HEALTH, 100),
-        new Consumable("Full Health Potion", 300, 10, ResourceTypes.HEALTH, 99999),
-            new Consumable("Minor Mana Potion", 8, 10, ResourceTypes.MANA, 20),
-            new Consumable("Moderate Mana Potion", 25, 10, ResourceTypes.MANA, 50),
-            new Consumable("Supreme Mana Potion", 80, 10, ResourceTypes.MANA, 100),
-            new Consumable("Full Mana Potion", 250, 10, ResourceTypes.MANA, 99999),
-    };
 
     public Character(String name, Job job) {
         super(name, job.getHealthValues(), job.getManaValues(), job.getAttributes(), job.getResistances());
@@ -86,13 +52,23 @@ public class Character extends CombatActor {
         this.actionPoints = 3;
         this.attributePoints = 0;
         this.maxActionPoints = this.actionPoints;
-        this.abilities = charAbilities;
-        this.reactions = charReactions;
-        this.equipmentSlots = new EnumMap<>(EquipmentTypes.class);
-        for (EquipmentTypes type : EquipmentTypes.values()) {
-            equipmentSlots.put(type, null);
-        }
-        this.items = charItems;
+        this.charAbilities = CharacterAbilities.getAbilities();
+        this.abilities = new ArrayList<>(this.charAbilities);
+        this.reactions = CharacterReactions.getReactions();
+        this.equipmentSlots = new LinkedHashMap<>();
+
+        // Display names as keys, but keep a mapping from EquipmentTypes to display names for lookup
+        equipmentSlots.put("Head", new HeadSlot());
+        equipmentSlots.put("Mainhand", new MainHandSlot());
+        equipmentSlots.put("Offhand", new OffHandSlot());
+        equipmentSlots.put("Legs", new LegsSlot());
+        equipmentSlots.put("Torso", new TorsoSlot());
+        equipmentSlots.put("Feet", new FeetSlot());
+        equipmentSlots.put("Neck", new NeckSlot());
+        equipmentSlots.put("Left Ring", new LeftRingSlot());
+        equipmentSlots.put("Right Ring", new RightRingSlot());
+
+        this.items = CharacterItems.getItems();
         this.abilities.addAll(this.job.getJobAbilities());
     }
 
@@ -109,33 +85,39 @@ public class Character extends CombatActor {
                 (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 4)
         );
 
-        try (Scanner attributesToAllocate = new Scanner(System.in)) {
-            while(this.attributePoints > 0) {
-                System.out.println("Which attribute would you like to allocate points to? You have " +
-                        this.attributePoints + " attribute points remaining.");
-                String attributeToLevel = attributesToAllocate.nextLine().toUpperCase();
-                if(
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.STRENGTH.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.AGILITY.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.KNOWLEDGE.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.DEFENSE.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.RESILIENCE.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.SPIRIT.toString()) ||
-                        attributeToLevel.equalsIgnoreCase(AttributeTypes.LUCK.toString())
-                ) {
-                    System.out.println("How many points to allocate? You have " + this.attributePoints + " remaining.");
-
-                    try {
-                        int numAttributePointToAllocate = Integer.parseInt(attributesToAllocate.nextLine());
-                        if(numAttributePointToAllocate <= this.attributePoints) {
-                            this.getAttributes().incrementAttribute(attributeToLevel, numAttributePointToAllocate);
-                            this.attributePoints -= numAttributePointToAllocate;
-                        } else {
-                            System.out.println("Insufficient Attribute Points.");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Please enter a valid number.");
+        Scanner attributesToAllocate = new Scanner(System.in);
+        while(this.attributePoints > 0) {
+            System.out.println("Which attribute would you like to allocate points to? You have " +
+                    this.attributePoints + " attribute points remaining.");
+            if (!attributesToAllocate.hasNextLine()) {
+                System.out.println("No input available. Skipping attribute allocation.");
+                break;
+            }
+            String attributeToLevel = attributesToAllocate.nextLine().toUpperCase();
+            if(
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.STRENGTH.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.AGILITY.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.KNOWLEDGE.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.DEFENSE.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.RESILIENCE.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.SPIRIT.toString()) ||
+                    attributeToLevel.equalsIgnoreCase(AttributeTypes.LUCK.toString())
+            ) {
+                System.out.println("How many points to allocate? You have " + this.attributePoints + " remaining.");
+                if (!attributesToAllocate.hasNextLine()) {
+                    System.out.println("No input available. Skipping attribute allocation.");
+                    break;
+                }
+                try {
+                    int numAttributePointToAllocate = Integer.parseInt(attributesToAllocate.nextLine());
+                    if(numAttributePointToAllocate <= this.attributePoints) {
+                        this.getAttributes().incrementAttribute(attributeToLevel, numAttributePointToAllocate);
+                        this.attributePoints -= numAttributePointToAllocate;
+                    } else {
+                        System.out.println("Insufficient Attribute Points.");
                     }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
                 }
             }
         }
@@ -174,27 +156,51 @@ public class Character extends CombatActor {
         return pass;
     }
 
-    public void equipItem(Equipment item) {
-        EquipmentTypes type = EquipmentTypes.valueOf(item.getEquipmentType().toString());
-        Equipment currentItem = equipmentSlots.get(type);
+    // Helper to map EquipmentTypes to display names
+    private static final Map<EquipmentTypes, String> equipmentTypeToDisplayName = Map.of(
+        EquipmentTypes.HEAD, "Head",
+        EquipmentTypes.MAINHAND, "Mainhand",
+        EquipmentTypes.OFFHAND, "Offhand",
+        EquipmentTypes.LEGS, "Legs",
+        EquipmentTypes.TORSO, "Torso",
+        EquipmentTypes.FEET, "Feet",
+        EquipmentTypes.NECK, "Neck",
+        EquipmentTypes.RING, "Ring"
+    );
 
-        if (currentItem != null) {
-            unequipItem(currentItem.getEquipmentType());
-        }
+    public boolean equipItem(Equipment item) {
+        String slotKey = equipmentTypeToDisplayName.get(item.getEquipmentType());
 
-        if (item instanceof Mainhand mainhandItem) {
-            if (mainhandItem.isTwoHanded()) {
-                Equipment offhandItem = equipmentSlots.get(EquipmentTypes.OFFHAND);
-                if (offhandItem != null) {
-                    unequipItem(EquipmentTypes.OFFHAND);
-                }
+        if ("Ring".equals(slotKey)) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Equip ring to [L]eft or [R]ight ring?");
+
+            String choice = scanner.nextLine().trim().toUpperCase();
+            if (choice.equals("L") || choice.equals("LEFT")) {
+                slotKey = "Left Ring";
+            } else if (choice.equals("R") || choice.equals("RIGHT")) {
+                slotKey = "Right Ring";
+            } else {
+                System.out.println("Invalid choice. Cancelling equip.");
+                return false;
             }
         }
 
-        equipmentSlots.put(type, item);
-        addItemAttributesAndResistances(item);
+        EquipmentSlot slot = equipmentSlots.get(slotKey);
 
-        equipment.remove(item);
+        if (slot != null && slot.canEquip(item)) {
+            Equipment currentlyEquipped = slot.getEquippedItem();
+            if (currentlyEquipped != null) {
+                unequipItem(slotKey);
+            }
+            slot.setEquippedItem(item);
+            addItemAttributesAndResistances(item);
+            equipment.remove(item);
+            return true;
+        } else {
+            System.out.println("Cannot equip " + item.getName() + " in slot " + slotKey);
+        }
+        return false;
     }
 
     public boolean equipItem(String itemName) {
@@ -204,40 +210,38 @@ public class Character extends CombatActor {
                 return true;
             }
         }
-        return false; // item not found
+        return false;
     }
 
-    public void unequipItem(EquipmentTypes type) {
-        Equipment item = equipmentSlots.get(type);
-        System.out.println("Unequipping " + item.getName());
-
-        if (item != null) {
+    public void unequipItem(String slotKey) {
+        EquipmentSlot slot = equipmentSlots.get(slotKey);
+        if (slot != null && slot.getEquippedItem() != null) {
+            Equipment item = slot.getEquippedItem();
+            System.out.println("Unequipping " + item.getName());
             removeItemAttributesAndResistances(item);
             equipment.add(item);
-            
             equipment.sort(Comparator.comparing(Equipment::getName, String.CASE_INSENSITIVE_ORDER));
-            equipmentSlots.put(type, null);
+            slot.unequip();
         }
     }
 
-    public boolean unequipItem(String itemName) {
-        for (Map.Entry<EquipmentTypes, Equipment> entry : equipmentSlots.entrySet()) {
-            Equipment item = entry.getValue();
+    public boolean unequipItemByName(String itemName) {
+        for (EquipmentSlot slot : equipmentSlots.values()) {
+            Equipment item = slot.getEquippedItem();
             if (item != null && item.getName().equalsIgnoreCase(itemName)) {
-                unequipItem(entry.getKey());
+                unequipItem(slot.getName().toUpperCase());
                 return true;
             }
         }
-        return false; // item not equipped
+        return false;
     }
-
 
     public List<String> getEquippedItems() {
         List<String> equipped = new ArrayList<>();
-        for (Map.Entry<EquipmentTypes, Equipment> entry : equipmentSlots.entrySet()) {
-            Equipment item = entry.getValue();
+        for (Map.Entry<String, EquipmentSlot> entry : equipmentSlots.entrySet()) {
+            Equipment item = entry.getValue().getEquippedItem();
             if (item != null) {
-                equipped.add(entry.getKey().name() + ": " + item.getName());
+                equipped.add(entry.getKey() + ": " + item.getName());
             }
         }
         return equipped;
@@ -316,36 +320,6 @@ public class Character extends CombatActor {
         }
     }
 
-    // public void handleReaction(String reaction) {
-    //     ReactionTypes reactionType;
-    //     try {
-    //         reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
-    //     } catch (IllegalArgumentException e) {
-    //         System.out.println("Invalid reaction: " + reaction);
-    //         return;
-    //     }
-
-    //     switch (reactionType) {
-    //         case DEFEND:
-    //             System.out.println(this.getName() + " is now in a defending stance.");
-    //             this.handleDefend();
-    //             break;
-    //         case PARRY:
-    //             System.out.println(this.getName() + " is now in a parrying stance.");
-    //             this.setStance(Stances.PARRYING);
-    //             break;
-    //         case ITEM:
-    //             this.handleItem(reaction);
-    //             break;
-    //         case OBSERVE:
-    //             System.out.println(this.getName() + " is observing the surrounding area.");
-    //             break;
-    //         default:
-    //             System.out.println("Unhandled reaction: " + reaction);
-    //             break;
-    //     }
-    // }
-
     public boolean isValidAbility(String action) {
         List<Ability> abilities = this.getAbilities();
 
@@ -356,7 +330,8 @@ public class Character extends CombatActor {
         boolean shieldRequired = false;
         boolean weaponRequired = false;
 
-        for (Equipment equipment : this.getEquipmentSlots().values()) {
+        for (EquipmentSlot slot : this.getEquipmentSlots().values()) {
+            Equipment equipment = slot.getEquippedItem();
             if (selectedAbility.getArmorRequirement() != null) {
                 for (ArmorTypes armorType : selectedAbility.getArmorRequirement()) {
                     if (equipment != null && armorType.equals(equipment.getItemType())) {
@@ -406,7 +381,8 @@ public class Character extends CombatActor {
         System.out.println();
 
         for (EquipmentTypes slot : slots) {
-            Equipment equipment = this.equipmentSlots.get(slot);
+            EquipmentSlot equipmentSlot = this.equipmentSlots.get(slot.name());
+            Equipment equipment = equipmentSlot != null ? equipmentSlot.getEquippedItem() : null;
             if (equipment != null) {
                 System.out.println("You currently have a " + equipment.getItemType() + " equipped in your " + slot.name().toLowerCase() + ".");
             } else {
@@ -483,7 +459,7 @@ public class Character extends CombatActor {
         this.equipment = equipment;
     }
 
-    public Map<EquipmentTypes, Equipment> getEquipmentSlots() {
+    public Map<String, EquipmentSlot> getEquipmentSlots() {
         return equipmentSlots;
     }
 
@@ -525,7 +501,7 @@ public class Character extends CombatActor {
     }
 
     public ArrayList<Ability> getCharAbilities() {
-        return charAbilities;
+        return CharacterAbilities.getAbilities();
     }
 
     public void setCharAbilities(ArrayList<Ability> charAbilities) {
@@ -533,19 +509,19 @@ public class Character extends CombatActor {
     }
 
     public Reaction[] getCharReactions() {
-        return charReactions;
+        return CharacterReactions.getReactions();
     }
 
     public void setCharReactions(Reaction[] charReactions) {
-        this.charReactions = charReactions;
+        this.reactions = charReactions;
     }
 
     public Consumable[] getCharItems() {
-        return charItems;
+        return CharacterItems.getItems();
     }
 
     public void setCharItems(Consumable[] charItems) {
-        this.charItems = charItems;
+        this.items = charItems;
     }
 
     @Override
@@ -574,9 +550,9 @@ public class Character extends CombatActor {
     
         // Equipment
         sb.append(String.format("| %-24s | %-40s |\n", "Equipment", ""));
-        for (Map.Entry<EquipmentTypes, Equipment> entry : this.getEquipmentSlots().entrySet()) {
-            String eqType = entry.getKey().name();
-            String eqName = (entry.getValue() != null) ? entry.getValue().getName() : "None";
+        for (Map.Entry<String, EquipmentSlot> entry : this.getEquipmentSlots().entrySet()) {
+            String eqType = entry.getKey();
+            String eqName = (entry.getValue().getEquippedItem() != null) ? entry.getValue().getEquippedItem().getName() : "None";
             for (int i = 0; i < StringUtils.wrapText(eqName, rightWidth).size(); i++) {
                 sb.append(String.format("|   %-22s | %-40s |\n",
                     i == 0 ? eqType : "",

@@ -1,5 +1,6 @@
 package items.equipment;
 
+import items.equipment.item_types.*;
 import items.equipment.item_types.mainhand.Dagger;
 import items.equipment.item_types.mainhand.Longbow;
 import items.equipment.item_types.mainhand.Staff;
@@ -52,6 +53,18 @@ public class EquipmentDatabase {
                 200,
                 new Attributes(0.0, 0.0, 0.0, 30.0, 20.0, 0.0, 0.0),
                 new Resistances(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        ));
+        EQUIPMENT_LIST.add(new Ring(
+                "Band of Fate",
+                2000,
+                new Attributes(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0),
+                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        ));
+        EQUIPMENT_LIST.add(new Neck(
+                "Amulet of Strength",
+                2000,
+                new Attributes(100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         ));
 
     }

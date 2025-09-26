@@ -1,14 +1,6 @@
 package items.equipment.equipment_slots;
 
 import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;
-import utils.GameScanner;
-import utils.InputHandler;
-import utils.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import characters.Party;
 
@@ -33,7 +25,7 @@ public abstract class EquipmentSlot {
     public void equip(Equipment equipment, Party party) {
         if (canEquip(equipment)) {
             if (equippedItem != null) {
-                unequip(party);
+                unequip();
             }
             this.equippedItem = equipment;
         } else {
@@ -41,11 +33,15 @@ public abstract class EquipmentSlot {
         }
     }
 
-    public void unequip(Party party) {
+    public void unequip() {
         if (equippedItem != null) {
 
             // Clear the slot
             this.equippedItem = null;
         }
+    }
+    
+    public Object getItemType() {
+        return (equippedItem != null) ? equippedItem.getItemType() : null;
     }
 }

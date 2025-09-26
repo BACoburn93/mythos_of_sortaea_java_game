@@ -8,6 +8,7 @@ import characters.Character;
 import characters.Party;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
+import items.equipment.equipment_slots.*;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.SelectionUtils;
@@ -39,26 +40,31 @@ public class EquipmentHandler {
 
         if (eq != null) {
             System.out.println("Equipping " + eq.getName());
-            character.equipItem(eq);
-            equipmentList.remove(eq);
-            ui.CombatUIStrings.printCombatActorStats(character);
+            boolean equipped = character.equipItem(eq); 
+            if (equipped) {
+                equipmentList.remove(eq);
+                ui.CombatUIStrings.printCombatActorStats(character);
+            } else {
+                System.out.println("Could not equip " + eq.getName() + ". Check slot compatibility.");
+            }
         }
     }
 
     public void handleUnequip(GameScanner scanner, Character character) {
-        Map<EquipmentTypes, Equipment> slots = character.getEquipmentSlots();
-        List<EquipmentTypes> orderedSlots = new ArrayList<>(slots.keySet());
-        List<Map.Entry<EquipmentTypes, Equipment>> entries = new ArrayList<>(slots.entrySet());
+        Map<String, EquipmentSlot> slotMap = character.getEquipmentSlots();
+        List<String> orderedSlots = new ArrayList<>(slotMap.keySet());
+        List<Map.Entry<String, EquipmentSlot>> entries = new ArrayList<>(slotMap.entrySet());
 
-        orderedSlots.remove(EquipmentTypes.HEAD);
-        orderedSlots.add(0, EquipmentTypes.HEAD);
+        // orderedSlots.remove(EquipmentTypes.HEAD.toString());
+        // orderedSlots.add(0, EquipmentTypes.HEAD.toString());
 
         StringUtils.printOptionsGrid(
             orderedSlots,
             slot -> {
-                Equipment eq = slots.get(slot);
+                EquipmentSlot eqSlot = slotMap.get(slot);
+                Equipment eq = (eqSlot != null) ? eqSlot.getEquippedItem() : null;
                 String eqName = (eq != null && eq.getName() != null) ? eq.getName() : "Empty";
-                return slot.toString() + ": " + eqName;
+                return slot + ": " + eqName;
             },
             3,
             5
@@ -67,19 +73,20 @@ public class EquipmentHandler {
         System.out.println("Type the item name, slot name (e.g., HEAD), or its number to unequip:");
         String input = scanner.nextLine();
 
-        Map.Entry<EquipmentTypes, Equipment> selectedEntry = InputHandler.getItemByInput(
+        Map.Entry<String, EquipmentSlot> selectedEntry = InputHandler.getItemByInput(
             input,
             entries,
             entry -> {
-                Equipment eq = entry.getValue();
-                String slotName = entry.getKey().toString();
+                EquipmentSlot eqSlot = entry.getValue();
+                Equipment eq = (eqSlot != null) ? eqSlot.getEquippedItem() : null;
+                String slotName = entry.getKey();
                 String itemName = (eq != null && eq.getName() != null) ? eq.getName() : "";
                 return slotName + "|" + itemName;
             }
         );
 
-        EquipmentTypes slot = (selectedEntry != null) ? selectedEntry.getKey() : null;
-        Equipment eq = (slot != null) ? slots.get(slot) : null;
+        String slot = (selectedEntry != null) ? selectedEntry.getKey() : null;
+        Equipment eq = (slot != null && slotMap.get(slot) != null) ? slotMap.get(slot).getEquippedItem() : null;
 
         if (slot != null && eq != null) {
             character.unequipItem(slot);
