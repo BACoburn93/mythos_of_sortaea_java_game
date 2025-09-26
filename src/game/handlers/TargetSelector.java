@@ -1,11 +1,12 @@
 package handlers;
 
-import actors.ActorTypes;
-import actors.types.CombatActor;
 import utils.GameScanner;
 import utils.StringUtils;
 
 import java.util.*;
+
+import actors.ActorTypes;
+import actors.types.CombatActor;
 
 public class TargetSelector {
     private final ArrayList<CombatActor> actors;

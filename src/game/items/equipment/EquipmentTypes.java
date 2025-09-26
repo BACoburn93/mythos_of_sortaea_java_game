@@ -5,10 +5,13 @@ public enum EquipmentTypes {
     TORSO,
     LEGS,
     FEET,
+    HANDS,
+    SHOULDERS,
     BACK,
     WAIST,
     MAINHAND,
     OFFHAND,
+    ACCESSORY,
     NECK,
     RING
 }

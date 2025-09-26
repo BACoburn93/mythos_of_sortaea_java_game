@@ -1,10 +1,11 @@
 package items.equipment;
 
-import actors.attributes.Attributes;
-import actors.resistances.Resistances;
 import items.equipment.item_types.ItemType;
 
 import java.util.Comparator;
+
+import actors.attributes.Attributes;
+import actors.resistances.Resistances;
 
 public abstract class Equipment implements Comparator<Equipment> {
     private String name;

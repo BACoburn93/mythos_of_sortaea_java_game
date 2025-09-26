@@ -1,13 +1,13 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
+import actors.attributes.Attributes;
+import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import characters.jobs.Job;
 import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
-import actors.attributes.Attributes;
-import actors.resistances.Resistances;
 
 import java.util.ArrayList;
 

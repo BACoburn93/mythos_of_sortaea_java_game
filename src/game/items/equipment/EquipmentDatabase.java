@@ -1,7 +1,5 @@
 package items.equipment;
 
-import actors.attributes.Attributes;
-import actors.resistances.Resistances;
 import items.equipment.item_types.mainhand.Dagger;
 import items.equipment.item_types.mainhand.Longbow;
 import items.equipment.item_types.mainhand.Staff;
@@ -11,6 +9,9 @@ import items.equipment.item_types.torso.LightTorso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import actors.attributes.Attributes;
+import actors.resistances.Resistances;
 
 public class EquipmentDatabase {
     private static final List<Equipment> EQUIPMENT_LIST = new ArrayList<>();

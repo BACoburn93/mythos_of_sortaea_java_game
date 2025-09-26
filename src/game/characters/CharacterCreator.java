@@ -5,7 +5,6 @@ import characters.jobs.Jobs.MageJob;
 import characters.jobs.Jobs.RangerJob;
 import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
-import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;

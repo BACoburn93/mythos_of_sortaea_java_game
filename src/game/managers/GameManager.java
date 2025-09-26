@@ -1,6 +1,5 @@
 package managers;
 
-import actors.types.CombatActor;
 import containers.GameContainer;
 import enemies.EnemyDatabase;
 import handlers.*;
@@ -11,6 +10,8 @@ import utils.InputHandler;
 import utils.StringUtils;
 
 import java.util.ArrayList;
+
+import actors.types.CombatActor;
 
 public class GameManager {
     private final InputHandler inputHandler = new InputHandler();

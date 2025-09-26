@@ -1,12 +1,13 @@
 package items.consumables;
 
-import actors.resources.HealthValues;
-import actors.resources.ManaValues;
-import actors.resources.ResourceTypes;
 import characters.Character;
 import items.Item;
 
 import java.util.Objects;
+
+import actors.resources.HealthValues;
+import actors.resources.ManaValues;
+import actors.resources.ResourceTypes;
 
 public class Consumable extends Item {
     public ResourceTypes effectType; // healthRestore, manaRestore, attrBoost, etc.

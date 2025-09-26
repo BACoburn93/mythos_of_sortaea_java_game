@@ -1,15 +1,6 @@
 package interfaces;
 
-// import abilities.Ability;
-// import abilities.damages.Damage;
 import actors.ActorTypes;
-// import actors.attributes.Attributes;
-// import actors.resistances.Resistances;
-// import actors.resources.HealthValues;
-// import actors.resources.ManaValues;
-// import actors.stances.Stances;
-// import status_conditions.StatusCondition;
-// import status_conditions.StatusConditions;
 
 public interface ActorInterface {
     String getName();
