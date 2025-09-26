@@ -95,7 +95,9 @@ public class EquipmentHandler {
         if (requiredTypes == null || requiredTypes.length == 0) return true;
         return character.getEquipmentSlots().values().stream().anyMatch(e -> {
             if (e == null) return false;
+
             Object itemTypeObj = e.getItemType();
+
             if (itemTypeObj != null && typeClass.isInstance(itemTypeObj)) {
                 T itemType = typeClass.cast(itemTypeObj);
                 for (T req : requiredTypes) {
@@ -104,6 +106,7 @@ public class EquipmentHandler {
                     }
                 }
             }
+            
             return false;
         });
     }

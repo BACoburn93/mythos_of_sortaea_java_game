@@ -5,6 +5,7 @@ import java.util.Random;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.SelectionUtils;
+import utils.StringUtils;
 import characters.Character;
 import enemies.Enemy;
 import abilities.Ability;
@@ -53,8 +54,7 @@ public class AbilityHandler {
             boolean meetsShieldReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getShieldRequirement(), ShieldTypes.class);
 
             if (!meetsWeaponReq || !meetsArmorReq || !meetsShieldReq) {
-                System.out.println("");
-                System.out.println("You do not meet the equipment requirements for this ability.");
+                StringUtils.stringDivider("You do not meet the equipment requirements for this ability.", "", 0);
                 return;
             }
 
