@@ -15,9 +15,14 @@ import utils.StringUtils;
 
 public class EquipmentHandler {
     private Party party;
+    private Character character;
 
     public EquipmentHandler(Party party) {
         this.party = party;
+    }
+
+    public EquipmentHandler(Character character) {
+        this.character = character;
     }
 
     public void handleEquip(GameScanner scanner, Character character) {
@@ -84,6 +89,23 @@ public class EquipmentHandler {
         } else {
             System.out.println("No such equipped item found.");
         }
+    }
+
+    public <T extends Enum<T>> boolean meetsEquipmentRequirement(T[] requiredTypes, Class<T> typeClass) {
+        if (requiredTypes == null || requiredTypes.length == 0) return true;
+        return character.getEquipmentSlots().values().stream().anyMatch(e -> {
+            if (e == null) return false;
+            Object itemTypeObj = e.getItemType();
+            if (itemTypeObj != null && typeClass.isInstance(itemTypeObj)) {
+                T itemType = typeClass.cast(itemTypeObj);
+                for (T req : requiredTypes) {
+                    if (itemType.equals(req)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
     }
 
 }

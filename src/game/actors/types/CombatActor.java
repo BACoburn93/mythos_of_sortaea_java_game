@@ -27,7 +27,7 @@ public class CombatActor extends Actor {
     private Resistances resistances;
     private StatusConditions statusConditions;
     private Stances stance;
-    private int level;
+    protected int level;
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
                     Resistances resistances, StatusConditions statusConditions, int level) {

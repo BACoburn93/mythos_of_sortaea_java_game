@@ -9,7 +9,8 @@ public class Arch implements Prefix {
     public void apply(Enemy enemy) {
         double factor = MathUtils.randomInRange(2.15, 0.35);
 
-        // Make sure to multiply both current value and max value for health/mana
+        enemy.updateLevelAndExperience(enemy.getLevel());
+
         enemy.getAttributes().multiplyStrength(factor);
         enemy.getAttributes().multiplyAgility(factor);
         enemy.getAttributes().multiplyDefense(factor);
@@ -33,9 +34,6 @@ public class Arch implements Prefix {
 
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);
-
-        int lvl = enemy.getLevel();
-        enemy.setLevel(lvl + lvl / 2);
 
         enemy.setName("Arch" + enemy.getName());
     }

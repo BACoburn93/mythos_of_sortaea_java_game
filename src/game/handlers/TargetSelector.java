@@ -30,7 +30,12 @@ public class TargetSelector {
         while (true) {
             System.out.println("Available targets:");
 
-            StringUtils.printOptionsGrid(enemies, CombatActor::getName, 2, 4);
+            StringUtils.printOptionsGrid(
+                enemies,
+                e -> e.getName() + " (Lvl " + e.getLevel() + ")",
+                2,
+                4
+            );
 
             System.out.println("Choose a target by name or number or type [Q]uit to go back:");
             String input = scanner.nextLine();

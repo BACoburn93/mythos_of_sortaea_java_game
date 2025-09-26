@@ -11,6 +11,7 @@ import abilities.Ability;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
+import items.equipment.item_types.*;
 
 public class AbilityHandler {
     private GameScanner scanner;
@@ -45,6 +46,18 @@ public class AbilityHandler {
         if (chosenAbility.getActionCost() > character.getActionPoints() || !character.canUseAbility(chosenAbility)) {
             CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
         } else {
+            EquipmentHandler equipmentHandler = new EquipmentHandler(character);
+
+            boolean meetsWeaponReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getWeaponRequirement(), WeaponTypes.class);
+            boolean meetsArmorReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getArmorRequirement(), ArmorTypes.class);
+            boolean meetsShieldReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getShieldRequirement(), ShieldTypes.class);
+
+            if (!meetsWeaponReq || !meetsArmorReq || !meetsShieldReq) {
+                System.out.println("");
+                System.out.println("You do not meet the equipment requirements for this ability.");
+                return;
+            }
+
             CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
 
             if (chosenTarget != null) {

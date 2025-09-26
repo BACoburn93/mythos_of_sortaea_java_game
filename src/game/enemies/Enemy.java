@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class Enemy extends CombatActor {
     private List<SingleTargetAbility> abilities;
-    private int experience = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));
+    private int experience = this.getSpawnWeight() > 0 ? getLevel() * (5 * (this.spawnWeight * this.spawnWeight)) : getLevel() * 5;
 
     private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
     private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
@@ -129,7 +129,6 @@ public class Enemy extends CombatActor {
                     CombatUIStrings.printMissedAttack(this, target, ability);
                 }
 
-//                this.attack(this, target, ability);
                 this.spendMana(ability);
                 abilityChosen = true;
 
@@ -143,6 +142,16 @@ public class Enemy extends CombatActor {
 
         if(abilityRoll <= 0 && !abilityChosen) {
             System.out.println(this.getName() + " has insufficient mana.");
+        }
+    }
+
+    public void updateLevelAndExperience(int level) {
+        this.setLevel(this.level + level);
+
+        if (spawnWeight > 0) {
+            this.level = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));
+        } else {
+            this.level = getLevel() * 5;
         }
     }
 
