@@ -18,7 +18,7 @@ public class ReactionHandler {
         this.scanner = scanner;
     }
 
-    public void handleReaction(ArrayList<Character> partyCharacters, ArrayList<CombatActor> turnOrder) {
+    public void handleReaction(ArrayList<CombatActor> combatActors, ArrayList<Character> partyCharacters) {
         boolean validCharacter = false;
         boolean validReaction = false;
         Character chosenCharacter = null;
@@ -60,7 +60,7 @@ public class ReactionHandler {
 
             if (chosenCharacter.isValidReaction(reactionToUse)) {
                 chosenCharacter.setActionPoints(chosenCharacter.getActionPoints() - chosenReaction.getActionCost());
-                chosenCharacter.handleReaction(partyCharacters, reactionToUse.toLowerCase());
+                chosenCharacter.handleReaction(combatActors, partyCharacters, reactionToUse.toLowerCase());
                 validReaction = true;
             } else {
                 System.out.println("Invalid reaction, please try again. If you need help, type HELP.");

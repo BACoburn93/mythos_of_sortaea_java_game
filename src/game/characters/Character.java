@@ -1,15 +1,11 @@
 package characters;
 
 import abilities.Ability;
-import abilities.damages.Damage;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.reactions.*;
 import abilities.single_target.SingleTargetAbility;
-import actors.Actor;
 import actors.ActorTypes;
 import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
-import actors.resources.ResourceTypes;
 import actors.stances.Stances;
 import actors.types.CombatActor;
 import characters.jobs.Job;
@@ -21,7 +17,7 @@ import items.equipment.item_types.ItemType;
 import items.equipment.item_types.ShieldTypes;
 import items.equipment.item_types.WeaponTypes;
 import items.equipment.equipment_slots.*;
-
+import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;
 
@@ -29,35 +25,45 @@ import java.util.*;
 import characters.initializers.*;
 
 public class Character extends CombatActor {
-    private Job job;
+    private final Job job;
     private int level;
     private int experience;
     private int experienceToLevel = 100;
     private int actionPoints;
     private int maxActionPoints;
     private int attributePoints;
-    private Reaction[] reactions;
-    private ArrayList<Ability> abilities;
-    private ArrayList<Equipment> equipment = new ArrayList<>();
-    private Map<String, EquipmentSlot> equipmentSlots; 
-    private Consumable[] items;
-    private ArrayList<Ability> charAbilities = new ArrayList<>();
 
-    public Character(String name, Job job) {
+    private final Reaction[] reactions;
+    private final ArrayList<Ability> abilities;
+    private final ArrayList<Equipment> equipment;
+    private final Map<String, EquipmentSlot> equipmentSlots;
+    private final Consumable[] items;
+    private final ArrayList<Ability> charAbilities;
+    private final GameScanner gameScanner;
+
+
+    public Character(GameScanner gameScanner, String name, Job job) {
         super(name, job.getHealthValues(), job.getManaValues(), job.getAttributes(), job.getResistances());
         this.setActorType(ActorTypes.CHARACTER);
+        
         this.job = job;
         this.level = 1;
         this.experience = 0;
         this.actionPoints = 3;
         this.attributePoints = 0;
         this.maxActionPoints = this.actionPoints;
+        
+        this.gameScanner = gameScanner;
+
         this.charAbilities = CharacterAbilities.getAbilities();
         this.abilities = new ArrayList<>(this.charAbilities);
         this.reactions = CharacterReactions.getReactions();
-        this.equipmentSlots = new LinkedHashMap<>();
 
-        // Display names as keys, but keep a mapping from EquipmentTypes to display names for lookup
+        this.equipment = new ArrayList<>();
+        this.equipmentSlots = new LinkedHashMap<>();
+        this.items = CharacterItems.getItems();
+
+        // Initialize equipment slots
         equipmentSlots.put("Head", new HeadSlot());
         equipmentSlots.put("Mainhand", new MainHandSlot());
         equipmentSlots.put("Offhand", new OffHandSlot());
@@ -68,9 +74,9 @@ public class Character extends CombatActor {
         equipmentSlots.put("Left Ring", new LeftRingSlot());
         equipmentSlots.put("Right Ring", new RightRingSlot());
 
-        this.items = CharacterItems.getItems();
         this.abilities.addAll(this.job.getJobAbilities());
     }
+
 
 
     public void addExperience(int expToAdd) {
@@ -85,15 +91,11 @@ public class Character extends CombatActor {
                 (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 4)
         );
 
-        Scanner attributesToAllocate = new Scanner(System.in);
         while(this.attributePoints > 0) {
             System.out.println("Which attribute would you like to allocate points to? You have " +
                     this.attributePoints + " attribute points remaining.");
-            if (!attributesToAllocate.hasNextLine()) {
-                System.out.println("No input available. Skipping attribute allocation.");
-                break;
-            }
-            String attributeToLevel = attributesToAllocate.nextLine().toUpperCase();
+            System.out.println("Options: Strength, Agility, Knowledge, Defense, Resilience, Spirit, Luck");
+            String attributeToLevel = gameScanner.nextLine().toUpperCase();
             if(
                     attributeToLevel.equalsIgnoreCase(AttributeTypes.STRENGTH.toString()) ||
                     attributeToLevel.equalsIgnoreCase(AttributeTypes.AGILITY.toString()) ||
@@ -104,12 +106,9 @@ public class Character extends CombatActor {
                     attributeToLevel.equalsIgnoreCase(AttributeTypes.LUCK.toString())
             ) {
                 System.out.println("How many points to allocate? You have " + this.attributePoints + " remaining.");
-                if (!attributesToAllocate.hasNextLine()) {
-                    System.out.println("No input available. Skipping attribute allocation.");
-                    break;
-                }
+
                 try {
-                    int numAttributePointToAllocate = Integer.parseInt(attributesToAllocate.nextLine());
+                    int numAttributePointToAllocate = Integer.parseInt(gameScanner.nextLine());
                     if(numAttributePointToAllocate <= this.attributePoints) {
                         this.getAttributes().incrementAttribute(attributeToLevel, numAttributePointToAllocate);
                         this.attributePoints -= numAttributePointToAllocate;
@@ -172,10 +171,9 @@ public class Character extends CombatActor {
         String slotKey = equipmentTypeToDisplayName.get(item.getEquipmentType());
 
         if ("Ring".equals(slotKey)) {
-            Scanner scanner = new Scanner(System.in);
             System.out.println("Equip ring to [L]eft or [R]ight ring?");
 
-            String choice = scanner.nextLine().trim().toUpperCase();
+            String choice = gameScanner.nextLine().trim().toUpperCase();
             if (choice.equals("L") || choice.equals("LEFT")) {
                 slotKey = "Left Ring";
             } else if (choice.equals("R") || choice.equals("RIGHT")) {
@@ -279,16 +277,29 @@ public class Character extends CombatActor {
         }
     }
 
-    public void handleObserve(ArrayList<Character> actors) {
-        String actorNames = actors.stream()
-                .map(Actor::getName)
-                .collect(java.util.stream.Collectors.joining(", "));
+    public void handleObserve(ArrayList<CombatActor> combatActors) {
+        System.out.println("Choose a target to observe (by name or number):");
+        StringUtils.printOptionsGrid(
+            combatActors,
+            CombatActor::getName,
+            3,
+            4
+        );
 
-        StringUtils.twoStringDivider(this.getName() + " is observing the surrounding area.",
-                actorNames, "", 50);
+        System.out.println("Checking first");
+        String action = gameScanner.nextLine();
+
+        CombatActor selected = InputHandler.getItemByInput(action, combatActors, CombatActor::getName);
+
+        if (selected != null) {
+            ui.CombatUIStrings.printCombatActorStats(selected);
+        } else {
+            System.out.println("No such target found.");
+        }
+
     }
 
-    public void handleReaction(ArrayList<Character> actors, String reaction) {
+    public void handleReaction(ArrayList<CombatActor> actors, ArrayList<Character> partyCharacters, String reaction) {
         ReactionTypes reactionType;
         try {
             reactionType = ReactionTypes.valueOf(reaction.toUpperCase());
@@ -440,7 +451,7 @@ public class Character extends CombatActor {
         }
     }
 
-    // Getters and Setters
+    // Getters
 
     @Override
     public String getName() {
@@ -455,10 +466,6 @@ public class Character extends CombatActor {
         return equipment;
     }
 
-    public void setEquipment(ArrayList<Equipment> equipment) {
-        this.equipment = equipment;
-    }
-
     public Map<String, EquipmentSlot> getEquipmentSlots() {
         return equipmentSlots;
     }
@@ -467,62 +474,44 @@ public class Character extends CombatActor {
         return actionPoints;
     }
 
-    public void setActionPoints(int actionPoints) {
-        this.actionPoints = actionPoints;
-    }
-
     public int getMaxActionPoints() {
         return maxActionPoints;
     }
 
-
     public Reaction[] getReactions() {
         return reactions;
-    }
-
-    public void setReactions(Reaction[] reactions) {
-        this.reactions = reactions;
     }
 
     public ArrayList<Ability> getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(ArrayList<Ability> abilities) {
-        this.abilities = abilities;
-    }
-
     public Consumable[] getItems() {
         return items;
     }
 
-    public void setItems(Consumable[] items) {
-        this.items = items;
-    }
-
     public ArrayList<Ability> getCharAbilities() {
-        return CharacterAbilities.getAbilities();
-    }
-
-    public void setCharAbilities(ArrayList<Ability> charAbilities) {
-        this.charAbilities = charAbilities;
+        return charAbilities;
     }
 
     public Reaction[] getCharReactions() {
         return CharacterReactions.getReactions();
     }
 
-    public void setCharReactions(Reaction[] charReactions) {
-        this.reactions = charReactions;
-    }
-
     public Consumable[] getCharItems() {
         return CharacterItems.getItems();
     }
 
-    public void setCharItems(Consumable[] charItems) {
-        this.items = charItems;
+    // Setters
+
+    public void setActionPoints(int actionPoints) {
+        this.actionPoints = actionPoints;
     }
+
+    public void setMaxActionPoints(int maxActionPoints) {
+        this.maxActionPoints = maxActionPoints;
+    }
+
 
     @Override
     public String toString() {

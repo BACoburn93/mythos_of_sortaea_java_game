@@ -36,7 +36,7 @@ public class GameManager {
 
             switch (choice) {
                 case "1":
-                    startNewGame();
+                    startNewGame(gameScanner);
                     break;
 
                 case "2":
@@ -56,8 +56,8 @@ public class GameManager {
         inputHandler.close();
     }
 
-    private void startNewGame() {
-        GameContainer newGame = new GameContainer();
+    private void startNewGame(GameScanner gameScanner) {
+        GameContainer newGame = new GameContainer(gameScanner);
         System.out.println("Your party is ready:");
         System.out.println(newGame.party.printPartySummary());
 
@@ -67,7 +67,7 @@ public class GameManager {
 
     private void runTestCombat() {
         // Create test game state
-        GameContainer testGame = new GameContainer();
+        GameContainer testGame = new GameContainer(gameScanner);
 
         // Create enemies and actors
         ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();

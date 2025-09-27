@@ -72,7 +72,7 @@ public class CombatManager {
                     if (actor instanceof Character c) {
                         actionHandler.handleTurn(c);
                     } else if (actor instanceof Enemy e) {
-                        reactionHandler.handleReaction(party.characters, turnOrder);
+                        reactionHandler.handleReaction(turnOrder, party.characters);
                         e.chooseEnemyAbility(party);
                     }
                     actor.handleEndTurn();

@@ -16,7 +16,11 @@ import java.util.Set;
 
 public class CharacterCreator {
 
-    private final GameScanner gameLoop = new GameScanner();
+    private final GameScanner gameScanner;
+
+    public CharacterCreator(GameScanner gameScanner) {
+        this.gameScanner = gameScanner;
+    }
 
     private static final List<Job> validJobs = List.of(
             new MageJob(),
@@ -38,7 +42,7 @@ public class CharacterCreator {
         for (int i = 1; i <= numCharacters; i++) {
             String name = getUniqueCharacterName(i, characterNames);
             Job job = chooseJobForCharacter(name);
-            characterParty.add(new Character(name, job));
+            characterParty.add(new Character(gameScanner, name, job));
         }
 
         return new Party(characterParty);
@@ -52,7 +56,7 @@ public class CharacterCreator {
             System.out.println("How many characters would you like to have in your party? (Maximum 6)");
 
             try {
-                numCharacters = Integer.parseInt(this.gameLoop.nextLine());
+                numCharacters = Integer.parseInt(this.gameScanner.nextLine());
                 if (numCharacters <= 6 && numCharacters > 0) {
                     validInput = true;
                 } else {
@@ -72,7 +76,7 @@ public class CharacterCreator {
 
         while (!validName) {
             System.out.println("What is Character Number " + index + "'s name?");
-            name = StringUtils.capitalize(this.gameLoop.nextLine());
+            name = StringUtils.capitalize(this.gameScanner.nextLine());
 
             boolean isNumericIndex = false;
             try {
@@ -109,7 +113,7 @@ public class CharacterCreator {
         boolean validJob = false;
 
         while (!validJob) {
-            String jobInput = gameLoop.nextLine();
+            String jobInput = gameScanner.nextLine();
             job = InputHandler.getItemByInput(jobInput, validJobs, Job::getName);
 
             if (job != null) {

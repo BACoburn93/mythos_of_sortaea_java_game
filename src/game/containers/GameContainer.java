@@ -6,10 +6,10 @@ import utils.GameScanner;
 
 public class GameContainer {
     public Party party;
-    GameScanner gameLoop = new GameScanner();
+    // GameScanner gameLoop = new GameScanner();
 
-    public GameContainer() {
-        CharacterCreator characterCreator = new CharacterCreator();
+    public GameContainer(GameScanner gameScanner) {
+        CharacterCreator characterCreator = new CharacterCreator(gameScanner);
         party = characterCreator.createParty();
     }
 

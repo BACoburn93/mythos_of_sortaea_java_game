@@ -7,7 +7,6 @@ import java.util.Map;
 import characters.Character;
 import characters.Party;
 import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;
 import items.equipment.equipment_slots.*;
 import utils.GameScanner;
 import utils.InputHandler;
@@ -54,9 +53,6 @@ public class EquipmentHandler {
         Map<String, EquipmentSlot> slotMap = character.getEquipmentSlots();
         List<String> orderedSlots = new ArrayList<>(slotMap.keySet());
         List<Map.Entry<String, EquipmentSlot>> entries = new ArrayList<>(slotMap.entrySet());
-
-        // orderedSlots.remove(EquipmentTypes.HEAD.toString());
-        // orderedSlots.add(0, EquipmentTypes.HEAD.toString());
 
         StringUtils.printOptionsGrid(
             orderedSlots,
