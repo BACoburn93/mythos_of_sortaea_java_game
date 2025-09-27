@@ -3,14 +3,6 @@ package status_conditions;
 import actors.types.CombatActor;
 
 public class Poison extends DamageOverTime {
-    // public Poison(int value, int chanceToTrigger, int duration) {
-    //     super(StatusTypes.POISON, value, chanceToTrigger, duration, StatusAttributeTypes.CHANCE_TO_TRIGGER);
-    // }
-
-    // public Poison(int value, int resistance) {
-    //     super(StatusTypes.POISON, value, resistance, 0, StatusAttributeTypes.RESISTANCE);
-    // }
-
     public Poison() {
         super(StatusTypes.POISON); // Default constructor with default values
     }

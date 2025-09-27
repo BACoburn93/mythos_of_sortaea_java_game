@@ -422,7 +422,7 @@ const barethWithFirebolt = new Character({
 const rowan = new Character({
     name: "Rowan",
     hp: 20, 
-    ac: 12,
+    ac: 15, // Mage Armor
     spells: [fireBolt],
     spellCastingMod: 'intelligence',
     strength: 8,
@@ -446,9 +446,8 @@ const simulateFight = (charA, charB) => {
     while (attacker.isAlive() && defender.isAlive() && round <= 50) {
         console.log(`--- Round ${round} ---`);
         let result;
-        let maxRounds = 50;
 
-        if (attacker.spells && attacker.spells.length > maxRounds) {
+        if (attacker.spells && attacker.spells.length > 0) {
             result = attacker.spellAttack(defender, attacker.spells[0]);
             if (result.hit) {
                 console.log(`${result.caster} hits ${result.target} with ${attacker.spells[0].name} for ${result.finalDamage} damage! (${result.target} HP: ${result.hp})`);
