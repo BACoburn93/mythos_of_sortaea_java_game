@@ -18,7 +18,10 @@ public class ActionHandler {
     private final EquipmentHandler equipmentHandler;
     private final SortHandler sortHandler;
     private final InputHandler inputHandler;
+    private final ArrayList<CombatActor> actors;
     private Party party;
+    
+
     public ActionHandler(GameScanner scanner, ArrayList<CombatActor> actors, Party party, ArrayList<Enemy> enemies, EquipmentHandler equipmentHandler) {
         this.scanner = scanner;
         this.abilityHandler = new AbilityHandler(scanner, new TargetSelector(actors), actors, enemies);
@@ -26,6 +29,7 @@ public class ActionHandler {
         this.sortHandler = new SortHandler(scanner, inputHandler);
         this.party = party;
         this.equipmentHandler = equipmentHandler;
+        this.actors = actors;
     }
 
     public void handleTurn(Character character) {
@@ -63,11 +67,7 @@ public class ActionHandler {
                     equipmentHandler.handleUnequip(scanner, character);
                 }
                 case OBSERVE -> {
-                    if (character.getStatusConditions().getBlind().getDuration() <= 0) {
-                        System.out.println(character);
-                    } else {
-                        System.out.println("You're blinded and can't observe.");
-                    }
+                    character.handleObserve(this.actors);
                 }
                 case SORT -> {
                     handleSortAction(party, character);

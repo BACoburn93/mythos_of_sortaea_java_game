@@ -60,21 +60,10 @@ public class Character extends CombatActor {
         this.reactions = CharacterReactions.getReactions();
 
         this.equipment = new ArrayList<>();
-        this.equipmentSlots = new LinkedHashMap<>();
+        this.equipmentSlots = CharacterItems.getEquipmentSlots();
         this.items = CharacterItems.getItems();
-
-        // Initialize equipment slots
-        equipmentSlots.put("Head", new HeadSlot());
-        equipmentSlots.put("Mainhand", new MainHandSlot());
-        equipmentSlots.put("Offhand", new OffHandSlot());
-        equipmentSlots.put("Legs", new LegsSlot());
-        equipmentSlots.put("Torso", new TorsoSlot());
-        equipmentSlots.put("Feet", new FeetSlot());
-        equipmentSlots.put("Neck", new NeckSlot());
-        equipmentSlots.put("Left Ring", new LeftRingSlot());
-        equipmentSlots.put("Right Ring", new RightRingSlot());
-
         this.abilities.addAll(this.job.getJobAbilities());
+        
     }
 
 
@@ -278,23 +267,29 @@ public class Character extends CombatActor {
     }
 
     public void handleObserve(ArrayList<CombatActor> combatActors) {
-        System.out.println("Choose a target to observe (by name or number):");
-        StringUtils.printOptionsGrid(
-            combatActors,
-            CombatActor::getName,
-            3,
-            4
-        );
 
-        System.out.println("Checking first");
-        String action = gameScanner.nextLine();
+        if (this.getStatusConditions().getBlind().getDuration() <= 0) {
+            System.out.println("Choose a target to observe (by name or number):");
+            
+            StringUtils.printOptionsGrid(
+                combatActors,
+                CombatActor::getName,
+                3,
+                4
+            );
 
-        CombatActor selected = InputHandler.getItemByInput(action, combatActors, CombatActor::getName);
+            String action = gameScanner.nextLine();
 
-        if (selected != null) {
-            ui.CombatUIStrings.printCombatActorStats(selected);
+            CombatActor selected = InputHandler.getItemByInput(action, combatActors, CombatActor::getName);
+
+            if (selected != null) {
+                ui.CombatUIStrings.printCombatActorStats(selected);
+            } else {
+                System.out.println("No such target found.");
+            }
+
         } else {
-            System.out.println("No such target found.");
+            System.out.println("You're blinded and can't observe.");
         }
 
     }

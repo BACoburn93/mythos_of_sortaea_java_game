@@ -51,6 +51,8 @@ public class InputHandler {
 
         StringUtils.printOptionsGrid(valuesList, e -> formatEnumName(e.name()), 3, 5);
 
+        System.out.println(prompt);
+
         String input = scanner.nextLine().trim().toLowerCase();
 
         try {

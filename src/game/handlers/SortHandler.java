@@ -121,9 +121,6 @@ public class SortHandler {
         return inputHandler.promptEnumSelection(ConsumableSortKey.class, "Sort Consumables by:");
     }
 
-
-    // TODO -- Allow selecting sort to allow for indexed input
-
     public void handleSortEquipment(Party party) {
         EquipmentSortKey sortKey = promptEquipmentSortKey();
         boolean ascending = promptAscending();
@@ -145,6 +142,7 @@ public class SortHandler {
 
     private boolean promptAscending() {
         YesOrNo result = inputHandler.promptEnumSelection(YesOrNo.class, "Ascending?");
+        
         return result == YesOrNo.YES;
     }
 
@@ -172,7 +170,7 @@ public class SortHandler {
 
         items.sort(comparator);
     }
-
+    
     private Comparator<Ability> getAbilityComparator(AbilitySortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Ability::getName);
