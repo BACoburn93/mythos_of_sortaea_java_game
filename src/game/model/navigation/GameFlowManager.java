@@ -1,12 +1,11 @@
 package model.navigation;
 
 import characters.Party;
-import enemies.Enemy;
-import enemies.EnemyFactory;
 import handlers.ActionHandler;
 import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
 import managers.CombatManager;
+import model.navigation.regions.Forest;
 import utils.GameScanner;
 import utils.StringUtils;
 
@@ -21,7 +20,7 @@ import actors.types.CombatActor;
 public class GameFlowManager {
     private GameScanner scanner = new GameScanner();
     private static final Random rng = new Random();
-    private Region currentRegion;
+    private Forest currentRegion;
 
     public static <T> T getRandomOrNull(List<T> list) {
         int index = rng.nextInt(list.size());
@@ -31,11 +30,12 @@ public class GameFlowManager {
     // Example: initialize region with a pool
     public GameFlowManager() {
         // Example region setup
+
         Map<String, Double> forestEnemies = new java.util.HashMap<>();
         forestEnemies.put("goblin", 0.4);
         forestEnemies.put("orc", 0.15);
         forestEnemies.put("dragon", 0.1);
-        currentRegion = new Region("Dark Forest", forestEnemies);
+        currentRegion = new Forest(forestEnemies);
     }
 
     // Entry point for exploration
@@ -47,57 +47,59 @@ public class GameFlowManager {
     private void explore(Node currentNode, Party party) {
         Node node = currentNode;
 
-        while (node != null) {
-            System.out.println("\n" + node.getDescription());
+        while (true) { // Infinite loop for testing
+            while (node != null) {
+                System.out.println("\n" + node.getDescription());
 
-            var options = node.getOptions();
+                var options = node.getOptions();
 
-            StringUtils.printOptionsGrid(
-                options,
-                o -> o,
-                1,
-                0
-            );
-
-            int choice = -1;
-            while (choice < 1 || choice > options.size()) {
-                System.out.print("Choose an option: ");
-                try {
-                    choice = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a number.");
-                }
-            }
-
-            // Example: Hook for battle nodes
-            if (node.getDescription().contains("battle") && choice == 1) {
-                // Set up actors for combat based on region
-                ArrayList<enemies.Enemy> enemies = currentRegion.generateEnemies();
-                ArrayList<CombatActor> allActors = currentRegion.setupCombatActors(party, enemies);
-
-                // Create handlers
-                EquipmentHandler equipmentHandler = new EquipmentHandler(party);
-                ActionHandler actionHandler = new ActionHandler(scanner, allActors, party, enemies, equipmentHandler);
-                ReactionHandler reactionHandler = new ReactionHandler(scanner);
-
-                // Start combat
-                CombatManager combatManager = new CombatManager(
-                        party,
-                        enemies,
-                        actionHandler,
-                        reactionHandler
+                StringUtils.printOptionsGrid(
+                    options,
+                    o -> o,
+                    1,
+                    0
                 );
-                
-                combatManager.startCombat();
+
+                int choice = -1;
+                while (choice < 1 || choice > options.size()) {
+                    System.out.print("Choose an option: ");
+                    try {
+                        choice = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number.");
+                    }
+                }
+
+                // Example: Hook for battle nodes
+                if (node.getDescription().contains("battle") && choice == 1) {
+                    // Set up actors for combat based on region
+                    ArrayList<enemies.Enemy> enemies = currentRegion.generateEnemies();
+                    ArrayList<CombatActor> allActors = currentRegion.setupCombatActors(party, enemies);
+
+                    // Create handlers
+                    EquipmentHandler equipmentHandler = new EquipmentHandler(party);
+                    ActionHandler actionHandler = new ActionHandler(scanner, allActors, party, enemies, equipmentHandler);
+                    ReactionHandler reactionHandler = new ReactionHandler(scanner);
+
+                    // Start combat
+                    CombatManager combatManager = new CombatManager(
+                            party,
+                            enemies,
+                            actionHandler,
+                            reactionHandler
+                    );
+                    
+                    combatManager.startCombat();
+                }
+
+                node = node.getNextNode(choice);
             }
 
-            node = node.getNextNode(choice);
+            System.out.println("Your journey ends here. Restarting for testing...\n");
+            node = buildStartingNode(); // Restart from the beginning for testing
         }
-
-        System.out.println("Your journey ends here.");
     }
 
-    // Build a simple branching starting node setup
     private Node buildStartingNode() {
         Node start = new Node(
             "You find yourself at the entrance of a dark forest. What will you do?",
@@ -132,7 +134,9 @@ public class GameFlowManager {
 
         Node endNode = new Node(
             "The path ends here. Your adventure concludes for now.",
-            Arrays.asList()
+            Arrays.asList(
+                "Restart your adventure"
+            )
         );
 
         // Connect nodes (using 1-based indices for options)
@@ -146,7 +150,36 @@ public class GameFlowManager {
         campNode.addNextNode(1, endNode);    // Continue → end
         suppliesNode.addNextNode(1, endNode);// Continue → end
 
+        endNode.addNextNode(1, start);
+
         return start;
+    }
+
+    // To change region, just assign a new subclass instance:
+    public void changeRegion(String regionType) {
+        Map<String, Double> enemies;
+        switch (regionType.toLowerCase()) {
+            case "forest":
+                enemies = new java.util.HashMap<>();
+                    enemies.put("goblin", 0.4);
+                    enemies.put("orc", 0.15);
+                    enemies.put("dragon", 0.1);
+
+                currentRegion = new Forest(enemies);
+                System.out.println("You have entered the Forest region.");
+                break;
+            case "desert":
+            // TODO when testing region changing logic
+                // enemies = new java.util.HashMap<>();
+                // enemies.put("scorpion", 0.5);
+                // enemies.put("sand_worm", 0.2);
+                // // ...add more enemies as needed...
+                // currentRegion = new Desert(enemies);
+                // System.out.println("You have entered the Desert region.");
+                break;
+            default:
+                System.out.println("Unknown region.");
+        }
     }
 }
 

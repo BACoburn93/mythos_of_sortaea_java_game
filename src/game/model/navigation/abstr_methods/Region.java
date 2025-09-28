@@ -1,4 +1,4 @@
-package model.navigation;
+package model.navigation.abstr_methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,12 @@ import actors.types.CombatActor;
 import characters.Party;
 import enemies.Enemy;
 import enemies.EnemyFactory;
+import model.navigation.EventNode;
 
-public class Region {
+public abstract class Region {
     private String name;
+    // Store multiple possible event chains, each as a list of EventNodes
+    private List<List<EventNode>> eventChains;
     private Map<String, Double> enemyWeights; // enemy type -> spawn weight
     private int maxSpawnWeight = 4;
     private static final Random rng = new Random();
@@ -19,6 +22,7 @@ public class Region {
     public Region(String name, Map<String, Double> enemyWeights) {
         this.name = name;
         this.enemyWeights = enemyWeights;
+        this.eventChains = new ArrayList<>();
     }
 
     public String getName() {
@@ -82,5 +86,21 @@ public class Region {
         allActors.addAll(enemies);
 
         return allActors;
+    }
+
+    // Add an event chain to this region
+    public void addEventChain(List<EventNode> chain) {
+        eventChains.add(chain);
+    }
+
+    // Get all event chains
+    public List<List<EventNode>> getEventChains() {
+        return eventChains;
+    }
+
+    // Optionally, get a random event chain
+    public List<EventNode> getRandomEventChain() {
+        if (eventChains.isEmpty()) return null;
+        return eventChains.get(rng.nextInt(eventChains.size()));
     }
 }
