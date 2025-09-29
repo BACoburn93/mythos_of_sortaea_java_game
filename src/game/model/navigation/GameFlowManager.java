@@ -12,7 +12,6 @@ import utils.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import actors.types.CombatActor;
@@ -29,13 +28,7 @@ public class GameFlowManager {
 
     // Example: initialize region with a pool
     public GameFlowManager() {
-        // Example region setup
-
-        Map<String, Double> forestEnemies = new java.util.HashMap<>();
-        forestEnemies.put("goblin", 0.4);
-        forestEnemies.put("orc", 0.15);
-        forestEnemies.put("dragon", 0.1);
-        currentRegion = new Forest(forestEnemies);
+        currentRegion = new Forest();
     }
 
     // Entry point for exploration
@@ -111,7 +104,7 @@ public class GameFlowManager {
         );
 
         Node battleNode = new Node(
-            "A wild goblin jumps out from behind a tree! Prepare for battle!",
+            "Creatures of the Forest become hostile! Prepare for battle!",
             Arrays.asList(
                 "Fight",
                 "Run away"
@@ -157,24 +150,14 @@ public class GameFlowManager {
 
     // To change region, just assign a new subclass instance:
     public void changeRegion(String regionType) {
-        Map<String, Double> enemies;
         switch (regionType.toLowerCase()) {
             case "forest":
-                enemies = new java.util.HashMap<>();
-                    enemies.put("goblin", 0.4);
-                    enemies.put("orc", 0.15);
-                    enemies.put("dragon", 0.1);
-
-                currentRegion = new Forest(enemies);
+                currentRegion = new Forest();
                 System.out.println("You have entered the Forest region.");
                 break;
             case "desert":
-            // TODO when testing region changing logic
-                // enemies = new java.util.HashMap<>();
-                // enemies.put("scorpion", 0.5);
-                // enemies.put("sand_worm", 0.2);
-                // // ...add more enemies as needed...
-                // currentRegion = new Desert(enemies);
+                // TODO when testing region changing logic
+                // currentRegion = new Desert();
                 // System.out.println("You have entered the Desert region.");
                 break;
             default:

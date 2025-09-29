@@ -16,12 +16,12 @@ public abstract class Region {
     // Store multiple possible event chains, each as a list of EventNodes
     private List<List<EventNode>> eventChains;
     private Map<String, Double> enemyWeights; // enemy type -> spawn weight
-    private int maxSpawnWeight = 4;
+    private int maxSpawnWeight = 5;
     private static final Random rng = new Random();
 
-    public Region(String name, Map<String, Double> enemyWeights) {
+    public Region(String name) {
         this.name = name;
-        this.enemyWeights = enemyWeights;
+        this.enemyWeights = initEnemyPool();
         this.eventChains = new ArrayList<>();
     }
 
@@ -103,4 +103,7 @@ public abstract class Region {
         if (eventChains.isEmpty()) return null;
         return eventChains.get(rng.nextInt(eventChains.size()));
     }
+
+    // Subclasses must implement this to provide their enemy pool
+    protected abstract Map<String, Double> initEnemyPool();
 }

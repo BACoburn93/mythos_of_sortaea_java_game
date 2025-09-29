@@ -434,6 +434,9 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
+    // TODO -- Set up levelUp to give attribute points and possibly new abilities
+    // Only have it trigger after a combat sequence
+    // Maybe create a perk tree, randomized ability choices, subclass options, paragon paths, epic destinies, etc.
     public void levelUp() {
         while(this.experience >= this.experienceToLevel) {
             this.level++;

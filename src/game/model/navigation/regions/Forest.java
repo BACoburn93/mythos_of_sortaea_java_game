@@ -3,10 +3,15 @@ package model.navigation.regions;
 import java.util.Map;
 
 import model.navigation.abstr_methods.Region;
+import model.navigation.regions.initializers.*;
 
 public class Forest extends Region {
-    public Forest(Map<String, Double> enemyWeights) {
-        super("Forest", enemyWeights);
-        // Optionally, add Forest-specific event chains or logic here
+    public Forest() {
+        super("Forest");
+    }
+
+    @Override
+    protected Map<String, Double> initEnemyPool() {
+        return ForestInit.forestEnemies;
     }
 }
