@@ -83,6 +83,8 @@ public class GameFlowManager {
                     );
                     
                     combatManager.startCombat();
+
+                    combatManager.postCombat();
                 }
 
                 node = node.getNextNode(choice);

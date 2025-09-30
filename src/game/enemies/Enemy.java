@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class Enemy extends CombatActor {
     private List<SingleTargetAbility> abilities;
-    private int experience = this.getSpawnWeight() > 0 ? getLevel() * (5 * (this.spawnWeight * this.spawnWeight)) : getLevel() * 5;
+    private int experience;
 
     private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
     private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
@@ -38,6 +38,7 @@ public class Enemy extends CombatActor {
         super(name, healthValues, manaValues, attributes, resistances, level);
         this.setActorType(ActorTypes.ENEMY);
         this.abilities = new ArrayList<>(List.of(baseAbilities));
+        this.experience = getLevel() * 5;
     }
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
@@ -46,6 +47,7 @@ public class Enemy extends CombatActor {
         this.setActorType(ActorTypes.ENEMY);
         this.abilities = new ArrayList<>(List.of(baseAbilities));
         this.spawnWeight = spawnWeight;
+        this.experience = this.getSpawnWeight() > 0 ? getLevel() * (5 * (this.spawnWeight * this.spawnWeight)) : getLevel() * 5;
     }
 
     protected void setupModifiers() {
@@ -149,10 +151,8 @@ public class Enemy extends CombatActor {
         this.setLevel(this.level + level);
 
         if (spawnWeight > 0) {
-            this.level = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));
-        } else {
-            this.level = getLevel() * 5;
-        }
+            this.experience = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));
+        } 
     }
 
     @Override

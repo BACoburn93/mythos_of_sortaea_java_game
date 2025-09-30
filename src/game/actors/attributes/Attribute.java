@@ -27,7 +27,7 @@ public abstract class Attribute {
 
     @Override
     public String toString() {
-        return name + ": " + value;
+        return name + ": " + (int) value;
     }
 }
 

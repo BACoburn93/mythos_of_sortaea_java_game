@@ -4,6 +4,7 @@ import abilities.Ability;
 import abilities.reactions.*;
 import abilities.single_target.SingleTargetAbility;
 import actors.ActorTypes;
+import actors.attributes.Attribute;
 import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.stances.Stances;
@@ -70,44 +71,64 @@ public class Character extends CombatActor {
 
     public void addExperience(int expToAdd) {
         this.experience += expToAdd;
-        // levelUp();
+
+        while(this.experience >= this.experienceToLevel) {
+            this.experience -= this.experienceToLevel;
+            this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
+            levelUp();
+        }
     }
 
     public void allocateAttributePoints() {
-        Random randomRoll = new Random();
-
-        this.attributePoints = randomRoll.nextInt(3,
-                (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 4)
+        List<String> attributeOptions = Arrays.asList(
+            "Strength", "Agility", "Knowledge", "Defense", "Resilience", "Spirit", "Luck"
         );
 
-        while(this.attributePoints > 0) {
-            System.out.println("Which attribute would you like to allocate points to? You have " +
-                    this.attributePoints + " attribute points remaining.");
-            System.out.println("Options: Strength, Agility, Knowledge, Defense, Resilience, Spirit, Luck");
-            String attributeToLevel = gameScanner.nextLine().toUpperCase();
-            if(
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.STRENGTH.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.AGILITY.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.KNOWLEDGE.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.DEFENSE.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.RESILIENCE.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.SPIRIT.toString()) ||
-                    attributeToLevel.equalsIgnoreCase(AttributeTypes.LUCK.toString())
-            ) {
-                System.out.println("How many points to allocate? You have " + this.attributePoints + " remaining.");
+        Random randomRoll = new Random();
+        int minValue = this.level / 4 + 2;
+        int luckBonus = (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 4);
+        int maxValue = minValue + luckBonus + 1;
 
-                try {
-                    int numAttributePointToAllocate = Integer.parseInt(gameScanner.nextLine());
-                    if(numAttributePointToAllocate <= this.attributePoints) {
-                        this.getAttributes().incrementAttribute(attributeToLevel, numAttributePointToAllocate);
-                        this.attributePoints -= numAttributePointToAllocate;
-                    } else {
-                        System.out.println("Insufficient Attribute Points.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a valid number.");
-                }
+        if (maxValue > minValue) {
+            this.attributePoints = randomRoll.nextInt(minValue, maxValue); 
+        } else {
+            this.attributePoints = minValue;
+        }
+
+        while(this.attributePoints > 0) {
+            StringUtils.stringDivider("Which attribute would you like to allocate points to? You have " +
+                    this.attributePoints + " attribute points remaining.", " ", 10);
+
+            StringUtils.printOptionsGrid(
+                attributeOptions,
+                attr -> attr, 
+                3,
+                attributeOptions.size()
+            );
+
+            String attrToLevel = gameScanner.nextLine();
+
+            String selected = InputHandler.getItemByInput(attrToLevel, attributeOptions, java.util.function.Function.identity());
+
+            if (selected == null) {
+                System.out.println("Invalid attribute selection. Please try again.");
+                continue;
             }
+
+            System.out.println("How many points to allocate? You have " + this.attributePoints + " remaining.");
+
+            try {
+                int numAttributePointToAllocate = Integer.parseInt(gameScanner.nextLine());
+                if(numAttributePointToAllocate <= this.attributePoints) {
+                    this.getAttributes().incrementAttribute(selected, numAttributePointToAllocate);
+                    this.attributePoints -= numAttributePointToAllocate;
+                } else {
+                    System.out.println("Insufficient Attribute Points.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+            // }
         }
 
         StringUtils.stringDivider(String.valueOf(this.getAttributes()), "", 50);
@@ -232,6 +253,10 @@ public class Character extends CombatActor {
             }
         }
         return equipped;
+    }
+
+    public void handlePostCombat() {
+        this.actionPoints = this.maxActionPoints;
     }
 
     private void addItemAttributesAndResistances(Equipment item) {
@@ -438,15 +463,10 @@ public class Character extends CombatActor {
     // Only have it trigger after a combat sequence
     // Maybe create a perk tree, randomized ability choices, subclass options, paragon paths, epic destinies, etc.
     public void levelUp() {
-        while(this.experience >= this.experienceToLevel) {
-            this.level++;
-            this.experience -= this.experienceToLevel;
-            this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
-            if(this.level % 4 == 0) this.maxActionPoints++;
-
-            StringUtils.stringDivider(this.getName() + " has leveled up!", "* ", 10);
-            allocateAttributePoints();
-        }
+        this.level++;
+        if(this.level % 4 == 0) this.maxActionPoints++;
+        StringUtils.stringDivider(this.getName() + " has leveled up!", "* ", 10);
+        allocateAttributePoints();
     }
 
     // Getters

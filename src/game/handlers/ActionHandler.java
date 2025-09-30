@@ -19,6 +19,7 @@ public class ActionHandler {
     private final SortHandler sortHandler;
     private final InputHandler inputHandler;
     private final ArrayList<CombatActor> actors;
+    private final ArrayList<Enemy> enemies;
     private Party party;
     
 
@@ -30,12 +31,16 @@ public class ActionHandler {
         this.party = party;
         this.equipmentHandler = equipmentHandler;
         this.actors = actors;
+        this.enemies = enemies;
     }
 
     public void handleTurn(Character character) {
         character.setActionPoints(character.getMaxActionPoints());
 
         while (character.getActionPoints() > 0) {
+            if(enemies.isEmpty()) {
+                break; 
+            }
             CombatUIStrings.formatPartyStat(party.getCharacters());
 
             // Use enum selection instead of raw string input

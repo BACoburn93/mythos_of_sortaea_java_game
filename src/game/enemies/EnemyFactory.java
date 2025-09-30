@@ -3,8 +3,6 @@ package enemies;
 import enemies.abilities.AbilityPool;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
-import enemies.modifiers.prefixes.*;
-import enemies.modifiers.suffixes.*;
 import enemies.types.*;
 // import enemies.util.EnemyNameTracker;
 import utils.StringUtils;

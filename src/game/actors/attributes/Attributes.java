@@ -68,7 +68,7 @@ public class Attributes {
             case "LUCK" -> setLuck(new LuckAttribute(getLuck().getValue() + value));
             default -> { }
         }
-        System.out.println(attribute + " " + value);
+        System.out.println(attribute + " has increased by " + (int) value + ".");
     }
 
     // Increment methods
@@ -176,12 +176,12 @@ public class Attributes {
 
     @Override
     public String toString() {
-        return "STR " + strength.getValue() + ", " +
-               "AGI " + agility.getValue() + ", " +
-               "KNO " + knowledge.getValue() + ", " +
-               "DEF " + defense.getValue() + ", " +
-               "RES " + resilience.getValue() + ", " +
-               "SPI " + spirit.getValue() + ", " +
-               "LUC " + luck.getValue();
+        return "STR " + (int) strength.getValue() + ", " +
+               "AGI " + (int) agility.getValue() + ", " +
+               "KNO " + (int) knowledge.getValue() + ", " +
+               "DEF " + (int) defense.getValue() + ", " +
+               "RES " + (int) resilience.getValue() + ", " +
+               "SPI " + (int) spirit.getValue() + ", " +
+               "LUC " + (int) luck.getValue();
     }
 }

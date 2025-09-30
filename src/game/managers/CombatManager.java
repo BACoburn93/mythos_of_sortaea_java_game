@@ -16,6 +16,7 @@ public class CombatManager {
     private ArrayList<Enemy> enemies;
     private ActionHandler actionHandler;
     private ReactionHandler reactionHandler;
+    private int totalExp = 0;
 
     public CombatManager(Party party, ArrayList<Enemy> enemies,
                          ActionHandler actionHandler,
@@ -62,6 +63,8 @@ public class CombatManager {
     public void startCombat() {
         setupTurnOrder();
 
+        totalExp = enemies.stream().mapToInt(Enemy::getExperience).sum();
+
         while (partyAlive() && !enemies.isEmpty()) {
             for (CombatActor actor : turnOrder) {
                 if (!partyAlive() || enemies.isEmpty()) {
@@ -79,6 +82,36 @@ public class CombatManager {
                 }
             }
         }
+        System.out.println("Total Experience earned: " + totalExp);
         System.out.println("Combat ended!");
+    }
+
+    public void postCombat() {
+        if (partyAlive()) {
+            for (Character character : party.characters) {
+                character.handlePostCombat();
+            }
+
+            distributeExperience(totalExp);
+        } else {
+            System.out.println("Your party was defeated...");
+
+            // Handle defeat scenario (e.g., game over, retreat, etc.)
+        }
+
+        totalExp = 0;
+        enemies.clear();
+    }   
+
+    public void distributeExperience(int totalExp) {
+        System.out.println("Distributing " + totalExp + " experience points among party members.");
+        int partySize = party.characters.size();
+        if (partySize == 0) return;
+
+        int expPerCharacter = totalExp / partySize;
+
+        for (characters.Character c : party.characters) {
+            c.addExperience(expPerCharacter);
+        }
     }
 }
