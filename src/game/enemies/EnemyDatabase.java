@@ -31,7 +31,7 @@ public class EnemyDatabase {
                 new Resistances(),
                 new TargetingAbility[]{
                     AbilityDatabase.ROTTING_TENTACLE,
-                    AbilityDatabase.VIPER_FANGS,
+                    AbilityDatabase.VENOM_MAW,
                     AbilityDatabase.POISON_MIST,
                     AbilityDatabase.IMPALING_ICE
                 },

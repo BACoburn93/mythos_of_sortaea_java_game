@@ -24,6 +24,7 @@ public class EnemyFactory {
         enemyConstructors.put("goblin", Goblin::new);
         enemyConstructors.put("orc", Orc::new);
         enemyConstructors.put("dragon", Dragon::new);
+        enemyConstructors.put("marlboro", Marlboro::new);
     }
 
     public static Enemy createEnemy(String baseType, Prefix prefix, Suffix suffix) {

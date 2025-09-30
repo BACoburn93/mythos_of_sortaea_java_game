@@ -21,7 +21,7 @@ public class AbilityDatabase {
     public static final TargetingAbility ROTTING_TENTACLE = new TargetingAbility(
             "Rotting Tentacle", 1, 30, new Damage[]{new PhysicalDarknessDamage(15, 16)}, ""
     );
-    public static final TargetingAbility VIPER_FANGS = new TargetingAbility(
+    public static final TargetingAbility VENOM_MAW = new TargetingAbility(
             "Viper Fangs", 1, 30, new Damage[]{new PhysicalVenomDamage(15, 16)}, ""
     );
     public static final TargetingAbility POISON_MIST = new TargetingAbility(

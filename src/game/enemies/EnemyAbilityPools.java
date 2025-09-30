@@ -24,9 +24,16 @@ public class EnemyAbilityPools {
         dragonPool.addWeightedAbility(AbilityDatabase.TAIL, 30);
         dragonPool.addWeightedAbility(AbilityDatabase.CLAW, 30);
 
+        AbilityPool marlboroPool = new AbilityPool();
+        marlboroPool.addWeightedAbility(AbilityDatabase.ROTTING_TENTACLE, 40);
+        marlboroPool.addWeightedAbility(AbilityDatabase.VENOM_MAW, 30);
+        marlboroPool.addWeightedAbility(AbilityDatabase.POISON_MIST, 20);
+        marlboroPool.addWeightedAbility(AbilityDatabase.IMPALING_ICE, 10);
+
         pools.put("goblin", goblinPool);
         pools.put("orc", orcPool);
         pools.put("dragon", dragonPool);
+        pools.put("marlboro", marlboroPool);
     }
 
     public static AbilityPool getPool(String enemyType) {
