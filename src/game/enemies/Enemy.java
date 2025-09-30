@@ -1,7 +1,7 @@
 package enemies;
 
 import abilities.Ability;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class Enemy extends CombatActor {
-    private List<SingleTargetAbility> abilities;
+    private List<TargetingAbility> abilities;
     private int experience;
 
     private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
@@ -34,7 +34,7 @@ public class Enemy extends CombatActor {
     private int spawnWeight = 1;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
-                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int level) {
+                 Attributes attributes, Resistances resistances, TargetingAbility[] baseAbilities, int level) {
         super(name, healthValues, manaValues, attributes, resistances, level);
         this.setActorType(ActorTypes.ENEMY);
         this.abilities = new ArrayList<>(List.of(baseAbilities));
@@ -42,7 +42,7 @@ public class Enemy extends CombatActor {
     }
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
-                 Attributes attributes, Resistances resistances, SingleTargetAbility[] baseAbilities, int level, int spawnWeight) {
+                 Attributes attributes, Resistances resistances, TargetingAbility[] baseAbilities, int level, int spawnWeight) {
         super(name, healthValues, manaValues, attributes, resistances, level);
         this.setActorType(ActorTypes.ENEMY);
         this.abilities = new ArrayList<>(List.of(baseAbilities));
@@ -58,8 +58,8 @@ public class Enemy extends CombatActor {
     public int getExperience() { return experience; }
     public void setExperience(int experience) { this.experience = experience; }
 
-    public List<SingleTargetAbility> getAbilities() { return abilities; }
-    public void setAbilities(List<SingleTargetAbility> abilities) { this.abilities = abilities; }
+    public List<TargetingAbility> getAbilities() { return abilities; }
+    public void setAbilities(List<TargetingAbility> abilities) { this.abilities = abilities; }
 
     public Prefix getPrefix() { return prefix; }
     public void setPrefix(Prefix prefix) { this.prefix = prefix; }
@@ -103,7 +103,7 @@ public class Enemy extends CombatActor {
         return null;
     }
 
-    public void addAbility(SingleTargetAbility ability) {
+    public void addAbility(TargetingAbility ability) {
         if (!abilities.contains(ability)) {
             abilities.add(ability);
         }

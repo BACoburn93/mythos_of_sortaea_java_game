@@ -2,7 +2,7 @@ package characters;
 
 import abilities.Ability;
 import abilities.reactions.*;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.ActorTypes;
 import actors.attributes.Attribute;
 import actors.attributes.AttributeTypes;
@@ -147,7 +147,7 @@ public class Character extends CombatActor {
             return selected;
         }
 
-        return new SingleTargetAbility("pass", 0, 0, null, "Conserve or recuperate.");
+        return new TargetingAbility("pass", 0, 0, null, "Conserve or recuperate.");
     }
 
 

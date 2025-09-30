@@ -1,7 +1,7 @@
 package enemies.types;
 
 import abilities.database.AbilityDatabase;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -18,7 +18,7 @@ public class Goblin extends Enemy {
             new ManaValues(10, 3),
             new Attributes(10, 12, 8, 10, 8, 8, 8),
             new Resistances(),
-            new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
+            new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             1
         );
         setupModifiers();

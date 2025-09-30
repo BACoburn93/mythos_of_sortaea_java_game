@@ -1,7 +1,7 @@
 package enemies;
 
 import abilities.database.AbilityDatabase;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -16,7 +16,7 @@ public class EnemyDatabase {
                        new ManaValues(10, 3),
                        new Attributes(10, 12, 8, 10, 8, 8, 8),
                        new Resistances(),
-                       new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
+                       new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
                        20);
 
     public static ArrayList<Enemy> getDefaultEnemies() {
@@ -29,7 +29,7 @@ public class EnemyDatabase {
                 new ManaValues(100, 30),
                 new Attributes(10, 12, 8, 10, 8, 8, 8),
                 new Resistances(),
-                new SingleTargetAbility[]{
+                new TargetingAbility[]{
                     AbilityDatabase.ROTTING_TENTACLE,
                     AbilityDatabase.VIPER_FANGS,
                     AbilityDatabase.POISON_MIST,
@@ -45,7 +45,7 @@ public class EnemyDatabase {
                        new ManaValues(10, 3),
                        new Attributes(10, 12, 8, 10, 8, 8, 8),
                        new Resistances(),
-                       new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG },
+                       new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
                        20));
        enemies.add(
                new Enemy("Orc",
@@ -53,7 +53,7 @@ public class EnemyDatabase {
                        new ManaValues(10, 5),
                        new Attributes(15, 9,15, 13, 14, 10, 8),
                        new Resistances(),
-                       new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
+                       new TargetingAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
                        35));
        enemies.add(
                new Enemy("Red Dragon",
@@ -62,7 +62,7 @@ public class EnemyDatabase {
                        new Attributes(24, 18, 22, 20, 22, 24, 18),
                        new Resistances(10, 10, 10, 5, 50, 0,
                                5, 5, 2, 5, 3, 3),
-                       new SingleTargetAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE, AbilityDatabase.FIRE_BREATH },
+                       new TargetingAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE, AbilityDatabase.FIRE_BREATH },
                        200));
 
         return enemies;

@@ -1,7 +1,7 @@
 package enemies.types;
 
 import abilities.database.AbilityDatabase;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -17,7 +17,7 @@ public class Dragon extends Enemy {
             new Attributes(24, 18, 22, 20, 22, 24, 18),
             new Resistances(10, 10, 10, 10, 10, 10,
                     10, 10, 10, 10, 10, 10),
-            new SingleTargetAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE },
+            new TargetingAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE },
             25,
             3
         );

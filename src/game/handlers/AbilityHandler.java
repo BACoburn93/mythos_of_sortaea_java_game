@@ -9,6 +9,7 @@ import utils.StringUtils;
 import characters.Character;
 import enemies.Enemy;
 import abilities.Ability;
+import abilities.single_target.TargetingAbility;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
@@ -67,17 +68,47 @@ public class AbilityHandler {
                 character.spendMana(chosenAbility);
                 character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
 
-                if (!missedTarget) {
-                    character.attack(character, chosenTarget, chosenAbility);
+                // --- Begin multi-target logic ---
+                if (chosenAbility instanceof TargetingAbility targetingAbility) {
+                    int leftRange = targetingAbility.getLeftRange();
+                    int rightRange = targetingAbility.getRightRange();
+
+                    int targetIndex = enemies.indexOf(chosenTarget);
+
+                    ArrayList<CombatActor> targetsToHit = new ArrayList<>();
+                    for (int i = targetIndex - leftRange; i <= targetIndex + rightRange; i++) {
+                        if (i >= 0 && i < enemies.size()) {
+                            targetsToHit.add(enemies.get(i));
+                        }
+                    }
+
+                    for (CombatActor target : targetsToHit) {
+                        boolean missedNewTarget = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();
+                        if (!missedNewTarget) {
+                            character.attack(character, target, chosenAbility);
+                        } else {
+                            CombatUIStrings.printMissedAttack(character, target, chosenAbility);
+                        }
+                        CombatUIStrings.printHitPointsRemaining(target);
+
+                        if (target.getHealthValues().getValue() < 0) {
+                            actors = handleKillEnemy(target);
+                        }
+                    }
                 } else {
-                    CombatUIStrings.printMissedAttack(character, chosenTarget, chosenAbility);
-                }
+                    // Fallback: single target logic
+                    if (!missedTarget) {
+                        character.attack(character, chosenTarget, chosenAbility);
+                    } else {
+                        CombatUIStrings.printMissedAttack(character, chosenTarget, chosenAbility);
+                    }
+                    CombatUIStrings.printHitPointsRemaining(chosenTarget);
 
-                CombatUIStrings.printHitPointsRemaining(chosenTarget);
-
-                if (chosenTarget.getHealthValues().getValue() < 0) {
-                    actors = handleKillEnemy(chosenTarget);
+                    if (chosenTarget.getHealthValues().getValue() < 0) {
+                        actors = handleKillEnemy(chosenTarget);
+                    }
                 }
+                // --- End multi-target logic ---
             } 
         }
     }

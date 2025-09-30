@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.Map;
 import java.util.HashMap;
 
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 
 public class EnemyFactory {
     private static final Random rng = new Random();
@@ -46,8 +46,8 @@ public class EnemyFactory {
         int maxAbilities = pool.getWeightedAbilities().size();
         int numAbilities = maxAbilities == 0 ? 0 : rng.nextInt(maxAbilities) + 1;
 
-        List<SingleTargetAbility> abilitiesToAdd = pool.getRandomUniqueAbilities(rng, numAbilities);
-        for (SingleTargetAbility ability : abilitiesToAdd) {
+        List<TargetingAbility> abilitiesToAdd = pool.getRandomUniqueAbilities(rng, numAbilities);
+        for (TargetingAbility ability : abilitiesToAdd) {
             enemy.addAbility(ability);
         }
 
@@ -87,8 +87,8 @@ public class EnemyFactory {
         int numAbilities = maxAbilities == 0 ? 0 : rng.nextInt(maxAbilities) + 1;
 
         // Get random unique abilities from the pool
-        List<SingleTargetAbility> abilitiesToAdd = pool.getRandomUniqueAbilities(rng, numAbilities);
-        for (SingleTargetAbility ability : abilitiesToAdd) {
+        List<TargetingAbility> abilitiesToAdd = pool.getRandomUniqueAbilities(rng, numAbilities);
+        for (TargetingAbility ability : abilitiesToAdd) {
             enemy.addAbility(ability);
         }
 

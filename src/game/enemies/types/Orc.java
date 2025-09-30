@@ -1,7 +1,7 @@
 package enemies.types;
 
 import abilities.database.AbilityDatabase;
-import abilities.single_target.SingleTargetAbility;
+import abilities.single_target.TargetingAbility;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -18,7 +18,7 @@ public class Orc extends Enemy {
             new ManaValues(10, 5),
             new Attributes(15, 9,15, 13, 14, 10, 8),
             new Resistances(),
-            new SingleTargetAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
+            new TargetingAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
             3
         );
     }
