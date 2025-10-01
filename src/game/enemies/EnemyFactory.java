@@ -10,10 +10,11 @@ import utils.StringUtils;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+
+import abilities.ability_types.TargetingAbility;
+
 import java.util.Map;
 import java.util.HashMap;
-
-import abilities.single_target.TargetingAbility;
 
 public class EnemyFactory {
     private static final Random rng = new Random();

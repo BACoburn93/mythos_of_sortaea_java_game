@@ -1,7 +1,7 @@
 package enemies;
 
+import abilities.ability_types.TargetingAbility;
 import abilities.database.AbilityDatabase;
-import abilities.single_target.TargetingAbility;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;

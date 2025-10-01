@@ -1,9 +1,15 @@
 package abilities.database;
 
+import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
+import abilities.damages.magical.MagicalFireDamage;
+import abilities.damages.magical.MagicalIceDamage;
+import abilities.damages.magical.MagicalLightningDamage;
+import abilities.damages.magical.MagicalPiercingDamage;
 import abilities.damages.physical.*;
 import abilities.damages.spiritual.SpiritualFireDamage;
-import abilities.single_target.TargetingAbility;
+import items.equipment.AbilityPrerequisites;
+import items.equipment.item_types.ArmorTypes;
 import status_conditions.*;
 
 public class AbilityDatabase {
@@ -121,4 +127,96 @@ public class AbilityDatabase {
         2, 
         "A cone of fire that scorches all in its path."
     );
+
+    // Character Abilities
+
+    // Mage Abilities
+    public static final TargetingAbility FIREBALL = new TargetingAbility(
+            "Fireball",
+            12, 1,
+            new Damage[]{
+                    new MagicalFireDamage(
+                            10,
+                            18,
+                            new StatusCondition[]{new Burn(10, 100, 2)}
+                    ),
+                    new SpiritualFireDamage(3, 5)
+            },
+            AbilityPrerequisites.SPELL_CASTING_WEAPONS,
+            2,
+            2,
+            "A sphere of flames that explodes wherever it lands."
+    );
+
+    public static final TargetingAbility ICE_SPIKE = new TargetingAbility(
+            "Ice Spike",
+            13, 1,
+            new Damage[]{
+                    new MagicalIceDamage(
+                            4,
+                            8,
+                            new StatusCondition[]{new Burn(10, 100, 2)}
+                    ),
+                    new MagicalPiercingDamage(12, 14)
+            },
+            AbilityPrerequisites.SPELL_CASTING_WEAPONS,
+            "An ice spire that guides itself to impale it's target."
+    );
+
+    public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility(
+            "Lightning Bolt",
+            10, 1,
+            new Damage[]{new MagicalLightningDamage(15, 22)},
+            AbilityPrerequisites.SPELL_CASTING_WEAPONS,
+            "A streak of cackling plasma going forth to electrocute a target."
+    );
+
+    // Warrior Abilities
+    public static final TargetingAbility SLASH = new TargetingAbility(
+            "Slash",
+            3, 1,
+            new Damage[]{new PhysicalSlashingDamage(15, 22)},
+            AbilityPrerequisites.SLASHING_WEAPONS,
+            "A powerful slash with a sword."
+    );
+
+    public static final TargetingAbility SHIELD_BASH = new TargetingAbility(
+            "Shield Bash",
+            2, 1,
+            new Damage[]{new PhysicalBludgeoningDamage(15, 22)},
+            "A bash with a shield that stuns the target."
+    );
+
+    public static final TargetingAbility CHARGE = new TargetingAbility(
+            "Charge",
+            5, 2,
+            new Damage[]{new PhysicalBludgeoningDamage(15, 22)},
+            "A charging attack that deals heavy damage."
+    );
+
+    // Rogue Abilities
+    public static final TargetingAbility BACKSTAB = new TargetingAbility(
+            "Backstab",
+            1, 1,
+            new Damage[]{new PhysicalPiercingDamage(15, 22)},
+            "A backstab that has high potential damage."
+    );
+
+    public static final TargetingAbility POISON_DART = new TargetingAbility(
+            "Poison Dart",
+            2, 1,
+            new Damage[]{new PhysicalPiercingDamage(3, 6), new PhysicalEarthDamage(10, 15)},
+            "A dart that poisons the target."
+    );
+
+    public static final TargetingAbility SHADOW_STEP = new TargetingAbility(
+            "Shadow Step",
+            0, 1,
+            null,
+            "A move that allows the rogue to dodge attacks."
+    );
+
+    
+
+
 }

@@ -41,6 +41,11 @@ public class EquipmentHandler {
             System.out.println("Equipping " + eq.getName());
             boolean equipped = character.equipItem(eq); 
             if (equipped) {
+                // Add item abilities if present
+                if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand && mainhand.getAbilities() != null) {
+                    character.addItemAbilities(mainhand.getAbilities());
+                }
+                // Repeat for Offhand or other equipment types as needed
                 equipmentList.remove(eq);
                 ui.CombatUIStrings.printCombatActorStats(character);
             } else {
@@ -86,6 +91,11 @@ public class EquipmentHandler {
 
         if (slot != null && eq != null) {
             character.unequipItem(slot);
+            // Remove item abilities if present
+            if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand && mainhand.getAbilities() != null) {
+                character.removeItemAbilities(mainhand.getAbilities());
+            }
+            // Repeat for Offhand or other equipment types as needed
             party.getSharedEquipment().add(eq);
             System.out.println("Unequipped " + eq.getName() + " from " + slot);
             ui.CombatUIStrings.printCombatActorStats(character);

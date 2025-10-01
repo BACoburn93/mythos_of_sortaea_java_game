@@ -1,11 +1,9 @@
 package characters;
 
 import abilities.Ability;
+import abilities.ability_types.TargetingAbility;
 import abilities.reactions.*;
-import abilities.single_target.TargetingAbility;
 import actors.ActorTypes;
-import actors.attributes.Attribute;
-import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.stances.Stances;
 import actors.types.CombatActor;
@@ -39,7 +37,7 @@ public class Character extends CombatActor {
     private final ArrayList<Equipment> equipment;
     private final Map<String, EquipmentSlot> equipmentSlots;
     private final Consumable[] items;
-    private final ArrayList<Ability> charAbilities;
+    private List<Ability> itemAbilities = new ArrayList<>();
     private final GameScanner gameScanner;
 
 
@@ -56,10 +54,8 @@ public class Character extends CombatActor {
         
         this.gameScanner = gameScanner;
 
-        this.charAbilities = CharacterAbilities.getAbilities();
-        this.abilities = new ArrayList<>(this.charAbilities);
+        this.abilities = new ArrayList<>(CharacterAbilities.getAbilities());
         this.reactions = CharacterReactions.getReactions();
-
         this.equipment = new ArrayList<>();
         this.equipmentSlots = CharacterItems.getEquipmentSlots();
         this.items = CharacterItems.getItems();
@@ -253,6 +249,20 @@ public class Character extends CombatActor {
             }
         }
         return equipped;
+    }
+
+    public List<Ability> getAbilities() {
+        List<Ability> all = new ArrayList<>(this.abilities); // or whatever your base abilities field is called
+        all.addAll(itemAbilities);
+        return all;
+    }
+
+    public void addItemAbilities(List<Ability> abilities) {
+        if (abilities != null) itemAbilities.addAll(abilities);
+    }
+
+    public void removeItemAbilities(List<Ability> abilities) {
+        if (abilities != null) itemAbilities.removeAll(abilities);
     }
 
     public void handlePostCombat() {
@@ -500,17 +510,17 @@ public class Character extends CombatActor {
         return reactions;
     }
 
-    public ArrayList<Ability> getAbilities() {
-        return abilities;
-    }
+    // public ArrayList<Ability> getAbilities() {
+    //     return abilities;
+    // }
 
     public Consumable[] getItems() {
         return items;
     }
 
-    public ArrayList<Ability> getCharAbilities() {
-        return charAbilities;
-    }
+    // public ArrayList<Ability> getCharAbilities() {
+    //     return charAbilities;
+    // }
 
     public Reaction[] getCharReactions() {
         return CharacterReactions.getReactions();

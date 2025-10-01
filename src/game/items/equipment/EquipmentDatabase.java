@@ -11,6 +11,7 @@ import items.equipment.item_types.torso.LightTorso;
 import java.util.ArrayList;
 import java.util.List;
 
+import abilities.database.AbilityDatabase;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 
@@ -34,19 +35,30 @@ public class EquipmentDatabase {
                 "Gods Finger",
                 1000,
                 new Attributes(0.0, 0.0, 100.0, 20.0, 20.0, 20.0, 20.0),
-                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0)
+                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0),
+                List.of(
+                        AbilityDatabase.FIREBALL,
+                        AbilityDatabase.LIGHTNING_BOLT,
+                        AbilityDatabase.ICE_SPIKE
+                )
         ));
         EQUIPMENT_LIST.add(new Dagger(
                 "Riteknife",
                 100,
                 new Attributes(0.0, 35.0, 0.0, 0.0, 0.0, 0.0, 10.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+                List.of(
+                    AbilityDatabase.BACKSTAB
+                )
         ));
         EQUIPMENT_LIST.add(new Longbow(
                 "Dragon Longbow",
                 800,
                 new Attributes(0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 5.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+                List.of(
+                    AbilityDatabase.POISON_DART
+                )
         ));
         EQUIPMENT_LIST.add(new LargeShield(
                 "Tower Shield",

@@ -1,4 +1,4 @@
-package abilities.single_target;
+package abilities.ability_types;
 
 import abilities.Ability;
 import abilities.damages.Damage;

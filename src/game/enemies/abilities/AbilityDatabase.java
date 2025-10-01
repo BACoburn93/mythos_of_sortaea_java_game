@@ -1,9 +1,9 @@
 package enemies.abilities;
 
+import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
 import abilities.damages.physical.*;
 import abilities.damages.spiritual.SpiritualFireDamage;
-import abilities.single_target.TargetingAbility;
 
 public class AbilityDatabase {
     public static final TargetingAbility PUNCH = new TargetingAbility(

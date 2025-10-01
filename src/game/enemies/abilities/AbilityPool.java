@@ -1,8 +1,8 @@
 package enemies.abilities;
 
-import abilities.single_target.TargetingAbility;
-
 import java.util.*;
+
+import abilities.ability_types.TargetingAbility;
 
 public class AbilityPool {
     private final Map<TargetingAbility, Integer> weightedAbilities = new LinkedHashMap<>();

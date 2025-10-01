@@ -9,7 +9,7 @@ import utils.StringUtils;
 import characters.Character;
 import enemies.Enemy;
 import abilities.Ability;
-import abilities.single_target.TargetingAbility;
+import abilities.ability_types.TargetingAbility;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
