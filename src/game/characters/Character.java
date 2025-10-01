@@ -258,7 +258,24 @@ public class Character extends CombatActor {
     }
 
     public void addItemAbilities(List<Ability> abilities) {
-        if (abilities != null) itemAbilities.addAll(abilities);
+        if (abilities != null) {
+            Set<String> knownNames = new HashSet<>();
+
+            for (Ability a : this.abilities) {
+                knownNames.add(a.getName());
+            }
+
+            for (Ability a : itemAbilities) {
+                knownNames.add(a.getName());
+            }
+            
+            for (Ability a : abilities) {
+                if (!knownNames.contains(a.getName())) {
+                    itemAbilities.add(a);
+                    knownNames.add(a.getName());
+                }
+            }
+        }
     }
 
     public void removeItemAbilities(List<Ability> abilities) {
@@ -514,17 +531,10 @@ public class Character extends CombatActor {
         return reactions;
     }
 
-    // public ArrayList<Ability> getAbilities() {
-    //     return abilities;
-    // }
-
     public Consumable[] getItems() {
         return items;
     }
 
-    // public ArrayList<Ability> getCharAbilities() {
-    //     return charAbilities;
-    // }
 
     public Reaction[] getCharReactions() {
         return CharacterReactions.getReactions();
