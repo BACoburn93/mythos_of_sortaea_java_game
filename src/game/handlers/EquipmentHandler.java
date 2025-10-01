@@ -3,15 +3,18 @@ package handlers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import characters.Character;
 import characters.Party;
 import items.equipment.Equipment;
 import items.equipment.equipment_slots.*;
+import items.equipment.item_types.ItemType;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.SelectionUtils;
 import utils.StringUtils;
+import characters.jobs.Job;
 
 public class EquipmentHandler {
     private Party party;
@@ -38,6 +41,18 @@ public class EquipmentHandler {
         );
 
         if (eq != null) {
+            Job charJob = character.getJobObj();
+            Set<ItemType> allowedTypes = charJob.getEquippableItemTypes();
+
+            if (allowedTypes != null) {
+                ItemType itemType = eq.getItemType();
+
+                if (itemType != null && !allowedTypes.contains(itemType)) {
+                    System.out.println("Your job cannot equip this item type.");
+                    return;
+                }
+            }
+
             System.out.println("Equipping " + eq.getName());
             boolean equipped = character.equipItem(eq); 
             if (equipped) {

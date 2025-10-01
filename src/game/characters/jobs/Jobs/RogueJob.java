@@ -5,6 +5,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import characters.jobs.EquipmentProficiencies;
 import characters.jobs.Job;
 import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
@@ -22,7 +23,8 @@ public class RogueJob extends Job {
                         5, 1, 1, 4, 0),
                 new StatusConditions(2, 2, 2, 2, 2, 2, 2, 2,
                         2, 2, 2, 2, 2, 2, 2, 2, 2),
-                new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.ROGUE, 2))
+                new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.ROGUE, 2)),
+                EquipmentProficiencies.rogueAllowed
         );
     }
 }

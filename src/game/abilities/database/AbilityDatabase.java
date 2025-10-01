@@ -20,6 +20,7 @@ public class AbilityDatabase {
         new Damage[]{new PhysicalBludgeoningDamage(6, 12)}, 
         "A basic melee attack using fists."
     );
+
     public static final TargetingAbility KICK = new TargetingAbility(
         "Kick", 
         0, 
@@ -32,8 +33,6 @@ public class AbilityDatabase {
 
     public static final TargetingAbility SLASH = new TargetingAbility(
         "Slash", 
-        0, 
-        1, 
         new Damage[]{new PhysicalSlashingDamage(11, 19)}, 
         AbilityPrerequisites.SLASHING_WEAPONS,
         "A powerful slash."
@@ -41,8 +40,6 @@ public class AbilityDatabase {
 
     public static final TargetingAbility STAB = new TargetingAbility(
         "Stab", 
-        0, 
-        1, 
         new Damage[]{new PhysicalPiercingDamage(10, 20)}, 
         AbilityPrerequisites.PIERCING_WEAPONS,
         "A precise piercing attack."
@@ -50,8 +47,6 @@ public class AbilityDatabase {
 
     public static final TargetingAbility BASH = new TargetingAbility(
         "Bash", 
-        0, 
-        1, 
         new Damage[]{new PhysicalBludgeoningDamage(12, 18)}, 
         AbilityPrerequisites.BLUDGEONING_WEAPONS,
         "A powerful bash."
@@ -59,8 +54,6 @@ public class AbilityDatabase {
 
     public static final TargetingAbility SHOOT = new TargetingAbility(
         "Shoot", 
-        0, 
-        1, 
         new Damage[]{
             new PhysicalPiercingDamage(
                 6, 
@@ -74,8 +67,6 @@ public class AbilityDatabase {
 
     public static final TargetingAbility MAGIC_DART = new TargetingAbility(
         "Magic Dart", 
-        0, 
-        1, 
         new Damage[]{new MagicalPiercingDamage(11, 19)}, 
         AbilityPrerequisites.SPELL_CASTING_WEAPONS,
         "A basic magical attack."

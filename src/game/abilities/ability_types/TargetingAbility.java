@@ -14,6 +14,12 @@ public class TargetingAbility extends Ability {
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, String description) {
         this(name, manaCost, actionCost, damages, 0, 0, description);
     }
+    
+    // Constructor for default weapons
+    public TargetingAbility(String name, Damage[] damages, WeaponTypes[] weaponTypes,
+                           String description) {
+        this(name, 0, 1, damages, weaponTypes, 0, 0, description);
+    }
 
     // Constructor for ArmorTypes
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorTypes,

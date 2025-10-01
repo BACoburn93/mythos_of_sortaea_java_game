@@ -5,10 +5,12 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import items.equipment.item_types.ItemType;
 import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 public abstract class Job {
     private String name;
@@ -19,9 +21,11 @@ public abstract class Job {
     private StatusConditions statusConditions;
     // Need to bind status conditions to jobs so that they affect character statistics
     private ArrayList<Ability> jobAbilities;
+    private Set<ItemType> equippableItemTypes;
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
-               Attributes attributes, Resistances resistances, ArrayList<Ability> jobAbilities) {
+               Attributes attributes, Resistances resistances, ArrayList<Ability> jobAbilities, 
+               Set<ItemType> equippableItemTypes) {
         this.name = name;
         this.healthValues = healthValues;
         this.manaValues = manaValues;
@@ -29,10 +33,13 @@ public abstract class Job {
         this.resistances = resistances;
         this.statusConditions = new StatusConditions();
         this.jobAbilities = jobAbilities;
+        this.equippableItemTypes = equippableItemTypes;
     }
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
-               Attributes attributes, Resistances resistances, StatusConditions statusConditions, ArrayList<Ability> jobAbilities) {
+               Attributes attributes, Resistances resistances, 
+               StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
+               Set<ItemType> equippableItemTypes) {
         this.name = name;
         this.healthValues = healthValues;
         this.manaValues = manaValues;
@@ -40,6 +47,7 @@ public abstract class Job {
         this.resistances = resistances;
         this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
+        this.equippableItemTypes = equippableItemTypes;
     }
 
     public String getName() {
@@ -96,6 +104,14 @@ public abstract class Job {
 
     public void setJobAbilities(ArrayList<Ability> jobAbilities) {
         this.jobAbilities = jobAbilities;
+    }
+
+    public Set<ItemType> getEquippableItemTypes() {
+        return equippableItemTypes;
+    }
+
+    public void setEquippableItemTypes(Set<ItemType> equippableItemTypes) {
+        this.equippableItemTypes = equippableItemTypes;
     }
 
     @Override

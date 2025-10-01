@@ -490,6 +490,10 @@ public class Character extends CombatActor {
         return job.getName();
     }
 
+    public Job getJobObj() {
+        return job;
+    }
+
     public ArrayList<Equipment> getEquipment() {
         return equipment;
     }
