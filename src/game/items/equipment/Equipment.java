@@ -2,8 +2,11 @@ package items.equipment;
 
 import items.equipment.item_types.ItemType;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
+import abilities.Ability;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 
@@ -52,6 +55,13 @@ public abstract class Equipment implements Comparator<Equipment> {
 
     public Resistances getResistances() {
         return resistances;
+    }
+
+    protected static List<Ability> combineWithAbilities(Ability baseAbility, List<Ability> abilities) {
+        List<Ability> result = new ArrayList<>();
+        if (baseAbility != null) result.add(baseAbility);
+        if (abilities != null) result.addAll(abilities);
+        return result;
     }
 
     @Override

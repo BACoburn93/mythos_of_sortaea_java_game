@@ -42,6 +42,13 @@ public class AbilityPrerequisites {
         WeaponTypes.WARHAMMER,
         WeaponTypes.ROD,
     };
+
+    public static final WeaponTypes[] RANGED_WEAPONS = {
+        WeaponTypes.CROSSBOW,
+        WeaponTypes.LONGBOW,
+        WeaponTypes.SHORTBOW,
+        WeaponTypes.JAVELIN,
+    };
 }
 
 // BATTLEAXE,

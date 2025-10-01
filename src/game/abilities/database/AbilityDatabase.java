@@ -9,10 +9,10 @@ import abilities.damages.magical.MagicalPiercingDamage;
 import abilities.damages.physical.*;
 import abilities.damages.spiritual.SpiritualFireDamage;
 import items.equipment.AbilityPrerequisites;
-import items.equipment.item_types.ArmorTypes;
 import status_conditions.*;
 
 public class AbilityDatabase {
+    // Basic Abilities
     public static final TargetingAbility PUNCH = new TargetingAbility(
         "Punch", 
         0, 
@@ -27,6 +27,62 @@ public class AbilityDatabase {
         new Damage[]{new PhysicalBludgeoningDamage(5, 18)}, 
         "A swift kick that can stagger the opponent."
     );
+
+    // Weapon Abilities
+
+    public static final TargetingAbility SLASH = new TargetingAbility(
+        "Slash", 
+        0, 
+        1, 
+        new Damage[]{new PhysicalSlashingDamage(11, 19)}, 
+        AbilityPrerequisites.SLASHING_WEAPONS,
+        "A powerful slash."
+    );
+
+    public static final TargetingAbility STAB = new TargetingAbility(
+        "Stab", 
+        0, 
+        1, 
+        new Damage[]{new PhysicalPiercingDamage(10, 20)}, 
+        AbilityPrerequisites.PIERCING_WEAPONS,
+        "A precise piercing attack."
+    );
+
+    public static final TargetingAbility BASH = new TargetingAbility(
+        "Bash", 
+        0, 
+        1, 
+        new Damage[]{new PhysicalBludgeoningDamage(12, 18)}, 
+        AbilityPrerequisites.BLUDGEONING_WEAPONS,
+        "A powerful bash."
+    );
+
+    public static final TargetingAbility SHOOT = new TargetingAbility(
+        "Shoot", 
+        0, 
+        1, 
+        new Damage[]{
+            new PhysicalPiercingDamage(
+                6, 
+                15, 
+                new StatusCondition[]{new Bleed(5, 50, 2)}
+            ),
+        }, 
+        AbilityPrerequisites.RANGED_WEAPONS,
+        "A ranged attack using a bow or crossbow."
+    );
+
+    public static final TargetingAbility MAGIC_DART = new TargetingAbility(
+        "Magic Dart", 
+        0, 
+        1, 
+        new Damage[]{new MagicalPiercingDamage(11, 19)}, 
+        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
+        "A basic magical attack."
+    );
+
+    // Enemy Abilities
+
     public static final TargetingAbility CLAW = new TargetingAbility(
         "Claw", 
         2, 
@@ -172,13 +228,6 @@ public class AbilityDatabase {
     );
 
     // Warrior Abilities
-    public static final TargetingAbility SLASH = new TargetingAbility(
-            "Slash",
-            3, 1,
-            new Damage[]{new PhysicalSlashingDamage(15, 22)},
-            AbilityPrerequisites.SLASHING_WEAPONS,
-            "A powerful slash with a sword."
-    );
 
     public static final TargetingAbility SHIELD_BASH = new TargetingAbility(
             "Shield Bash",
@@ -216,7 +265,7 @@ public class AbilityDatabase {
             "A move that allows the rogue to dodge attacks."
     );
 
-    
+
 
 
 }
