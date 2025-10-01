@@ -268,7 +268,7 @@ public class Character extends CombatActor {
             for (Ability a : itemAbilities) {
                 knownNames.add(a.getName());
             }
-            
+
             for (Ability a : abilities) {
                 if (!knownNames.contains(a.getName())) {
                     itemAbilities.add(a);
@@ -279,7 +279,10 @@ public class Character extends CombatActor {
     }
 
     public void removeItemAbilities(List<Ability> abilities) {
-        if (abilities != null) itemAbilities.removeAll(abilities);
+        if (abilities != null) {
+            List<String> namesToRemove = abilities.stream().map(Ability::getName).toList();
+            itemAbilities.removeIf(a -> namesToRemove.contains(a.getName()));
+        }
     }
 
     public void handlePostCombat() {

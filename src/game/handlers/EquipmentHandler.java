@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import abilities.Ability;
 import characters.Character;
 import characters.Party;
 import items.equipment.Equipment;
@@ -106,11 +107,23 @@ public class EquipmentHandler {
 
         if (slot != null && eq != null) {
             character.unequipItem(slot);
-            // Remove item abilities if present
-            if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand && mainhand.getAbilities() != null) {
-                character.removeItemAbilities(mainhand.getAbilities());
+
+            // Remove item abilities if present (generalized for any Equipment with abilities)
+            List<Ability> abilitiesToRemove = null;
+            
+            if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
+                abilitiesToRemove = mainhand.getAbilities();
+            } 
+            // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
+            //     abilitiesToRemove = offhand.getAbilities();
+            // }
+            // Account for each of the other equipment types as needed
+
+            // TODO - Fix the abilities not being removes when unequipping an item
+            if (abilitiesToRemove != null) {
+                character.removeItemAbilities(abilitiesToRemove);
             }
-            // Repeat for Offhand or other equipment types as needed
+
             party.getSharedEquipment().add(eq);
             System.out.println("Unequipped " + eq.getName() + " from " + slot);
             ui.CombatUIStrings.printCombatActorStats(character);

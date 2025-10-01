@@ -7,7 +7,6 @@ import abilities.Ability;
 import abilities.damages.Damage;
 import actors.types.CombatActor;
 import characters.Character;
-import interfaces.Nameable;
 import items.equipment.Equipment;
 import status_conditions.StatusCondition;
 import status_conditions.StatusConditions;

@@ -1,7 +1,5 @@
 package enemies.util;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class EnemyNameTracker {
     // private static final Map<String, Integer> comboCounts = new HashMap<>();
