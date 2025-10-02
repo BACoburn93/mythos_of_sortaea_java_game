@@ -41,32 +41,41 @@ public class EquipmentHandler {
             3
         );
 
-        if (eq != null) {
-            Job charJob = character.getJobObj();
-            Set<ItemType> allowedTypes = charJob.getEquippableItemTypes();
+        if (eq == null) return;
 
-            if (allowedTypes != null) {
-                ItemType itemType = eq.getItemType();
+        Job charJob = character.getJobObj();
+        Set<ItemType> allowedTypes = charJob.getEquippableItemTypes();
+        ItemType itemType = eq.getItemType();
 
-                if (itemType != null && !allowedTypes.contains(itemType)) {
-                    System.out.println("Your job cannot equip this item type.");
-                    return;
-                }
+        // Validate allowed types before doing anything else
+        if (allowedTypes != null && (itemType == null || !allowedTypes.contains(itemType))) {
+            System.out.println("Your job cannot equip this item type.");
+            return;
+        }
+
+        // Find the slot and unequip any currently equipped item
+        String slotKey = StringUtils.toSlotKey(eq.getEquipmentType().name());
+        EquipmentSlot slotObj = character.getEquipmentSlots().get(slotKey);
+
+        if (slotObj != null) {
+            Equipment equippedItem = slotObj.getEquippedItem();
+            if (equippedItem != null) {
+                removeEquipmentAbilities(character, equippedItem);
+                character.unequipItem(slotKey);
+                equipmentList.add(equippedItem);
             }
+        }
 
-            System.out.println("Equipping " + eq.getName());
-            boolean equipped = character.equipItem(eq); 
-            if (equipped) {
-                // Add item abilities if present
-                if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand && mainhand.getAbilities() != null) {
-                    character.addItemAbilities(mainhand.getAbilities());
-                }
-                // Repeat for Offhand or other equipment types as needed
-                equipmentList.remove(eq);
-                ui.CombatUIStrings.printCombatActorStats(character);
-            } else {
-                System.out.println("Could not equip " + eq.getName() + ". Check slot compatibility.");
-            }
+        System.out.println("Equipping " + eq.getName());
+        boolean equipped = character.equipItem(eq);
+        if (equipped) {
+            // Add item abilities if present
+            addEquipmentAbilities(character, eq);
+
+            equipmentList.remove(eq);
+            ui.CombatUIStrings.printCombatActorStats(character);
+        } else {
+            System.out.println("Could not equip " + eq.getName() + ". Check slot compatibility.");
         }
     }
 
@@ -74,6 +83,7 @@ public class EquipmentHandler {
         Map<String, EquipmentSlot> slotMap = character.getEquipmentSlots();
         List<String> orderedSlots = new ArrayList<>(slotMap.keySet());
         List<Map.Entry<String, EquipmentSlot>> entries = new ArrayList<>(slotMap.entrySet());
+        List<Equipment> equipmentList = party.getSharedEquipment();
 
         StringUtils.printOptionsGrid(
             orderedSlots,
@@ -105,26 +115,15 @@ public class EquipmentHandler {
         String slot = (selectedEntry != null) ? selectedEntry.getKey() : null;
         Equipment eq = (slot != null && slotMap.get(slot) != null) ? slotMap.get(slot).getEquippedItem() : null;
 
+        System.out.println("Unequipping " + (eq != null ? eq.getName() : "nothing") + " from " + slot);
+
         if (slot != null && eq != null) {
-            character.unequipItem(slot);
-
             // Remove item abilities if present (generalized for any Equipment with abilities)
-            List<Ability> abilitiesToRemove = null;
+            removeEquipmentAbilities(character, eq);
             
-            if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
-                abilitiesToRemove = mainhand.getAbilities();
-            } 
-            // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
-            //     abilitiesToRemove = offhand.getAbilities();
-            // }
-            // Account for each of the other equipment types as needed
+            character.unequipItem(slot);
+            equipmentList.add(eq);
 
-            // TODO - Fix the abilities not being removes when unequipping an item
-            if (abilitiesToRemove != null) {
-                character.removeItemAbilities(abilitiesToRemove);
-            }
-
-            party.getSharedEquipment().add(eq);
             System.out.println("Unequipped " + eq.getName() + " from " + slot);
             ui.CombatUIStrings.printCombatActorStats(character);
         } else {
@@ -150,6 +149,45 @@ public class EquipmentHandler {
             
             return false;
         });
+    }
+
+    // TODO - Fix the abilities not being removed when unequipping an item
+    private void removeEquipmentAbilities(Character character, Equipment eq) {
+        if (eq == null) return;
+        List<Ability> abilitiesToRemove = null;
+        if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
+            abilitiesToRemove = mainhand.getAbilities();
+        }
+        // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
+        //     abilitiesToRemove = offhand.getAbilities();
+        // }
+        // Add more equipment types as needed
+
+        if (abilitiesToRemove != null) {
+            for (Ability ab : abilitiesToRemove) {
+                System.out.println("Removing ability: " + ab.getName());
+            }
+            character.removeItemAbilities(abilitiesToRemove);
+        }
+    }
+
+    private void addEquipmentAbilities(Character character, Equipment eq) {
+        if (eq == null) return;
+        List<Ability> abilitiesToAdd = null;
+        if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
+            abilitiesToAdd = mainhand.getAbilities();
+        }
+        // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
+        //     abilitiesToAdd = offhand.getAbilities();
+        // }
+        // Add more equipment types as needed
+
+        if (abilitiesToAdd != null) {
+            for (Ability ab : abilitiesToAdd) {
+                System.out.println("Adding ability: " + ab.getName());
+            }
+            character.addItemAbilities(abilitiesToAdd);
+        }
     }
 
 }

@@ -34,7 +34,6 @@ public class Character extends CombatActor {
 
     private final Reaction[] reactions;
     private final ArrayList<Ability> abilities;
-    private final ArrayList<Equipment> equipment;
     private final Map<String, EquipmentSlot> equipmentSlots;
     private final Consumable[] items;
     private List<Ability> itemAbilities = new ArrayList<>();
@@ -56,7 +55,6 @@ public class Character extends CombatActor {
 
         this.abilities = new ArrayList<>(CharacterAbilities.getAbilities());
         this.reactions = CharacterReactions.getReactions();
-        this.equipment = new ArrayList<>();
         this.equipmentSlots = CharacterItems.getEquipmentSlots();
         this.items = CharacterItems.getItems();
         this.abilities.addAll(this.job.getJobAbilities());
@@ -199,20 +197,9 @@ public class Character extends CombatActor {
             }
             slot.setEquippedItem(item);
             addItemAttributesAndResistances(item);
-            equipment.remove(item);
             return true;
         } else {
             System.out.println("Cannot equip " + item.getName() + " in slot " + slotKey);
-        }
-        return false;
-    }
-
-    public boolean equipItem(String itemName) {
-        for (Equipment item : equipment) {
-            if (item.getName().equalsIgnoreCase(itemName)) {
-                this.equipItem(item);
-                return true;
-            }
         }
         return false;
     }
@@ -223,8 +210,6 @@ public class Character extends CombatActor {
             Equipment item = slot.getEquippedItem();
             System.out.println("Unequipping " + item.getName());
             removeItemAttributesAndResistances(item);
-            equipment.add(item);
-            equipment.sort(Comparator.comparing(Equipment::getName, String.CASE_INSENSITIVE_ORDER));
             slot.unequip();
         }
     }
@@ -512,10 +497,6 @@ public class Character extends CombatActor {
 
     public Job getJobObj() {
         return job;
-    }
-
-    public ArrayList<Equipment> getEquipment() {
-        return equipment;
     }
 
     public Map<String, EquipmentSlot> getEquipmentSlots() {

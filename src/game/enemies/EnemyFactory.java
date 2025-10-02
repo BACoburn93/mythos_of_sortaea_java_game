@@ -3,8 +3,6 @@ package enemies;
 import enemies.abilities.AbilityPool;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
-import enemies.types.*;
-// import enemies.util.EnemyNameTracker;
 import utils.StringUtils;
 
 import java.util.List;
@@ -19,14 +17,7 @@ import java.util.HashMap;
 public class EnemyFactory {
     private static final Random rng = new Random();
 
-    // Registry for enemy constructors
     private static final Map<String, Function<String, Enemy>> enemyConstructors = new HashMap<>();
-    static {
-        enemyConstructors.put("goblin", Goblin::new);
-        enemyConstructors.put("orc", Orc::new);
-        enemyConstructors.put("dragon", Dragon::new);
-        enemyConstructors.put("marlboro", Marlboro::new);
-    }
 
     public static Enemy createEnemy(String baseType, Prefix prefix, Suffix suffix) {
         String prefixName = (prefix != null) ? prefix.getName() : "";
@@ -61,7 +52,9 @@ public class EnemyFactory {
     }
 
     public static Enemy createEnemy(String baseType) {
-        Function<String, Enemy> constructor = enemyConstructors.get(baseType.toLowerCase());
+        // Lookup constructor for the given baseType from the Registry
+        Function<String, Enemy> constructor = EnemyRegistry.getConstructor(baseType);
+
         if (constructor == null) throw new IllegalArgumentException("Unknown enemy type: " + baseType);
 
         // Temporarily create enemy to access its prefix/suffix pools

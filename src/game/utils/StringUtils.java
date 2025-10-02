@@ -201,4 +201,9 @@ public class StringUtils {
         System.out.println();
     }
 
+    public static String toSlotKey(String enumName) {
+        String lower = enumName.toLowerCase();
+        return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
+    }
+
 }
