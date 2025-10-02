@@ -27,4 +27,9 @@ public class WarriorJob extends Job {
                 EquipmentProficiencies.warriorAllowed
         );
     }
+
+    @Override
+    protected JobTypes getJobType() {
+        return JobTypes.WARRIOR;
+    }
 }

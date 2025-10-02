@@ -27,4 +27,9 @@ public class RangerJob extends Job {
                 EquipmentProficiencies.rangerAllowed
         );
     }
+
+    @Override
+    protected JobTypes getJobType() {
+        return JobTypes.RANGER;
+    }
 }

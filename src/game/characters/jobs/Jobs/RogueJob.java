@@ -27,4 +27,9 @@ public class RogueJob extends Job {
                 EquipmentProficiencies.rogueAllowed
         );
     }
+
+    @Override
+    protected JobTypes getJobType() {
+        return JobTypes.ROGUE;
+    }
 }

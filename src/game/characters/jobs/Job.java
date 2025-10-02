@@ -1,6 +1,8 @@
 package characters.jobs;
 
 import abilities.Ability;
+import abilities.AbilityPool;
+import abilities.AbilityPoolRegistry;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -10,6 +12,7 @@ import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public abstract class Job {
@@ -35,6 +38,8 @@ public abstract class Job {
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
     }
+
+    protected abstract JobTypes getJobType();
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
@@ -112,6 +117,15 @@ public abstract class Job {
 
     public void setEquippableItemTypes(Set<ItemType> equippableItemTypes) {
         this.equippableItemTypes = equippableItemTypes;
+    }
+
+    public AbilityPool getAbilityPool() {
+        return AbilityPoolRegistry.getPool(this.getJobType());
+    }
+
+    public List<Ability> getPoolAbilities() {
+        AbilityPool pool = getAbilityPool();
+        return pool != null ? pool.getAbilities() : List.of();
     }
 
     @Override

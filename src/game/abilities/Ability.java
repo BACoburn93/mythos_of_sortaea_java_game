@@ -11,22 +11,25 @@ public abstract class Ability {
     private String name;
     private int manaCost;
     private int actionCost;
+    private int levelRequirement;
     private ArmorTypes[] armorRequirement;
     private ShieldTypes[] shieldRequirement;
     private WeaponTypes[] weaponRequirement;
     private Damage[] damages;
     private String description;
 
-    public Ability(String name, int manaCost, int actionCost, Damage[] damages, String description) {
+    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
         this.name = name;
+        this.levelRequirement = levelRequirement;
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;
         this.description = description;
     }
 
-    public Ability(String name, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, String description) {
+    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, String description) {
         this.name = name;
+        this.levelRequirement = levelRequirement;
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;
@@ -34,8 +37,9 @@ public abstract class Ability {
         this.description = description;
     }
 
-    public Ability(String name, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, String description) {
+    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, String description) {
         this.name = name;
+        this.levelRequirement = levelRequirement;
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;
@@ -43,8 +47,9 @@ public abstract class Ability {
         this.description = description;
     }
 
-    public Ability(String name, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, String description) {
+    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, String description) {
         this.name = name;
+        this.levelRequirement = levelRequirement;
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;
@@ -58,6 +63,14 @@ public abstract class Ability {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getLevelRequirement() {
+        return levelRequirement;
+    }
+
+    public void setLevelRequirement(int levelRequirement) {
+        this.levelRequirement = levelRequirement;
     }
 
     public int getManaCost() {

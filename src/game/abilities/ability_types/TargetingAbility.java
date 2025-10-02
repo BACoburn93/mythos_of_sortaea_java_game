@@ -39,31 +39,79 @@ public class TargetingAbility extends Ability {
         this(name, manaCost, actionCost, damages, weaponTypes, 0, 0, description);
     }
 
+    // Constructor with levelRequirement, default left/right range, and no equipment requirement
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
+        this(name, levelRequirement, manaCost, actionCost, damages, 0, 0, description);
+    }
+
+    // Constructor with levelRequirement, ArmorTypes, default left/right range
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorTypes, String description) {
+        this(name, levelRequirement, manaCost, actionCost, damages, armorTypes, 0, 0, description);
+    }
+
+    // Constructor with levelRequirement, ShieldTypes, default left/right range
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldTypes, String description) {
+        this(name, levelRequirement, manaCost, actionCost, damages, shieldTypes, 0, 0, description);
+    }
+
+    // Constructor with levelRequirement, WeaponTypes, default left/right range
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponTypes, String description) {
+        this(name, levelRequirement, manaCost, actionCost, damages, weaponTypes, 0, 0, description);
+    }
+
     // New constructors with leftRange and rightRange
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages,
                            int leftRange, int rightRange, String description) {
-        super(name, manaCost, actionCost, damages, description);
+        super(name, 1, manaCost, actionCost, damages, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }
 
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorTypes,
                            int leftRange, int rightRange, String description) {
-        super(name, manaCost, actionCost, damages, armorTypes, description);
+        super(name, 1, manaCost, actionCost, damages, armorTypes, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }
 
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldTypes,
                            int leftRange, int rightRange, String description) {
-        super(name, manaCost, actionCost, damages, shieldTypes, description);
+        super(name, 1, manaCost, actionCost, damages, shieldTypes, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }
 
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponTypes,
                            int leftRange, int rightRange, String description) {
-        super(name, manaCost, actionCost, damages, weaponTypes, description);
+        super(name, 1, manaCost, actionCost, damages, weaponTypes, description);
+        this.leftRange = leftRange;
+        this.rightRange = rightRange;
+    }
+
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages,
+                           int leftRange, int rightRange, String description) {
+        super(name, levelRequirement, manaCost, actionCost, damages, description);
+        this.leftRange = leftRange;
+        this.rightRange = rightRange;
+    }
+
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorTypes,
+                           int leftRange, int rightRange, String description) {
+        super(name, levelRequirement, manaCost, actionCost, damages, armorTypes, description);
+        this.leftRange = leftRange;
+        this.rightRange = rightRange;
+    }
+
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldTypes,
+                           int leftRange, int rightRange, String description) {
+        super(name, levelRequirement, manaCost, actionCost, damages, shieldTypes, description);
+        this.leftRange = leftRange;
+        this.rightRange = rightRange;
+    }
+
+    public TargetingAbility(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponTypes,
+                           int leftRange, int rightRange, String description) {
+        super(name, levelRequirement, manaCost, actionCost, damages, weaponTypes, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }

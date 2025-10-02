@@ -31,4 +31,9 @@ public class MageJob extends Job {
         );
     }
 
+    @Override
+    protected JobTypes getJobType() {
+        return JobTypes.MAGE;
+    }
+
 }

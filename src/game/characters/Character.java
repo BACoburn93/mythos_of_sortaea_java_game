@@ -73,59 +73,49 @@ public class Character extends CombatActor {
     }
 
     public void learnNewAbility() {
-        // TODO - Update ability to have a levelRequirement
-        // Also, make job specific ability pools
-        // Either in the Job class itself, or in a separate AbilityPool class
-        // Or have a mapping of Job to AbilityPool
-        // List<Ability> allAbilities = AbilityPool.getAllAbilities(); // Need to be job specific
+        List<Ability> allAbilities = this.job.getPoolAbilities();
 
         List<Ability> potentialAbilities = new ArrayList<>(this.job.getJobAbilities());
         potentialAbilities.removeAll(this.abilities);
 
-        // for (Ability ability : allAbilities) {
-        // boolean alreadyKnown = this.abilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
-        // boolean itemKnown = this.itemAbilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
-        //     if (!alreadyKnown && !itemKnown && ability.getRequiredLevel() <= this.level) {
-        //         potentialAbilities.add(ability);
-        //     }
-        // }
+        for (Ability ability : allAbilities) {
+            boolean alreadyKnown = this.abilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
+            boolean itemKnown = this.itemAbilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
+            boolean levelOk = ability.getLevelRequirement() <= this.level;
+            if (!alreadyKnown && !itemKnown && levelOk) {
+                potentialAbilities.add(ability);
+            }
+        }
 
-        // Collections.shuffle(potentialAbilities);
+        Collections.shuffle(potentialAbilities);
 
-        // int numChoices = Math.min(3, potentialAbilities.size());
-        // List<Ability> choices = potentialAbilities.subList(0, numChoices);
+        int numChoices = Math.min(3, potentialAbilities.size());
+        List<Ability> choices = potentialAbilities.subList(0, numChoices);
 
-        // if (choices.isEmpty()) {
-        //     System.out.println("No new abilities available to learn.");
-        //     return;
-        // }
-
-        if (potentialAbilities.isEmpty()) {
+        if (choices.isEmpty()) {
             System.out.println("No new abilities available to learn.");
             return;
         }
 
         StringUtils.stringDivider("Choose a new ability to learn:", " ", 10);
         StringUtils.printOptionsGrid(
-            potentialAbilities,
+            choices,
             Ability::getName,
             3,
-            potentialAbilities.size()
+            choices.size()
         );
 
         String abilityChoice = gameScanner.nextLine();
-        Ability selectedAbility = InputHandler.getItemByInput(abilityChoice, potentialAbilities, Ability::getName);
+        Ability selectedAbility = InputHandler.getItemByInput(abilityChoice, choices, Ability::getName);
 
         if (selectedAbility != null) {
             this.abilities.add(selectedAbility);
             System.out.println("You have learned a new ability: " + selectedAbility.getName());
         } else {
             System.out.println("Invalid selection. No ability learned.");
-            if(potentialAbilities.size() == 1) {
-                this.abilities.add(potentialAbilities.get(0));
-                System.out.println("Automatically learned the only available ability: " + potentialAbilities.get(0).getName());
-            } else if(potentialAbilities.size() == 0) {
-                System.out.println("No new abilities available to learn.");
+            if (choices.size() == 1) {
+                this.abilities.add(choices.get(0));
+                System.out.println("Automatically learned the only available ability: " + choices.get(0).getName());
             }
         }
     }
