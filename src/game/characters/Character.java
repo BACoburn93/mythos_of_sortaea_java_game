@@ -8,6 +8,7 @@ import actors.attributes.Attributes;
 import actors.stances.Stances;
 import actors.types.CombatActor;
 import characters.jobs.Job;
+import enemies.abilities.AbilityPool;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
@@ -61,8 +62,6 @@ public class Character extends CombatActor {
         
     }
 
-
-
     public void addExperience(int expToAdd) {
         this.experience += expToAdd;
 
@@ -70,6 +69,64 @@ public class Character extends CombatActor {
             this.experience -= this.experienceToLevel;
             this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
             levelUp();
+        }
+    }
+
+    public void learnNewAbility() {
+        // TODO - Update ability to have a levelRequirement
+        // Also, make job specific ability pools
+        // Either in the Job class itself, or in a separate AbilityPool class
+        // Or have a mapping of Job to AbilityPool
+        // List<Ability> allAbilities = AbilityPool.getAllAbilities(); // Need to be job specific
+
+        List<Ability> potentialAbilities = new ArrayList<>(this.job.getJobAbilities());
+        potentialAbilities.removeAll(this.abilities);
+
+        // for (Ability ability : allAbilities) {
+        // boolean alreadyKnown = this.abilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
+        // boolean itemKnown = this.itemAbilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
+        //     if (!alreadyKnown && !itemKnown && ability.getRequiredLevel() <= this.level) {
+        //         potentialAbilities.add(ability);
+        //     }
+        // }
+
+        // Collections.shuffle(potentialAbilities);
+
+        // int numChoices = Math.min(3, potentialAbilities.size());
+        // List<Ability> choices = potentialAbilities.subList(0, numChoices);
+
+        // if (choices.isEmpty()) {
+        //     System.out.println("No new abilities available to learn.");
+        //     return;
+        // }
+
+        if (potentialAbilities.isEmpty()) {
+            System.out.println("No new abilities available to learn.");
+            return;
+        }
+
+        StringUtils.stringDivider("Choose a new ability to learn:", " ", 10);
+        StringUtils.printOptionsGrid(
+            potentialAbilities,
+            Ability::getName,
+            3,
+            potentialAbilities.size()
+        );
+
+        String abilityChoice = gameScanner.nextLine();
+        Ability selectedAbility = InputHandler.getItemByInput(abilityChoice, potentialAbilities, Ability::getName);
+
+        if (selectedAbility != null) {
+            this.abilities.add(selectedAbility);
+            System.out.println("You have learned a new ability: " + selectedAbility.getName());
+        } else {
+            System.out.println("Invalid selection. No ability learned.");
+            if(potentialAbilities.size() == 1) {
+                this.abilities.add(potentialAbilities.get(0));
+                System.out.println("Automatically learned the only available ability: " + potentialAbilities.get(0).getName());
+            } else if(potentialAbilities.size() == 0) {
+                System.out.println("No new abilities available to learn.");
+            }
         }
     }
 
@@ -474,14 +531,14 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
-    // TODO -- Set up levelUp to give attribute points and possibly new abilities
-    // Only have it trigger after a combat sequence
+    // TODO -- Set up levelUp to give new abilities
     // Maybe create a perk tree, randomized ability choices, subclass options, paragon paths, epic destinies, etc.
     public void levelUp() {
         this.level++;
         if(this.level % 4 == 0) this.maxActionPoints++;
         StringUtils.stringDivider(this.getName() + " has leveled up!", "* ", 10);
         allocateAttributePoints();
+        learnNewAbility();
     }
 
     // Getters
