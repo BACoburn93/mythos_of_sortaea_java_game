@@ -27,6 +27,8 @@ public class CombatActor extends Actor {
     private Resistances resistances;
     private StatusConditions statusConditions;
     private Stances stance;
+    // TODO - create a base unarmed damage value for each actor
+    // Replace the unarmed damage with equipment damage when equipment is added (Character subclass only)
     protected int level;
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,

@@ -1,9 +1,9 @@
 package managers;
 
 import containers.GameContainer;
-import enemies.EnemyDatabase;
 import handlers.*;
 import model.navigation.GameFlowManager;
+import model.navigation.regions.Forest;
 import ui.MenuUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
@@ -12,6 +12,12 @@ import utils.StringUtils;
 import java.util.ArrayList;
 
 import actors.types.CombatActor;
+import characters.Character;
+import characters.Party;
+import characters.jobs.Jobs.MageJob;
+import characters.jobs.Jobs.RangerJob;
+import characters.jobs.Jobs.RogueJob;
+import characters.jobs.Jobs.WarriorJob;
 
 public class GameManager {
     private final InputHandler inputHandler = new InputHandler();
@@ -67,25 +73,44 @@ public class GameManager {
 
     private void runTestCombat() {
         // Create test game state
-        GameContainer testGame = new GameContainer(gameScanner);
+        // GameContainer testGame = new GameContainer(gameScanner);
 
         // Create enemies and actors
-        ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();
-        ArrayList<CombatActor> allActors = new ArrayList<>(testGame.party.characters);
+        // ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();
+        // ArrayList<CombatActor> allActors = new ArrayList<>(testGame.party.characters);
+
+        Character testMage = new Character(gameScanner, "Test Mage", new MageJob());
+        Character testWarrior = new Character(gameScanner, "Test Warrior", new WarriorJob());
+        Character testRanger = new Character(gameScanner, "Test Ranger", new RangerJob());
+        Character testRogue = new Character(gameScanner, "Test Rogue", new RogueJob());
+        
+        ArrayList<Character> testCharacters = new ArrayList<>();
+            testCharacters.add(testMage);
+            testCharacters.add(testWarrior);
+            testCharacters.add(testRanger);
+            testCharacters.add(testRogue);
+
+        Party party = new Party(testCharacters);
+        Forest currentRegion = new Forest();
+
+        ArrayList<enemies.Enemy> enemies = currentRegion.generateEnemies();
+        ArrayList<CombatActor> allActors = currentRegion.setupCombatActors(party, enemies);
+        ArrayList<enemies.Enemy> testEnemies = new ArrayList<>();
         allActors.addAll(testEnemies);
 
         // Create handlers
-        EquipmentHandler equipmentHandler = new EquipmentHandler(testGame.party);
-        ActionHandler actionHandler = new ActionHandler(gameScanner, allActors, testGame.party, testEnemies, equipmentHandler);
+        EquipmentHandler equipmentHandler = new EquipmentHandler(party);
+        ActionHandler actionHandler = new ActionHandler(gameScanner, allActors, party, enemies, equipmentHandler);
         ReactionHandler reactionHandler = new ReactionHandler(gameScanner);
 
         // Start combat
         CombatManager combatManager = new CombatManager(
-                testGame.party,
-                testEnemies,
+                party,
+                enemies,
                 actionHandler,
                 reactionHandler
         );
+
         combatManager.startCombat();
     }
 }
