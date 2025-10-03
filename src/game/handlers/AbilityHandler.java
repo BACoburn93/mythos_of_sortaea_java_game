@@ -68,7 +68,6 @@ public class AbilityHandler {
                 character.spendMana(chosenAbility);
                 character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
 
-                // TODO - fix spawnWeight affecting range of abilities and move this logic to a separate method
                 // Begin multi-target logic
                 if (chosenAbility instanceof TargetingAbility targetingAbility) {
                     int leftRange = targetingAbility.getLeftRange();
@@ -95,11 +94,17 @@ public class AbilityHandler {
                         int eWeight = e.getSpawnWeight();
 
                         // If adding this enemy would exceed the leftRange, break (can't reach past)
-                        if (leftSpaces + eWeight > leftRange) break;
+                        if (leftSpaces + eWeight > leftRange) {
+                            if(!targetsToHit.contains(e)) {
+                                targetsToHit.add(e);
+                            }
+                            break;
+                        }
 
                         if (!targetsToHit.contains(e)) {
                             targetsToHit.add(e);
                         }
+                        // Debugging print to visualize the spacing
                         leftSpaces += eWeight;
                         idx -= eWeight;
                     }
@@ -110,20 +115,21 @@ public class AbilityHandler {
                     while (idx < enemies.size() && rightSpaces < rightRange) {
                         Enemy e = enemies.get(idx);
                         int eWeight = e.getSpawnWeight();
-                        if (rightSpaces + eWeight > rightRange) break; // Can't reach past this enemy
+
+                        if (rightSpaces + eWeight > rightRange) {
+                            if (!targetsToHit.contains(e)) {
+                                targetsToHit.add(e);
+                            }
+                            break;
+                        } 
+
                         if (!targetsToHit.contains(e)) {
                             targetsToHit.add(e);
                         }
-                        rightSpaces += eWeight;
-                        idx += eWeight;
-                    }
 
-                    // ArrayList<CombatActor> targetsToHit = new ArrayList<>();
-                    // for (int i = targetIndex - leftRange; i <= targetIndex + rightRange; i++) {
-                    //     if (i >= 0 && i < enemies.size()) {
-                    //         targetsToHit.add(enemies.get(i));
-                    //     }
-                    // }
+                        rightSpaces += eWeight;
+                        idx += 1; // Move one index at a time
+                    }
 
                     for (CombatActor target : targetsToHit) {
                         boolean missedNewTarget = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();

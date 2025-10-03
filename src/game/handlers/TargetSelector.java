@@ -7,6 +7,7 @@ import java.util.*;
 
 import actors.ActorTypes;
 import actors.types.CombatActor;
+import enemies.Enemy;
 
 public class TargetSelector {
     private final ArrayList<CombatActor> actors;
@@ -30,10 +31,10 @@ public class TargetSelector {
 
         while (true) {
             System.out.println("Available targets:");
-
+            // TODO - change back to level once debugged
             StringUtils.printOptionsGrid(
                 enemies,
-                e -> e.getName() + " (Lvl " + e.getLevel() + ")",
+                e -> e.getName() + " (Lvl " + ((Enemy) e).getSpawnWeight() + ")",
                 2,
                 4
             );

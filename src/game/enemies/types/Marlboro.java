@@ -22,7 +22,8 @@ public class Marlboro extends Enemy {
                 AbilityDatabase.POISON_MIST,
                 AbilityDatabase.IMPALING_ICE
             },
-            20
+            20,
+            2
         );
     }
 }
