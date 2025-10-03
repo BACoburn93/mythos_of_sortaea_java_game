@@ -31,9 +31,6 @@ public class Enemy extends CombatActor {
     private Prefix prefix;
     private Suffix suffix;
     
-    // TODO - Maybe have spawnWeight determine the whether an AOE can extend beyond
-    // Think like size, so the spawnWeght is like an indicator that this enemy is larger than normal
-    // and thus might require a larger aoe range to hit targets next to it
     private int spawnWeight = 1;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,

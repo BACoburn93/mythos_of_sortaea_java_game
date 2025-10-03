@@ -521,8 +521,7 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
-    // TODO -- Set up levelUp to give new abilities
-    // Maybe create a perk tree, randomized ability choices, subclass options, paragon paths, epic destinies, etc.
+    // TODO -- Perk Tree, Subclass, Paragon Path, Epic Destiny 
     public void levelUp() {
         this.level++;
         if(this.level % 4 == 0) this.maxActionPoints++;
