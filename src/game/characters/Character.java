@@ -38,6 +38,7 @@ public class Character extends CombatActor {
     private int actionPoints;
     private int maxActionPoints;
     private int attributePoints;
+    public int hits;
 
     private final Reaction[] reactions;
     private final ArrayList<Ability> abilities;
@@ -56,6 +57,7 @@ public class Character extends CombatActor {
         this.experience = 0;
         this.actionPoints = 3;
         this.attributePoints = 0;
+        this.hits = job.getHits();
         this.maxActionPoints = this.actionPoints;
         
         this.gameScanner = gameScanner;
@@ -360,7 +362,7 @@ public class Character extends CombatActor {
             default -> attrToDamageBonus = 1.0;
         }
 
-        int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
+        // int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
         Damage[] damages = new Damage[hits];
         for (int i = 0; i < hits; i++) {
             damages[i] = damageSupplier.get();

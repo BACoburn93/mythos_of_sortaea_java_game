@@ -30,6 +30,7 @@ public abstract class Job implements DamageTypeProvider {
     private Set<ItemType> equippableItemTypes;
     private double unarmedDamage;
     private String unarmedDamageAttr;
+    private int hits;
 
     protected abstract JobTypes getJobType();
 
@@ -46,6 +47,7 @@ public abstract class Job implements DamageTypeProvider {
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = "strength";
+        this.hits = 1;
     }
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
@@ -62,6 +64,7 @@ public abstract class Job implements DamageTypeProvider {
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = "strength";
+        this.hits = 1;
     }
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
@@ -78,6 +81,7 @@ public abstract class Job implements DamageTypeProvider {
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = unarmedDamageAttr;
+        this.hits = 1;
     }
 
     public String getName() {
@@ -134,6 +138,14 @@ public abstract class Job implements DamageTypeProvider {
 
     public String getUnarmedDamageAttr() {
         return unarmedDamageAttr;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 
     public Collection<? extends Ability> getJobAbilities() {

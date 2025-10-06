@@ -59,7 +59,7 @@ public void handleAttackAction(Character character) {
     // Apply the attack using the correct damage type
     character.attack(
         chosenTarget,
-        () -> damageFactory.apply(1, (int) damage), // or use min/max as needed
+        () -> damageFactory.apply((int) damage / 2, (int) damage), 
         attrToAttWith
     );
     character.setActionPoints(character.getActionPoints() - 1);

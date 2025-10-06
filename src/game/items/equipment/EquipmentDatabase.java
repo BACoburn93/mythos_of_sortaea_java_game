@@ -49,7 +49,8 @@ public class EquipmentDatabase {
                 new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
                 List.of(
                     AbilityDatabase.BACKSTAB
-                )
+                ),
+                50.0
         ));
         EQUIPMENT_LIST.add(new Longbow(
                 "Dragon Longbow",

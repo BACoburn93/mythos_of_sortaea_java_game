@@ -12,6 +12,19 @@ import items.equipment.item_types.WeaponTypes;
 public class Dagger extends Mainhand {
     private static final String ATTRIBUTE_TO_ATTACK_WITH = "agility";
 
+    public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(
+            name,
+            goldValue,
+            WeaponTypes.DAGGER,
+            false,
+            attributes,
+            resistances,
+            Equipment.combineWithAbilities(AbilityDatabase.STAB, abilities),
+            damage
+        );
+    }
+
     public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         super(
             name,
