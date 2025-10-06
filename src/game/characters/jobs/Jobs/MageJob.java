@@ -1,6 +1,8 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
+import abilities.damages.Damage;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -27,7 +29,9 @@ public class MageJob extends Job {
                         2, 3, 3, 2, 2),
                 new StatusConditions(),
                 new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.MAGE, 2)),
-                EquipmentProficiencies.mageAllowed
+                EquipmentProficiencies.mageAllowed,
+                1.0,
+                "intelligence"
         );
     }
 

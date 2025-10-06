@@ -56,8 +56,8 @@ public class ActionHandler {
                     System.out.println("Ending turn.");
                     return;
                 }
-                case HELP -> {
-                    StringUtils.stringDivider("There's no helping you now.", "", 50);
+                case ATTACK -> {
+                    abilityHandler.handleAttackAction(character);
                 }
                 case ITEM -> {
                     character.handleItem("ITEM");

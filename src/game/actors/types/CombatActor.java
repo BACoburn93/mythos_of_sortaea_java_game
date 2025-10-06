@@ -3,8 +3,11 @@ package actors.types;
 import java.util.Random;
 
 import abilities.Ability;
+import abilities.ability_types.TargetingAbility;
+import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.Actor;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
@@ -28,7 +31,9 @@ public class CombatActor extends Actor {
     private StatusConditions statusConditions;
     private Stances stance;
     // TODO - create a base unarmed damage value for each actor
-    // Replace the unarmed damage with equipment damage when equipment is added (Character subclass only)
+    // Maybe make it an integer and scale it with attributes, depending on the declared unarmed attribute type?
+    // Replace the unarmed damage with equipment damage when mainhand is equipped (Character subclass only)
+    // Replace 'ConcreteDamage' with the actual concrete subclass of Damage
     protected int level;
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
@@ -190,10 +195,32 @@ public class CombatActor extends Actor {
         return damageToMitigate;
     }
 
-    public void attack(CombatActor attacker, CombatActor target, Ability ability) {
-            target.takeDamage(attacker, ability);
+    public void attack(CombatActor target, Ability ability) {
+            target.takeDamage(this, ability);
 
     }
+
+    // public void attack(CombatActor target, String attrDamageBonus) {
+    //     // TODO - Test on Character when implemented
+    //     double attrToDamageBonus = 1.0;
+
+    //     switch(attrDamageBonus.toLowerCase()) {
+    //         case "strength" -> attrToDamageBonus = this.getAttributes().getStrength().getValue() / 6.0;
+    //         case "agility" -> attrToDamageBonus = this.getAttributes().getAgility().getValue() / 8.0;
+    //         case "intelligence" -> attrToDamageBonus = this.getAttributes().getKnowledge().getValue() / 10.0;
+    //         default -> attrToDamageBonus = 1.0;
+    //     }
+
+    //     int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
+    //     Damage[] unarmedDamage = new Damage[hits];
+    //     for (int i = 0; i < hits; i++) {
+    //         // You can adjust min/max as needed
+    //         unarmedDamage[i] = new PhysicalBludgeoningDamage(1, 8);
+    //     }
+    //     WeaponAbility ability = new WeaponAbility(unarmedDamage);
+
+    //     target.takeDamage(this, ability);
+    // }
 
     public void takeDamage(CombatActor attacker, Ability ability) {
         StringBuilder damageMessage = new StringBuilder();

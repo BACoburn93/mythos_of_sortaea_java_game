@@ -126,7 +126,7 @@ public class Enemy extends CombatActor {
                 boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
 
                 if(!missedTarget) {
-                    this.attack(this, target, ability);
+                    this.attack(target, ability);
                 } else {
                     CombatUIStrings.printMissedAttack(this, target, ability);
                 }

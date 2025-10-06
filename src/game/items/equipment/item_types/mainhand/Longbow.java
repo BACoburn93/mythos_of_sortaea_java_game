@@ -17,12 +17,13 @@ public class Longbow extends Mainhand {
             true, 
             attributes, 
             resistances, 
-            combineWithAbilities(AbilityDatabase.SHOOT, abilities)
+            combineWithAbilities(AbilityDatabase.SHOOT, abilities),
+            10.0
         );
     }
 
     public Longbow(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.LONGBOW, true, attributes, resistances, List.of(AbilityDatabase.SHOOT));
+        super(name, goldValue, WeaponTypes.LONGBOW, true, attributes, resistances, List.of(AbilityDatabase.SHOOT), 10.0);
     }
 
 }

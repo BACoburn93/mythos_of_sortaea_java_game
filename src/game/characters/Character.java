@@ -2,6 +2,9 @@ package characters;
 
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
+import abilities.ability_types.WeaponAbility;
+import abilities.damages.Damage;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.reactions.*;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
@@ -16,12 +19,15 @@ import items.equipment.item_types.ArmorTypes;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.ShieldTypes;
 import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.mainhand.Mainhand;
 import items.equipment.equipment_slots.*;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;
 
 import java.util.*;
+import java.util.function.Supplier;
+
 import characters.initializers.*;
 
 public class Character extends CombatActor {
@@ -283,6 +289,18 @@ public class Character extends CombatActor {
         return equipped;
     }
 
+    public Mainhand getEquippedMainHand() {
+        EquipmentSlot mainhandSlot = equipmentSlots.get("Mainhand");
+        if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof Mainhand mainHand) {
+            return mainHand;
+        }
+        return null;
+    }
+
+    public boolean hasWeaponEquipped() {
+        return getEquippedMainHand() != null;
+    }
+
     public List<Ability> getAbilities() {
         List<Ability> all = new ArrayList<>(this.abilities); // or whatever your base abilities field is called
         all.addAll(itemAbilities);
@@ -329,6 +347,27 @@ public class Character extends CombatActor {
     private void removeItemAttributesAndResistances(Equipment item) {
         this.getAttributes().subtract(item.getAttributes());
         this.getResistances().subtract(item.getResistances());
+    }
+
+    public void attack(CombatActor target, Supplier<Damage> damageSupplier, String attrDamageBonus) {
+        // TODO - Test on Character when implemented
+        double attrToDamageBonus = 1.0;
+
+        switch(attrDamageBonus.toLowerCase()) {
+            case "strength" -> attrToDamageBonus = this.getAttributes().getStrength().getValue() / 6.0;
+            case "agility" -> attrToDamageBonus = this.getAttributes().getAgility().getValue() / 8.0;
+            case "intelligence" -> attrToDamageBonus = this.getAttributes().getKnowledge().getValue() / 10.0;
+            default -> attrToDamageBonus = 1.0;
+        }
+
+        int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
+        Damage[] damages = new Damage[hits];
+        for (int i = 0; i < hits; i++) {
+            damages[i] = damageSupplier.get();
+        }
+        WeaponAbility ability = new WeaponAbility(damages);
+
+        target.takeDamage(this, ability);
     }
 
     private void handleDefend() {
@@ -409,7 +448,7 @@ public class Character extends CombatActor {
                 System.out.println(this.getName() + " is passing their turn.");
                 break;
             default:
-                System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
+                System.out.println("Invalid reaction, please try again.");
         }
     }
 
@@ -564,7 +603,6 @@ public class Character extends CombatActor {
     public Consumable[] getItems() {
         return items;
     }
-
 
     public Reaction[] getCharReactions() {
         return CharacterReactions.getReactions();

@@ -34,7 +34,9 @@ public class TargetSelector {
             // TODO - change back to level once debugged
             StringUtils.printOptionsGrid(
                 enemies,
-                e -> e.getName() + " (Lvl " + ((Enemy) e).getSpawnWeight() + ")",
+                e -> e.getName() + 
+                " (SIZE " + ((Enemy) e).getSpawnWeight() + ")" + " HP: " + 
+                (int) e.getHealthValues().getValue() + "/" + (int) e.getHealthValues().getMaxValue(),
                 2,
                 4
             );

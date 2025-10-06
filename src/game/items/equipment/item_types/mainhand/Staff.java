@@ -16,12 +16,13 @@ public class Staff extends Mainhand {
             false, 
             attributes, 
             resistances, 
-            combineWithAbilities(AbilityDatabase.MAGIC_DART, abilities)
+            combineWithAbilities(AbilityDatabase.MAGIC_DART, abilities),
+            6.0
         );
     }
 
     public Staff(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART));
+        super(name, goldValue, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), 6.0);
     }
 
 }

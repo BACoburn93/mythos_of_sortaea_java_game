@@ -48,7 +48,7 @@ public class ReactionHandler {
             
             StringUtils.printOptionsGrid(reactions, s -> s, 3, 4);
 
-            System.out.println("Choose a reaction (by name or number), or type HELP for options:");
+            System.out.println("Choose a reaction (by name or number):");
             String reactionInput = scanner.nextLine();
 
             String selectedReaction = InputHandler.getItemByInput(reactionInput, reactions, s -> s);
@@ -63,7 +63,7 @@ public class ReactionHandler {
                 chosenCharacter.handleReaction(combatActors, partyCharacters, reactionToUse.toLowerCase());
                 validReaction = true;
             } else {
-                System.out.println("Invalid reaction, please try again. If you need help, type HELP.");
+                System.out.println("Invalid reaction, please try again.");
             }
         }
     }

@@ -3,6 +3,8 @@ package characters.jobs;
 import abilities.Ability;
 import abilities.AbilityPool;
 import abilities.AbilityPoolRegistry;
+import abilities.damages.*;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -14,8 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
-public abstract class Job {
+public abstract class Job implements DamageTypeProvider {
     private String name;
     private HealthValues healthValues;
     private ManaValues manaValues;
@@ -25,10 +28,14 @@ public abstract class Job {
     // Need to bind status conditions to jobs so that they affect character statistics
     private ArrayList<Ability> jobAbilities;
     private Set<ItemType> equippableItemTypes;
+    private double unarmedDamage;
+    private String unarmedDamageAttr;
+
+    protected abstract JobTypes getJobType();
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, ArrayList<Ability> jobAbilities, 
-               Set<ItemType> equippableItemTypes) {
+               Set<ItemType> equippableItemTypes, double unarmedDamage) {
         this.name = name;
         this.healthValues = healthValues;
         this.manaValues = manaValues;
@@ -37,14 +44,14 @@ public abstract class Job {
         this.statusConditions = new StatusConditions();
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
+        this.unarmedDamage = unarmedDamage;
+        this.unarmedDamageAttr = "strength";
     }
-
-    protected abstract JobTypes getJobType();
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
                StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
-               Set<ItemType> equippableItemTypes) {
+               Set<ItemType> equippableItemTypes, double unarmedDamage) {
         this.name = name;
         this.healthValues = healthValues;
         this.manaValues = manaValues;
@@ -53,6 +60,24 @@ public abstract class Job {
         this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
+        this.unarmedDamage = unarmedDamage;
+        this.unarmedDamageAttr = "strength";
+    }
+
+    public Job(String name, HealthValues healthValues, ManaValues manaValues,
+               Attributes attributes, Resistances resistances, 
+               StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
+               Set<ItemType> equippableItemTypes, double unarmedDamage, String unarmedDamageAttr) {
+        this.name = name;
+        this.healthValues = healthValues;
+        this.manaValues = manaValues;
+        this.attributes = attributes;
+        this.resistances = resistances;
+        this.statusConditions = statusConditions;
+        this.jobAbilities = jobAbilities;
+        this.equippableItemTypes = equippableItemTypes;
+        this.unarmedDamage = unarmedDamage;
+        this.unarmedDamageAttr = unarmedDamageAttr;
     }
 
     public String getName() {
@@ -103,6 +128,14 @@ public abstract class Job {
         this.statusConditions = statusConditions;
     }
 
+    public double getUnarmedDamage() {
+        return unarmedDamage;
+    }
+
+    public String getUnarmedDamageAttr() {
+        return unarmedDamageAttr;
+    }
+
     public Collection<? extends Ability> getJobAbilities() {
         return jobAbilities;
     }
@@ -126,6 +159,11 @@ public abstract class Job {
     public List<Ability> getPoolAbilities() {
         AbilityPool pool = getAbilityPool();
         return pool != null ? pool.getAbilities() : List.of();
+    }
+
+    public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
+        
+        return (min, max) -> new PhysicalBludgeoningDamage(min, max);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package abilities.actions;
 
 public enum ActionTypes {
-    HELP,
+    ATTACK,
     ABILITY,
     ITEM,
     SORT,

@@ -1,6 +1,8 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
+import abilities.damages.Damage;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -11,6 +13,7 @@ import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
+import java.util.function.BiFunction;
 
 public class RogueJob extends Job {
     public RogueJob() {
@@ -24,7 +27,9 @@ public class RogueJob extends Job {
                 new StatusConditions(2, 2, 2, 2, 2, 2, 2, 2,
                         2, 2, 2, 2, 2, 2, 2, 2, 2),
                 new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.ROGUE, 2)),
-                EquipmentProficiencies.rogueAllowed
+                EquipmentProficiencies.rogueAllowed,
+                6.0,
+                "dexterity"
         );
     }
 
@@ -32,4 +37,5 @@ public class RogueJob extends Job {
     protected JobTypes getJobType() {
         return JobTypes.ROGUE;
     }
+
 }

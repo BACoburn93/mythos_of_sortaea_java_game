@@ -1,6 +1,6 @@
 package abilities.database;
 
-import abilities.ability_types.TargetingAbility;
+import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
 import abilities.damages.magical.MagicalPiercingDamage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
@@ -11,28 +11,28 @@ import status_conditions.Bleed;
 import status_conditions.StatusCondition;
 
 public class WeaponAbilities {
-        public static final TargetingAbility SLASH = new TargetingAbility(
+        public static final WeaponAbility SLASH = new WeaponAbility(
         "Slash", 
         new Damage[]{new PhysicalSlashingDamage(11, 19)}, 
         AbilityPrerequisites.SLASHING_WEAPONS,
         "A powerful slash."
     );
 
-    public static final TargetingAbility STAB = new TargetingAbility(
+    public static final WeaponAbility STAB = new WeaponAbility(
         "Stab", 
         new Damage[]{new PhysicalPiercingDamage(10, 20)}, 
         AbilityPrerequisites.PIERCING_WEAPONS,
         "A precise piercing attack."
     );
 
-    public static final TargetingAbility BASH = new TargetingAbility(
+    public static final WeaponAbility BASH = new WeaponAbility(
         "Bash", 
         new Damage[]{new PhysicalBludgeoningDamage(12, 18)}, 
         AbilityPrerequisites.BLUDGEONING_WEAPONS,
         "A powerful bash."
     );
 
-    public static final TargetingAbility SHOOT = new TargetingAbility(
+    public static final WeaponAbility SHOOT = new WeaponAbility(
         "Shoot", 
         new Damage[]{
             new PhysicalPiercingDamage(
@@ -45,7 +45,7 @@ public class WeaponAbilities {
         "A ranged attack using a bow or crossbow."
     );
 
-    public static final TargetingAbility MAGIC_DART = new TargetingAbility(
+    public static final WeaponAbility MAGIC_DART = new WeaponAbility(
         "Magic Dart", 
         new Damage[]{new MagicalPiercingDamage(11, 19)}, 
         AbilityPrerequisites.SPELL_CASTING_WEAPONS,

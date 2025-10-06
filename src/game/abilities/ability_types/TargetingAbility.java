@@ -10,6 +10,11 @@ public class TargetingAbility extends Ability {
     private int leftRange;
     private int rightRange;
 
+    // Basic Constructor with all default values except Damage
+    public TargetingAbility(Damage[] damages) {
+        this("Attack", 1, 0, 1, damages, 0, 0, "A basic attack.");
+    }
+
     // Basic constructor with default ranges (single target)
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, String description) {
         this(name, manaCost, actionCost, damages, 0, 0, description);

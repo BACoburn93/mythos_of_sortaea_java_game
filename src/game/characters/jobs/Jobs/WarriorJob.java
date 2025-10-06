@@ -1,6 +1,8 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
+import abilities.damages.Damage;
+import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -11,6 +13,7 @@ import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
+import java.util.function.BiFunction;
 
 public class WarriorJob extends Job {
     public WarriorJob() {
@@ -24,7 +27,8 @@ public class WarriorJob extends Job {
                 new StatusConditions(2, 2, 2, 2, 2, 2, 2, 2,
                         2, 2, 2, 2, 2, 2, 2, 2, 2),
                 new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.WARRIOR, 2)),
-                EquipmentProficiencies.warriorAllowed
+                EquipmentProficiencies.warriorAllowed,
+                10.0
         );
     }
 
@@ -32,4 +36,5 @@ public class WarriorJob extends Job {
     protected JobTypes getJobType() {
         return JobTypes.WARRIOR;
     }
+
 }
