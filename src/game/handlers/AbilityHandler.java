@@ -87,6 +87,11 @@ public void handleAttackAction(Character character) {
         }
     }
 
+    // TODO
+    // For left and right range, I currently check for eWeight / 2 to see if it fits in the range
+    // The logic should target adjacent enemies in instances whether they are within range at all
+    // In order to require that the entire spawnWeight is within range, change eWeight / 2 to eWeight
+    // Further testing may still need to be done to ensure this works as intended
     private void checkLeftRange(int start, Enemy mainTarget, int leftRange, ArrayList<CombatActor> targetsToHit) {
         int leftSpaces = mainTarget.getSpawnWeight() - 1;
         int idx = start - 1;
@@ -95,10 +100,7 @@ public void handleAttackAction(Character character) {
             Enemy e = enemies.get(idx);
             int eWeight = e.getSpawnWeight();
 
-            System.out.println("Checking enemy to the left: " + e.getName() + " with weight " + eWeight + " at index " + idx);
-            System.out.println("Remaining left spaces: " + (leftRange - leftSpaces));
-
-            if (leftSpaces + eWeight <= leftRange) {
+            if (leftSpaces + (eWeight / 2) <= leftRange) {
                 if (!targetsToHit.contains(e)) {
                     targetsToHit.add(e);
                 }
@@ -118,10 +120,7 @@ public void handleAttackAction(Character character) {
             Enemy e = enemies.get(idx);
             int eWeight = e.getSpawnWeight();
 
-            System.out.println("Checking enemy to the right: " + e.getName() + " with weight " + eWeight + " at index " + idx);
-            System.out.println("Remaining right spaces: " + (rightRange - rightSpaces));
-
-            if (rightSpaces + eWeight <= rightRange) {
+            if (rightSpaces + (eWeight / 2) <= rightRange) {
                 if (!targetsToHit.contains(e)) {
                     targetsToHit.add(e);
                 }
@@ -141,10 +140,6 @@ public void handleAttackAction(Character character) {
         if (targetIndex == -1) return;
 
         Enemy mainTarget = enemies.get(targetIndex);
-        // int mainSpawnWeight = mainTarget.getSpawnWeight();
-
-        // int mainStart = targetIndex;
-        // int mainEnd = targetIndex + mainSpawnWeight - 1;
 
         ArrayList<CombatActor> targetsToHit = new ArrayList<>();
         targetsToHit.add(mainTarget);
