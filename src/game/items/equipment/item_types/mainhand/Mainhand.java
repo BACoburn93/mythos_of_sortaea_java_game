@@ -1,5 +1,6 @@
 package items.equipment.item_types.mainhand;
 
+import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
@@ -13,7 +14,7 @@ import abilities.damages.physical.PhysicalBludgeoningDamage;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public class Mainhand extends Equipment implements DamageTypeProvider {
+public abstract class Mainhand extends Equipment implements DamageTypeProvider {
     private boolean twoHanded;
     private double damage;
     private List<Ability> abilities;
@@ -45,13 +46,10 @@ public class Mainhand extends Equipment implements DamageTypeProvider {
         this.abilities = abilities;
     }
 
-    public String getWeaponDamageAttr() {
-        return "strength"; 
+    public AttributeTypes getWeaponDamageAttr() {
+        return AttributeTypes.STRENGTH; 
     }
 
     @Override
-    public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
-        
-        return (min, max) -> new PhysicalBludgeoningDamage(min, max);
-    }
+    public abstract BiFunction<Integer, Integer, Damage> getBaseDamageType();
 }

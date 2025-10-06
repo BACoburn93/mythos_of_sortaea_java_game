@@ -54,13 +54,6 @@ public class WeaponAbility extends TargetingAbility {
         super(name, levelRequirement, manaCost, actionCost, damages, weaponTypes, leftRange, rightRange, description);
     }
 
-    public int calculateUnarmedAbilityDamage(Character user, int numHits) {
-        if (user.hasWeaponEquipped()) {
-            throw new IllegalStateException("Cannot use unarmed ability with weapon equipped.");
-        }
-        return (int) (user.getJobObj().getUnarmedDamage() * numHits);
-    }
-
     public int calculateWeaponAbilityDamage(Character user, double multiplier) {
         Mainhand weapon = user.getEquippedMainHand();
         if (weapon == null) {

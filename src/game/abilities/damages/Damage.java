@@ -40,6 +40,11 @@ public abstract class Damage {
         this.maxDamage = maxDamage;
     }
 
+    public void addBonus(double bonus) {
+        this.minDamage += bonus;
+        this.maxDamage += bonus;
+    }
+
     public DamageTypes getDamageType() {
         return damageType;
     }

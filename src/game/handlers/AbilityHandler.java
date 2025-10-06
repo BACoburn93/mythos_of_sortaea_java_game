@@ -13,6 +13,7 @@ import enemies.Enemy;
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
+import actors.attributes.AttributeTypes;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
@@ -39,20 +40,19 @@ public void handleAttackAction(Character character) {
     if (chosenTarget == null) return;
 
     EquipmentSlot mainhandSlot = character.getEquipmentSlots().get("Mainhand");
-    String attrToAttWith;
+    AttributeTypes attrToAttWith;
     double damage;
     BiFunction<Integer, Integer, Damage> damageFactory;
 
     if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof items.equipment.item_types.mainhand.Mainhand weapon) {
         // Weapon attack
         damage = weapon.getDamage();
-        attrToAttWith = weapon.getWeaponDamageAttr().toString().toLowerCase();
+        attrToAttWith = weapon.getWeaponDamageAttr();
         damageFactory = weapon.getBaseDamageType();
     } else {
         // Unarmed attack
         damage = character.getJobObj().getUnarmedDamage();
-        // damage = Math.max(1, damage);
-        attrToAttWith = character.getJobObj().getUnarmedDamageAttr().toLowerCase();
+        attrToAttWith = character.getJobObj().getUnarmedDamageAttr();
         damageFactory = character.getJobObj().getBaseDamageType();
     }
 

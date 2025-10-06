@@ -5,6 +5,7 @@ import abilities.AbilityPool;
 import abilities.AbilityPoolRegistry;
 import abilities.damages.*;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
+import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -29,7 +30,7 @@ public abstract class Job implements DamageTypeProvider {
     private ArrayList<Ability> jobAbilities;
     private Set<ItemType> equippableItemTypes;
     private double unarmedDamage;
-    private String unarmedDamageAttr;
+    private AttributeTypes unarmedDamageAttr;
     private int hits;
 
     protected abstract JobTypes getJobType();
@@ -46,7 +47,7 @@ public abstract class Job implements DamageTypeProvider {
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
-        this.unarmedDamageAttr = "strength";
+        this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
     }
 
@@ -63,7 +64,7 @@ public abstract class Job implements DamageTypeProvider {
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
-        this.unarmedDamageAttr = "strength";
+        this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
     }
 
@@ -80,7 +81,7 @@ public abstract class Job implements DamageTypeProvider {
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = equippableItemTypes;
         this.unarmedDamage = unarmedDamage;
-        this.unarmedDamageAttr = unarmedDamageAttr;
+        this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
     }
 
@@ -136,7 +137,7 @@ public abstract class Job implements DamageTypeProvider {
         return unarmedDamage;
     }
 
-    public String getUnarmedDamageAttr() {
+    public AttributeTypes getUnarmedDamageAttr() {
         return unarmedDamageAttr;
     }
 

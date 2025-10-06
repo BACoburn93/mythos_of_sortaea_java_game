@@ -10,6 +10,7 @@ import actors.ActorTypes;
 import actors.attributes.Attributes;
 import actors.stances.Stances;
 import actors.types.CombatActor;
+import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
 import enemies.abilities.AbilityPool;
 import items.consumables.Consumable;
@@ -351,21 +352,21 @@ public class Character extends CombatActor {
         this.getResistances().subtract(item.getResistances());
     }
 
-    public void attack(CombatActor target, Supplier<Damage> damageSupplier, String attrDamageBonus) {
+    public void attack(CombatActor target, Supplier<Damage> damageSupplier, AttributeTypes attrDamageBonus) {
         // TODO - Test on Character when implemented
-        double attrToDamageBonus = 1.0;
+        double attrToDamageBonus = switch (attrDamageBonus) {
+            case STRENGTH -> this.getAttributes().getStrength().getValue() / 6.0;
+            case AGILITY -> this.getAttributes().getAgility().getValue() / 8.0;
+            case KNOWLEDGE -> this.getAttributes().getKnowledge().getValue() / 10.0;
+            default -> 1.0;
+        };
 
-        switch(attrDamageBonus.toLowerCase()) {
-            case "strength" -> attrToDamageBonus = this.getAttributes().getStrength().getValue() / 6.0;
-            case "agility" -> attrToDamageBonus = this.getAttributes().getAgility().getValue() / 8.0;
-            case "intelligence" -> attrToDamageBonus = this.getAttributes().getKnowledge().getValue() / 10.0;
-            default -> attrToDamageBonus = 1.0;
-        }
 
-        // int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
         Damage[] damages = new Damage[hits];
         for (int i = 0; i < hits; i++) {
-            damages[i] = damageSupplier.get();
+            Damage baseDamage = damageSupplier.get();
+            baseDamage.addBonus(attrToDamageBonus); 
+            damages[i] = baseDamage;
         }
         WeaponAbility ability = new WeaponAbility(damages);
 
