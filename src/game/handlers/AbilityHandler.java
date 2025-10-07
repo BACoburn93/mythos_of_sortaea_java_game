@@ -82,6 +82,8 @@ public class AbilityHandler {
     public void handleAttackAction(Character character) {
         CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
 
+        if(chosenTarget == null) return;
+
         weaponAttack(character, null, chosenTarget, null);
 
         character.setActionPoints(character.getActionPoints() - 1);
