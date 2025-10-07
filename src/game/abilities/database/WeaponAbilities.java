@@ -14,6 +14,7 @@ public class WeaponAbilities {
         public static final WeaponAbility SLASH = new WeaponAbility(
         "Slash", 
         new Damage[]{new PhysicalSlashingDamage(11, 19)}, 
+        1.8,
         AbilityPrerequisites.SLASHING_WEAPONS,
         "A powerful slash."
     );
@@ -21,6 +22,7 @@ public class WeaponAbilities {
     public static final WeaponAbility STAB = new WeaponAbility(
         "Stab", 
         new Damage[]{new PhysicalPiercingDamage(10, 20)}, 
+        1.5,
         AbilityPrerequisites.PIERCING_WEAPONS,
         "A precise piercing attack."
     );
@@ -28,6 +30,7 @@ public class WeaponAbilities {
     public static final WeaponAbility BASH = new WeaponAbility(
         "Bash", 
         new Damage[]{new PhysicalBludgeoningDamage(12, 18)}, 
+        1.6,
         AbilityPrerequisites.BLUDGEONING_WEAPONS,
         "A powerful bash."
     );
@@ -41,6 +44,7 @@ public class WeaponAbilities {
                 new StatusCondition[]{new Bleed(5, 50, 2)}
             ),
         }, 
+        1.4,
         AbilityPrerequisites.RANGED_WEAPONS,
         "A ranged attack using a bow or crossbow."
     );
@@ -48,6 +52,7 @@ public class WeaponAbilities {
     public static final WeaponAbility MAGIC_DART = new WeaponAbility(
         "Magic Dart", 
         new Damage[]{new MagicalPiercingDamage(11, 19)}, 
+        0,
         AbilityPrerequisites.SPELL_CASTING_WEAPONS,
         "A basic magical attack."
     );

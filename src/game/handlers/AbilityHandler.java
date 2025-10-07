@@ -12,6 +12,7 @@ import characters.Character;
 import enemies.Enemy;
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
+import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
 import actors.attributes.AttributeTypes;
 import actors.types.CombatActor;
@@ -34,42 +35,63 @@ public class AbilityHandler {
         this.enemies = enemies;
     }
 
-public void handleAttackAction(Character character) {
-    CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
+    public void weaponAttack(Character character, WeaponAbility ability, CombatActor chosenTarget, Random random) {
+        if (chosenTarget == null) return;
 
-    if (chosenTarget == null) return;
+        EquipmentSlot mainhandSlot = character.getEquipmentSlots().get("Mainhand");
+        AttributeTypes attrToAttWith;
+        double baseDamage;
+        BiFunction<Integer, Integer, Damage> damageFactory;
 
-    EquipmentSlot mainhandSlot = character.getEquipmentSlots().get("Mainhand");
-    AttributeTypes attrToAttWith;
-    double damage;
-    BiFunction<Integer, Integer, Damage> damageFactory;
+        if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof items.equipment.item_types.mainhand.Mainhand weapon) {
+            baseDamage = weapon.getDamage();
+            attrToAttWith = weapon.getWeaponDamageAttr();
+            damageFactory = weapon.getBaseDamageType();
+        } else {
+            baseDamage = character.getJobObj().getUnarmedDamage();
+            attrToAttWith = character.getJobObj().getUnarmedDamageAttr();
+            damageFactory = character.getJobObj().getBaseDamageType();
+        }
 
-    if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof items.equipment.item_types.mainhand.Mainhand weapon) {
-        // Weapon attack
-        damage = weapon.getDamage();
-        attrToAttWith = weapon.getWeaponDamageAttr();
-        damageFactory = weapon.getBaseDamageType();
-    } else {
-        // Unarmed attack
-        damage = character.getJobObj().getUnarmedDamage();
-        attrToAttWith = character.getJobObj().getUnarmedDamageAttr();
-        damageFactory = character.getJobObj().getBaseDamageType();
+        final double finalDamage;
+        if (ability != null) {
+            double abilityMultiplier = ability.getMultiplier();
+            finalDamage = baseDamage * abilityMultiplier;
+        } else {
+            finalDamage = baseDamage;
+        }
+
+        // TODO - Consider modifying this so that the attack doesn't log the ability as an Attack
+        // Also find a way to not log the hits separately when the attack hits and then after 
+        // when the ability damage array hits
+        // Basic Weapon Attack with multiplier from ability if applicable
+        if (ability == null || ability.getMultiplier() > 0) {
+            character.attack(
+                chosenTarget,
+                () -> damageFactory.apply((int) finalDamage / 2, (int) finalDamage),
+                attrToAttWith
+            );
+        }
+
+        // Additional Attack from ability bonus
+        if(ability != null) {
+            attackTarget(character, chosenTarget, ability, random);
+        }
     }
 
-    // Apply the attack using the correct damage type
-    character.attack(
-        chosenTarget,
-        () -> damageFactory.apply((int) damage / 2, (int) damage), 
-        attrToAttWith
-    );
-    character.setActionPoints(character.getActionPoints() - 1);
+    public void handleAttackAction(Character character) {
+        CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
 
-    CombatUIStrings.printHitPointsRemaining(chosenTarget);
+        weaponAttack(character, null, chosenTarget, null);
 
-    if (chosenTarget.getHealthValues().getValue() < 0) {
-        actors = handleKillEnemy(chosenTarget);
+        character.setActionPoints(character.getActionPoints() - 1);
+
+        CombatUIStrings.printHitPointsRemaining(chosenTarget);
+
+        if (chosenTarget.getHealthValues().getValue() < 0) {
+            actors = handleKillEnemy(chosenTarget);
+        }
     }
-}
 
     public void handleAbilityAction(Character character) {
         Ability chosenAbility = SelectionUtils.selectFromList(
@@ -84,6 +106,20 @@ public void handleAttackAction(Character character) {
 
         if (chosenAbility != null) {
             handleUseAbility(character, chosenAbility);
+        }
+    }
+
+    private void attackTarget(Character character, CombatActor target, Ability ability, Random random) {
+        boolean missed = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();
+        if (!missed) {
+            character.attack(target, ability);
+        } else {
+            CombatUIStrings.printMissedAttack(character, target, ability);
+        }
+        CombatUIStrings.printHitPointsRemaining(target);
+
+        if (target.getHealthValues().getValue() < 0) {
+            actors = handleKillEnemy(target);
         }
     }
 
@@ -148,18 +184,12 @@ public void handleAttackAction(Character character) {
         checkRightRange(targetIndex, mainTarget, rightRange, targetsToHit);
 
         for (CombatActor target : targetsToHit) {
-            boolean missedNewTarget = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();
-            if (!missedNewTarget) {
-                character.attack(target, targetingAbility);
-            } else {
-                CombatUIStrings.printMissedAttack(character, target, targetingAbility);
-            }
-            CombatUIStrings.printHitPointsRemaining(target);
-
-            if (target.getHealthValues().getValue() < 0) {
-                actors = handleKillEnemy(target);
-            }
+            attackTarget(character, target, targetingAbility, random);
         }
+    }
+
+    public void handleWeaponAbility(Character character, WeaponAbility chosenAbility, CombatActor chosenTarget, Random random) {
+        weaponAttack(character, chosenAbility, chosenTarget, random);
     }
 
     public void handleUseAbility(Character character, Ability chosenAbility) {
@@ -186,20 +216,22 @@ public void handleAttackAction(Character character) {
                 character.spendMana(chosenAbility);
                 character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
 
-                if (chosenAbility instanceof TargetingAbility targetingAbility) {
+                if (chosenAbility instanceof WeaponAbility weaponAbility) {
+                    handleWeaponAbility(character, weaponAbility, chosenTarget, random);
+                } else if (chosenAbility instanceof TargetingAbility targetingAbility) {
                     handleTargetingAbility(character, targetingAbility, chosenTarget, random);
                 } else {
                     // TODO - Work on Weapon Ability handling
-                    if (!missedTarget) {
-                        character.attack(chosenTarget, chosenAbility);
-                    } else {
-                        CombatUIStrings.printMissedAttack(character, chosenTarget, chosenAbility);
-                    }
-                    CombatUIStrings.printHitPointsRemaining(chosenTarget);
+                    // if (!missedTarget) {
+                    //     character.attack(chosenTarget, chosenAbility);
+                    // } else {
+                    //     CombatUIStrings.printMissedAttack(character, chosenTarget, chosenAbility);
+                    // }
+                    // CombatUIStrings.printHitPointsRemaining(chosenTarget);
 
-                    if (chosenTarget.getHealthValues().getValue() < 0) {
-                        actors = handleKillEnemy(chosenTarget);
-                    }
+                    // if (chosenTarget.getHealthValues().getValue() < 0) {
+                    //     actors = handleKillEnemy(chosenTarget);
+                    // }
                 }
             } else {
                 GeneralUIStrings.handleInvalidAction();
