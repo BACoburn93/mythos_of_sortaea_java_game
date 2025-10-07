@@ -30,10 +30,6 @@ public class CombatActor extends Actor {
     private Resistances resistances;
     private StatusConditions statusConditions;
     private Stances stance;
-    // TODO - create a base unarmed damage value for each actor
-    // Maybe make it an integer and scale it with attributes, depending on the declared unarmed attribute type?
-    // Replace the unarmed damage with equipment damage when mainhand is equipped (Character subclass only)
-    // Replace 'ConcreteDamage' with the actual concrete subclass of Damage
     protected int level;
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,

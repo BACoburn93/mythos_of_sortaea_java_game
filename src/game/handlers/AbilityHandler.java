@@ -211,7 +211,6 @@ public class AbilityHandler {
 
             if (chosenTarget != null) {
                 Random random = new Random();
-                boolean missedTarget = random.nextInt(100) < character.getStatusConditions().getBlind().getValue();
 
                 character.spendMana(chosenAbility);
                 character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
@@ -221,17 +220,7 @@ public class AbilityHandler {
                 } else if (chosenAbility instanceof TargetingAbility targetingAbility) {
                     handleTargetingAbility(character, targetingAbility, chosenTarget, random);
                 } else {
-                    // TODO - Work on Weapon Ability handling
-                    // if (!missedTarget) {
-                    //     character.attack(chosenTarget, chosenAbility);
-                    // } else {
-                    //     CombatUIStrings.printMissedAttack(character, chosenTarget, chosenAbility);
-                    // }
-                    // CombatUIStrings.printHitPointsRemaining(chosenTarget);
-
-                    // if (chosenTarget.getHealthValues().getValue() < 0) {
-                    //     actors = handleKillEnemy(chosenTarget);
-                    // }
+                    System.out.println("Ability type not recognized.");
                 }
             } else {
                 GeneralUIStrings.handleInvalidAction();

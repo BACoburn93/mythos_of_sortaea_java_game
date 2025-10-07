@@ -353,14 +353,14 @@ public class Character extends CombatActor {
     }
 
     public void attack(CombatActor target, Supplier<Damage> damageSupplier, AttributeTypes attrDamageBonus) {
-        // TODO - Test on Character when implemented
+        
         double calculatedValue = switch (attrDamageBonus) {
             case STRENGTH -> this.getAttributes().getStrength().getValue() / 6.0;
             case AGILITY -> this.getAttributes().getAgility().getValue() / 8.0;
             case KNOWLEDGE -> this.getAttributes().getKnowledge().getValue() / 10.0;
             default -> 0.0;
         };
-        
+
         double attrToDamageBonus = Math.max(0, calculatedValue);
 
         Damage[] damages = new Damage[hits];
