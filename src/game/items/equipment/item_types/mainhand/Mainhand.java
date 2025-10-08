@@ -6,10 +6,9 @@ import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import items.equipment.item_types.ItemType;
-import abilities.Ability; // Import your Ability class
+import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.DamageTypeProvider;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 
 import java.util.List;
 import java.util.function.BiFunction;

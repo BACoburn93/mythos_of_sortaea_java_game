@@ -10,7 +10,8 @@ public class EquipmentProficiencies {
         WeaponTypes.STAFF, 
         WeaponTypes.WAND, 
         WeaponTypes.TOME, 
-        ArmorTypes.CLOTH
+        ArmorTypes.CLOTH,
+        ShieldTypes.SMALL
     );
 
     public static final Set<ItemType> warriorAllowed = Set.of(
@@ -39,7 +40,10 @@ public class EquipmentProficiencies {
         ArmorTypes.HEAVY,
         ArmorTypes.MEDIUM,
         ArmorTypes.LIGHT,
-        ArmorTypes.CLOTH
+        ArmorTypes.CLOTH,
+        ShieldTypes.LARGE,
+        ShieldTypes.MEDIUM,
+        ShieldTypes.SMALL
     );
 
     public static final Set<ItemType> rogueAllowed = Set.of(
@@ -57,7 +61,8 @@ public class EquipmentProficiencies {
         WeaponTypes.WHIP,
         ArmorTypes.MEDIUM,
         ArmorTypes.LIGHT,
-        ArmorTypes.CLOTH
+        ArmorTypes.CLOTH,
+        ShieldTypes.SMALL
     );
 
     public static final Set<ItemType> rangerAllowed = Set.of(
@@ -76,6 +81,8 @@ public class EquipmentProficiencies {
         WeaponTypes.WHIP,
         ArmorTypes.MEDIUM,
         ArmorTypes.LIGHT,
-        ArmorTypes.CLOTH
+        ArmorTypes.CLOTH,
+        ShieldTypes.MEDIUM,
+        ShieldTypes.SMALL
     );
 }

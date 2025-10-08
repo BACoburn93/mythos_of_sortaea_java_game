@@ -54,6 +54,7 @@ public class AbilityHandler {
         if (chosenTarget == null) return;
 
         EquipmentSlot mainhandSlot = caster.getEquipmentSlots().get("Mainhand");
+        EquipmentSlot offhandSlot = caster.getEquipmentSlots().get("Offhand");
         AttributeTypes attrToAttWith;
         double baseDamage;
         BiFunction<Integer, Integer, Damage> damageFactory;
@@ -62,6 +63,10 @@ public class AbilityHandler {
             baseDamage = weapon.getDamage();
             attrToAttWith = weapon.getWeaponDamageAttr();
             damageFactory = weapon.getBaseDamageType();
+        } else if(offhandSlot != null && offhandSlot.getEquippedItem() instanceof items.equipment.item_types.offhand.Offhand offhandWeapon && (ability != null && ability.isOffhand())) {
+            baseDamage = offhandWeapon.getDamage();
+            attrToAttWith = offhandWeapon.getWeaponDamageAttr();
+            damageFactory = offhandWeapon.getBaseDamageType();
         } else {
             baseDamage = caster.getJobObj().getUnarmedDamage();
             attrToAttWith = caster.getJobObj().getUnarmedDamageAttr();
@@ -69,6 +74,7 @@ public class AbilityHandler {
         }
 
         final double finalDamage;
+
         if (ability != null) {
             double abilityMultiplier = ability.getMultiplier();
             finalDamage = baseDamage * abilityMultiplier;
@@ -204,17 +210,6 @@ public class AbilityHandler {
         weaponAttack(caster, chosenAbility, chosenTarget, random);
     }
 
-    // private void executeAbility(Character caster, CombatActor target, Ability chosenAbility, Random random) {
-    //     for (AbilityExecutor ex : executors) {
-    //         if (ex.supports(chosenAbility)) {
-    //             ex.execute(caster, target, chosenAbility, this, random);
-    //             return;
-    //         }
-    //     }
-
-    //     System.out.println("Ability type not recognized.");
-    // }
-
     private void registerExecutor(Class<? extends Ability> abilityClass, AbilityExecutor executor) {
         executorMap.put(abilityClass, executor);
     }
@@ -231,10 +226,8 @@ public class AbilityHandler {
     }
 
     private void executeAbility(Character caster, CombatActor target, Ability chosenAbility, Random random) {
-        // fast exact match
         AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
 
-        // find most specific registered key if no exact match
         if (ex == null) {
             int best = Integer.MAX_VALUE;
             for (Map.Entry<Class<? extends Ability>, AbilityExecutor> entry : executorMap.entrySet()) {
@@ -247,7 +240,6 @@ public class AbilityHandler {
             }
         }
 
-        // fallback to supports() loop if still null
         if (ex == null) {
             for (AbilityExecutor e : executors) {
                 if (e.supports(chosenAbility)) {

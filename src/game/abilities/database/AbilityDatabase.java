@@ -4,6 +4,7 @@ import java.util.List;
 
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
+import abilities.ability_types.WeaponAbility;
 
 
 public class AbilityDatabase {
@@ -38,7 +39,7 @@ public class AbilityDatabase {
     public static final TargetingAbility METEOR_SWARM = MageAbilities.METEOR_SWARM;
 
     // Warrior Abilities
-    public static final TargetingAbility SHIELD_BASH = WarriorAbilities.SHIELD_BASH;
+    public static final WeaponAbility SHIELD_BASH = WarriorAbilities.SHIELD_BASH;
     public static final TargetingAbility CHARGE = WarriorAbilities.CHARGE;
 
     // Rogue Abilities

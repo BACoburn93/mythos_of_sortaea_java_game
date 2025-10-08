@@ -158,9 +158,9 @@ public class EquipmentHandler {
         if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
             abilitiesToRemove = mainhand.getAbilities();
         }
-        // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
-        //     abilitiesToRemove = offhand.getAbilities();
-        // }
+        else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
+            abilitiesToRemove = offhand.getAbilities();
+        }
         // Add more equipment types as needed
 
         if (abilitiesToRemove != null) {
@@ -177,9 +177,9 @@ public class EquipmentHandler {
         if (eq instanceof items.equipment.item_types.mainhand.Mainhand mainhand) {
             abilitiesToAdd = mainhand.getAbilities();
         }
-        // else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
-        //     abilitiesToAdd = offhand.getAbilities();
-        // }
+        else if (eq instanceof items.equipment.item_types.offhand.Offhand offhand) {
+            abilitiesToAdd = offhand.getAbilities();
+        }
         // Add more equipment types as needed
 
         if (abilitiesToAdd != null) {

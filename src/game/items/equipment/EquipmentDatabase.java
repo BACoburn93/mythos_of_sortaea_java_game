@@ -3,6 +3,7 @@ package items.equipment;
 import items.equipment.item_types.*;
 import items.equipment.item_types.mainhand.Dagger;
 import items.equipment.item_types.mainhand.Longbow;
+import items.equipment.item_types.mainhand.Longsword;
 import items.equipment.item_types.mainhand.Staff;
 import items.equipment.item_types.offhand.LargeShield;
 import items.equipment.item_types.torso.HeavyTorso;
@@ -61,11 +62,25 @@ public class EquipmentDatabase {
                     AbilityDatabase.POISON_DART
                 )
         ));
+        EQUIPMENT_LIST.add(new Longsword(
+                "Excalibur",
+                5000,
+                new Attributes(50.0, 0.0, 0.0, 20.0, 20.0, 20.0, 0.0),
+                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0),
+                List.of(
+                    AbilityDatabase.SLASH
+                ),
+                77.0
+        ));
         EQUIPMENT_LIST.add(new LargeShield(
                 "Tower Shield",
                 200,
                 new Attributes(0.0, 0.0, 0.0, 30.0, 20.0, 0.0, 0.0),
-                new Resistances(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                new Resistances(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+                List.of(
+                    AbilityDatabase.SHIELD_BASH
+                ),
+                8.0
         ));
         EQUIPMENT_LIST.add(new Ring(
                 "Band of Fate",
