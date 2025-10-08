@@ -1,4 +1,4 @@
-package handlers;
+package handlers.ability;
 
 import java.util.Random;
 import java.util.function.BiFunction;
@@ -10,6 +10,8 @@ import utils.SelectionUtils;
 import utils.StringUtils;
 import characters.Character;
 import enemies.Enemy;
+import handlers.EquipmentHandler;
+import handlers.TargetSelector;
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
@@ -18,6 +20,8 @@ import actors.attributes.AttributeTypes;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import items.equipment.equipment_slots.EquipmentSlot;
 import items.equipment.item_types.*;
@@ -28,17 +32,28 @@ public class AbilityHandler {
     private ArrayList<CombatActor> actors;
     private ArrayList<Enemy> enemies;
 
+    private final ArrayList<AbilityExecutor> executors = new ArrayList<>();
+    private final Map<Class<? extends Ability>, AbilityExecutor> executorMap = new HashMap<>();
+
     public AbilityHandler(GameScanner scanner, TargetSelector targetSelector, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
         this.scanner = scanner;
         this.targetSelector = targetSelector;
         this.actors = actors;
         this.enemies = enemies;
+
+        // Used to register different ability executors
+        executors.add(new WeaponAbilityExecutor());
+        executors.add(new TargetingAbilityExecutor());
+
+        // register map entries for specificity -- Prevents parent class from overriding child class
+        registerExecutor(WeaponAbility.class, new WeaponAbilityExecutor());
+        registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
     }
 
-    public void weaponAttack(Character character, WeaponAbility ability, CombatActor chosenTarget, Random random) {
+    public void weaponAttack(Character caster, WeaponAbility ability, CombatActor chosenTarget, Random random) {
         if (chosenTarget == null) return;
 
-        EquipmentSlot mainhandSlot = character.getEquipmentSlots().get("Mainhand");
+        EquipmentSlot mainhandSlot = caster.getEquipmentSlots().get("Mainhand");
         AttributeTypes attrToAttWith;
         double baseDamage;
         BiFunction<Integer, Integer, Damage> damageFactory;
@@ -48,9 +63,9 @@ public class AbilityHandler {
             attrToAttWith = weapon.getWeaponDamageAttr();
             damageFactory = weapon.getBaseDamageType();
         } else {
-            baseDamage = character.getJobObj().getUnarmedDamage();
-            attrToAttWith = character.getJobObj().getUnarmedDamageAttr();
-            damageFactory = character.getJobObj().getBaseDamageType();
+            baseDamage = caster.getJobObj().getUnarmedDamage();
+            attrToAttWith = caster.getJobObj().getUnarmedDamageAttr();
+            damageFactory = caster.getJobObj().getBaseDamageType();
         }
 
         final double finalDamage;
@@ -66,7 +81,7 @@ public class AbilityHandler {
         // when the ability damage array hits
         // Basic Weapon Attack with multiplier from ability if applicable
         if (ability == null || ability.getMultiplier() > 0) {
-            character.attack(
+            caster.attack(
                 chosenTarget,
                 () -> damageFactory.apply((int) finalDamage / 2, (int) finalDamage),
                 attrToAttWith
@@ -75,7 +90,7 @@ public class AbilityHandler {
 
         // Additional Attack from ability bonus
         if(ability != null) {
-            attackTarget(character, chosenTarget, ability, random);
+            attackTarget(caster, chosenTarget, ability, random);
         }
     }
 
@@ -125,11 +140,6 @@ public class AbilityHandler {
         }
     }
 
-    // TODO
-    // For left and right range, I currently check for eWeight / 2 to see if it fits in the range
-    // The logic should target adjacent enemies in instances whether they are within range at all
-    // In order to require that the entire spawnWeight is within range, change eWeight / 2 to eWeight
-    // Further testing may still need to be done to ensure this works as intended
     private void checkLeftRange(int start, Enemy mainTarget, int leftRange, ArrayList<CombatActor> targetsToHit) {
         int leftSpaces = mainTarget.getSpawnWeight() - 1;
         int idx = start - 1;
@@ -170,7 +180,7 @@ public class AbilityHandler {
         }
     }
 
-    private void handleTargetingAbility(Character character, TargetingAbility targetingAbility, CombatActor chosenTarget, Random random) {
+    public void handleTargetingAbility(Character character, TargetingAbility targetingAbility, CombatActor chosenTarget, Random random) {
         int leftRange = targetingAbility.getLeftRange();
         int rightRange = targetingAbility.getRightRange();
 
@@ -190,8 +200,68 @@ public class AbilityHandler {
         }
     }
 
-    public void handleWeaponAbility(Character character, WeaponAbility chosenAbility, CombatActor chosenTarget, Random random) {
-        weaponAttack(character, chosenAbility, chosenTarget, random);
+    public void handleWeaponAbility(Character caster, WeaponAbility chosenAbility, CombatActor chosenTarget, Random random) {
+        weaponAttack(caster, chosenAbility, chosenTarget, random);
+    }
+
+    // private void executeAbility(Character caster, CombatActor target, Ability chosenAbility, Random random) {
+    //     for (AbilityExecutor ex : executors) {
+    //         if (ex.supports(chosenAbility)) {
+    //             ex.execute(caster, target, chosenAbility, this, random);
+    //             return;
+    //         }
+    //     }
+
+    //     System.out.println("Ability type not recognized.");
+    // }
+
+    private void registerExecutor(Class<? extends Ability> abilityClass, AbilityExecutor executor) {
+        executorMap.put(abilityClass, executor);
+    }
+
+    private int classDistance(Class<?> ancestor, Class<?> descendant) {
+        if (!ancestor.isAssignableFrom(descendant)) return Integer.MAX_VALUE;
+        int dist = 0;
+        Class<?> cur = descendant;
+        while (cur != null && cur != ancestor) {
+            cur = cur.getSuperclass();
+            dist++;
+        }
+        return dist;
+    }
+
+    private void executeAbility(Character caster, CombatActor target, Ability chosenAbility, Random random) {
+        // fast exact match
+        AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
+
+        // find most specific registered key if no exact match
+        if (ex == null) {
+            int best = Integer.MAX_VALUE;
+            for (Map.Entry<Class<? extends Ability>, AbilityExecutor> entry : executorMap.entrySet()) {
+                Class<? extends Ability> key = entry.getKey();
+                int d = classDistance(key, chosenAbility.getClass());
+                if (d < best) {
+                    best = d;
+                    ex = entry.getValue();
+                }
+            }
+        }
+
+        // fallback to supports() loop if still null
+        if (ex == null) {
+            for (AbilityExecutor e : executors) {
+                if (e.supports(chosenAbility)) {
+                    ex = e;
+                    break;
+                }
+            }
+        }
+
+        if (ex != null) {
+            ex.execute(caster, target, chosenAbility, this, random);
+        } else {
+            System.out.println("Ability type not recognized.");
+        }
     }
 
     public void handleUseAbility(Character character, Ability chosenAbility) {
@@ -217,13 +287,8 @@ public class AbilityHandler {
                 character.spendMana(chosenAbility);
                 character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
 
-                if (chosenAbility instanceof WeaponAbility weaponAbility) {
-                    handleWeaponAbility(character, weaponAbility, chosenTarget, random);
-                } else if (chosenAbility instanceof TargetingAbility targetingAbility) {
-                    handleTargetingAbility(character, targetingAbility, chosenTarget, random);
-                } else {
-                    System.out.println("Ability type not recognized.");
-                }
+                // Use this to handle different ability types
+                executeAbility(character, chosenTarget, chosenAbility, random);
             } else {
                 GeneralUIStrings.handleInvalidAction();
             }
