@@ -55,9 +55,9 @@ public class AbilityHandler {
     private static class WeaponStats {
         final double baseDamage;
         final AttributeTypes attrToAttWith;
-        final java.util.function.BiFunction<Integer, Integer, abilities.damages.Damage> damageFactory;
+        final BiFunction<Integer, Integer, Damage> damageFactory;
 
-        WeaponStats(double baseDamage, AttributeTypes attrToAttWith, java.util.function.BiFunction<Integer, Integer, abilities.damages.Damage> damageFactory) {
+        WeaponStats(double baseDamage, AttributeTypes attrToAttWith, BiFunction<Integer, Integer, Damage> damageFactory) {
             this.baseDamage = baseDamage;
             this.attrToAttWith = attrToAttWith;
             this.damageFactory = damageFactory;
@@ -98,11 +98,7 @@ public class AbilityHandler {
         } else {
             finalDamage = baseDamage;
         }
-
-        // TODO - Consider modifying this so that the attack doesn't log the ability as an Attack
-        // Also find a way to not log the hits separately when the attack hits and then after 
-        // when the ability damage array hits
-        // Basic Weapon Attack with multiplier from ability if applicable
+        // Damage dealt from the weapon itself, modified by ability multiplier
         if (ability == null || ability.getMultiplier() > 0) {
             caster.attack(
                 chosenTarget,
@@ -111,7 +107,7 @@ public class AbilityHandler {
             );
         }
 
-        // Additional Attack from ability bonus
+        // Damage dealt from the ability itself
         if(ability != null) {
             attackTarget(caster, chosenTarget, ability, random);
         }
