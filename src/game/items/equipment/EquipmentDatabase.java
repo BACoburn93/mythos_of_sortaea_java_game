@@ -80,7 +80,7 @@ public class EquipmentDatabase {
                 List.of(
                     AbilityDatabase.SHIELD_BASH
                 ),
-                8.0
+                3.0
         ));
         EQUIPMENT_LIST.add(new Ring(
                 "Band of Fate",

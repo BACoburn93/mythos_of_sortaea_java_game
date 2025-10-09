@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import items.equipment.equipment_slots.EquipmentSlot;
 import items.equipment.item_types.*;
+import items.equipment.interfaces.WeaponDamageProvider;
 
 public class AbilityHandler {
     private GameScanner scanner;
@@ -50,28 +50,45 @@ public class AbilityHandler {
         registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
     }
 
+    // - Weapon Handling -
+    // Helper class to hold weapon stats
+    private static class WeaponStats {
+        final double baseDamage;
+        final AttributeTypes attrToAttWith;
+        final java.util.function.BiFunction<Integer, Integer, abilities.damages.Damage> damageFactory;
+
+        WeaponStats(double baseDamage, AttributeTypes attrToAttWith, java.util.function.BiFunction<Integer, Integer, abilities.damages.Damage> damageFactory) {
+            this.baseDamage = baseDamage;
+            this.attrToAttWith = attrToAttWith;
+            this.damageFactory = damageFactory;
+        }
+    }
+
+    // Resolves the weapon stats based on whether the ability is offhand or not
+    private WeaponStats resolveWeaponStats(Character caster, WeaponAbility ability) {
+        boolean useOffhand = ability != null && ability.isOffhand();
+        String slotKey = useOffhand ? "Offhand" : "Mainhand";
+        items.equipment.equipment_slots.EquipmentSlot slot = caster.getEquipmentSlots().get(slotKey);
+
+        if (slot != null && slot.getEquippedItem() instanceof WeaponDamageProvider wp) {
+            return new WeaponStats(wp.getDamage(), wp.getWeaponDamageAttr(), wp.getBaseDamageType());
+        }
+
+        return new WeaponStats(
+            caster.getJobObj().getUnarmedDamage(),
+            caster.getJobObj().getUnarmedDamageAttr(),
+            caster.getJobObj().getBaseDamageType()
+        );
+    }
+
+    // Handles a weapon attack, optionally with a weapon ability
     public void weaponAttack(Character caster, WeaponAbility ability, CombatActor chosenTarget, Random random) {
         if (chosenTarget == null) return;
 
-        EquipmentSlot mainhandSlot = caster.getEquipmentSlots().get("Mainhand");
-        EquipmentSlot offhandSlot = caster.getEquipmentSlots().get("Offhand");
-        AttributeTypes attrToAttWith;
-        double baseDamage;
-        BiFunction<Integer, Integer, Damage> damageFactory;
-
-        if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof items.equipment.item_types.mainhand.Mainhand weapon) {
-            baseDamage = weapon.getDamage();
-            attrToAttWith = weapon.getWeaponDamageAttr();
-            damageFactory = weapon.getBaseDamageType();
-        } else if(offhandSlot != null && offhandSlot.getEquippedItem() instanceof items.equipment.item_types.offhand.Offhand offhandWeapon && (ability != null && ability.isOffhand())) {
-            baseDamage = offhandWeapon.getDamage();
-            attrToAttWith = offhandWeapon.getWeaponDamageAttr();
-            damageFactory = offhandWeapon.getBaseDamageType();
-        } else {
-            baseDamage = caster.getJobObj().getUnarmedDamage();
-            attrToAttWith = caster.getJobObj().getUnarmedDamageAttr();
-            damageFactory = caster.getJobObj().getBaseDamageType();
-        }
+        WeaponStats stats = resolveWeaponStats(caster, ability);
+        double baseDamage = stats.baseDamage;
+        AttributeTypes attrToAttWith = stats.attrToAttWith;
+        BiFunction<Integer,Integer,Damage> damageFactory = stats.damageFactory;
 
         final double finalDamage;
 
@@ -100,6 +117,8 @@ public class AbilityHandler {
         }
     }
 
+    // - Ability Handling -
+    // Handles the attack logic and logging
     public void handleAttackAction(Character character) {
         CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
 

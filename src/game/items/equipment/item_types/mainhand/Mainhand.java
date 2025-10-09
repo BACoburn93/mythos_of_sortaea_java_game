@@ -5,6 +5,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
+import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
 import abilities.Ability;
 import abilities.damages.Damage;
@@ -13,7 +14,7 @@ import abilities.damages.DamageTypeProvider;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public abstract class Mainhand extends Equipment implements DamageTypeProvider {
+public abstract class Mainhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider {
     private boolean twoHanded;
     private double damage;
     private List<Ability> abilities;

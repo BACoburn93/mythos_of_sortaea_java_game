@@ -11,9 +11,10 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
+import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
 
-public abstract class Offhand extends Equipment implements DamageTypeProvider {
+public abstract class Offhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider {
     private List<Ability> abilities;
     private double damage;
 
