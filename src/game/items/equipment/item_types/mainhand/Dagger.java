@@ -53,4 +53,5 @@ public class Dagger extends Mainhand {
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalPiercingDamage(min, max);
     }
+
 }

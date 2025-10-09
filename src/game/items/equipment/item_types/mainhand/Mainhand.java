@@ -5,6 +5,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
+import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
 import abilities.Ability;
@@ -14,7 +15,7 @@ import abilities.damages.DamageTypeProvider;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public abstract class Mainhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider {
+public abstract class Mainhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider, MutableWeaponDamage {
     private boolean twoHanded;
     private double damage;
     private List<Ability> abilities;
@@ -52,4 +53,9 @@ public abstract class Mainhand extends Equipment implements DamageTypeProvider, 
 
     @Override
     public abstract BiFunction<Integer, Integer, Damage> getBaseDamageType();
+
+    @Override
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
 }

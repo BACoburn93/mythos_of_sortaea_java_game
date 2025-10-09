@@ -31,6 +31,10 @@ public class Staff extends Mainhand {
         super(name, goldValue, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), 6.0);
     }
 
+    public Staff() {
+        this("Staff", 0, new Attributes(), new Resistances());
+    }
+
     public AttributeTypes getWeaponDamageAttr() {
         return AttributeTypes.KNOWLEDGE; 
     }

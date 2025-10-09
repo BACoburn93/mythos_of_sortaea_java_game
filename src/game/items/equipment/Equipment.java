@@ -37,24 +37,48 @@ public abstract class Equipment implements Comparator<Equipment> {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getGoldValue() {
         return value;
+    }
+
+    public void setGoldValue(int value) {
+        this.value = value;
     }
 
     public EquipmentTypes getEquipmentType() {
         return equipmentType;
     }
 
+    public void setEquipmentType(EquipmentTypes equipmentType) {
+        this.equipmentType = equipmentType;
+    }
+
     public ItemType getItemType() {
         return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
     }
 
     public Attributes getAttributes() {
         return attributes;
     }
 
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
+    }
+
     public Resistances getResistances() {
         return resistances;
+    }
+
+    public void setResistances(Resistances resistances) {
+        this.resistances = resistances;
     }
 
     protected static List<Ability> combineWithAbilities(Ability baseAbility, List<Ability> abilities) {
