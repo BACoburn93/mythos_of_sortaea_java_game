@@ -1,8 +1,8 @@
 package enemies.modifiers;
 
 import enemies.Enemy;
+import utils.Modifier;
 
-public interface Suffix {
-    void apply(Enemy enemy);
-    String getName();
+public interface Suffix extends Modifier<Enemy> {
+    
 }
