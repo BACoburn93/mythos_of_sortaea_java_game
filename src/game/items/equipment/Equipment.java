@@ -27,8 +27,6 @@ public abstract class Equipment implements Comparator<Equipment> {
         return new Resistances(0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
-    // name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances
-
     protected Equipment(String name,
                         double value,
                         EquipmentTypes equipmentType,
@@ -61,6 +59,10 @@ public abstract class Equipment implements Comparator<Equipment> {
     public Equipment(String name, int value, EquipmentTypes equipmentType,
                      Attributes attributes, Resistances resistances) {
         this(name, value, equipmentType, null, attributes, resistances);
+    }
+
+    protected Equipment(String name, double value, EquipmentTypes equipmentType) {
+        this(name, value, equipmentType, null, null, null, null);
     }
 
     public String getName() {

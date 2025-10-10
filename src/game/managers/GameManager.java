@@ -87,7 +87,7 @@ public class GameManager {
 
         List<Equipment> shared = new ArrayList<>();
         String[] keys = {
-            EquipmentKey.STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWERSHIELD.key(),
+            EquipmentKey.LESSERSTAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWERSHIELD.key(),
             EquipmentKey.LONGSWORD.key(), EquipmentKey.LONGBOW.key(), EquipmentKey.PLATEARMOR.key(),
             EquipmentKey.LEATHERARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
         };

@@ -48,71 +48,71 @@ public class EquipmentDatabase {
         EquipmentFactory factory = FactoryRegistry.getEquipmentFactory();
 
         factory.registerPrototype(
-                "Staff",
-                EquipmentRegistry.get(EquipmentKey.STAFF.key()),
-                STAFF_PREFIX_POOL, 0.35,
-                STAFF_SUFFIX_POOL, 0.55
+                EquipmentKey.LESSERSTAFF.key(),
+                EquipmentRegistry.get(EquipmentKey.LESSERSTAFF.key()),
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "Dagger",
+                EquipmentKey.DAGGER.key(),
                 EquipmentRegistry.get(EquipmentKey.DAGGER.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "TowerShield",
+                EquipmentKey.TOWERSHIELD.key(),
                 EquipmentRegistry.get(EquipmentKey.TOWERSHIELD.key()),
-                SHIELD_PREFIX_POOL, 0.10,
-                SHIELD_SUFFIX_POOL, 0.25
+                SHIELD_PREFIX_POOL, 0.5,
+                SHIELD_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "Longsword",
+                EquipmentKey.LONGSWORD.key(),
                 EquipmentRegistry.get(EquipmentKey.LONGSWORD.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "Longbow",
+                EquipmentKey.LONGBOW.key(),
                 EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "PlateArmor",
+                EquipmentKey.PLATEARMOR.key(),
                 EquipmentRegistry.get(EquipmentKey.PLATEARMOR.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "LeatherArmor",
+                EquipmentKey.LEATHERARMOR.key(),
                 EquipmentRegistry.get(EquipmentKey.LEATHERARMOR.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "Ring",
+                EquipmentKey.RING.key(),
                 EquipmentRegistry.get(EquipmentKey.RING.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                "Amulet",
+                EquipmentKey.AMULET.key(),
                 EquipmentRegistry.get(EquipmentKey.AMULET.key()),
-                STAFF_PREFIX_POOL, 50.0,
-                STAFF_SUFFIX_POOL, 50.0
+                STAFF_PREFIX_POOL, 0.5,
+                STAFF_SUFFIX_POOL, 0.5
         );
 
         // sample items for quick debugging
-        EQUIPMENT_LIST.add(factory.createByKey("Staff", null, null));
-        EQUIPMENT_LIST.add(factory.createRandomByKey("Dagger", null, null));
+        EQUIPMENT_LIST.add(factory.createByKey(EquipmentKey.LESSERSTAFF.key(), null, null));
+        EQUIPMENT_LIST.add(factory.createRandomByKey(EquipmentKey.DAGGER.key(), null, null));
     }
 
     public static List<Equipment> getEquipmentList() {

@@ -45,6 +45,10 @@ public class Dagger extends Mainhand {
         super(name, value, WeaponTypes.DAGGER, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
     }
 
+    public Dagger(String name, double value) {
+        super(name, value, WeaponTypes.DAGGER, false, null, null, List.of(AbilityDatabase.STAB), 6.0);
+    }
+
     public AttributeTypes getWeaponDamageAttr() {
         return AttributeTypes.AGILITY;
     }

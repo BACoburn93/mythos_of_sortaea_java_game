@@ -3,7 +3,7 @@ package items.equipment;
 import java.util.function.Supplier;
 
 public enum EquipmentKey {
-    STAFF("staff"),
+    LESSERSTAFF("lesserstaff"),
     DAGGER("dagger"),
     TOWERSHIELD("towershield"),
     LONGSWORD("longsword"),
