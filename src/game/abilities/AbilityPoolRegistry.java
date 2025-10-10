@@ -4,7 +4,6 @@ import abilities.database.*;
 
 import characters.jobs.JobTypes;
 
-import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 

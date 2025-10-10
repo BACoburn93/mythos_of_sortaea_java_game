@@ -3,11 +3,8 @@ package actors.types;
 import java.util.Random;
 
 import abilities.Ability;
-import abilities.ability_types.TargetingAbility;
-import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.Actor;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
@@ -197,7 +194,7 @@ public class CombatActor extends Actor {
     }
 
     // public void attack(CombatActor target, String attrDamageBonus) {
-    //     // TODO - Test on Character when implemented
+    //     // to do - Test on Character when implemented
     //     double attrToDamageBonus = 1.0;
 
     //     switch(attrDamageBonus.toLowerCase()) {

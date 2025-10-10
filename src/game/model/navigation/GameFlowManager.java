@@ -158,7 +158,7 @@ public class GameFlowManager {
                 System.out.println("You have entered the Forest region.");
                 break;
             case "desert":
-                // TODO when testing region changing logic
+                // to do when testing region changing logic
                 // currentRegion = new Desert();
                 // System.out.println("You have entered the Desert region.");
                 break;

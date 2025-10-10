@@ -4,7 +4,6 @@ import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.reactions.*;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
@@ -12,7 +11,6 @@ import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
-import enemies.abilities.AbilityPool;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
@@ -564,7 +562,7 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
-    // TODO -- Perk Tree, Subclass, Paragon Path, Epic Destiny 
+    // to do -- Perk Tree, Subclass, Paragon Path, Epic Destiny 
     public void levelUp() {
         this.level++;
         if(this.level % 4 == 0) this.maxActionPoints++;

@@ -31,7 +31,7 @@ public class TargetSelector {
 
         while (true) {
             System.out.println("Available targets:");
-            // TODO - change back to level once debugged
+            // to do - change back to level once debugged
             StringUtils.printOptionsGrid(
                 enemies,
                 e -> e.getName() + 

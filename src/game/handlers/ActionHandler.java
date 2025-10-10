@@ -7,7 +7,6 @@ import handlers.ability.AbilityHandler;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
-import utils.StringUtils;
 import abilities.actions.ActionTypes;
 import actors.types.CombatActor;
 

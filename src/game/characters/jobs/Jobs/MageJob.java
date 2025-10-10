@@ -1,8 +1,6 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
-import abilities.damages.Damage;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;

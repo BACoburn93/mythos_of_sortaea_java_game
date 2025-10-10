@@ -1,9 +1,6 @@
 package characters.jobs.Jobs;
 
 import abilities.AbilityInitializer;
-import abilities.damages.Damage;
-import abilities.damages.DamageTypeProvider;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
@@ -14,7 +11,6 @@ import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
-import java.util.function.BiFunction;
 
 public class RangerJob extends Job {
     public RangerJob() {
