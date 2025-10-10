@@ -49,69 +49,65 @@ public class EquipmentDatabase {
 
         factory.registerPrototype(
                 "Staff",
-                EquipmentRegistry.get("staff"),
-                STAFF_PREFIX_POOL,
-                0.35,
-                STAFF_SUFFIX_POOL,
-                0.55
+                EquipmentRegistry.get(EquipmentKey.STAFF.key()),
+                STAFF_PREFIX_POOL, 0.35,
+                STAFF_SUFFIX_POOL, 0.55
         );
 
         factory.registerPrototype(
                 "Dagger",
-                EquipmentRegistry.get("dagger"),
-                null, 0.0,
-                null, 0.0
+                EquipmentRegistry.get(EquipmentKey.DAGGER.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
-                "LargeShield",
-                EquipmentRegistry.get("largeshield"),
-                SHIELD_PREFIX_POOL,
-                0.10,
-                SHIELD_SUFFIX_POOL,
-                0.25
+                "TowerShield",
+                EquipmentRegistry.get(EquipmentKey.TOWERSHIELD.key()),
+                SHIELD_PREFIX_POOL, 0.10,
+                SHIELD_SUFFIX_POOL, 0.25
         );
 
         factory.registerPrototype(
                 "Longsword",
-                EquipmentRegistry.get("longsword"),
-                null, 0.0,
-                null, 0.0
+                EquipmentRegistry.get(EquipmentKey.LONGSWORD.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
                 "Longbow",
-                EquipmentRegistry.get("longbow"),
-                null, 0.0,
-                null, 0.0
+                EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
-                "HeavyTorso",
-                EquipmentRegistry.get("heavytorso"),
-                null, 0.0,
-                null, 0.0
+                "PlateArmor",
+                EquipmentRegistry.get(EquipmentKey.PLATEARMOR.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
-                "LightTorso",
-                EquipmentRegistry.get("lighttorso"),
-                null, 0.0,
-                null, 0.0
+                "LeatherArmor",
+                EquipmentRegistry.get(EquipmentKey.LEATHERARMOR.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
                 "Ring",
-                EquipmentRegistry.get("ring"),
-                null, 0.0,
-                null, 0.0
+                EquipmentRegistry.get(EquipmentKey.RING.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         factory.registerPrototype(
-                "Neck",
-                EquipmentRegistry.get("neck"),
-                null, 0.0,
-                null, 0.0
+                "Amulet",
+                EquipmentRegistry.get(EquipmentKey.AMULET.key()),
+                STAFF_PREFIX_POOL, 50.0,
+                STAFF_SUFFIX_POOL, 50.0
         );
 
         // sample items for quick debugging

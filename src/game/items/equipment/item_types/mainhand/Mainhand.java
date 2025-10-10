@@ -20,12 +20,12 @@ public abstract class Mainhand extends Equipment implements DamageTypeProvider, 
     private double damage;
     private List<Ability> abilities;
 
-    public Mainhand(String name, int goldValue, ItemType itemType, boolean twoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, goldValue, itemType, twoHanded, attributes, resistances, abilities, 0.0);
+    public Mainhand(String name, double value, ItemType itemType, boolean twoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, value, itemType, twoHanded, attributes, resistances, abilities, 0.0);
     }
 
-    public Mainhand(String name, int goldValue, ItemType itemType, boolean twoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, goldValue, EquipmentTypes.MAINHAND, itemType, attributes, resistances);
+    public Mainhand(String name, double value, ItemType itemType, boolean twoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, value, EquipmentTypes.MAINHAND, itemType, attributes, resistances, abilities);
         this.twoHanded = twoHanded;
         this.damage = damage;
         this.abilities = abilities;

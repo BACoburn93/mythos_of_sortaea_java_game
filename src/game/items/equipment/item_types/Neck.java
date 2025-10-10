@@ -6,8 +6,8 @@ import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 
 public class Neck extends Equipment {
-    public Neck(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, EquipmentTypes.NECK, attributes, resistances);
+    public Neck(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, EquipmentTypes.NECK, attributes, resistances);
     }
 
 }

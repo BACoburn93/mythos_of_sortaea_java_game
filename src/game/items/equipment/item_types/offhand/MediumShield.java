@@ -12,16 +12,16 @@ import items.equipment.item_types.ShieldTypes;
 
 public class MediumShield extends Offhand {
 
-    public MediumShield(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, ShieldTypes.MEDIUM, attributes, resistances);
+    public MediumShield(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, ShieldTypes.MEDIUM, attributes, resistances);
     }
     
-    public MediumShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, goldValue, ShieldTypes.MEDIUM, attributes, resistances, abilities);
+    public MediumShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        super(name, value, ShieldTypes.MEDIUM, attributes, resistances, abilities);
     }
 
-    public MediumShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, goldValue, ShieldTypes.MEDIUM, attributes, resistances, abilities, damage);
+    public MediumShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, value, ShieldTypes.MEDIUM, attributes, resistances, abilities, damage);
     }
 
     @Override

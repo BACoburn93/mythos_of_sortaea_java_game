@@ -27,19 +27,25 @@ public abstract class Equipment implements Comparator<Equipment> {
         return new Resistances(0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
+    // name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances
+
     protected Equipment(String name,
                         double value,
+                        EquipmentTypes equipmentType,
+                        ItemType itemType,
                         Attributes attributes,
                         Resistances resistances,
                         List<Ability> abilities) {
         this.name = name;
         this.value = value;
+        this.equipmentType = equipmentType;
+        this.itemType = itemType;
         this.attributes = (attributes == null) ? defaultAttributes() : attributes;
         this.resistances = (resistances == null) ? defaultResistances() : resistances;
     }
 
-    protected Equipment(String name, double value) {
-        this(name, value, null, null, null);
+    protected Equipment(String name, double value, EquipmentTypes equipmentType, Attributes attributes, Resistances resistances) {
+        this(name, value, equipmentType, null, attributes, resistances, null);
     }
 
     public Equipment(String name, int value, EquipmentTypes equipmentType,

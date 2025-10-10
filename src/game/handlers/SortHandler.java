@@ -191,7 +191,7 @@ public class SortHandler {
     private Comparator<Consumable> getConsumableComparator(ConsumableSortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Consumable::getName);
-            case VALUE -> Comparator.comparingInt(Consumable::getGoldValue);
+            case VALUE -> Comparator.comparingDouble(Consumable::getValue);
             case QUANTITY -> Comparator.comparingInt(Consumable::getQuantity);
             case TYPE -> Comparator.comparing(e -> e.getEffectType().toString());
         };

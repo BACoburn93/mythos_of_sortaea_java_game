@@ -19,20 +19,20 @@ public abstract class Offhand extends Equipment implements DamageTypeProvider, W
     private List<Ability> abilities;
     private double damage;
 
-    public Offhand(String name, int goldValue, ItemType itemType, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, EquipmentTypes.OFFHAND, itemType, attributes, resistances);
+    public Offhand(String name, double value, ItemType itemType, Attributes attributes, Resistances resistances) {
+        super(name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances, null);
         this.abilities = null;
         this.damage = 0;
     }
 
-    public Offhand(String name, int goldValue, ItemType itemType, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, goldValue, EquipmentTypes.OFFHAND, itemType, attributes, resistances);
+    public Offhand(String name, double value, ItemType itemType, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        super(name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances, abilities);
         this.abilities = abilities;
         this.damage = 0;
     }
 
-    public Offhand(String name, int goldValue, ItemType itemType, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, goldValue, EquipmentTypes.OFFHAND, itemType, attributes, resistances);
+    public Offhand(String name, double value, ItemType itemType, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances, abilities);
         this.abilities = abilities;
         this.damage = damage;
     }

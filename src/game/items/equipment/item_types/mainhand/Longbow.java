@@ -12,10 +12,10 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.WeaponTypes;
 
 public class Longbow extends Mainhand {
-    public Longbow(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         super(
             name, 
-            goldValue, 
+            value, 
             WeaponTypes.LONGBOW, 
             true, 
             attributes, 
@@ -25,8 +25,8 @@ public class Longbow extends Mainhand {
         );
     }
 
-    public Longbow(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.LONGBOW, true, attributes, resistances, List.of(AbilityDatabase.SHOOT), 10.0);
+    public Longbow(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, WeaponTypes.LONGBOW, true, attributes, resistances, List.of(AbilityDatabase.SHOOT), 10.0);
     }
 
     @Override

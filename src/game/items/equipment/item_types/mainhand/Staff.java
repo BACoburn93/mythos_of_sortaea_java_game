@@ -14,10 +14,10 @@ import abilities.database.AbilityDatabase;
 
 public class Staff extends Mainhand {
 
-    public Staff(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    public Staff(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         super(
             name, 
-            goldValue, 
+            value, 
             WeaponTypes.STAFF, 
             false, 
             attributes, 
@@ -27,8 +27,8 @@ public class Staff extends Mainhand {
         );
     }
 
-    public Staff(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), 6.0);
+    public Staff(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), 6.0);
     }
 
     public Staff() {

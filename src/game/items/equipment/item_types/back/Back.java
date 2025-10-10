@@ -7,14 +7,7 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.ArmorTypes;
 
 public class Back extends Equipment {
-    public Back(String name, int goldValue, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
-        super(
-                name,
-                goldValue,
-                EquipmentTypes.BACK,
-                itemType,
-                attributes,
-                resistances
-        );
+    public Back(String name, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
+        super(name, value, EquipmentTypes.BACK, itemType, attributes, resistances, null);
     }
 }

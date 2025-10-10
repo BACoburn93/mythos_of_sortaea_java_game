@@ -29,7 +29,7 @@ public final class EquipmentRegistry {
     static {
         // Register suppliers with reasonably complete default prototype constructors.
         // These suppliers should produce a base prototype item (Database may flavor it).
-        SUPPLIERS.put("staff", () -> new Staff(
+        SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
                 "Staff",
                 1000,
                 new Attributes(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0),
@@ -37,7 +37,7 @@ public final class EquipmentRegistry {
                 java.util.List.of(AbilityDatabase.FIREBALL)
         ));
 
-        SUPPLIERS.put("dagger", () -> new Dagger(
+        SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(
                 "Dagger",
                 100,
                 new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
@@ -46,8 +46,8 @@ public final class EquipmentRegistry {
                 25.0
         ));
 
-        SUPPLIERS.put("largeshield", () -> new LargeShield(
-                "Large Shield",
+        SUPPLIERS.put(EquipmentKey.TOWERSHIELD.key(), () -> new LargeShield(
+                "Tower Shield",
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
                 new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
@@ -55,7 +55,7 @@ public final class EquipmentRegistry {
                 3.0
         ));
 
-        SUPPLIERS.put("longsword", () -> new Longsword(
+        SUPPLIERS.put(EquipmentKey.LONGSWORD.key(), () -> new Longsword(
                 "Longsword",
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
@@ -64,7 +64,7 @@ public final class EquipmentRegistry {
                 77.0
         ));
 
-        SUPPLIERS.put("longbow", () -> new Longbow(
+        SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () -> new Longbow(
                 "Longbow",
                 800,
                 new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
@@ -72,33 +72,37 @@ public final class EquipmentRegistry {
                 java.util.List.of(AbilityDatabase.POISON_DART)
         ));
 
-        SUPPLIERS.put("heavytorso", () -> new HeavyTorso(
-                "Heavy Torso",
+        SUPPLIERS.put(EquipmentKey.PLATEARMOR.key(), () -> new HeavyTorso(
+                "Plate Armor",
                 1000,
                 new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
         ));
 
-        SUPPLIERS.put("lighttorso", () -> new LightTorso(
-                "Light Torso",
+        SUPPLIERS.put(EquipmentKey.LEATHERARMOR.key(), () -> new LightTorso(
+                "Leather Armor",
                 200,
                 new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),
                 new Resistances(1,1,1,1,1,1,1,1,1,1,1,1)
         ));
 
-        SUPPLIERS.put("ring", () -> new Ring(
+        SUPPLIERS.put(EquipmentKey.RING.key(), () -> new Ring(
                 "Ring",
                 2000,
                 new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,100.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
         ));
 
-        SUPPLIERS.put("neck", () -> new Neck(
-                "Neck",
+        SUPPLIERS.put(EquipmentKey.AMULET.key(), () -> new Neck(
+                "Amulet",
                 2000,
                 new Attributes(100.0,0.0,0.0,0.0,0.0,0.0,0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
         ));
+    }
+
+    public static Supplier<Equipment> get(EquipmentKey key) {
+        return (key == null) ? null : get(key.key());
     }
 
     public static Supplier<Equipment> get(String key) {

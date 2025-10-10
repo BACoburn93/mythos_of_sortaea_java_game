@@ -2,13 +2,13 @@ package items;
 
 public abstract class Item {
     private String name;
-    private int goldValue;
+    private double value;
     private int quantity;
     private int actionCost;
 
-    public Item(String name, int goldValue, int quantity) {
+    public Item(String name, double value, int quantity) {
         this.name = name;
-        this.goldValue = goldValue;
+        this.value = value;
         this.quantity = quantity;
         this.actionCost = 1;
     }
@@ -17,8 +17,8 @@ public abstract class Item {
         return name;
     }
 
-    public int getGoldValue() {
-        return goldValue;
+    public double getValue() {
+        return value;
     }
 
     public int getQuantity() {

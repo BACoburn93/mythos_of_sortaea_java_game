@@ -6,6 +6,7 @@ import characters.jobs.Jobs.RangerJob;
 import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
 import items.equipment.Equipment;
+import items.equipment.EquipmentKey;
 import utils.FactoryRegistry;
 import utils.GameScanner;
 import utils.InputHandler;
@@ -43,7 +44,12 @@ public class CharacterCreator {
         Set<String> characterNames = new HashSet<>();
 
         List<Equipment> startingEq = new ArrayList<>();
-        String[] keys = {"staff", "dagger", "largeshield", "longsword","longbow","heavytorso","lighttorso","ring","neck"};
+
+        String[] keys = {
+            EquipmentKey.STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWERSHIELD.key(),
+            EquipmentKey.LONGSWORD.key(), EquipmentKey.LONGBOW.key(), EquipmentKey.PLATEARMOR.key(),
+            EquipmentKey.LEATHERARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
+        };
 
         for (int i=0;i<10;i++) {
             String key = keys[new Random().nextInt(keys.length)];

@@ -12,16 +12,16 @@ import items.equipment.item_types.ShieldTypes;
 
 public class SmallShield extends Offhand {
 
-    public SmallShield(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, ShieldTypes.SMALL, attributes, resistances);
+    public SmallShield(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, ShieldTypes.SMALL, attributes, resistances);
     }
 
-    public SmallShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, goldValue, ShieldTypes.SMALL, attributes, resistances, abilities);
+    public SmallShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        super(name, value, ShieldTypes.SMALL, attributes, resistances, abilities);
     }
 
-    public SmallShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, goldValue, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
+    public SmallShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, value, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
     }
 
     @Override

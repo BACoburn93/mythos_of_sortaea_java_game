@@ -7,8 +7,8 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.ArmorTypes;
 
 public class Legs extends Equipment {
-    public Legs(String name, int goldValue, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, EquipmentTypes.LEGS, itemType, attributes, resistances);
+    public Legs(String name, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
+        super(name, value, EquipmentTypes.LEGS, itemType, attributes, resistances, null);
     }
 
 }

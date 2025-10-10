@@ -15,10 +15,10 @@ import items.equipment.item_types.WeaponTypes;
 
 public class Dagger extends Mainhand {
 
-    public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
         super(
             name,
-            goldValue,
+            value,
             WeaponTypes.DAGGER,
             false,
             attributes,
@@ -28,10 +28,10 @@ public class Dagger extends Mainhand {
         );
     }
 
-    public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         super(
             name,
-            goldValue,
+            value,
             WeaponTypes.DAGGER,
             false,
             attributes,
@@ -41,8 +41,8 @@ public class Dagger extends Mainhand {
         );
     }
 
-    public Dagger(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.DAGGER, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
+    public Dagger(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, WeaponTypes.DAGGER, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

@@ -15,10 +15,10 @@ import items.equipment.item_types.WeaponTypes;
 
 public class Longsword extends Mainhand {
     
-    public Longsword(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public Longsword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
         super(
             name,
-            goldValue,
+            value,
             WeaponTypes.LONGSWORD,
             false,
             attributes,
@@ -28,10 +28,10 @@ public class Longsword extends Mainhand {
         );
     }
 
-    public Longsword(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    public Longsword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         super(
             name,
-            goldValue,
+            value,
             WeaponTypes.LONGSWORD,
             false,
             attributes,
@@ -41,8 +41,8 @@ public class Longsword extends Mainhand {
         );
     }
 
-    public Longsword(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, WeaponTypes.LONGSWORD, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
+    public Longsword(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, WeaponTypes.LONGSWORD, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

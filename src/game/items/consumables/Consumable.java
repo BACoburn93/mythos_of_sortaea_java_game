@@ -12,8 +12,8 @@ import actors.resources.ResourceTypes;
 public class Consumable extends Item {
     public ResourceTypes effectType; // healthRestore, manaRestore, attrBoost, etc.
     public int effectValue; // How much the effectType affects the type (if applicable)
-    public Consumable(String name, int goldValue, int quantity, ResourceTypes effectType, int effectValue) {
-        super(name, goldValue, quantity);
+    public Consumable(String name, double value, int quantity, ResourceTypes effectType, int effectValue) {
+        super(name, value, quantity);
         this.effectType = effectType;
         this.effectValue = effectValue;
     }
@@ -47,7 +47,7 @@ public class Consumable extends Item {
 
     public String toString() {
         return  getName() + " | " +
-                "COST: " + getGoldValue() + " GP" + " | " +
+                "COST: " + getValue() + " GP" + " | " +
                 "QTY: " + getQuantity() + " | " +
                 "TYPE: " + effectType + " | " +
                 "VALUE: " + (effectValue < 10000 ? effectValue : "ALL");

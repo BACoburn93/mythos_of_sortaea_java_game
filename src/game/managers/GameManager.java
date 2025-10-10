@@ -23,6 +23,7 @@ import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
 import items.equipment.Equipment;
 import items.equipment.EquipmentDatabase;
+import items.equipment.EquipmentKey;
 
 public class GameManager {
     private final InputHandler inputHandler = new InputHandler();
@@ -70,6 +71,7 @@ public class GameManager {
 
     private void startNewGame(GameScanner gameScanner) {
         GameContainer newGame = new GameContainer(gameScanner);
+        EquipmentDatabase.init();
         System.out.println("Your party is ready:");
         System.out.println(newGame.party.printPartySummary());
 
@@ -84,7 +86,11 @@ public class GameManager {
         Character testRogue = new Character(gameScanner, "Test Rogue", new RogueJob());
 
         List<Equipment> shared = new ArrayList<>();
-        String[] keys = {"staff","dagger","towershield","longsword","longbow","platearmor","leatherarmor","ring","amulet"};
+        String[] keys = {
+            EquipmentKey.STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWERSHIELD.key(),
+            EquipmentKey.LONGSWORD.key(), EquipmentKey.LONGBOW.key(), EquipmentKey.PLATEARMOR.key(),
+            EquipmentKey.LEATHERARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
+        };
 
         for (int i=0;i<10;i++) {
             String key = keys[new Random().nextInt(keys.length)];

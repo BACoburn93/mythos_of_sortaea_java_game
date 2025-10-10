@@ -12,16 +12,16 @@ import items.equipment.item_types.ShieldTypes;
 
 public class LargeShield extends Offhand {
 
-    public LargeShield(String name, int goldValue, Attributes attributes, Resistances resistances) {
-        super(name, goldValue, ShieldTypes.LARGE, attributes, resistances);
+    public LargeShield(String name, double value, Attributes attributes, Resistances resistances) {
+        super(name, value, ShieldTypes.LARGE, attributes, resistances);
     }
 
-    public LargeShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, goldValue, ShieldTypes.LARGE, attributes, resistances, abilities);
+    public LargeShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        super(name, value, ShieldTypes.LARGE, attributes, resistances, abilities);
     }
 
-    public LargeShield(String name, int goldValue, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, goldValue, ShieldTypes.LARGE, attributes, resistances, abilities, damage);
+    public LargeShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, value, ShieldTypes.LARGE, attributes, resistances, abilities, damage);
     }
 
     @Override
