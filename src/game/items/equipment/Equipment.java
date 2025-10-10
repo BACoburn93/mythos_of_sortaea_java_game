@@ -12,11 +12,35 @@ import actors.resistances.Resistances;
 
 public abstract class Equipment implements Comparator<Equipment> {
     private String name;
-    private int value;
+    private double value;
     private EquipmentTypes equipmentType;
     private ItemType itemType;
     private Attributes attributes;
     private Resistances resistances;
+
+        // Helper factories that produce zero/default objects
+    private static Attributes defaultAttributes() {
+        return new Attributes(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    }
+
+    private static Resistances defaultResistances() {
+        return new Resistances(0,0,0,0,0,0,0,0,0,0,0,0);
+    }
+
+    protected Equipment(String name,
+                        double value,
+                        Attributes attributes,
+                        Resistances resistances,
+                        List<Ability> abilities) {
+        this.name = name;
+        this.value = value;
+        this.attributes = (attributes == null) ? defaultAttributes() : attributes;
+        this.resistances = (resistances == null) ? defaultResistances() : resistances;
+    }
+
+    protected Equipment(String name, double value) {
+        this(name, value, null, null, null);
+    }
 
     public Equipment(String name, int value, EquipmentTypes equipmentType,
                      ItemType itemType, Attributes attributes, Resistances resistances) {
@@ -41,11 +65,11 @@ public abstract class Equipment implements Comparator<Equipment> {
         this.name = name;
     }
 
-    public int getGoldValue() {
+    public double getGoldValue() {
         return value;
     }
 
-    public void setGoldValue(int value) {
+    public void setGoldValue(double value) {
         this.value = value;
     }
 
@@ -90,7 +114,6 @@ public abstract class Equipment implements Comparator<Equipment> {
 
     @Override
     public int compare(Equipment o1, Equipment o2) {
-        // You can implement a more meaningful comparison if needed
         return o1.getName().compareToIgnoreCase(o2.getName());
     }
 

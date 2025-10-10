@@ -183,7 +183,7 @@ public class SortHandler {
     private Comparator<Equipment> getEquipmentComparator(EquipmentSortKey sortKey) {
         return switch (sortKey) {
             case NAME -> Comparator.comparing(Equipment::getName);
-            case VALUE -> Comparator.comparingInt(Equipment::getGoldValue); 
+            case VALUE -> Comparator.comparingDouble(Equipment::getGoldValue); 
             case TYPE -> Comparator.comparing(e -> e.getEquipmentType().toString());
         };
     }

@@ -10,31 +10,55 @@ import java.util.function.Supplier;
 import java.util.Random;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.Collections;
 
+/**
+ * Responsible only for creation / RNG / applying flavors.
+ * Prototypes and pools are registered by EquipmentDatabase (using EquipmentRegistry suppliers).
+ */
 
 public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix> {
-    // public static final EquipmentFactory INSTANCE = new EquipmentFactory();
     private Random rng = new Random();
     private final Map<String, Supplier<Equipment>> prototypes = new HashMap<>();
     private final Map<String, List<Weighted<Prefix>>> prefixPools = new HashMap<>();
     private final Map<String, List<Weighted<Suffix>>> suffixPools = new HashMap<>();
-    private final Map<String, Double> prefixApplyChance = new HashMap<>(); 
+    private final Map<String, Double> prefixApplyChance = new HashMap<>();
     private final Map<String, Double> suffixApplyChance = new HashMap<>();
 
-    public EquipmentFactory() {  };
+    public EquipmentFactory() { }
 
-    // normalize key for consistent lookup
+    // public static Weighted so callers (EquipmentDatabase) can build pools easily
+    public static final class Weighted<T> {
+        public final T value;
+        public final double weight;
+        public Weighted(T value, double weight) { this.value = value; this.weight = weight; }
+    }
+
+    // normalize keys used for register/lookup
     private static String normalizeKey(String key) {
         return key == null ? null : key.trim().toLowerCase();
     }
 
-    // small weighted holder
-    public static final class Weighted<T> {
-        final T value;
-        final double weight;
-        Weighted(T value, double weight) { this.value = value; this.weight = weight; }
+    // helpers for tests / debugging
+    public void setSeed(long seed) { this.rng = new Random(seed); }
+    public void setRandom(Random random) { this.rng = (random == null) ? new Random() : random; }
+    public Set<String> getRegisteredKeys() { return Collections.unmodifiableSet(prototypes.keySet()); }
+    public void clearPrototypes() {
+        prototypes.clear();
+        prefixPools.clear();
+        suffixPools.clear();
+        prefixApplyChance.clear();
+        suffixApplyChance.clear();
     }
 
+    @Override
+    public Equipment create(Supplier<Equipment> ctor, Prefix prefix, Suffix suffix) {
+        Equipment item = ctor.get();
+        return FlavorUtils.applyFlavor(item, prefix, suffix);
+    }
+
+    // pick random entry from a weighted pool
     private static <T> T pickWeighted(Random rng, List<Weighted<T>> pool) {
         if (pool == null || pool.isEmpty()) return null;
         double total = 0.0;
@@ -49,38 +73,19 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
         return pool.get(pool.size() - 1).value;
     }
 
-    public void setSeed(long seed) {
-        this.rng = new Random(seed);
-    }
-
-    public void setRandom(Random random) {
-        this.rng = (random == null) ? new Random() : random;
-    }
-
-    @Override
-    public Equipment create(Supplier<Equipment> ctor, Prefix prefix, Suffix suffix) {
-        Equipment item = ctor.get();
-        return FlavorUtils.applyFlavor(item, prefix, suffix);
-    }
-
-    // create with random prefix/suffix chosen from lists
+    // create using explicit random lists (keeps previous convenience)
     public Equipment createRandomByKey(String key, List<Prefix> prefixes, List<Suffix> suffixes) {
         Prefix p = (prefixes == null || prefixes.isEmpty()) ? null : prefixes.get(rng.nextInt(prefixes.size()));
         Suffix s = (suffixes == null || suffixes.isEmpty()) ? null : suffixes.get(rng.nextInt(suffixes.size()));
         return createByKey(key, p, s);
     }
 
-    // allow registering additional prototypes (e.g. from EquipmentDatabase)
+    // register a simple prototype (no pools)
     public void registerPrototype(String key, Supplier<Equipment> ctor) {
         prototypes.put(normalizeKey(key), ctor);
     }
 
-    // convenience that uses the Factory default random selection behavior
-    public Equipment createRandom(Supplier<Equipment> ctor, List<Prefix> prefixes, List<Suffix> suffixes) {
-        return Factory.super.createRandom(ctor, prefixes, suffixes, rng);
-    }
-
-    // register prototype with optional prefix/suffix pools and overall chances
+    // register prototype together with pools and per-prototype apply chances
     public void registerPrototype(String key, Supplier<Equipment> ctor,
                                   List<Weighted<Prefix>> prefixes, double prefixChance,
                                   List<Weighted<Suffix>> suffixes, double suffixChance) {
@@ -92,7 +97,7 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
         suffixApplyChance.put(k, suffixChance);
     }
 
-    // create by key uses prototype pools and chances
+    // create by key uses registered supplier and rolls pools/chances
     public Equipment createByKey(String key, Prefix overridePrefix, Suffix overrideSuffix) {
         String k = normalizeKey(key);
         Supplier<Equipment> ctor = prototypes.get(k);
@@ -101,17 +106,16 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
         Prefix chosenP = overridePrefix;
         Suffix chosenS = overrideSuffix;
 
-        // if no override, roll using pools / chances registered for this key
         if (chosenP == null) {
-            Double chance = prefixApplyChance.getOrDefault(key, 0.0);
+            Double chance = prefixApplyChance.getOrDefault(k, 0.0);
             if (rng.nextDouble() < chance) {
-                chosenP = pickWeighted(rng, prefixPools.get(key));
+                chosenP = pickWeighted(rng, prefixPools.get(k));
             }
         }
         if (chosenS == null) {
-            Double chance = suffixApplyChance.getOrDefault(key, 0.0);
+            Double chance = suffixApplyChance.getOrDefault(k, 0.0);
             if (rng.nextDouble() < chance) {
-                chosenS = pickWeighted(rng, suffixPools.get(key));
+                chosenS = pickWeighted(rng, suffixPools.get(k));
             }
         }
 
