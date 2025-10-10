@@ -10,6 +10,7 @@ import items.equipment.item_types.torso.HeavyTorso;
 import items.equipment.item_types.torso.LightTorso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import abilities.database.AbilityDatabase;
@@ -18,9 +19,25 @@ import actors.resistances.Resistances;
 
 import items.equipment.modifiers.prefixes.*;
 import items.equipment.modifiers.suffixes.*;
+import items.equipment.modifiers.Prefix;
+import items.equipment.modifiers.Suffix;
+import utils.FactoryRegistry;
 
 public class EquipmentDatabase {
     private static final List<Equipment> EQUIPMENT_LIST = new ArrayList<>();
+
+    // Reusable pools you can reference when registering prototypes (easy to reuse/change for tests)
+    private static final List<EquipmentFactory.Weighted<Prefix>> PREFIX_POOL = Arrays.asList(
+        new EquipmentFactory.Weighted<Prefix>(new Ancient(), 0.25),
+        new EquipmentFactory.Weighted<Prefix>(new Enflamed(), 0.25)
+    );
+
+    private static final List<EquipmentFactory.Weighted<Suffix>> SUFFIX_POOL = Arrays.asList(
+        new EquipmentFactory.Weighted<Suffix>(new OfTheNorthWind(), 0.25),
+        new EquipmentFactory.Weighted<Suffix>(new OfFortitude(), 0.25)
+    );
+
+
     static {
         init();
     }
@@ -30,134 +47,128 @@ public class EquipmentDatabase {
         if (!EQUIPMENT_LIST.isEmpty()) return;
 
         // deterministic tests: optional
-        EquipmentFactory.INSTANCE.setSeed(42L);
+        FactoryRegistry.getEquipmentFactory().setSeed(42L);
 
         // Register prototypes and pools (example: Staff has pools; others use no pools for now)
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Staff",
-        () -> new Staff(
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Staff",
+            () -> new Staff(
                 "Staff",
                 1000,
                 new Attributes(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
                 List.of(AbilityDatabase.FIREBALL)
-        ),
-        List.of(
-                new EquipmentFactory.Weighted<>(new Ancient(), 0.25)
-        ),
-        0.35,
-        List.of(
-                new EquipmentFactory.Weighted<>(new OfTheNorth(), 0.5)
-        ),
-        0.55 
+            ),
+            PREFIX_POOL,
+            0.35,
+            SUFFIX_POOL,
+            0.55
         );
 
-        // Register other prototypes (no pools shown; add pools as needed)
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Dagger",
-        () -> new Dagger(
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Dagger",
+            () -> new Dagger(
                 "Dagger",
                 100,
                 new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
                 List.of(),
                 25.0
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "LargeShield",
-        () -> new LargeShield(
-                "Large Shield",
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "TowerShield",
+            () -> new LargeShield(
+                "Tower Shield",
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
                 new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
                 List.of(AbilityDatabase.SHIELD_BASH),
                 3.0
-        ),
-        // example: shields get prefixes rarely, but can get suffixes
-        List.of(new EquipmentFactory.Weighted<>(new Ancient(), 1.0)),
-        0.10,
-        List.of(new EquipmentFactory.Weighted<>(new OfTheNorth(), 1.0)),
-        0.25
+            ),
+            PREFIX_POOL,
+            0.10,
+            SUFFIX_POOL,
+            0.25
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Longsword",
-        () -> new Longsword(
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Longsword",
+            () -> new Longsword(
                 "Longsword",
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
                 List.of(AbilityDatabase.SLASH),
                 77.0
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Longbow",
-        () -> new Longbow(
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Longbow",
+            () -> new Longbow(
                 "Longbow",
                 800,
                 new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
                 List.of(AbilityDatabase.POISON_DART)
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "HeavyTorso",
-        () -> new HeavyTorso(
-                "Heavy Torso",
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "PlateArmor",
+            () -> new HeavyTorso(
+                "Plate Armor",
                 1000,
                 new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "LightTorso",
-        () -> new LightTorso(
-                "Light Torso",
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "LeatherArmor",
+            () -> new LightTorso(
+                "Leather Armor",
                 200,
                 new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),
                 new Resistances(1,1,1,1,1,1,1,1,1,1,1,1)
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Ring",
-        () -> new Ring(
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Ring",
+            () -> new Ring(
                 "Ring",
                 2000,
                 new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,100.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
-        EquipmentFactory.INSTANCE.registerPrototype(
-        "Neck",
-        () -> new Neck(
-                "Neck",
+        FactoryRegistry.getEquipmentFactory().registerPrototype(
+            "Amulet",
+            () -> new Neck(
+                "Amulet",
                 2000,
                 new Attributes(100.0,0.0,0.0,0.0,0.0,0.0,0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
-        ),
-        null, 0.0, null, 0.0
+            ),
+            PREFIX_POOL, 30.0, SUFFIX_POOL, 30.0
         );
 
         // optionally create some sample items for quick testing
-        EQUIPMENT_LIST.add(EquipmentFactory.INSTANCE.createByKey("Staff", null, null));
-        EQUIPMENT_LIST.add(EquipmentFactory.INSTANCE.createRandomByKey("Dagger", null, null));
+        EQUIPMENT_LIST.add(FactoryRegistry.getEquipmentFactory().createByKey("Staff", null, null));
+        EQUIPMENT_LIST.add(FactoryRegistry.getEquipmentFactory().createRandomByKey("Dagger", null, null));
     }
 
     public static List<Equipment> getEquipmentList() {
-            return EQUIPMENT_LIST;
+        return EQUIPMENT_LIST;
     }
 }

@@ -5,6 +5,8 @@ import characters.jobs.Jobs.MageJob;
 import characters.jobs.Jobs.RangerJob;
 import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
+import items.equipment.Equipment;
+import utils.FactoryRegistry;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;
@@ -12,6 +14,7 @@ import utils.StringUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class CharacterCreator {
@@ -39,13 +42,21 @@ public class CharacterCreator {
         ArrayList<Character> characterParty = new ArrayList<>();
         Set<String> characterNames = new HashSet<>();
 
+        List<Equipment> startingEq = new ArrayList<>();
+        String[] keys = {"staff", "dagger", "largeshield", "longsword","longbow","heavytorso","lighttorso","ring","neck"};
+
+        for (int i=0;i<10;i++) {
+            String key = keys[new Random().nextInt(keys.length)];
+            startingEq.add(FactoryRegistry.getEquipmentFactory().createRandomByKey(key, null, null));
+        }
+
         for (int i = 1; i <= numCharacters; i++) {
             String name = getUniqueCharacterName(i, characterNames);
             Job job = chooseJobForCharacter(name);
             characterParty.add(new Character(gameScanner, name, job));
         }
 
-        return new Party(characterParty);
+        return new Party(characterParty, startingEq);
     }
 
     private int getNumCharacters() {

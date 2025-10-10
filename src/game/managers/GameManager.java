@@ -5,11 +5,14 @@ import handlers.*;
 import model.navigation.GameFlowManager;
 import model.navigation.regions.Forest;
 import ui.MenuUIStrings;
+import utils.FactoryRegistry;
 import utils.GameScanner;
 import utils.InputHandler;
 import utils.StringUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import actors.types.CombatActor;
 import characters.Character;
@@ -18,6 +21,7 @@ import characters.jobs.Jobs.MageJob;
 import characters.jobs.Jobs.RangerJob;
 import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
+import items.equipment.Equipment;
 import items.equipment.EquipmentDatabase;
 
 public class GameManager {
@@ -74,17 +78,18 @@ public class GameManager {
     }
 
     private void runTestCombat() {
-        // Create test game state
-        // GameContainer testGame = new GameContainer(gameScanner);
-
-        // Create enemies and actors
-        // ArrayList<enemies.Enemy> testEnemies = EnemyDatabase.getDefaultEnemies();
-        // ArrayList<CombatActor> allActors = new ArrayList<>(testGame.party.characters);
-
         Character testMage = new Character(gameScanner, "Test Mage", new MageJob());
         Character testWarrior = new Character(gameScanner, "Test Warrior", new WarriorJob());
         Character testRanger = new Character(gameScanner, "Test Ranger", new RangerJob());
         Character testRogue = new Character(gameScanner, "Test Rogue", new RogueJob());
+
+        List<Equipment> shared = new ArrayList<>();
+        String[] keys = {"staff","dagger","towershield","longsword","longbow","platearmor","leatherarmor","ring","amulet"};
+
+        for (int i=0;i<10;i++) {
+            String key = keys[new Random().nextInt(keys.length)];
+            shared.add(FactoryRegistry.getEquipmentFactory().createRandomByKey(key, null, null));
+        }
         
         ArrayList<Character> testCharacters = new ArrayList<>();
             testCharacters.add(testMage);
@@ -92,7 +97,7 @@ public class GameManager {
             testCharacters.add(testRanger);
             testCharacters.add(testRogue);
 
-        Party party = new Party(testCharacters);
+        Party party = new Party(testCharacters, shared);
         Forest currentRegion = new Forest();
 
         ArrayList<enemies.Enemy> enemies = currentRegion.generateEnemies();

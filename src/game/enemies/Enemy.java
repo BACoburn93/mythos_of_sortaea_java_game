@@ -110,18 +110,18 @@ public class Enemy extends CombatActor {
     }
 
     public void chooseEnemyAbility(Party targetsToChooseFrom) {
-        Party validTargets = targetsToChooseFrom.validTargetsInParty();
+        ArrayList<Character> validTargets = targetsToChooseFrom.validTargetsInParty();
 
         boolean abilityChosen = false;
         Random random = new Random();
 
         double abilityRoll = random.nextDouble(1, 100);
-        int targetRoll = random.nextInt(0, validTargets.partySize);
+        int targetRoll = random.nextInt(0, validTargets.size());
 
         for (Ability ability : this.abilities) {
             if (abilityRoll < (double) 100 / this.abilities.size() &&
                     this.getManaValues().getValue() >= ability.getManaCost()) {
-                Character target = validTargets.characters.get(targetRoll);
+                Character target = validTargets.get(targetRoll);
 
                 boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
 

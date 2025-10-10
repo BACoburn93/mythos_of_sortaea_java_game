@@ -1,15 +1,13 @@
-package items.equipment.modifiers.suffixes;
+package items.equipment.modifiers.prefixes;
 
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.Suffix;
+import items.equipment.modifiers.Prefix;
 
-public class OfTheNorth implements Suffix {
-    
-    @Override
+public class Enflamed implements Prefix {
     public void apply(Equipment target) {
-        target.setGoldValue(target.getGoldValue() * 2);
+        target.setGoldValue(target.getGoldValue() * 3);
 
         if (target instanceof WeaponDamageProvider wp) {
             double newDamage = wp.getDamage() * 1.5;
@@ -18,16 +16,15 @@ public class OfTheNorth implements Suffix {
             }
         }
 
-        target.getResistances().addIce(1.0);
+        target.getResistances().addIce(3.0);
         target.getResistances().addFire(1.0);
 
-        target.getResistances().multiplyIce(5.0);
-        target.getResistances().multiplyFire(5.0);
+        target.getResistances().multiplyIce(4.0);
+        target.getResistances().multiplyFire(6.0);
     }
 
     @Override
     public String getName() {
-        return " of the North";
+        return "Enflamed ";
     }
-
 }

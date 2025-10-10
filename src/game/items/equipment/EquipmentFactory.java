@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix> {
-    public static final EquipmentFactory INSTANCE = new EquipmentFactory();
+    // public static final EquipmentFactory INSTANCE = new EquipmentFactory();
     private Random rng = new Random();
     private final Map<String, Supplier<Equipment>> prototypes = new HashMap<>();
     private final Map<String, List<Weighted<Prefix>>> prefixPools = new HashMap<>();
@@ -21,8 +21,15 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
     private final Map<String, Double> prefixApplyChance = new HashMap<>(); 
     private final Map<String, Double> suffixApplyChance = new HashMap<>();
 
+    public EquipmentFactory() {  };
+
+    // normalize key for consistent lookup
+    private static String normalizeKey(String key) {
+        return key == null ? null : key.trim().toLowerCase();
+    }
+
     // small weighted holder
-    static final class Weighted<T> {
+    public static final class Weighted<T> {
         final T value;
         final double weight;
         Weighted(T value, double weight) { this.value = value; this.weight = weight; }
@@ -65,7 +72,7 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
 
     // allow registering additional prototypes (e.g. from EquipmentDatabase)
     public void registerPrototype(String key, Supplier<Equipment> ctor) {
-        prototypes.put(key, ctor);
+        prototypes.put(normalizeKey(key), ctor);
     }
 
     // convenience that uses the Factory default random selection behavior
@@ -77,17 +84,20 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
     public void registerPrototype(String key, Supplier<Equipment> ctor,
                                   List<Weighted<Prefix>> prefixes, double prefixChance,
                                   List<Weighted<Suffix>> suffixes, double suffixChance) {
-        prototypes.put(key, ctor);
-        if (prefixes != null) prefixPools.put(key, prefixes);
-        if (suffixes != null) suffixPools.put(key, suffixes);
-        prefixApplyChance.put(key, prefixChance);
-        suffixApplyChance.put(key, suffixChance);
+        String k = normalizeKey(key);
+        prototypes.put(k, ctor);
+        if (prefixes != null) prefixPools.put(k, prefixes);
+        if (suffixes != null) suffixPools.put(k, suffixes);
+        prefixApplyChance.put(k, prefixChance);
+        suffixApplyChance.put(k, suffixChance);
     }
 
     // create by key uses prototype pools and chances
     public Equipment createByKey(String key, Prefix overridePrefix, Suffix overrideSuffix) {
-        Supplier<Equipment> ctor = prototypes.get(key);
+        String k = normalizeKey(key);
+        Supplier<Equipment> ctor = prototypes.get(k);
         if (ctor == null) throw new IllegalArgumentException("No prototype registered for key: " + key);
+
         Prefix chosenP = overridePrefix;
         Suffix chosenS = overrideSuffix;
 

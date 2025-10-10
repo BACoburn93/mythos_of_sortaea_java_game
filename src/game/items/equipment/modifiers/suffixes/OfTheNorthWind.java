@@ -1,14 +1,14 @@
-package items.equipment.modifiers.prefixes;
+package items.equipment.modifiers.suffixes;
+
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.Prefix;
+import items.equipment.modifiers.Suffix;
 
-public class Ancient implements Prefix {
-   
+public class OfTheNorthWind implements Suffix {
     @Override
     public void apply(Equipment target) {
-        target.setGoldValue(target.getGoldValue() * 5);
+        target.setGoldValue(target.getGoldValue() * 3);
 
         if (target instanceof WeaponDamageProvider wp) {
             double newDamage = wp.getDamage() * 1.5;
@@ -17,12 +17,16 @@ public class Ancient implements Prefix {
             }
         }
 
-        target.getAttributes().multiplyStrength(10);
+        target.getResistances().addIce(1.0);
+        target.getResistances().addFire(3.0);
 
+        target.getResistances().multiplyIce(3.0);
+        target.getResistances().multiplyFire(5.0);
     }
 
     @Override
     public String getName() {
-        return "Ancient ";
+        return " of the North Wind";
     }
+
 }
