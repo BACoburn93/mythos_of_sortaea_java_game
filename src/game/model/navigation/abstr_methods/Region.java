@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import actors.types.CombatActor;
 import characters.Party;
@@ -29,20 +30,23 @@ public abstract class Region {
         return name;
     }
 
-    public String getRandomEnemyType() {
-        double totalWeight = enemyWeights.values().stream().mapToDouble(Double::doubleValue).sum();
-        double roll = rng.nextDouble() * totalWeight;
-        double cumulative = 0.0;
+    // pick a random enemy type from those whose spawn weight fits the remaining budget
+    public String getRandomEnemyTypeForBudget(int maxAllowedWeight) {
+        Map<String, Double> candidates = enemyWeights.entrySet().stream()
+            .filter(e -> EnemyFactory.getSpawnWeightForType(e.getKey()) <= maxAllowedWeight)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        // Iterate through the map to find the enemy type corresponding to the roll
-        for (Map.Entry<String, Double> entry : enemyWeights.entrySet()) {
+        if (candidates.isEmpty()) return null;
+
+        double totalWeight = candidates.values().stream().mapToDouble(Double::doubleValue).sum();
+        double roll = rng.nextDouble() * totalWeight;
+
+        double cumulative = 0.0;
+        for (Map.Entry<String, Double> entry : candidates.entrySet()) {
             cumulative += entry.getValue();
-            if (roll <= cumulative) {
-                return entry.getKey();
-            }
+            if (roll <= cumulative) return entry.getKey();
         }
-        // fallback
-        return enemyWeights.keySet().iterator().next();
+        return candidates.keySet().iterator().next();
     }
 
     public int getMaxSpawnWeight() {
@@ -54,9 +58,10 @@ public abstract class Region {
         int remainingWeight = maxSpawnWeight;
 
         while (remainingWeight > 0) {
-            String type = getRandomEnemyType();
-            int enemyWeight = EnemyFactory.getSpawnWeightForType(type); 
+            String type = getRandomEnemyTypeForBudget(remainingWeight);
+            if (type == null) break; // no candidates fit the remaining budget
 
+            int enemyWeight = EnemyFactory.getSpawnWeightForType(type);
             if (enemyWeight <= remainingWeight) {
                 enemyTypes.add(type);
                 remainingWeight -= enemyWeight;

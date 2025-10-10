@@ -30,10 +30,10 @@ public class EnemyAbilityPools {
         marlboroPool.addWeightedAbility(AbilityDatabase.POISON_MIST, 20);
         marlboroPool.addWeightedAbility(AbilityDatabase.IMPALING_ICE, 10);
 
-        pools.put("goblin", goblinPool);
-        pools.put("orc", orcPool);
-        pools.put("dragon", dragonPool);
-        pools.put("marlboro", marlboroPool);
+        pools.put(EnemyKey.GOBLIN.key(), goblinPool);
+        pools.put(EnemyKey.ORC.key(), orcPool);
+        pools.put(EnemyKey.DRAGON.key(), dragonPool);
+        pools.put(EnemyKey.MARLBORO.key(), marlboroPool);
     }
 
     public static AbilityPool getPool(String enemyType) {

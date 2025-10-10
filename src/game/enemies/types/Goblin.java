@@ -24,10 +24,10 @@ public class Goblin extends Enemy {
         setupModifiers();
     }
 
-    @Override
-    protected void setupModifiers() {
-        addAvailablePrefix(new Arch(), 0.05);
-        addAvailablePrefix(new Wrathful(), 0.25);
-        addAvailableSuffix(new Cryomancer(), 0.15);
-    }
+    // @Override
+    // protected void setupModifiers() {
+    //     addAvailablePrefix(new Arch(), 0.05);
+    //     addAvailablePrefix(new Wrathful(), 0.25);
+    //     addAvailableSuffix(new Cryomancer(), 0.15);
+    // }
 }

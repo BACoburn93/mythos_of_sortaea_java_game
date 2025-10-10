@@ -1,6 +1,7 @@
 package managers;
 
 import containers.GameContainer;
+import enemies.EnemyDatabase;
 import handlers.*;
 import model.navigation.GameFlowManager;
 import model.navigation.regions.Forest;
@@ -33,6 +34,7 @@ public class GameManager {
     public void start() {
         MenuUIStrings.titleScreen();
         EquipmentDatabase.init();
+        EnemyDatabase.init();
 
         while (gameIsRunning) {
             MenuUIStrings.mainMenu();

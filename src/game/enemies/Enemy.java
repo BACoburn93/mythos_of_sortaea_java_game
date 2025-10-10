@@ -71,37 +71,37 @@ public class Enemy extends CombatActor {
     public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
 
     // Suffixes and Prefixes
-    public void addAvailablePrefix(Prefix prefix, double chance) {
-        availablePrefixes.add(prefix);
-        prefixChances.put(prefix.getClass(), chance);
-    }
+    // public void addAvailablePrefix(Prefix prefix, double chance) {
+    //     availablePrefixes.add(prefix);
+    //     prefixChances.put(prefix.getClass(), chance);
+    // }
 
-    public void addAvailableSuffix(Suffix suffix, double chance) {
-        availableSuffixes.add(suffix);
-        suffixChances.put(suffix.getClass(), chance);
-    }
+    // public void addAvailableSuffix(Suffix suffix, double chance) {
+    //     availableSuffixes.add(suffix);
+    //     suffixChances.put(suffix.getClass(), chance);
+    // }
 
-    public Prefix acquirePrefix() {
-        Random rng = new Random();
-        for (Prefix prefix : availablePrefixes) {
-            double chance = prefixChances.getOrDefault(prefix.getClass(), 0.0);
-            if (rng.nextDouble() < chance) {
-                return prefix;
-            }
-        }
-        return null;
-    }
+    // public Prefix acquirePrefix() {
+    //     Random rng = new Random();
+    //     for (Prefix prefix : availablePrefixes) {
+    //         double chance = prefixChances.getOrDefault(prefix.getClass(), 0.0);
+    //         if (rng.nextDouble() < chance) {
+    //             return prefix;
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    public Suffix acquireSuffix() {
-        Random rng = new Random();
-        for (Suffix suffix : availableSuffixes) {
-            double chance = suffixChances.getOrDefault(suffix.getClass(), 0.0);
-            if (rng.nextDouble() < chance) {
-                return suffix;
-            }
-        }
-        return null;
-    }
+    // public Suffix acquireSuffix() {
+    //     Random rng = new Random();
+    //     for (Suffix suffix : availableSuffixes) {
+    //         double chance = suffixChances.getOrDefault(suffix.getClass(), 0.0);
+    //         if (rng.nextDouble() < chance) {
+    //             return suffix;
+    //         }
+    //     }
+    //     return null;
+    // }
 
     public void addAbility(Ability ability) {
         if (!abilities.contains(ability)) {

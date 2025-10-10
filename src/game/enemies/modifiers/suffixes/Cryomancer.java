@@ -12,8 +12,6 @@ public class Cryomancer implements Suffix {
         enemy.getAttributes().increaseKnowledge(15);
         
         enemy.addAbility(AbilityDatabase.IMPALING_ICE);
-
-        enemy.setName(enemy.getName() + " Cryomancer");
     }
 
     @Override

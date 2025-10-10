@@ -1,73 +1,77 @@
 package enemies;
 
+import enemies.modifiers.Prefix;
+import enemies.modifiers.Suffix;
+import enemies.modifiers.prefixes.*;
+import enemies.modifiers.suffixes.*;
+import enemies.types.*;
 
-public class EnemyDatabase {
-    // private static Enemy goblin = new Enemy(
-    //                    "Goblin",
-    //                    new HealthValues(30, 3),
-    //                    new ManaValues(10, 3),
-    //                    new Attributes(10, 12, 8, 10, 8, 8, 8),
-    //                    new Resistances(),
-    //                    new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
-    //                    20);
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
-    // public static ArrayList<Enemy> getDefaultEnemies() {
-    //     ArrayList<Enemy> enemies = new ArrayList<>();
+/**
+ * Bootstraps enemy prototype metadata: prefix/suffix pools, apply chances, spawn weights.
+ * Call EnemyDatabase.init() once at startup (GameManager.start).
+ */
+public final class EnemyDatabase {
+    public static final class Weighted<T> {
+        public final T value;
+        public final double weight;
+        public Weighted(T value, double weight) { this.value = value; this.weight = weight; }
+    }
 
-    //     enemies.add(
-    //         new Enemy(
-    //             "Marlboro",
-    //             new HealthValues(300, 30),
-    //             new ManaValues(100, 30),
-    //             new Attributes(10, 12, 8, 10, 8, 8, 8),
-    //             new Resistances(),
-    //             new TargetingAbility[]{
-    //                 AbilityDatabase.ROTTING_TENTACLE,
-    //                 AbilityDatabase.VENOM_MAW,
-    //                 AbilityDatabase.POISON_MIST,
-    //                 AbilityDatabase.IMPALING_ICE
-    //             },
-    //             20,
-    //             2
-    //         )
-    //     );
-    //    enemies.add(
-    //            new Enemy(
-    //                    "Goblin",
-    //                    new HealthValues(30, 3),
-    //                    new ManaValues(10, 3),
-    //                    new Attributes(10, 12, 8, 10, 8, 8, 8),
-    //                    new Resistances(),
-    //                    new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
-    //                    20));
-    //    enemies.add(
-    //            new Enemy("Orc",
-    //                    new HealthValues(45, 5),
-    //                    new ManaValues(10, 5),
-    //                    new Attributes(15, 9,15, 13, 14, 10, 8),
-    //                    new Resistances(),
-    //                    new TargetingAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
-    //                    35));
-    //    enemies.add(
-    //            new Enemy("Red Dragon",
-    //                    new HealthValues(300, 20),
-    //                    new ManaValues(250, 20),
-    //                    new Attributes(24, 18, 22, 20, 22, 24, 18),
-    //                    new Resistances(10, 10, 10, 5, 50, 0,
-    //                            5, 5, 2, 5, 3, 3),
-    //                    new TargetingAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE, AbilityDatabase.FIRE_BREATH },
-    //                    200));
+    private static final Map<String, List<Weighted<Prefix>>> prefixPools = new HashMap<>();
+    private static final Map<String, List<Weighted<Suffix>>> suffixPools = new HashMap<>();
+    private static final Map<String, Double> prefixChance = new HashMap<>();
+    private static final Map<String, Double> suffixChance = new HashMap<>();
+    private static final Map<String, Integer> spawnWeights = new HashMap<>();
 
-    //     return enemies;
-    // }
+    private static boolean initialized = false;
 
-    // public static ArrayList<Enemy> goblinScenario() {
-    //     ArrayList<Enemy> enemies = new ArrayList<>();
+    public static void init() {
+        if (initialized) return;
+        initialized = true;
 
-    //     enemies.add(goblin);
-    //     enemies.add(goblin);
-    //     enemies.add(goblin);
+        // Example registration (adjust keys to match EnemyRegistry registrations)
+        EnemyRegistry.register(EnemyKey.GOBLIN.key(), name -> new Goblin(name));
+        EnemyRegistry.register(EnemyKey.MARLBORO.key(), name -> new Marlboro(name));
+        EnemyRegistry.register(EnemyKey.DRAGON.key(), name -> new Dragon(name));
+        EnemyRegistry.register(EnemyKey.ORC.key(), name -> new Orc(name));
 
-    //     return enemies;
-    // }
+        registerPrototype(
+            EnemyKey.GOBLIN.key(),
+                1, // spawn weight
+                List.of( // prefix pool with multiple entries
+                    new Weighted<>(new Arch(), 0.5),
+                    new Weighted<>(new Wrathful(), 0.5)
+                ),
+                0.5, // prefix chance
+                List.of(
+                    new Weighted<>(new Cryomancer(), 0.6)
+                ),
+                0.5  // suffix chance
+        );
+    }
+
+    public static void registerPrototype(String key,
+                                         int spawnWeight,
+                                         List<Weighted<Prefix>> prefixes, double pChance,
+                                         List<Weighted<Suffix>> suffixes, double sChance) {
+        if (key == null) return;
+        String k = key.trim().toLowerCase();
+        if (prefixes != null) prefixPools.put(k, prefixes);
+        if (suffixes != null) suffixPools.put(k, suffixes);
+        prefixChance.put(k, pChance);
+        suffixChance.put(k, sChance);
+        spawnWeights.put(k, spawnWeight);
+    }
+
+    public static List<Weighted<Prefix>> getPrefixPool(String key) { return prefixPools.get(normalize(key)); }
+    public static List<Weighted<Suffix>> getSuffixPool(String key) { return suffixPools.get(normalize(key)); }
+    public static double getPrefixChance(String key) { return prefixChance.getOrDefault(normalize(key), 0.0); }
+    public static double getSuffixChance(String key) { return suffixChance.getOrDefault(normalize(key), 0.0); }
+    public static int getSpawnWeight(String key) { return spawnWeights.getOrDefault(normalize(key), 1); }
+
+    private static String normalize(String k) { return k == null ? null : k.trim().toLowerCase(); }
 }

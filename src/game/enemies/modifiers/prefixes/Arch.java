@@ -34,8 +34,6 @@ public class Arch implements Prefix {
 
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);
-
-        enemy.setName("Arch" + enemy.getName());
     }
 
     @Override
