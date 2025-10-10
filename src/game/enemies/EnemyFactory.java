@@ -4,17 +4,20 @@ import enemies.abilities.AbilityPool;
 import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
 import utils.StringUtils;
+import utils.Factory;
+import utils.FlavorUtils;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import abilities.ability_types.TargetingAbility;
 
 import java.util.Map;
 import java.util.HashMap;
 
-public class EnemyFactory {
+public class EnemyFactory implements Factory<Enemy, Prefix, Suffix> {
     private static final Random rng = new Random();
 
     private static final Map<String, Function<String, Enemy>> enemyConstructors = new HashMap<>();
@@ -101,5 +104,11 @@ public class EnemyFactory {
         Enemy tempEnemy = constructor.apply(StringUtils.capitalize(type));
         
         return tempEnemy.getSpawnWeight();
+    }
+
+    @Override
+    public Enemy create(Supplier<Enemy> ctor, Prefix prefix, Suffix suffix) {
+        Enemy e = ctor.get();
+        return FlavorUtils.applyFlavor(e, prefix, suffix);
     }
 }
