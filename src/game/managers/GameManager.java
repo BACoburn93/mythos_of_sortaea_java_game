@@ -18,6 +18,7 @@ import characters.jobs.Jobs.MageJob;
 import characters.jobs.Jobs.RangerJob;
 import characters.jobs.Jobs.RogueJob;
 import characters.jobs.Jobs.WarriorJob;
+import items.equipment.EquipmentDatabase;
 
 public class GameManager {
     private final InputHandler inputHandler = new InputHandler();
@@ -26,6 +27,7 @@ public class GameManager {
 
     public void start() {
         MenuUIStrings.titleScreen();
+        EquipmentDatabase.init();
 
         while (gameIsRunning) {
             MenuUIStrings.mainMenu();

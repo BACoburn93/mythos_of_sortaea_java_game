@@ -18,6 +18,9 @@ public class OfTheNorth implements Suffix {
             }
         }
 
+        target.getResistances().addIce(1.0);
+        target.getResistances().addFire(1.0);
+
         target.getResistances().multiplyIce(5.0);
         target.getResistances().multiplyFire(5.0);
     }

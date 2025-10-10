@@ -16,88 +16,148 @@ import abilities.database.AbilityDatabase;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 
+import items.equipment.modifiers.prefixes.*;
+import items.equipment.modifiers.suffixes.*;
+
 public class EquipmentDatabase {
     private static final List<Equipment> EQUIPMENT_LIST = new ArrayList<>();
-
     static {
-        EQUIPMENT_LIST.add(new HeavyTorso(
-                "Armor of the Damned",
-                10000,
-                new Attributes(20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 0.0),
-                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0)
-        ));
-        EQUIPMENT_LIST.add(new LightTorso(
-                "Leather Armor",
-                10,
-                new Attributes(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0),
-                new Resistances(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
-        ));
-        EQUIPMENT_LIST.add(new Staff(
-                "Gods Finger",
-                1000,
-                new Attributes(0.0, 0.0, 100.0, 20.0, 20.0, 20.0, 20.0),
-                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0),
-                List.of(
-                        AbilityDatabase.FIREBALL,
-                        AbilityDatabase.LIGHTNING_BOLT,
-                        AbilityDatabase.ICE_SPIKE
-                )
-        ));
-        EQUIPMENT_LIST.add(new Dagger(
-                "Riteknife",
-                100,
-                new Attributes(0.0, 35.0, 0.0, 0.0, 0.0, 0.0, 10.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-                List.of(
-                    AbilityDatabase.BACKSTAB
-                ),
-                50.0
-        ));
-        EQUIPMENT_LIST.add(new Longbow(
-                "Dragon Longbow",
-                800,
-                new Attributes(0.0, 60.0, 0.0, 0.0, 0.0, 0.0, 5.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-                List.of(
-                    AbilityDatabase.POISON_DART
-                )
-        ));
-        EQUIPMENT_LIST.add(new Longsword(
-                "Excalibur",
-                5000,
-                new Attributes(50.0, 0.0, 0.0, 20.0, 20.0, 20.0, 0.0),
-                new Resistances(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0),
-                List.of(
-                    AbilityDatabase.SLASH
-                ),
-                77.0
-        ));
-        EQUIPMENT_LIST.add(new LargeShield(
-                "Tower Shield",
-                200,
-                new Attributes(0.0, 0.0, 0.0, 30.0, 20.0, 0.0, 0.0),
-                new Resistances(10.0, 10.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-                List.of(
-                    AbilityDatabase.SHIELD_BASH
-                ),
-                3.0
-        ));
-        EQUIPMENT_LIST.add(new Ring(
-                "Band of Fate",
-                2000,
-                new Attributes(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-        ));
-        EQUIPMENT_LIST.add(new Neck(
-                "Amulet of Strength",
-                2000,
-                new Attributes(100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-                new Resistances(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-        ));
+        init();
+    }
 
+    public static void init() {
+        // guard so init is idempotent if called multiple times
+        if (!EQUIPMENT_LIST.isEmpty()) return;
+
+        // deterministic tests: optional
+        EquipmentFactory.INSTANCE.setSeed(42L);
+
+        // Register prototypes and pools (example: Staff has pools; others use no pools for now)
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Staff",
+        () -> new Staff(
+                "Staff",
+                1000,
+                new Attributes(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0),
+                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
+                List.of(AbilityDatabase.FIREBALL)
+        ),
+        List.of(
+                new EquipmentFactory.Weighted<>(new Ancient(), 0.25)
+        ),
+        0.35,
+        List.of(
+                new EquipmentFactory.Weighted<>(new OfTheNorth(), 0.5)
+        ),
+        0.55 
+        );
+
+        // Register other prototypes (no pools shown; add pools as needed)
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Dagger",
+        () -> new Dagger(
+                "Dagger",
+                100,
+                new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
+                List.of(),
+                25.0
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "LargeShield",
+        () -> new LargeShield(
+                "Large Shield",
+                200,
+                new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
+                new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
+                List.of(AbilityDatabase.SHIELD_BASH),
+                3.0
+        ),
+        // example: shields get prefixes rarely, but can get suffixes
+        List.of(new EquipmentFactory.Weighted<>(new Ancient(), 1.0)),
+        0.10,
+        List.of(new EquipmentFactory.Weighted<>(new OfTheNorth(), 1.0)),
+        0.25
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Longsword",
+        () -> new Longsword(
+                "Longsword",
+                500,
+                new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
+                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
+                List.of(AbilityDatabase.SLASH),
+                77.0
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Longbow",
+        () -> new Longbow(
+                "Longbow",
+                800,
+                new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
+                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
+                List.of(AbilityDatabase.POISON_DART)
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "HeavyTorso",
+        () -> new HeavyTorso(
+                "Heavy Torso",
+                1000,
+                new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
+                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "LightTorso",
+        () -> new LightTorso(
+                "Light Torso",
+                200,
+                new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),
+                new Resistances(1,1,1,1,1,1,1,1,1,1,1,1)
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Ring",
+        () -> new Ring(
+                "Ring",
+                2000,
+                new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,100.0),
+                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        EquipmentFactory.INSTANCE.registerPrototype(
+        "Neck",
+        () -> new Neck(
+                "Neck",
+                2000,
+                new Attributes(100.0,0.0,0.0,0.0,0.0,0.0,0.0),
+                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
+        ),
+        null, 0.0, null, 0.0
+        );
+
+        // optionally create some sample items for quick testing
+        EQUIPMENT_LIST.add(EquipmentFactory.INSTANCE.createByKey("Staff", null, null));
+        EQUIPMENT_LIST.add(EquipmentFactory.INSTANCE.createRandomByKey("Dagger", null, null));
     }
 
     public static List<Equipment> getEquipmentList() {
-        return EQUIPMENT_LIST;
+            return EQUIPMENT_LIST;
     }
 }

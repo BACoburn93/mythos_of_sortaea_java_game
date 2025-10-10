@@ -9,11 +9,15 @@ public final class FlavorUtils {
 
     public static <T extends Equipment> T applyFlavor(T item, Prefix prefix, Suffix suffix) {
         if (item == null) return null;
+
         String name = (prefix != null ? prefix.getName().trim() + " " : "") + item.getName()
             + (suffix != null ? " " + suffix.getName().trim() : "");
+
         item.setName(name);
+
         if (prefix != null) prefix.apply(item);
         if (suffix != null) suffix.apply(item);
+        
         return item;
     }
 }
