@@ -14,19 +14,17 @@ import enemies.modifiers.Prefix;
 import enemies.modifiers.Suffix;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class Enemy extends CombatActor {
     private List<Ability> abilities;
     private int experience;
 
-    private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
-    private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
-    private Map<Class<? extends Prefix>, Double> prefixChances = new HashMap<>();
-    private Map<Class<? extends Suffix>, Double> suffixChances = new HashMap<>();
+    // private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
+    // private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
+    // private Map<Class<? extends Prefix>, Double> prefixChances = new HashMap<>();
+    // private Map<Class<? extends Suffix>, Double> suffixChances = new HashMap<>();
 
     private Prefix prefix;
     private Suffix suffix;

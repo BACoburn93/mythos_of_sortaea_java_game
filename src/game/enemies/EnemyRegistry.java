@@ -19,7 +19,7 @@ public final class EnemyRegistry {
         return CONSTRUCTORS.get(key.trim().toLowerCase());
     }
 
-    // convenience overload using your enum (returns the same Function that accepts a display name)
+    // convenience overload using enum
     public static Function<String, Enemy> getConstructor(EnemyKey key) {
         return (key == null) ? null : getConstructor(key.key());
     }
