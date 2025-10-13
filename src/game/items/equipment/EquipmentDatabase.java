@@ -22,8 +22,8 @@ public class EquipmentDatabase {
         EquipmentFactory factory = FactoryRegistry.getEquipmentFactory();
 
         factory.registerPrototype(
-                EquipmentKey.LESSERSTAFF.key(),
-                EquipmentRegistry.get(EquipmentKey.LESSERSTAFF.key()),
+                EquipmentKey.LESSER_STAFF.key(),
+                EquipmentRegistry.get(EquipmentKey.LESSER_STAFF.key()),
                 LesserStaffPools.PREFIX_POOL, 0.5,
                 LesserStaffPools.SUFFIX_POOL, 0.5
         );
@@ -36,8 +36,8 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
-                EquipmentKey.TOWERSHIELD.key(),
-                EquipmentRegistry.get(EquipmentKey.TOWERSHIELD.key()),
+                EquipmentKey.TOWER_SHIELD.key(),
+                EquipmentRegistry.get(EquipmentKey.TOWER_SHIELD.key()),
                 TowerShieldPools.PREFIX_POOL, 0.5,
                 TowerShieldPools.SUFFIX_POOL, 0.5
         );
@@ -57,15 +57,15 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
-                EquipmentKey.PLATEARMOR.key(),
-                EquipmentRegistry.get(EquipmentKey.PLATEARMOR.key()),
+                EquipmentKey.PLATE_ARMOR.key(),
+                EquipmentRegistry.get(EquipmentKey.PLATE_ARMOR.key()),
                 PlateArmorPools.PREFIX_POOL, 0.5,
                 PlateArmorPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                EquipmentKey.LEATHERARMOR.key(),
-                EquipmentRegistry.get(EquipmentKey.LEATHERARMOR.key()),
+                EquipmentKey.LEATHER_ARMOR.key(),
+                EquipmentRegistry.get(EquipmentKey.LEATHER_ARMOR.key()),
                 LeatherArmorPools.PREFIX_POOL, 0.5,
                 LeatherArmorPools.SUFFIX_POOL, 0.5
         );
@@ -85,7 +85,7 @@ public class EquipmentDatabase {
         );
 
         // sample items for quick debugging
-        EQUIPMENT_LIST.add(factory.createByKey(EquipmentKey.LESSERSTAFF.key(), null, null));
+        EQUIPMENT_LIST.add(factory.createByKey(EquipmentKey.LESSER_STAFF.key(), null, null));
         EQUIPMENT_LIST.add(factory.createRandomByKey(EquipmentKey.DAGGER.key(), null, null));
     }
 

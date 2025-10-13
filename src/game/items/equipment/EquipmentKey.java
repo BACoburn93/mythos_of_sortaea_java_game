@@ -3,13 +3,13 @@ package items.equipment;
 import java.util.function.Supplier;
 
 public enum EquipmentKey {
-    LESSERSTAFF("lesserstaff"),
+    LESSER_STAFF("lesserstaff"),
     DAGGER("dagger"),
-    TOWERSHIELD("towershield"),
+    TOWER_SHIELD("towershield"),
     LONGSWORD("longsword"),
     LONGBOW("longbow"),
-    PLATEARMOR("platearmor"),
-    LEATHERARMOR("leatherarmor"),
+    PLATE_ARMOR("platearmor"),
+    LEATHER_ARMOR("leatherarmor"),
     RING("ring"),
     AMULET("amulet");
 

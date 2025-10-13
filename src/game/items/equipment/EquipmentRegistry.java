@@ -29,7 +29,7 @@ public final class EquipmentRegistry {
     static {
         // Register suppliers with reasonably complete default prototype constructors.
         // These suppliers should produce a base prototype item (Database may flavor it).
-        SUPPLIERS.put(EquipmentKey.LESSERSTAFF.key(), () -> new Staff(
+        SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
                 "Lesser Staff",
                 10
         ));
@@ -43,7 +43,7 @@ public final class EquipmentRegistry {
                 25.0
         ));
 
-        SUPPLIERS.put(EquipmentKey.TOWERSHIELD.key(), () -> new LargeShield(
+        SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
                 "Tower Shield",
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
@@ -69,14 +69,14 @@ public final class EquipmentRegistry {
                 java.util.List.of(AbilityDatabase.POISON_DART)
         ));
 
-        SUPPLIERS.put(EquipmentKey.PLATEARMOR.key(), () -> new HeavyTorso(
+        SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () -> new HeavyTorso(
                 "Plate Armor",
                 1000,
                 new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
         ));
 
-        SUPPLIERS.put(EquipmentKey.LEATHERARMOR.key(), () -> new LightTorso(
+        SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () -> new LightTorso(
                 "Leather Armor",
                 200,
                 new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),

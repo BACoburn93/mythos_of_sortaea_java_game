@@ -3,6 +3,7 @@ package enemies;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
 import enemies.types.*;
+import items.equipment.EquipmentKey;
 import loot.DropTable;
 import loot.LootEntry;
 import loot.LootManager;
@@ -47,10 +48,9 @@ public final class EnemyDatabase {
         );
 
         LootManager.registerDropTable(EnemyKey.GOBLIN.key(),
-        // todo - Use a map to assign itemKeys from item database to avoid hardcoding strings
             new DropTable()
-                .add(new LootEntry("dagger", 1.0, 0.25, 1, 1, 0))
-                .add(new LootEntry("lesserstaff", 1.0, 0.95, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.DAGGER.key(), 1.0, 0.25, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.LESSER_STAFF.key(), 1.0, 0.95, 1, 1, 0))
                 .add(LootEntry.gold(5, 0.9))
         );
 

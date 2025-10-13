@@ -46,9 +46,9 @@ public class CharacterCreator {
         List<Equipment> startingEq = new ArrayList<>();
 
         String[] keys = {
-            EquipmentKey.LESSERSTAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWERSHIELD.key(),
-            EquipmentKey.LONGSWORD.key(), EquipmentKey.LONGBOW.key(), EquipmentKey.PLATEARMOR.key(),
-            EquipmentKey.LEATHERARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
+            EquipmentKey.LESSER_STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
+            EquipmentKey.LONGSWORD.key(), EquipmentKey.LONGBOW.key(), EquipmentKey.PLATE_ARMOR.key(),
+            EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
         };
 
         for (int i=0;i<10;i++) {
