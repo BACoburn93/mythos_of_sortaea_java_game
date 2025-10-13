@@ -26,7 +26,7 @@ public class ActionHandler {
 
     public ActionHandler(GameScanner scanner, ArrayList<CombatActor> actors, Party party, ArrayList<Enemy> enemies, EquipmentHandler equipmentHandler) {
         this.scanner = scanner;
-        this.abilityHandler = new AbilityHandler(scanner, new TargetSelector(actors), actors, enemies);
+        this.abilityHandler = new AbilityHandler(scanner, new TargetSelector(actors), party, actors, enemies);
         this.inputHandler = new InputHandler();
         this.sortHandler = new SortHandler(scanner, inputHandler);
         this.party = party;

@@ -3,7 +3,9 @@ package enemies;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
 import enemies.types.*;
-
+import loot.DropTable;
+import loot.LootEntry;
+import loot.LootManager;
 import modifiers.EnemyModifiers.*;
 
 import java.util.List;
@@ -42,6 +44,12 @@ public final class EnemyDatabase {
                 1, 
                 GoblinPools.PREFIX_POOL, 0.5,
                 GoblinPools.SUFFIX_POOL, 0.5
+        );
+
+        LootManager.registerDropTable(EnemyKey.GOBLIN.key(),
+            new DropTable()
+                .add(new LootEntry("dagger", 1.0, 0.25, 1, 1, 0))
+                .add(LootEntry.gold(5, 0.9))
         );
 
         registerPrototype(

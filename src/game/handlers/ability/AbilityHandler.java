@@ -9,6 +9,7 @@ import utils.GameScanner;
 import utils.SelectionUtils;
 import utils.StringUtils;
 import characters.Character;
+import characters.Party;
 import enemies.Enemy;
 import handlers.EquipmentHandler;
 import handlers.TargetSelector;
@@ -21,23 +22,28 @@ import actors.types.CombatActor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import items.equipment.item_types.*;
+import loot.LootManager;
+import items.equipment.Equipment;
 import items.equipment.interfaces.WeaponDamageProvider;
 
 public class AbilityHandler {
     private GameScanner scanner;
     private TargetSelector targetSelector;
+    private Party party;
     private ArrayList<CombatActor> actors;
     private ArrayList<Enemy> enemies;
 
     private final ArrayList<AbilityExecutor> executors = new ArrayList<>();
     private final Map<Class<? extends Ability>, AbilityExecutor> executorMap = new HashMap<>();
 
-    public AbilityHandler(GameScanner scanner, TargetSelector targetSelector, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
+    public AbilityHandler(GameScanner scanner, TargetSelector targetSelector, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
         this.scanner = scanner;
         this.targetSelector = targetSelector;
+        this.party = party;
         this.actors = actors;
         this.enemies = enemies;
 
@@ -126,8 +132,8 @@ public class AbilityHandler {
 
         CombatUIStrings.printHitPointsRemaining(chosenTarget);
 
-        if (chosenTarget.getHealthValues().getValue() < 0) {
-            actors = handleKillEnemy(chosenTarget);
+        if (chosenTarget.getHealthValues().getValue() < 0 && chosenTarget instanceof Enemy) {
+            actors = handleKillEnemy(party, (Enemy) chosenTarget);
         }
     }
 
@@ -156,8 +162,8 @@ public class AbilityHandler {
         }
         CombatUIStrings.printHitPointsRemaining(target);
 
-        if (target.getHealthValues().getValue() < 0) {
-            actors = handleKillEnemy(target);
+        if (target.getHealthValues().getValue() < 0 && target instanceof Enemy) {
+            actors = handleKillEnemy(party, (Enemy) target);
         }
     }
 
@@ -302,8 +308,18 @@ public class AbilityHandler {
         }
     }
 
-    private ArrayList<CombatActor> handleKillEnemy(CombatActor enemy) {
+    private ArrayList<CombatActor> handleKillEnemy(Party party, Enemy enemy) {
         System.out.println(enemy.getName() + " has been slain.");
+
+        List<Object> drops = LootManager.generateDrops(enemy);
+        for (Object o : drops) {
+            if (o instanceof Equipment) {
+                party.getSharedEquipment().add((Equipment) o);
+            } else if (o instanceof Integer) {
+                party.addGold((Integer) o);
+            }
+        }
+
         enemies.remove(enemy);
 
         actors.removeIf(a -> a == enemy);

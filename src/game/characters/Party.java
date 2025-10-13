@@ -8,6 +8,7 @@ import java.util.List;
 public class Party {
     public ArrayList<Character> characters;
     public int partySize;
+    public int gold = 0;
     private List<Equipment> sharedEquipment;
 
     public Party(ArrayList<Character> characters) {
@@ -49,6 +50,22 @@ public class Party {
         }
 
         return validCharacters;
+    }
+
+    public void addGold(int amount) {
+        if (amount > 0) {
+            this.gold += amount;
+        }
+    }
+
+    public void removeGold(int amount) {
+        if (amount > 0 && this.gold >= amount) {
+            this.gold -= amount;
+        }
+    }
+
+    public int getGold() {
+        return gold;
     }
 
     public List<Equipment> getSharedEquipment() {

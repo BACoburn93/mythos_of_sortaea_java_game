@@ -7,6 +7,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import enemies.Enemy;
+import enemies.EnemyKey;
 
 public class Goblin extends Enemy {
     public Goblin(String name) {
@@ -19,13 +20,8 @@ public class Goblin extends Enemy {
             new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             1
         );
-        // setupModifiers();
+        
+        setTypeKey(EnemyKey.GOBLIN.key());
     }
 
-    // @Override
-    // protected void setupModifiers() {
-    //     addAvailablePrefix(new Arch(), 0.05);
-    //     addAvailablePrefix(new Wrathful(), 0.25);
-    //     addAvailableSuffix(new Cryomancer(), 0.15);
-    // }
 }

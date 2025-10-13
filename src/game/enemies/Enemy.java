@@ -17,15 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Enemy extends CombatActor {
+public abstract class Enemy extends CombatActor {
     private List<Ability> abilities;
     private int experience;
 
-    // private ArrayList<Prefix> availablePrefixes = new ArrayList<>();
-    // private ArrayList<Suffix> availableSuffixes = new ArrayList<>();
-    // private Map<Class<? extends Prefix>, Double> prefixChances = new HashMap<>();
-    // private Map<Class<? extends Suffix>, Double> suffixChances = new HashMap<>();
-
+    private String typeKey;
     private EnemyPrefix prefix;
     private EnemySuffix suffix;
     
@@ -48,16 +44,21 @@ public class Enemy extends CombatActor {
         this.experience = this.getSpawnWeight() > 0 ? getLevel() * (5 * (this.spawnWeight * this.spawnWeight)) : getLevel() * 5;
     }
 
-    // protected void setupModifiers() {
-
-    // }
-
     // Getters and Setters
     public int getExperience() { return experience; }
     public void setExperience(int experience) { this.experience = experience; }
 
     public List<Ability> getAbilities() { return abilities; }
     public void setAbilities(List<Ability> abilities) { this.abilities = abilities; }
+
+    public String getTypeKey() {
+        if (typeKey != null && !typeKey.isEmpty()) return typeKey;
+        return this.getClass().getSimpleName().toLowerCase();
+    }
+
+    protected void setTypeKey(String key) {
+        this.typeKey = (key == null) ? null : key.trim().toLowerCase();
+    }
 
     public EnemyPrefix getPrefix() { return prefix; }
     public void setPrefix(EnemyPrefix prefix) { this.prefix = prefix; }
@@ -67,39 +68,6 @@ public class Enemy extends CombatActor {
 
     public int getSpawnWeight() { return spawnWeight; }
     public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
-
-    // Suffixes and Prefixes
-    // public void addAvailablePrefix(Prefix prefix, double chance) {
-    //     availablePrefixes.add(prefix);
-    //     prefixChances.put(prefix.getClass(), chance);
-    // }
-
-    // public void addAvailableSuffix(Suffix suffix, double chance) {
-    //     availableSuffixes.add(suffix);
-    //     suffixChances.put(suffix.getClass(), chance);
-    // }
-
-    // public Prefix acquirePrefix() {
-    //     Random rng = new Random();
-    //     for (Prefix prefix : availablePrefixes) {
-    //         double chance = prefixChances.getOrDefault(prefix.getClass(), 0.0);
-    //         if (rng.nextDouble() < chance) {
-    //             return prefix;
-    //         }
-    //     }
-    //     return null;
-    // }
-
-    // public Suffix acquireSuffix() {
-    //     Random rng = new Random();
-    //     for (Suffix suffix : availableSuffixes) {
-    //         double chance = suffixChances.getOrDefault(suffix.getClass(), 0.0);
-    //         if (rng.nextDouble() < chance) {
-    //             return suffix;
-    //         }
-    //     }
-    //     return null;
-    // }
 
     public void addAbility(Ability ability) {
         if (!abilities.contains(ability)) {
