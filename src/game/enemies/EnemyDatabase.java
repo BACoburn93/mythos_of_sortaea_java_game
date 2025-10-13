@@ -1,19 +1,16 @@
 package enemies;
 
-import enemies.modifiers.Prefix;
-import enemies.modifiers.Suffix;
-import enemies.modifiers.prefixes.*;
-import enemies.modifiers.suffixes.*;
+import enemies.modifiers.EnemyPrefix;
+import enemies.modifiers.EnemySuffix;
 import enemies.types.*;
+
+import modifiers.EnemyModifiers.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-/**
- * Bootstraps enemy prototype metadata: prefix/suffix pools, apply chances, spawn weights.
- * Call EnemyDatabase.init() once at startup (GameManager.start).
- */
+
 public final class EnemyDatabase {
     public static final class Weighted<T> {
         public final T value;
@@ -21,8 +18,8 @@ public final class EnemyDatabase {
         public Weighted(T value, double weight) { this.value = value; this.weight = weight; }
     }
 
-    private static final Map<String, List<Weighted<Prefix>>> prefixPools = new HashMap<>();
-    private static final Map<String, List<Weighted<Suffix>>> suffixPools = new HashMap<>();
+    private static final Map<String, List<Weighted<EnemyPrefix>>> prefixPools = new HashMap<>();
+    private static final Map<String, List<Weighted<EnemySuffix>>> suffixPools = new HashMap<>();
     private static final Map<String, Double> prefixChance = new HashMap<>();
     private static final Map<String, Double> suffixChance = new HashMap<>();
     private static final Map<String, Integer> spawnWeights = new HashMap<>();
@@ -33,31 +30,32 @@ public final class EnemyDatabase {
         if (initialized) return;
         initialized = true;
 
-        // Example registration (adjust keys to match EnemyRegistry registrations)
+        // Example registration
         EnemyRegistry.register(EnemyKey.GOBLIN.key(), name -> new Goblin(name));
         EnemyRegistry.register(EnemyKey.MARLBORO.key(), name -> new Marlboro(name));
         EnemyRegistry.register(EnemyKey.DRAGON.key(), name -> new Dragon(name));
         EnemyRegistry.register(EnemyKey.ORC.key(), name -> new Orc(name));
 
+        // Register Prefix/Suffix pools and spawn weights
         registerPrototype(
             EnemyKey.GOBLIN.key(),
-                1, // spawn weight
-                List.of( // prefix pool with multiple entries
-                    new Weighted<>(new Arch(), 0.5),
-                    new Weighted<>(new Wrathful(), 0.5)
-                ),
-                0.5, // prefix chance
-                List.of(
-                    new Weighted<>(new Cryomancer(), 0.6)
-                ),
-                0.5  // suffix chance
+                1, 
+                GoblinPools.PREFIX_POOL, 0.5,
+                GoblinPools.SUFFIX_POOL, 0.5
+        );
+
+        registerPrototype(
+            EnemyKey.ORC.key(),
+                1, 
+                OrcPools.PREFIX_POOL, 0.5,
+                OrcPools.SUFFIX_POOL, 0.5
         );
     }
 
     public static void registerPrototype(String key,
                                          int spawnWeight,
-                                         List<Weighted<Prefix>> prefixes, double pChance,
-                                         List<Weighted<Suffix>> suffixes, double sChance) {
+                                         List<Weighted<EnemyPrefix>> prefixes, double pChance,
+                                         List<Weighted<EnemySuffix>> suffixes, double sChance) {
         if (key == null) return;
         String k = key.trim().toLowerCase();
         if (prefixes != null) prefixPools.put(k, prefixes);
@@ -67,8 +65,8 @@ public final class EnemyDatabase {
         spawnWeights.put(k, spawnWeight);
     }
 
-    public static List<Weighted<Prefix>> getPrefixPool(String key) { return prefixPools.get(normalize(key)); }
-    public static List<Weighted<Suffix>> getSuffixPool(String key) { return suffixPools.get(normalize(key)); }
+    public static List<Weighted<EnemyPrefix>> getPrefixPool(String key) { return prefixPools.get(normalize(key)); }
+    public static List<Weighted<EnemySuffix>> getSuffixPool(String key) { return suffixPools.get(normalize(key)); }
     public static double getPrefixChance(String key) { return prefixChance.getOrDefault(normalize(key), 0.0); }
     public static double getSuffixChance(String key) { return suffixChance.getOrDefault(normalize(key), 0.0); }
     public static int getSpawnWeight(String key) { return spawnWeights.getOrDefault(normalize(key), 1); }

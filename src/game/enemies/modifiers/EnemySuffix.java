@@ -3,6 +3,6 @@ package enemies.modifiers;
 import enemies.Enemy;
 import utils.Modifier;
 
-public interface Suffix extends Modifier<Enemy> {
+public interface EnemySuffix extends Modifier<Enemy> {
     
 }

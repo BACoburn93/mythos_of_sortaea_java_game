@@ -2,8 +2,8 @@ package items.equipment;
 
 import utils.Factory;
 import utils.FlavorUtils;
-import items.equipment.modifiers.Prefix;
-import items.equipment.modifiers.Suffix;
+import items.equipment.modifiers.EquipmentPrefix;
+import items.equipment.modifiers.EquipmentSuffix;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -18,11 +18,11 @@ import java.util.Collections;
  * Prototypes and pools are registered by EquipmentDatabase (using EquipmentRegistry suppliers).
  */
 
-public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix> {
+public final class EquipmentFactory implements Factory<Equipment, EquipmentPrefix, EquipmentSuffix> {
     private Random rng = new Random();
     private final Map<String, Supplier<Equipment>> prototypes = new HashMap<>();
-    private final Map<String, List<Weighted<Prefix>>> prefixPools = new HashMap<>();
-    private final Map<String, List<Weighted<Suffix>>> suffixPools = new HashMap<>();
+    private final Map<String, List<Weighted<EquipmentPrefix>>> prefixPools = new HashMap<>();
+    private final Map<String, List<Weighted<EquipmentSuffix>>> suffixPools = new HashMap<>();
     private final Map<String, Double> prefixApplyChance = new HashMap<>();
     private final Map<String, Double> suffixApplyChance = new HashMap<>();
 
@@ -53,7 +53,7 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
     }
 
     @Override
-    public Equipment create(Supplier<Equipment> ctor, Prefix prefix, Suffix suffix) {
+    public Equipment create(Supplier<Equipment> ctor, EquipmentPrefix prefix, EquipmentSuffix suffix) {
         Equipment item = ctor.get();
         return FlavorUtils.applyFlavor(item, prefix, suffix);
     }
@@ -74,9 +74,9 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
     }
 
     // create using explicit random lists (keeps previous convenience)
-    public Equipment createRandomByKey(String key, List<Prefix> prefixes, List<Suffix> suffixes) {
-        Prefix p = (prefixes == null || prefixes.isEmpty()) ? null : prefixes.get(rng.nextInt(prefixes.size()));
-        Suffix s = (suffixes == null || suffixes.isEmpty()) ? null : suffixes.get(rng.nextInt(suffixes.size()));
+    public Equipment createRandomByKey(String key, List<EquipmentPrefix> prefixes, List<EquipmentSuffix> suffixes) {
+        EquipmentPrefix p = (prefixes == null || prefixes.isEmpty()) ? null : prefixes.get(rng.nextInt(prefixes.size()));
+        EquipmentSuffix s = (suffixes == null || suffixes.isEmpty()) ? null : suffixes.get(rng.nextInt(suffixes.size()));
         return createByKey(key, p, s);
     }
 
@@ -87,8 +87,8 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
 
     // register prototype together with pools and per-prototype apply chances
     public void registerPrototype(String key, Supplier<Equipment> ctor,
-                                  List<Weighted<Prefix>> prefixes, double prefixChance,
-                                  List<Weighted<Suffix>> suffixes, double suffixChance) {
+                                  List<Weighted<EquipmentPrefix>> prefixes, double prefixChance,
+                                  List<Weighted<EquipmentSuffix>> suffixes, double suffixChance) {
         String k = normalizeKey(key);
         prototypes.put(k, ctor);
         if (prefixes != null) prefixPools.put(k, prefixes);
@@ -98,13 +98,13 @@ public final class EquipmentFactory implements Factory<Equipment, Prefix, Suffix
     }
 
     // create by key uses registered supplier and rolls pools/chances
-    public Equipment createByKey(String key, Prefix overridePrefix, Suffix overrideSuffix) {
+    public Equipment createByKey(String key, EquipmentPrefix overridePrefix, EquipmentSuffix overrideSuffix) {
         String k = normalizeKey(key);
         Supplier<Equipment> ctor = prototypes.get(k);
         if (ctor == null) throw new IllegalArgumentException("No prototype registered for key: " + key);
 
-        Prefix chosenP = overridePrefix;
-        Suffix chosenS = overrideSuffix;
+        EquipmentPrefix chosenP = overridePrefix;
+        EquipmentSuffix chosenS = overrideSuffix;
 
         if (chosenP == null) {
             Double chance = prefixApplyChance.getOrDefault(k, 0.0);

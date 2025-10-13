@@ -1,10 +1,10 @@
 package enemies.modifiers.prefixes;
 
 import enemies.Enemy;
-import enemies.modifiers.Prefix;
+import enemies.modifiers.EnemyPrefix;
 import utils.MathUtils;
 
-public class Arch implements Prefix {
+public class Arch implements EnemyPrefix {
     @Override
     public void apply(Enemy enemy) {
         double factor = MathUtils.randomInRange(2.15, 0.35);

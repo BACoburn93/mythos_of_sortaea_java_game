@@ -3,9 +3,9 @@ package items.equipment.modifiers.suffixes;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.Suffix;
+import items.equipment.modifiers.EquipmentSuffix;
 
-public class OfFortitude implements Suffix {
+public class OfFortitude implements EquipmentSuffix {
     @Override
     public void apply(Equipment target) {
         target.setGoldValue(target.getGoldValue() * 4);

@@ -12,7 +12,7 @@ public class Marlboro extends Enemy {
     public Marlboro(String name) {
         super(
             name,
-            new HealthValues(300, 30),
+            new HealthValues(200, 20),
             new ManaValues(100, 30),
             new Attributes(10, 12, 8, 10, 8, 8, 8),
             new Resistances(),

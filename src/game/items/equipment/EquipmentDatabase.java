@@ -1,41 +1,15 @@
 package items.equipment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import utils.FactoryRegistry;
-import items.equipment.modifiers.Prefix;
-import items.equipment.modifiers.Suffix;
-import items.equipment.modifiers.prefixes.*;
-import items.equipment.modifiers.suffixes.*;
+import modifiers.EquipmentModifiers.*;
 
-/**
- * Bootstraps prototype registrations and prefix/suffix pools.
- * Call EquipmentDatabase.init() early in startup (Main or GameManager.start).
- */
+
 public class EquipmentDatabase {
     private static final List<Equipment> EQUIPMENT_LIST = new ArrayList<>();
     private static boolean initialized = false;
-
-    // reusable test pools
-    private static final List<EquipmentFactory.Weighted<Prefix>> STAFF_PREFIX_POOL = Arrays.asList(
-            new EquipmentFactory.Weighted<Prefix>(new Ancient(), 0.25),
-            new EquipmentFactory.Weighted<Prefix>(new Enflamed(), 0.75)
-    );
-
-    private static final List<EquipmentFactory.Weighted<Suffix>> STAFF_SUFFIX_POOL = Arrays.asList(
-            new EquipmentFactory.Weighted<Suffix>(new OfTheNorthWind(), 0.5),
-            new EquipmentFactory.Weighted<Suffix>(new OfFortitude(), 0.5)
-    );
-
-    private static final List<EquipmentFactory.Weighted<Prefix>> SHIELD_PREFIX_POOL = Arrays.asList(
-            new EquipmentFactory.Weighted<Prefix>(new Ancient(), 1.0)
-    );
-
-    private static final List<EquipmentFactory.Weighted<Suffix>> SHIELD_SUFFIX_POOL = Arrays.asList(
-            new EquipmentFactory.Weighted<Suffix>(new OfTheNorthWind(), 1.0)
-    );
 
     public static void init() {
         if (initialized) return;
@@ -50,64 +24,64 @@ public class EquipmentDatabase {
         factory.registerPrototype(
                 EquipmentKey.LESSERSTAFF.key(),
                 EquipmentRegistry.get(EquipmentKey.LESSERSTAFF.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                LesserStaffPools.PREFIX_POOL, 0.5,
+                LesserStaffPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.DAGGER.key(),
                 EquipmentRegistry.get(EquipmentKey.DAGGER.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                DaggerPools.PREFIX_POOL, 0.5,
+                DaggerPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.TOWERSHIELD.key(),
                 EquipmentRegistry.get(EquipmentKey.TOWERSHIELD.key()),
-                SHIELD_PREFIX_POOL, 0.5,
-                SHIELD_SUFFIX_POOL, 0.5
+                TowerShieldPools.PREFIX_POOL, 0.5,
+                TowerShieldPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.LONGSWORD.key(),
                 EquipmentRegistry.get(EquipmentKey.LONGSWORD.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                LongswordPools.PREFIX_POOL, 0.5,
+                LongswordPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.LONGBOW.key(),
                 EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                LongbowPools.PREFIX_POOL, 0.5,
+                LongbowPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.PLATEARMOR.key(),
                 EquipmentRegistry.get(EquipmentKey.PLATEARMOR.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.LEATHERARMOR.key(),
                 EquipmentRegistry.get(EquipmentKey.LEATHERARMOR.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                LeatherArmorPools.PREFIX_POOL, 0.5,
+                LeatherArmorPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.RING.key(),
                 EquipmentRegistry.get(EquipmentKey.RING.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                RingPools.PREFIX_POOL, 0.5,
+                RingPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
                 EquipmentKey.AMULET.key(),
                 EquipmentRegistry.get(EquipmentKey.AMULET.key()),
-                STAFF_PREFIX_POOL, 0.5,
-                STAFF_SUFFIX_POOL, 0.5
+                AmuletPools.PREFIX_POOL, 0.5,
+                AmuletPools.SUFFIX_POOL, 0.5
         );
 
         // sample items for quick debugging

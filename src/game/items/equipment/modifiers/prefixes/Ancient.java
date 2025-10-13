@@ -2,9 +2,9 @@ package items.equipment.modifiers.prefixes;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.Prefix;
+import items.equipment.modifiers.EquipmentPrefix;
 
-public class Ancient implements Prefix {
+public class Ancient implements EquipmentPrefix {
    
     @Override
     public void apply(Equipment target) {

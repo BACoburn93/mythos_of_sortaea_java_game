@@ -4,18 +4,18 @@ import abilities.database.AbilityDatabase;
 import enemies.Enemy;
 import enemies.modifiers.EnemySuffix;
 
-public class Cryomancer implements EnemySuffix {
+public class Pyromancer implements EnemySuffix {
     @Override
     public void apply(Enemy enemy) {
         enemy.updateLevelAndExperience(1);
 
-        enemy.getAttributes().increaseKnowledge(15);
+        enemy.getAttributes().increaseKnowledge(10);
         
-        enemy.addAbility(AbilityDatabase.IMPALING_ICE);
+        enemy.addAbility(AbilityDatabase.FIREBALL);
     }
 
     @Override
     public String getName() {
-        return " Cryomancer";
+        return " Pyromancer";
     }
 }

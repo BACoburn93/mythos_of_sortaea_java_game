@@ -19,7 +19,7 @@ public class Goblin extends Enemy {
             new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             1
         );
-        setupModifiers();
+        // setupModifiers();
     }
 
     // @Override

@@ -1,7 +1,7 @@
 package enemies;
 
-import enemies.modifiers.Prefix;
-import enemies.modifiers.Suffix;
+import enemies.modifiers.EnemyPrefix;
+import enemies.modifiers.EnemySuffix;
 import utils.StringUtils;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class EnemyFactory {
     }
 
     // create with explicit prefix/suffix
-    public static Enemy createEnemy(String baseType, Prefix prefix, Suffix suffix) {
+    public static Enemy createEnemy(String baseType, EnemyPrefix prefix, EnemySuffix suffix) {
         Function<String, Enemy> ctor = EnemyRegistry.getConstructor(baseType);
         if (ctor == null) throw new IllegalArgumentException("Unknown enemy type: " + baseType);
 
@@ -68,8 +68,8 @@ public class EnemyFactory {
         // decide prefix/suffix
         double pChance = EnemyDatabase.getPrefixChance(key);
         double sChance = EnemyDatabase.getSuffixChance(key);
-        Prefix chosenP = (rng.nextDouble() < pChance) ? pickWeighted(rng, EnemyDatabase.getPrefixPool(key)) : null;
-        Suffix chosenS = (rng.nextDouble() < sChance) ? pickWeighted(rng, EnemyDatabase.getSuffixPool(key)) : null;
+        EnemyPrefix chosenP = (rng.nextDouble() < pChance) ? pickWeighted(rng, EnemyDatabase.getPrefixPool(key)) : null;
+        EnemySuffix chosenS = (rng.nextDouble() < sChance) ? pickWeighted(rng, EnemyDatabase.getSuffixPool(key)) : null;
 
         return createEnemy(key, chosenP, chosenS);
     }

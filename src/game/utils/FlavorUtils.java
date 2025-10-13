@@ -1,8 +1,8 @@
 package utils;
 
 import items.equipment.Equipment;
-import items.equipment.modifiers.Prefix;
-import items.equipment.modifiers.Suffix;
+import items.equipment.modifiers.EquipmentPrefix;
+import items.equipment.modifiers.EquipmentSuffix;
 
 public final class FlavorUtils {
     private FlavorUtils() {}
@@ -14,7 +14,7 @@ public final class FlavorUtils {
         return target;
     }
 
-    public static Equipment applyFlavor(Equipment item, Prefix prefix, Suffix suffix) {
+    public static Equipment applyFlavor(Equipment item, EquipmentPrefix prefix, EquipmentSuffix suffix) {
         if (item == null) return null;
 
         StringBuilder name = new StringBuilder();

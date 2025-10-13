@@ -1,10 +1,10 @@
 package enemies.modifiers.prefixes;
 
 import enemies.Enemy;
-import enemies.modifiers.Prefix;
+import enemies.modifiers.EnemyPrefix;
 import utils.MathUtils;
 
-public class Wrathful implements Prefix {
+public class Wrathful implements EnemyPrefix {
     @Override
     public void apply(Enemy enemy) {
         enemy.updateLevelAndExperience(enemy.getLevel() / 10);

@@ -3,9 +3,9 @@ package items.equipment.modifiers.prefixes;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.Prefix;
+import items.equipment.modifiers.EquipmentPrefix;
 
-public class Enflamed implements Prefix {
+public class Enflamed implements EquipmentPrefix {
     public void apply(Equipment target) {
         target.setGoldValue(target.getGoldValue() * 3);
 

@@ -7,6 +7,7 @@ import handlers.ability.AbilityHandler;
 import ui.CombatUIStrings;
 import utils.GameScanner;
 import utils.InputHandler;
+import utils.StringUtils;
 import abilities.actions.ActionTypes;
 import actors.types.CombatActor;
 
@@ -42,6 +43,8 @@ public class ActionHandler {
                 break; 
             }
             CombatUIStrings.formatPartyStat(party.getCharacters());
+
+            StringUtils.stringDividerTop(character.getName(), "", 10);
 
             // Use enum selection instead of raw string input
             ActionTypes action = inputHandler.promptEnumSelection(ActionTypes.class, " ");

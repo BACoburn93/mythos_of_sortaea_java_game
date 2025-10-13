@@ -10,8 +10,8 @@ import actors.types.CombatActor;
 import characters.Character;
 import characters.Party;
 import ui.CombatUIStrings;
-import enemies.modifiers.Prefix;
-import enemies.modifiers.Suffix;
+import enemies.modifiers.EnemyPrefix;
+import enemies.modifiers.EnemySuffix;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ public class Enemy extends CombatActor {
     // private Map<Class<? extends Prefix>, Double> prefixChances = new HashMap<>();
     // private Map<Class<? extends Suffix>, Double> suffixChances = new HashMap<>();
 
-    private Prefix prefix;
-    private Suffix suffix;
+    private EnemyPrefix prefix;
+    private EnemySuffix suffix;
     
     private int spawnWeight = 1;
 
@@ -48,9 +48,9 @@ public class Enemy extends CombatActor {
         this.experience = this.getSpawnWeight() > 0 ? getLevel() * (5 * (this.spawnWeight * this.spawnWeight)) : getLevel() * 5;
     }
 
-    protected void setupModifiers() {
+    // protected void setupModifiers() {
 
-    }
+    // }
 
     // Getters and Setters
     public int getExperience() { return experience; }
@@ -59,11 +59,11 @@ public class Enemy extends CombatActor {
     public List<Ability> getAbilities() { return abilities; }
     public void setAbilities(List<Ability> abilities) { this.abilities = abilities; }
 
-    public Prefix getPrefix() { return prefix; }
-    public void setPrefix(Prefix prefix) { this.prefix = prefix; }
+    public EnemyPrefix getPrefix() { return prefix; }
+    public void setPrefix(EnemyPrefix prefix) { this.prefix = prefix; }
 
-    public Suffix getSuffix() { return suffix; }
-    public void setSuffix(Suffix suffix) { this.suffix = suffix; }
+    public EnemySuffix getSuffix() { return suffix; }
+    public void setSuffix(EnemySuffix suffix) { this.suffix = suffix; }
 
     public int getSpawnWeight() { return spawnWeight; }
     public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
