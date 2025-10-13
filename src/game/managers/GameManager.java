@@ -44,8 +44,11 @@ public class GameManager {
             for (Object o : drops) {
                 if (o instanceof Equipment) {
                     evt.getParty().getSharedEquipment().add((Equipment) o);
+                    System.out.println("Loot Obtained! " + evt.getEnemy().getName() + " dropped: ");
+                    System.out.println(o);
                 } else if (o instanceof Integer) {
                     evt.getParty().addGold((Integer) o);
+                    System.out.println("Gold Obtained! " + evt.getEnemy().getName() + " dropped: " + o + " gold.");
                 }
             }
         });
