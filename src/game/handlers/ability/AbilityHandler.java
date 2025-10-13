@@ -11,6 +11,8 @@ import utils.StringUtils;
 import characters.Character;
 import characters.Party;
 import enemies.Enemy;
+import events.EnemyDeathEvent;
+import events.EventBus;
 import handlers.EquipmentHandler;
 import handlers.TargetSelector;
 import abilities.Ability;
@@ -133,7 +135,7 @@ public class AbilityHandler {
         CombatUIStrings.printHitPointsRemaining(chosenTarget);
 
         if (chosenTarget.getHealthValues().getValue() < 0 && chosenTarget instanceof Enemy) {
-            actors = handleKillEnemy(party, (Enemy) chosenTarget);
+            actors = handleKillEnemy((Enemy) chosenTarget, party);
         }
     }
 
@@ -163,7 +165,7 @@ public class AbilityHandler {
         CombatUIStrings.printHitPointsRemaining(target);
 
         if (target.getHealthValues().getValue() < 0 && target instanceof Enemy) {
-            actors = handleKillEnemy(party, (Enemy) target);
+            actors = handleKillEnemy((Enemy) target, party);
         }
     }
 
@@ -308,17 +310,19 @@ public class AbilityHandler {
         }
     }
 
-    private ArrayList<CombatActor> handleKillEnemy(Party party, Enemy enemy) {
+    private ArrayList<CombatActor> handleKillEnemy(Enemy enemy, Party party) {
         System.out.println(enemy.getName() + " has been slain.");
 
-        List<Object> drops = LootManager.generateDrops(enemy);
-        for (Object o : drops) {
-            if (o instanceof Equipment) {
-                party.getSharedEquipment().add((Equipment) o);
-            } else if (o instanceof Integer) {
-                party.addGold((Integer) o);
-            }
-        }
+        EventBus.publish(new EnemyDeathEvent(enemy, party));
+
+        // List<Object> drops = LootManager.generateDrops(enemy);
+        // for (Object o : drops) {
+        //     if (o instanceof Equipment) {
+        //         party.getSharedEquipment().add((Equipment) o);
+        //     } else if (o instanceof Integer) {
+        //         party.addGold((Integer) o);
+        //     }
+        // }
 
         enemies.remove(enemy);
 

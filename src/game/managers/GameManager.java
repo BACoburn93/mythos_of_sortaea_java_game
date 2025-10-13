@@ -2,6 +2,8 @@ package managers;
 
 import containers.GameContainer;
 import enemies.EnemyDatabase;
+import events.EnemyDeathEvent;
+import events.EventBus;
 import handlers.*;
 import model.navigation.GameFlowManager;
 import model.navigation.regions.Forest;
@@ -25,6 +27,7 @@ import characters.jobs.Jobs.WarriorJob;
 import items.equipment.Equipment;
 import items.equipment.EquipmentDatabase;
 import items.equipment.EquipmentKey;
+import loot.LootManager;
 
 public class GameManager {
     private final InputHandler inputHandler = new InputHandler();
@@ -35,6 +38,17 @@ public class GameManager {
         MenuUIStrings.titleScreen();
         EquipmentDatabase.init();
         EnemyDatabase.init();
+
+        EventBus.subscribe(EnemyDeathEvent.class, evt -> {
+            var drops = LootManager.generateDrops(evt.getEnemy());
+            for (Object o : drops) {
+                if (o instanceof Equipment) {
+                    evt.getParty().getSharedEquipment().add((Equipment) o);
+                } else if (o instanceof Integer) {
+                    evt.getParty().addGold((Integer) o);
+                }
+            }
+        });
 
         while (gameIsRunning) {
             MenuUIStrings.mainMenu();
