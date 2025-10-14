@@ -1,4 +1,4 @@
-package handlers.ability;
+package handlers.ability.executers;
 
 import java.util.Random;
 import abilities.Ability;
@@ -7,6 +7,7 @@ import abilities.ability_types.WeaponAbility;
 import actors.types.CombatActor;
 import characters.Character;
 import enemies.Enemy;
+import handlers.ability.AbilityHandler;
 
 public class TargetingAbilityExecutor implements AbilityExecutor {
     @Override

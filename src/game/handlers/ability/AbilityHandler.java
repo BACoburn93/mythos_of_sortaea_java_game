@@ -1,7 +1,8 @@
 package handlers.ability;
 
 import java.util.Random;
-import java.util.function.BiFunction;
+import java.util.Map;
+import java.util.List;
 
 import ui.CombatUIStrings;
 import ui.GeneralUIStrings;
@@ -15,20 +16,18 @@ import events.EnemyDeathEvent;
 import events.EventBus;
 import handlers.EquipmentHandler;
 import handlers.TargetSelector;
+import handlers.ability.executers.AbilityExecutor;
+import handlers.ability.executers.TargetingAbilityExecutor;
+import handlers.ability.executers.WeaponAbilityExecutor;
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
-import abilities.damages.Damage;
-import actors.attributes.AttributeTypes;
 import actors.types.CombatActor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import items.equipment.item_types.*;
-import items.equipment.interfaces.WeaponDamageProvider;
 
 public class AbilityHandler {
     private GameScanner scanner;
@@ -47,13 +46,12 @@ public class AbilityHandler {
         this.actors = actors;
         this.enemies = enemies;
 
-        // Used to register different ability executors
-        executors.add(new WeaponAbilityExecutor());
-        executors.add(new TargetingAbilityExecutor());
-
-        // register map entries for specificity -- Prevents parent class from overriding child class
+        // register executors once
         registerExecutor(WeaponAbility.class, new WeaponAbilityExecutor());
         registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
+        // keep executors list for fallback supports()
+        executors.clear();
+        executors.addAll(List.of(new WeaponAbilityExecutor(), new TargetingAbilityExecutor()));
     }
 
     public AbilityHandler(GameScanner scanner, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
@@ -72,67 +70,18 @@ public class AbilityHandler {
         registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
     }
 
-    // - Weapon Handling -
-    // Helper class to hold weapon stats
-    private static class WeaponStats {
-        final double baseDamage;
-        final AttributeTypes attrToAttWith;
-        final BiFunction<Integer, Integer, Damage> damageFactory;
-
-        WeaponStats(double baseDamage, AttributeTypes attrToAttWith, BiFunction<Integer, Integer, Damage> damageFactory) {
-            this.baseDamage = baseDamage;
-            this.attrToAttWith = attrToAttWith;
-            this.damageFactory = damageFactory;
-        }
-    }
-
-    // Resolves the weapon stats based on whether the ability is offhand or not
-    private WeaponStats resolveWeaponStats(Character caster, WeaponAbility ability) {
-        boolean useOffhand = ability != null && ability.isOffhand();
-        String slotKey = useOffhand ? "Offhand" : "Mainhand";
-        items.equipment.equipment_slots.EquipmentSlot slot = caster.getEquipmentSlots().get(slotKey);
-
-        if (slot != null && slot.getEquippedItem() instanceof WeaponDamageProvider wp) {
-            return new WeaponStats(wp.getDamage(), wp.getWeaponDamageAttr(), wp.getBaseDamageType());
-        }
-
-        return new WeaponStats(
-            caster.getJobObj().getUnarmedDamage(),
-            caster.getJobObj().getUnarmedDamageAttr(),
-            caster.getJobObj().getBaseDamageType()
-        );
-    }
-
-    // Handles a weapon attack, optionally with a weapon ability
+    // small, high-level weapon attack delegator
     public void weaponAttack(Character caster, WeaponAbility ability, CombatActor chosenTarget, Random random) {
-        if (chosenTarget == null) return;
-
-        WeaponStats stats = resolveWeaponStats(caster, ability);
-        double baseDamage = stats.baseDamage;
-        AttributeTypes attrToAttWith = stats.attrToAttWith;
-        BiFunction<Integer,Integer,Damage> damageFactory = stats.damageFactory;
-
-        final double finalDamage;
-
-        if (ability != null) {
-            double abilityMultiplier = ability.getMultiplier();
-            finalDamage = baseDamage * abilityMultiplier;
-        } else {
-            finalDamage = baseDamage;
-        }
-        // Damage dealt from the weapon itself, modified by ability multiplier
+        var stats = WeaponStatsResolver.resolve(caster, ability);
+        double baseDamage = stats.baseDamage();
         if (ability == null || ability.getMultiplier() > 0) {
             caster.attack(
                 chosenTarget,
-                () -> damageFactory.apply((int) finalDamage / 2, (int) finalDamage),
-                attrToAttWith
+                () -> stats.damageFactory().apply((int)baseDamage/2, (int)baseDamage),
+                stats.attrToAttWith()
             );
         }
-
-        // Damage dealt from the ability itself
-        if(ability != null) {
-            attackTarget(caster, chosenTarget, ability, random);
-        }
+        if (ability != null) attackTarget(caster, chosenTarget, ability, random);
     }
 
     // - Ability Handling -
@@ -183,87 +132,20 @@ public class AbilityHandler {
         }
     }
 
-    private void checkLeftRange(int start, Enemy mainTarget, int leftRange, ArrayList<CombatActor> targetsToHit) {
-        int leftSpaces = mainTarget.getSpawnWeight() - 1;
-        int idx = start - 1;
-
-        while (idx >= 0 && leftSpaces < leftRange) {
-            Enemy e = enemies.get(idx);
-            int eWeight = e.getSpawnWeight();
-
-            if (leftSpaces + (eWeight / 2) <= leftRange) {
-                if (!targetsToHit.contains(e)) {
-                    targetsToHit.add(e);
-                }
-                leftSpaces += eWeight;
-                idx--;
-            } else {
-                break;
-            }
-        }
+    public void handleTargetingAbility(Character character, TargetingAbility ta, CombatActor chosenTarget, Random random) {
+        int left = ta.getLeftRange(), right = ta.getRightRange();
+        int idx = enemies.indexOf(chosenTarget);
+        if (idx == -1) return;
+        Enemy center = enemies.get(idx);
+        var targets = TargetingHelper.expandEnemyTargets(enemies, center, left, right);
+        for (CombatActor t : targets) attackTarget(character, t, ta, random);
     }
 
-    private void checkRightRange(int end, Enemy mainTarget, int rightRange, ArrayList<CombatActor> targetsToHit) {
-        int rightSpaces = mainTarget.getSpawnWeight() - 1;
-        int idx = end + 1;
-
-        while (idx < enemies.size() && rightSpaces < rightRange) {
-            Enemy e = enemies.get(idx);
-            int eWeight = e.getSpawnWeight();
-
-            if (rightSpaces + (eWeight / 2) <= rightRange) {
-                if (!targetsToHit.contains(e)) {
-                    targetsToHit.add(e);
-                }
-                rightSpaces += eWeight;
-                idx++;
-            } else {
-                break;
-            }
-        }
-    }
-
-    public void handleTargetingAbility(Character character, TargetingAbility targetingAbility, CombatActor chosenTarget, Random random) {
-        int leftRange = targetingAbility.getLeftRange();
-        int rightRange = targetingAbility.getRightRange();
-
-        int targetIndex = enemies.indexOf(chosenTarget);
-        if (targetIndex == -1) return;
-
-        Enemy mainTarget = enemies.get(targetIndex);
-
-        ArrayList<CombatActor> targetsToHit = new ArrayList<>();
-        targetsToHit.add(mainTarget);
-
-        checkLeftRange(targetIndex, mainTarget, leftRange, targetsToHit);
-        checkRightRange(targetIndex, mainTarget, rightRange, targetsToHit);
-
-        for (CombatActor target : targetsToHit) {
-            attackTarget(character, target, targetingAbility, random);
-        }
-    }
-
-    public void handleTargetingAbilityAgainstParty(Enemy caster, TargetingAbility targetingAbility, CombatActor chosenTarget, Random random) {
-        int leftRange = targetingAbility.getLeftRange();
-        int rightRange = targetingAbility.getRightRange();
-
-        List<Character> chars = this.party.getCharacters();
-        int center = chars.indexOf(chosenTarget);
-        if (center == -1) {
-            if (chosenTarget instanceof Character c) {
-                center = chars.indexOf(c);
-            }
-            if (center == -1) return;
-        }
-
-        int from = Math.max(0, center - leftRange);
-        int to = Math.min(chars.size() - 1, center + rightRange);
-
-        for (int i = from; i <= to; i++) {
-            Character t = chars.get(i);
-            if (t.getHealthValues().getValue() <= 0) continue; // skip dead
-            attackTargetByEnemy(caster, t, targetingAbility, random);
-        }
+    public void handleTargetingAbilityAgainstParty(Enemy caster, TargetingAbility ta, CombatActor chosenTarget, Random random) {
+        Character center = (chosenTarget instanceof Character) ? (Character) chosenTarget : null;
+        if (center == null) return;
+        var targets = TargetingHelper.expandPartyTargets(party, center, ta.getLeftRange(), ta.getRightRange());
+        for (Character ch : targets) attackTargetByEnemy(caster, ch, ta, random);
     }
 
     private void attackTargetByEnemy(Enemy enemy, CombatActor target, Ability ability, Random random) {
@@ -276,9 +158,9 @@ public class AbilityHandler {
         }
         CombatUIStrings.printHitPointsRemaining(target);
 
-        // Optional: handle character death if needed (hook into party/manager)
+        // Optional: handle character death if needed (maybe hook into party/manager)
         if (target.getHealthValues().getValue() < 0 && target instanceof Character) {
-            // you can notify CombatManager / EventBus here if you want centralized removal
+            // might notify CombatManager / EventBus here if I want centralized removal
             System.out.println(target.getName() + " has been slain.");
         }
     }
@@ -302,6 +184,7 @@ public class AbilityHandler {
         return dist;
     }
 
+    // executeAbility stays but delegates to executors (no heavy logic here)
     public void executeAbility(CombatActor caster, CombatActor target, Ability chosenAbility, Random random) {
         AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
 
@@ -333,11 +216,8 @@ public class AbilityHandler {
                 ex.execute(caster, target, chosenAbility, this, random);
             }
         } else {
-            System.out.println("Ability type not recognized.");
-            // fallback: if caster is CombatActor then call its default attack method if available
-            try {
-                if (caster != null) caster.attack(target, chosenAbility);
-            } catch (NoSuchMethodError ignored) {}
+            // fallback
+            if (caster != null) caster.attack(target, chosenAbility);
         }
     }
 
