@@ -20,8 +20,9 @@ public class WeaponAbilityExecutor implements AbilityExecutor {
     }
 
     @Override
-    public void execute(Enemy caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
-        // handler.handleWeaponAbility(caster, (WeaponAbility) ability, target, random);
+    public void execute(CombatActor caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
+        // Null for now, as only Characters can use WeaponAbilities
     }
+
 
 }

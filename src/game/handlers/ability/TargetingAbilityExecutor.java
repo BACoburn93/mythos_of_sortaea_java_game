@@ -1,13 +1,12 @@
 package handlers.ability;
 
 import java.util.Random;
-
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
+import actors.types.CombatActor;
 import characters.Character;
 import enemies.Enemy;
-import actors.types.CombatActor;
 
 public class TargetingAbilityExecutor implements AbilityExecutor {
     @Override
@@ -17,11 +16,16 @@ public class TargetingAbilityExecutor implements AbilityExecutor {
 
     @Override
     public void execute(Character caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
-        handler.handleTargetingAbility(caster, (TargetingAbility) ability, target, random);
+        execute((CombatActor) caster, target, ability, handler, random);
     }
 
     @Override
-    public void execute(Enemy caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
-        handler.handleTargetingAbilityAgainstParty(caster, (TargetingAbility) ability, target, random);
+    public void execute(CombatActor caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
+        TargetingAbility ta = (TargetingAbility) ability;
+        if (caster instanceof Enemy) {
+            handler.handleTargetingAbilityAgainstParty((Enemy) caster, ta, target, random);
+        } else {
+            handler.handleTargetingAbility((Character) caster, ta, target, random);
+        }
     }
 }

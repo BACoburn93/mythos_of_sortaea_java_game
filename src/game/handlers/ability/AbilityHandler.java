@@ -302,7 +302,7 @@ public class AbilityHandler {
         return dist;
     }
 
-    private void executeAbility(Character caster, CombatActor target, Ability chosenAbility, Random random) {
+    public void executeAbility(CombatActor caster, CombatActor target, Ability chosenAbility, Random random) {
         AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
 
         if (ex == null) {
@@ -327,42 +327,17 @@ public class AbilityHandler {
         }
 
         if (ex != null) {
-            ex.execute(caster, target, chosenAbility, this, random);
+            if (caster instanceof Character) {
+                ex.execute((Character) caster, target, chosenAbility, this, random);
+            } else {
+                ex.execute(caster, target, chosenAbility, this, random);
+            }
         } else {
             System.out.println("Ability type not recognized.");
-        }
-    }
-
-    // Overload for Enemy casters — make it public so CombatManager can call it.
-    public void executeAbility(Enemy caster, CombatActor target, Ability chosenAbility, Random random) {
-        AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
-
-        if (ex == null) {
-            int best = Integer.MAX_VALUE;
-            for (Map.Entry<Class<? extends Ability>, AbilityExecutor> entry : executorMap.entrySet()) {
-                Class<? extends Ability> key = entry.getKey();
-                int d = classDistance(key, chosenAbility.getClass());
-                if (d < best) {
-                    best = d;
-                    ex = entry.getValue();
-                }
-            }
-        }
-
-        if (ex == null) {
-            for (AbilityExecutor e : executors) {
-                if (e.supports(chosenAbility)) {
-                    ex = e;
-                    break;
-                }
-            }
-        }
-
-        if (ex != null) {
-            ex.execute(caster, target, chosenAbility, this, random);
-        } else {
-            System.out.println("Ability type not recognized.");
-            caster.attack(target, chosenAbility);
+            // fallback: if caster is CombatActor then call its default attack method if available
+            try {
+                if (caster != null) caster.attack(target, chosenAbility);
+            } catch (NoSuchMethodError ignored) {}
         }
     }
 
