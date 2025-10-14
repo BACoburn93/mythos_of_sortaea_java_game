@@ -21,5 +21,6 @@ public class Dragon extends Enemy {
             25,
             3
         );
+        setActionsPerTurn(3);
     }
 }

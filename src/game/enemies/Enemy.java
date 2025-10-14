@@ -26,6 +26,7 @@ public abstract class Enemy extends CombatActor {
     private EnemySuffix suffix;
     
     private int spawnWeight = 1;
+    private int actionsPerTurn = 1;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
                  Attributes attributes, Resistances resistances, Ability[] baseAbilities, int level) {
@@ -69,6 +70,9 @@ public abstract class Enemy extends CombatActor {
     public int getSpawnWeight() { return spawnWeight; }
     public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
 
+    public int getActionsPerTurn() { return actionsPerTurn; }
+    public void setActionsPerTurn(int actions) { this.actionsPerTurn = actions; }
+
     public void addAbility(Ability ability) {
         if (!abilities.contains(ability)) {
             abilities.add(ability);
@@ -84,28 +88,32 @@ public abstract class Enemy extends CombatActor {
         double abilityRoll = random.nextDouble(1, 100);
         int targetRoll = random.nextInt(0, validTargets.size());
 
-        for (Ability ability : this.abilities) {
-            if (abilityRoll < (double) 100 / this.abilities.size() &&
-                    this.getManaValues().getValue() >= ability.getManaCost()) {
-                Character target = validTargets.get(targetRoll);
+        while (actionsPerTurn > 0) {
+            for (Ability ability : this.abilities) {
+                if (abilityRoll < (double) 100 / this.abilities.size() &&
+                        this.getManaValues().getValue() >= ability.getManaCost()) {
+                    Character target = validTargets.get(targetRoll);
 
-                boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
+                    boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
 
-                if(!missedTarget) {
-                    this.attack(target, ability);
+                    if(!missedTarget) {
+                        this.attack(target, ability);
+                    } else {
+                        CombatUIStrings.printMissedAttack(this, target, ability);
+                    }
+
+                    this.spendMana(ability);
+                    abilityChosen = true;
+
+                    CombatUIStrings.printHitPointsRemaining(target);
+
+                    break;
                 } else {
-                    CombatUIStrings.printMissedAttack(this, target, ability);
+                    abilityRoll -= (double) 100 / this.abilities.size();
                 }
-
-                this.spendMana(ability);
-                abilityChosen = true;
-
-                CombatUIStrings.printHitPointsRemaining(target);
-
-                break;
-            } else {
-                abilityRoll -= (double) 100 / this.abilities.size();
             }
+
+            actionsPerTurn--;
         }
 
         if(abilityRoll <= 0 && !abilityChosen) {

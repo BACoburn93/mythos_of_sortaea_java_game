@@ -25,6 +25,7 @@ public class Marlboro extends Enemy {
             20,
             2
         );
+        setActionsPerTurn(2);
     }
 }
 
