@@ -15,6 +15,11 @@ public class TargetingAbility extends Ability {
         this("Attack", 1, 0, 1, damages, 0, 0, "A basic attack.");
     }
 
+    // Constructor for abilities that cost no action points and have default left/right range
+    public TargetingAbility(String name, int manaCost, Damage[] damages, String description) {
+        this(name, manaCost, 0, damages, 0, 0, description);
+    }
+
     // Basic constructor with default ranges (single target)
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages, String description) {
         this(name, manaCost, actionCost, damages, 0, 0, description);
@@ -65,6 +70,15 @@ public class TargetingAbility extends Ability {
     }
 
     // New constructors with leftRange and rightRange
+    
+    // Basic constructor with left/right ranges and no actionCost
+    public TargetingAbility(String name, int manaCost, Damage[] damages,
+                           int leftRange, int rightRange, String description) {
+        super(name, 1, manaCost, 0, damages, description);
+        this.leftRange = leftRange;
+        this.rightRange = rightRange;
+    }
+
     public TargetingAbility(String name, int manaCost, int actionCost, Damage[] damages,
                            int leftRange, int rightRange, String description) {
         super(name, 1, manaCost, actionCost, damages, description);
