@@ -16,7 +16,7 @@ public class Orc extends Enemy {
             new ManaValues(10, 5),
             new Attributes(15, 9,15, 13, 14, 10, 8),
             new Resistances(),
-            new TargetingAbility[]{ AbilityDatabase.FLASH_BANG, AbilityDatabase.PUNCH, AbilityDatabase.KICK },
+            new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             3
         );
     }

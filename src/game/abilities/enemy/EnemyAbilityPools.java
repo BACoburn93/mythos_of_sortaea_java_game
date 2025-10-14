@@ -1,30 +1,31 @@
-package enemies;
+package abilities.enemy;
 
 import abilities.database.AbilityDatabase;
-import enemies.abilities.AbilityPool;
+import enemies.EnemyKey;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class EnemyAbilityPools {
-    private static final Map<String, AbilityPool> pools = new HashMap<>();
+    private static final Map<String, EnemyAbilityPool> pools = new HashMap<>();
 
     static {
-        AbilityPool goblinPool = new AbilityPool();
-        goblinPool.addWeightedAbility(AbilityDatabase.FLASH_BANG, 60);
-        goblinPool.addWeightedAbility(AbilityDatabase.PUNCH, 40);
+        EnemyAbilityPool goblinPool = new EnemyAbilityPool();
+        goblinPool.addWeightedAbility(AbilityDatabase.FLASH_BANG, 10);
+        goblinPool.addWeightedAbility(AbilityDatabase.PUNCH, 90);
 
-        AbilityPool orcPool = new AbilityPool();
-        orcPool.addWeightedAbility(AbilityDatabase.PUNCH, 70);
-        orcPool.addWeightedAbility(AbilityDatabase.KICK, 30);
+        EnemyAbilityPool orcPool = new EnemyAbilityPool();
+        orcPool.addWeightedAbility(AbilityDatabase.FLASH_BANG, 20);
+        orcPool.addWeightedAbility(AbilityDatabase.PUNCH, 40);
+        orcPool.addWeightedAbility(AbilityDatabase.KICK, 40);
 
-        AbilityPool dragonPool = new AbilityPool();
+        EnemyAbilityPool dragonPool = new EnemyAbilityPool();
         dragonPool.addExclusiveAbility(AbilityDatabase.FIRE_BREATH);
         dragonPool.addWeightedAbility(AbilityDatabase.BITE, 40);
         dragonPool.addWeightedAbility(AbilityDatabase.TAIL, 30);
         dragonPool.addWeightedAbility(AbilityDatabase.CLAW, 30);
 
-        AbilityPool marlboroPool = new AbilityPool();
+        EnemyAbilityPool marlboroPool = new EnemyAbilityPool();
         marlboroPool.addWeightedAbility(AbilityDatabase.ROTTING_TENTACLE, 40);
         marlboroPool.addWeightedAbility(AbilityDatabase.VENOM_MAW, 30);
         marlboroPool.addWeightedAbility(AbilityDatabase.POISON_MIST, 20);
@@ -36,7 +37,7 @@ public class EnemyAbilityPools {
         pools.put(EnemyKey.MARLBORO.key(), marlboroPool);
     }
 
-    public static AbilityPool getPool(String enemyType) {
+    public static EnemyAbilityPool getPool(String enemyType) {
         return pools.get(enemyType.toLowerCase());
     }
 }

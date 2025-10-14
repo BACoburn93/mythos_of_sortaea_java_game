@@ -193,28 +193,6 @@ public class CombatActor extends Actor {
 
     }
 
-    // public void attack(CombatActor target, String attrDamageBonus) {
-    //     // to do - Test on Character when implemented
-    //     double attrToDamageBonus = 1.0;
-
-    //     switch(attrDamageBonus.toLowerCase()) {
-    //         case "strength" -> attrToDamageBonus = this.getAttributes().getStrength().getValue() / 6.0;
-    //         case "agility" -> attrToDamageBonus = this.getAttributes().getAgility().getValue() / 8.0;
-    //         case "intelligence" -> attrToDamageBonus = this.getAttributes().getKnowledge().getValue() / 10.0;
-    //         default -> attrToDamageBonus = 1.0;
-    //     }
-
-    //     int hits = attrToDamageBonus > 1 ? (int) attrToDamageBonus + (int) attrToDamageBonus : 1;
-    //     Damage[] unarmedDamage = new Damage[hits];
-    //     for (int i = 0; i < hits; i++) {
-    //         // You can adjust min/max as needed
-    //         unarmedDamage[i] = new PhysicalBludgeoningDamage(1, 8);
-    //     }
-    //     WeaponAbility ability = new WeaponAbility(unarmedDamage);
-
-    //     target.takeDamage(this, ability);
-    // }
-
     public void takeDamage(CombatActor attacker, Ability ability) {
         StringBuilder damageMessage = new StringBuilder();
 

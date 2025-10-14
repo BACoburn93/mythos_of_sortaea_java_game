@@ -54,11 +54,11 @@ public class Character extends CombatActor {
         this.job = job;
         this.level = 1;
         this.experience = 0;
-        this.actionPoints = 3;
+        this.maxActionPoints = 3;
         this.attributePoints = 0;
         this.hits = job.getHits();
-        this.maxActionPoints = this.actionPoints;
-        
+        this.actionPoints = this.maxActionPoints;
+
         this.gameScanner = gameScanner;
 
         this.abilities = new ArrayList<>(CharacterAbilities.getAbilities());

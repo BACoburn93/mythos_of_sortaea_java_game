@@ -1,10 +1,10 @@
-package enemies.abilities;
+package abilities.enemy;
 
 import java.util.*;
 
 import abilities.ability_types.TargetingAbility;
 
-public class AbilityPool {
+public class EnemyAbilityPool {
     private final Map<TargetingAbility, Integer> weightedAbilities = new LinkedHashMap<>();
     private final Set<TargetingAbility> exclusiveAbilities = new HashSet<>();
 

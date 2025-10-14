@@ -34,6 +34,8 @@ public class Arch implements EnemyPrefix {
 
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);
+
+        // enemy.setMaxActionPoints(enemy.getMaxActionPoints() + 1);
     }
 
     @Override

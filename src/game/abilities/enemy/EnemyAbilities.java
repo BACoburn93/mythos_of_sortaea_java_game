@@ -1,4 +1,4 @@
-package abilities.database;
+package abilities.enemy;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
@@ -19,7 +19,13 @@ import status_conditions.Poison;
 import status_conditions.StatusCondition;
 
 public class EnemyAbilities {
-        public static final TargetingAbility CLAW = new TargetingAbility(
+    public static final TargetingAbility PUNCH = new TargetingAbility(
+            "Punch", 0, 1, new Damage[]{new PhysicalBludgeoningDamage(6, 12)}, ""
+    );
+    public static final TargetingAbility KICK = new TargetingAbility(
+            "Kick", 0, 1, new Damage[]{new PhysicalBludgeoningDamage(5, 18)}, ""
+    );
+    public static final TargetingAbility CLAW = new TargetingAbility(
         "Claw", 
         2, 
         1, 
@@ -91,8 +97,8 @@ public class EnemyAbilities {
     );
     public static final TargetingAbility TAIL = new TargetingAbility(
         "Tail", 
-        5, 
-        1, 
+        0, 
+        2, 
         new Damage[]{
         new PhysicalBludgeoningDamage(8, 12),
         new PhysicalSlashingDamage(8, 12)
@@ -104,8 +110,8 @@ public class EnemyAbilities {
 
     public static final TargetingAbility BITE = new TargetingAbility(
         "Bite", 
-        5, 
-        30, 
+        0, 
+        1, 
         new Damage[]{new PhysicalPiercingDamage(15, 18)}, 
         "An attack with razor-sharp fangs to rend flesh."
     );
@@ -113,7 +119,7 @@ public class EnemyAbilities {
     public static final TargetingAbility FIRE_BREATH = new TargetingAbility(
         "Fire Breath",
         30, 
-        30, 
+        3, 
         new Damage[]{new SpiritualFireDamage(25, 35)}, 
         2, 
         2, 

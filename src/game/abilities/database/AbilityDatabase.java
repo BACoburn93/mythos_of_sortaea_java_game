@@ -5,12 +5,10 @@ import java.util.List;
 import abilities.Ability;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
+import abilities.enemy.EnemyAbilities;
 
 
 public class AbilityDatabase {
-    // Basic Abilities
-    public static final TargetingAbility PUNCH = BasicAbilities.PUNCH;
-    public static final TargetingAbility KICK = BasicAbilities.KICK;
 
     // Weapon Abilities
     public static final TargetingAbility SLASH = WeaponAbilities.SLASH;
@@ -20,6 +18,8 @@ public class AbilityDatabase {
     public static final TargetingAbility MAGIC_DART = WeaponAbilities.MAGIC_DART;
 
     // Enemy Abilities
+    public static final TargetingAbility PUNCH = EnemyAbilities.PUNCH;
+    public static final TargetingAbility KICK = EnemyAbilities.KICK;
     public static final TargetingAbility CLAW = EnemyAbilities.CLAW;
     public static final TargetingAbility BITE = EnemyAbilities.BITE;
     public static final TargetingAbility FLASH_BANG = EnemyAbilities.FLASH_BANG;
