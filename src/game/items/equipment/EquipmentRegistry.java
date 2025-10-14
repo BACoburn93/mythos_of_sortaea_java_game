@@ -39,8 +39,7 @@ public final class EquipmentRegistry {
                 100,
                 new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-                java.util.List.of(),
-                25.0
+                java.util.List.of()
         ));
 
         SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
@@ -48,8 +47,7 @@ public final class EquipmentRegistry {
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
                 new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
-                java.util.List.of(AbilityDatabase.SHIELD_BASH),
-                3.0
+                java.util.List.of(AbilityDatabase.SHIELD_BASH)
         ));
 
         SUPPLIERS.put(EquipmentKey.LONGSWORD.key(), () -> new Longsword(
@@ -57,8 +55,7 @@ public final class EquipmentRegistry {
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-                java.util.List.of(AbilityDatabase.SLASH),
-                77.0
+                java.util.List.of(AbilityDatabase.SLASH)
         ));
 
         SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () -> new Longbow(
@@ -86,14 +83,14 @@ public final class EquipmentRegistry {
         SUPPLIERS.put(EquipmentKey.RING.key(), () -> new Ring(
                 "Ring",
                 2000,
-                new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,100.0),
+                new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,10.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
         ));
 
         SUPPLIERS.put(EquipmentKey.AMULET.key(), () -> new Neck(
                 "Amulet",
                 2000,
-                new Attributes(100.0,0.0,0.0,0.0,0.0,0.0,0.0),
+                new Attributes(10.0,0.0,0.0,0.0,0.0,0.0,0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
         ));
     }
