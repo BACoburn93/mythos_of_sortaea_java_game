@@ -43,13 +43,15 @@ public class EnemyAbilities {
                                 new Confused(50, 100, 5)
                         }
                 )}, 
-        1,
-        1, "An intense burst of light that can blind and confuse targets."
+        2, 
+        2, "An intense burst of light that can blind and confuse targets."
     );
     public static final TargetingAbility ROTTING_TENTACLE = new TargetingAbility(
         "Rotting Tentacle", 
         30, 
         new Damage[]{new PhysicalDarknessDamage(15, 16)}, 
+        2, 
+        2, 
         "Lashing tentacle covered in decay that spreads disease."
     );
     public static final TargetingAbility VENOM_MAW = new TargetingAbility(
@@ -60,6 +62,8 @@ public class EnemyAbilities {
                         new Envenom(10, 75, 3)
                 })
         }, 
+        2, 
+        2, 
         "Fangs dripping with venom that can envenom the target."
     );
     public static final TargetingAbility POISON_MIST = new TargetingAbility(
@@ -78,6 +82,8 @@ public class EnemyAbilities {
         "Impaling Ice", 
         8, 
         new Damage[]{new PhysicalIceDamage(15, 16)}, 
+        2, 
+        2, 
         "A shard of ice that pierces the target."
     );
     public static final TargetingAbility HYDRO_BURST = new TargetingAbility(

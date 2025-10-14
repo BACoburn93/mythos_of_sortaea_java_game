@@ -4,6 +4,7 @@ import characters.Party;
 import handlers.ActionHandler;
 import handlers.EquipmentHandler;
 import handlers.ReactionHandler;
+import handlers.ability.AbilityHandler;
 import managers.CombatManager;
 import model.navigation.regions.Forest;
 import utils.GameScanner;
@@ -71,6 +72,7 @@ public class GameFlowManager {
 
                     // Create handlers
                     EquipmentHandler equipmentHandler = new EquipmentHandler(party);
+                    AbilityHandler abilityHandler = new AbilityHandler(scanner, party, allActors, enemies);
                     ActionHandler actionHandler = new ActionHandler(scanner, allActors, party, enemies, equipmentHandler);
                     ReactionHandler reactionHandler = new ReactionHandler(scanner);
 
@@ -78,6 +80,7 @@ public class GameFlowManager {
                     CombatManager combatManager = new CombatManager(
                             party,
                             enemies,
+                            abilityHandler,
                             actionHandler,
                             reactionHandler
                     );

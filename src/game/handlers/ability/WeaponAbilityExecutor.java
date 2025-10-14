@@ -5,6 +5,7 @@ import java.util.Random;
 import abilities.Ability;
 import abilities.ability_types.WeaponAbility;
 import characters.Character;
+import enemies.Enemy;
 import actors.types.CombatActor;
 
 public class WeaponAbilityExecutor implements AbilityExecutor {
@@ -16,6 +17,11 @@ public class WeaponAbilityExecutor implements AbilityExecutor {
     @Override
     public void execute(Character caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
         handler.handleWeaponAbility(caster, (WeaponAbility) ability, target, random);
+    }
+
+    @Override
+    public void execute(Enemy caster, CombatActor target, Ability ability, AbilityHandler handler, Random random) {
+        // handler.handleWeaponAbility(caster, (WeaponAbility) ability, target, random);
     }
 
 }

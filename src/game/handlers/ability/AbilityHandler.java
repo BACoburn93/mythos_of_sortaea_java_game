@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import items.equipment.item_types.*;
-import loot.LootManager;
-import items.equipment.Equipment;
 import items.equipment.interfaces.WeaponDamageProvider;
 
 public class AbilityHandler {
@@ -45,6 +43,22 @@ public class AbilityHandler {
     public AbilityHandler(GameScanner scanner, TargetSelector targetSelector, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
         this.scanner = scanner;
         this.targetSelector = targetSelector;
+        this.party = party;
+        this.actors = actors;
+        this.enemies = enemies;
+
+        // Used to register different ability executors
+        executors.add(new WeaponAbilityExecutor());
+        executors.add(new TargetingAbilityExecutor());
+
+        // register map entries for specificity -- Prevents parent class from overriding child class
+        registerExecutor(WeaponAbility.class, new WeaponAbilityExecutor());
+        registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
+    }
+
+    public AbilityHandler(GameScanner scanner, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {
+        this.scanner = scanner;
+        this.targetSelector = null;
         this.party = party;
         this.actors = actors;
         this.enemies = enemies;
@@ -229,6 +243,46 @@ public class AbilityHandler {
         }
     }
 
+    public void handleTargetingAbilityAgainstParty(Enemy caster, TargetingAbility targetingAbility, CombatActor chosenTarget, Random random) {
+        int leftRange = targetingAbility.getLeftRange();
+        int rightRange = targetingAbility.getRightRange();
+
+        List<Character> chars = this.party.getCharacters();
+        int center = chars.indexOf(chosenTarget);
+        if (center == -1) {
+            if (chosenTarget instanceof Character c) {
+                center = chars.indexOf(c);
+            }
+            if (center == -1) return;
+        }
+
+        int from = Math.max(0, center - leftRange);
+        int to = Math.min(chars.size() - 1, center + rightRange);
+
+        for (int i = from; i <= to; i++) {
+            Character t = chars.get(i);
+            if (t.getHealthValues().getValue() <= 0) continue; // skip dead
+            attackTargetByEnemy(caster, t, targetingAbility, random);
+        }
+    }
+
+    private void attackTargetByEnemy(Enemy enemy, CombatActor target, Ability ability, Random random) {
+        if (target == null) return;
+        boolean missed = random.nextInt(100) < enemy.getStatusConditions().getBlind().getValue();
+        if (!missed) {
+            enemy.attack(target, ability);
+        } else {
+            CombatUIStrings.printMissedAttack(enemy, target, ability);
+        }
+        CombatUIStrings.printHitPointsRemaining(target);
+
+        // Optional: handle character death if needed (hook into party/manager)
+        if (target.getHealthValues().getValue() < 0 && target instanceof Character) {
+            // you can notify CombatManager / EventBus here if you want centralized removal
+            System.out.println(target.getName() + " has been slain.");
+        }
+    }
+    
     public void handleWeaponAbility(Character caster, WeaponAbility chosenAbility, CombatActor chosenTarget, Random random) {
         weaponAttack(caster, chosenAbility, chosenTarget, random);
     }
@@ -278,6 +332,51 @@ public class AbilityHandler {
             System.out.println("Ability type not recognized.");
         }
     }
+
+    // Overload for Enemy casters — make it public so CombatManager can call it.
+    public void executeAbility(Enemy caster, CombatActor target, Ability chosenAbility, Random random) {
+        AbilityExecutor ex = executorMap.get(chosenAbility.getClass());
+
+        if (ex == null) {
+            int best = Integer.MAX_VALUE;
+            for (Map.Entry<Class<? extends Ability>, AbilityExecutor> entry : executorMap.entrySet()) {
+                Class<? extends Ability> key = entry.getKey();
+                int d = classDistance(key, chosenAbility.getClass());
+                if (d < best) {
+                    best = d;
+                    ex = entry.getValue();
+                }
+            }
+        }
+
+        if (ex == null) {
+            for (AbilityExecutor e : executors) {
+                if (e.supports(chosenAbility)) {
+                    ex = e;
+                    break;
+                }
+            }
+        }
+
+        if (ex != null) {
+            ex.execute(caster, target, chosenAbility, this, random);
+        } else {
+            System.out.println("Ability type not recognized.");
+            caster.attack(target, chosenAbility);
+        }
+    }
+
+    public void handleUseEnemyAbility(Enemy enemy, Ability chosenAbility) {
+        if (chosenAbility == null) return;
+
+        ArrayList<Character> validTargets = party.validTargetsInParty();
+        if (validTargets.isEmpty()) return;
+
+        Random random = new Random();
+        Character target = validTargets.get(random.nextInt(validTargets.size()));
+
+        executeAbility(enemy, target, chosenAbility, random);
+    }   
 
     public void handleUseAbility(Character character, Ability chosenAbility) {
         if (chosenAbility.getActionCost() > character.getActionPoints() || !character.canUseAbility(chosenAbility)) {

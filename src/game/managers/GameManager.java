@@ -1,10 +1,12 @@
 package managers;
 
 import containers.GameContainer;
+import enemies.Enemy;
 import enemies.EnemyDatabase;
 import events.EnemyDeathEvent;
 import events.EventBus;
 import handlers.*;
+import handlers.ability.AbilityHandler;
 import model.navigation.GameFlowManager;
 import model.navigation.regions.Forest;
 import ui.MenuUIStrings;
@@ -134,11 +136,14 @@ public class GameManager {
         EquipmentHandler equipmentHandler = new EquipmentHandler(party);
         ActionHandler actionHandler = new ActionHandler(gameScanner, allActors, party, enemies, equipmentHandler);
         ReactionHandler reactionHandler = new ReactionHandler(gameScanner);
+        AbilityHandler abilityHandler = new AbilityHandler(gameScanner, party, allActors, enemies);
+        // GameScanner scanner, TargetSelector targetSelector, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies
 
         // Start combat
         CombatManager combatManager = new CombatManager(
                 party,
                 enemies,
+                abilityHandler,
                 actionHandler,
                 reactionHandler
         );

@@ -1,28 +1,37 @@
 package managers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Random;
 
+import abilities.Ability;
 import actors.types.CombatActor;
 import characters.Party;
 import characters.Character;
 import enemies.Enemy;
 import handlers.ActionHandler;
+import handlers.EnemyHandler;
 import handlers.ReactionHandler;
+import handlers.ability.AbilityHandler;
+import utils.ActionRequest;
 
 public class CombatManager {
     private ArrayList<CombatActor> turnOrder;
     private Party party;
     private ArrayList<Enemy> enemies;
+    private AbilityHandler abilityHandler;
     private ActionHandler actionHandler;
     private ReactionHandler reactionHandler;
+    private final EnemyHandler enemyHandler = new EnemyHandler();
     private int totalExp = 0;
-
-    public CombatManager(Party party, ArrayList<Enemy> enemies,
+    
+    public CombatManager(Party party, ArrayList<Enemy> enemies, AbilityHandler abilityHandler,
                          ActionHandler actionHandler,
                          ReactionHandler reactionHandler) {
         this.party = party;
         this.enemies = enemies;
+        this.abilityHandler = abilityHandler;
         this.actionHandler = actionHandler;
         this.reactionHandler = reactionHandler;
     }
@@ -76,7 +85,20 @@ public class CombatManager {
                         actionHandler.handleTurn(c);
                     } else if (actor instanceof Enemy e) {
                         reactionHandler.handleReaction(turnOrder, party.characters);
-                        e.chooseEnemyAbility(party);
+                        // e.chooseEnemyAbility(party);
+
+                        var plan = enemyHandler.planActions(e, party);
+                        for (ActionRequest req : plan) {
+                            if (req.enemy.getHealth() <= 0) break;
+                            if (req.target.getHealth() <= 0) continue;
+
+                            if (req.enemy.getManaValues().getValue() < req.ability.getManaCost()) continue;
+
+                            req.enemy.spendMana(req.ability);
+                            // dispatch through the instance ability handler
+                            Random rng = new Random();
+                            abilityHandler.executeAbility(req.enemy, req.target, req.ability, rng);
+                        }
                     }
                     actor.handleEndTurn();
                 }

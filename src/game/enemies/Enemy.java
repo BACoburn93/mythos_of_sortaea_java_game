@@ -12,13 +12,14 @@ import characters.Party;
 import ui.CombatUIStrings;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
+import handlers.ability.AbilityHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public abstract class Enemy extends CombatActor {
-    private List<Ability> abilities;
+    public List<Ability> abilities;
     private int experience;
 
     private String typeKey;
@@ -26,7 +27,7 @@ public abstract class Enemy extends CombatActor {
     private EnemySuffix suffix;
     
     private int spawnWeight = 1;
-    private int actionsPerTurn = 1;
+    public int actionsPerTurn = 1;
 
     public Enemy(String name, HealthValues healthValues, ManaValues manaValues,
                  Attributes attributes, Resistances resistances, Ability[] baseAbilities, int level) {
@@ -79,47 +80,61 @@ public abstract class Enemy extends CombatActor {
         }
     }
 
-    public void chooseEnemyAbility(Party targetsToChooseFrom) {
-        ArrayList<Character> validTargets = targetsToChooseFrom.validTargetsInParty();
+    public void performAbilityNoConsume(Ability ability, Character target) {
+        if (ability == null || target == null) return;
 
-        boolean abilityChosen = false;
-        Random random = new Random();
+        boolean missedTarget = new java.util.Random().nextInt(100) < this.getStatusConditions().getBlind().getValue();
 
-        double abilityRoll = random.nextDouble(1, 100);
-        int targetRoll = random.nextInt(0, validTargets.size());
-
-        while (actionsPerTurn > 0) {
-            for (Ability ability : this.abilities) {
-                if (abilityRoll < (double) 100 / this.abilities.size() &&
-                        this.getManaValues().getValue() >= ability.getManaCost()) {
-                    Character target = validTargets.get(targetRoll);
-
-                    boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
-
-                    if(!missedTarget) {
-                        this.attack(target, ability);
-                    } else {
-                        CombatUIStrings.printMissedAttack(this, target, ability);
-                    }
-
-                    this.spendMana(ability);
-                    abilityChosen = true;
-
-                    CombatUIStrings.printHitPointsRemaining(target);
-
-                    break;
-                } else {
-                    abilityRoll -= (double) 100 / this.abilities.size();
-                }
-            }
-
-            actionsPerTurn--;
+        if (!missedTarget) {
+            this.attack(target, ability);
+        } else {
+            ui.CombatUIStrings.printMissedAttack(this, target, ability);
         }
 
-        if(abilityRoll <= 0 && !abilityChosen) {
-            System.out.println(this.getName() + " has insufficient mana.");
-        }
-    }
+        ui.CombatUIStrings.printHitPointsRemaining(target);
+    }   
+
+    // public void chooseEnemyAbility(Party targetsToChooseFrom) {
+    //     ArrayList<Character> validTargets = targetsToChooseFrom.validTargetsInParty();
+
+    //     boolean abilityChosen = false;
+    //     Random random = new Random();
+
+    //     double abilityRoll = random.nextDouble(1, 100);
+    //     int targetRoll = random.nextInt(0, validTargets.size());
+
+    //     while (actionsPerTurn > 0) {
+    //         for (Ability ability : this.abilities) {
+    //             if (abilityRoll < (double) 100 / this.abilities.size() &&
+    //                     this.getManaValues().getValue() >= ability.getManaCost()) {
+    //                 Character target = validTargets.get(targetRoll);
+
+    //                 boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
+
+    //                 if(!missedTarget) {
+    //                     this.attack(target, ability);
+    //                 } else {
+    //                     CombatUIStrings.printMissedAttack(this, target, ability);
+    //                 }
+
+    //                 this.spendMana(ability);
+    //                 abilityChosen = true;
+
+    //                 CombatUIStrings.printHitPointsRemaining(target);
+
+    //                 break;
+    //             } else {
+    //                 abilityRoll -= (double) 100 / this.abilities.size();
+    //             }
+    //         }
+
+    //         actionsPerTurn--;
+    //     }
+
+    //     if(abilityRoll <= 0 && !abilityChosen) {
+    //         System.out.println(this.getName() + " has insufficient mana.");
+    //     }
+    // }
 
     public void updateLevelAndExperience(int level) {
         this.setLevel(this.level + level);
