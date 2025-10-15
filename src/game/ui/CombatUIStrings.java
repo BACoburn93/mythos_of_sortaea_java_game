@@ -145,7 +145,11 @@ public class CombatUIStrings {
     }
 
     public static void printHitPointsRemaining(CombatActor actor) {
-        System.out.println(actor.getName() + " has " + StringUtils.formatInt(actor.getHealth()) + " hit points remaining.");
+        if(actor.getHealthValues().getValue() > 0) {
+            System.out.println(actor.getName() + " has " + StringUtils.formatInt(actor.getHealthValues().getValue()) + " hit points remaining.");
+        } else {
+            System.out.println(actor.getName() + " has been slain.");
+        }
     }
 
     public static void printMissedAttack(CombatActor attacker, CombatActor defender, Ability ability) {

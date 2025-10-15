@@ -42,10 +42,10 @@ public class Party {
         ArrayList<Character> validCharacters = new ArrayList<>();
 
         for (Character character : this.characters) {
-            if (character.getHealth() > 0) {
+            if (character.getHealthValues().getValue() > 0) {
                 validCharacters.add(character);
             } else {
-                System.out.println(character.getName() + " is unconscious and cannot be targeted.");
+                System.out.println(character.getName() + " is dead and cannot be targeted.");
             }
         }
 

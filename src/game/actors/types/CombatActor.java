@@ -194,6 +194,11 @@ public class CombatActor extends Actor {
     }
 
     public void takeDamage(CombatActor attacker, Ability ability) {
+        if(this.getHealthValues().getValue() <= 0) {
+            System.out.println(super.getName() + " is already dead and cannot take more damage.");
+            return;
+        }
+        
         StringBuilder damageMessage = new StringBuilder();
 
         for (Damage damage : ability.getDamages()) {
@@ -207,7 +212,7 @@ public class CombatActor extends Actor {
                     + damage.getMinDamage());
 
             int totalDamage = Math.max(baseDamage - damageToMitigate + damageToAdd, 0);
-            healthValues.setValue(healthValues.getValue() - totalDamage);
+            healthValues.setValue(Math.max(healthValues.getValue() - totalDamage, 0));
 
             CombatUIStrings.appendDamageMessage(damageMessage, attacker, this, ability, damage, totalDamage, isFirstDamage);
             applyStatusCondition(attacker, damage);

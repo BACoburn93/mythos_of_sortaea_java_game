@@ -11,12 +11,12 @@ import enemies.Enemy;
 import utils.ActionRequest;
 
 public class EnemyHandler {
-    // enemy AI logic to plan actions
+    // Enemy AI logic to plan actions
     public List<ActionRequest> planActions(Enemy enemy, Party targets) {
         // A list for planned actions to trigger in order on enemy's turn
         List<ActionRequest> plan = new ArrayList<>();
         ArrayList<Character> validTargets = targets.validTargetsInParty();
-        
+
         if (validTargets.isEmpty() || enemy.getAbilities() == null || enemy.getAbilities().isEmpty()) return plan;
 
         Random rnd = new Random();

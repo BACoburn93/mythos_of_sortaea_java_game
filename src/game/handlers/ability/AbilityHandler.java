@@ -97,7 +97,7 @@ public class AbilityHandler {
 
         CombatUIStrings.printHitPointsRemaining(chosenTarget);
 
-        if (chosenTarget.getHealthValues().getValue() < 0 && chosenTarget instanceof Enemy) {
+        if (chosenTarget.getHealthValues().getValue() <= 0 && chosenTarget instanceof Enemy) {
             actors = handleKillEnemy((Enemy) chosenTarget, party);
         }
     }
@@ -127,7 +127,7 @@ public class AbilityHandler {
         }
         CombatUIStrings.printHitPointsRemaining(target);
 
-        if (target.getHealthValues().getValue() < 0 && target instanceof Enemy) {
+        if (target.getHealthValues().getValue() <= 0 && target instanceof Enemy) {
             actors = handleKillEnemy((Enemy) target, party);
         }
     }
@@ -265,7 +265,6 @@ public class AbilityHandler {
     }
 
     private ArrayList<CombatActor> handleKillEnemy(Enemy enemy, Party party) {
-        System.out.println(enemy.getName() + " has been slain.");
 
         EventBus.publish(new EnemyDeathEvent(enemy, party));
 
