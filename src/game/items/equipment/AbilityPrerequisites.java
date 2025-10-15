@@ -12,9 +12,7 @@ public class AbilityPrerequisites {
     };
 
     public static final WeaponTypes[] SLASHING_WEAPONS = {
-        WeaponTypes.SHORTSWORD,
-        WeaponTypes.LONGSWORD,
-        WeaponTypes.BROADSWORD,
+        WeaponTypes.SWORD,
         WeaponTypes.CLAYMORE,
         WeaponTypes.KATANA,
         WeaponTypes.SCIMITAR,
@@ -31,8 +29,7 @@ public class AbilityPrerequisites {
         WeaponTypes.SPEAR,
         WeaponTypes.JAVELIN,
         WeaponTypes.CROSSBOW,
-        WeaponTypes.LONGBOW,
-        WeaponTypes.SHORTBOW,
+        WeaponTypes.BOW,
     };
 
     public static final WeaponTypes[] BLUDGEONING_WEAPONS = {
@@ -45,36 +42,7 @@ public class AbilityPrerequisites {
 
     public static final WeaponTypes[] RANGED_WEAPONS = {
         WeaponTypes.CROSSBOW,
-        WeaponTypes.LONGBOW,
-        WeaponTypes.SHORTBOW,
+        WeaponTypes.BOW,
         WeaponTypes.JAVELIN,
     };
 }
-
-// BATTLEAXE,
-// BROADSWORD,
-// CLAYMORE,
-// CROSSBOW,
-// DAGGER,
-// FISTICUFFS,
-// FLAIL,
-// HALBERD,
-// JAVELIN,
-// KATANA,
-// LONGBOW,
-// LONGSWORD,
-// MACE,
-// ORB,
-// RAPIER,
-// ROD,
-// SCIMITAR,
-// SCYTHE,
-// SHORTBOW,
-// SHORTSWORD,
-// SPEAR,
-// STAFF,
-// TOME,
-// TRIDENT,
-// WAND,
-// WARHAMMER,
-// WHIP

@@ -10,8 +10,8 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;
 import items.equipment.item_types.mainhand.Dagger;
-import items.equipment.item_types.mainhand.Longbow;
-import items.equipment.item_types.mainhand.Longsword;
+import items.equipment.item_types.mainhand.Bow;
+import items.equipment.item_types.mainhand.Sword;
 import items.equipment.item_types.mainhand.Staff;
 import items.equipment.item_types.offhand.LargeShield;
 import items.equipment.item_types.torso.HeavyTorso;
@@ -50,16 +50,16 @@ public final class EquipmentRegistry {
                 java.util.List.of(AbilityDatabase.SHIELD_BASH)
         ));
 
-        SUPPLIERS.put(EquipmentKey.LONGSWORD.key(), () -> new Longsword(
-                "Longsword",
+        SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
+                "Sword",
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
                 java.util.List.of(AbilityDatabase.SLASH)
         ));
 
-        SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () -> new Longbow(
-                "Longbow",
+        SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
+                "Bow",
                 800,
                 new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),

@@ -11,7 +11,7 @@ import items.equipment.modifiers.prefixes.Enflamed;
 import items.equipment.modifiers.suffixes.OfFortitude;
 import items.equipment.modifiers.suffixes.OfTheNorthWind;
 
-public class LongswordPools {
+public class SwordPools {
     public static final List<EquipmentFactory.Weighted<EquipmentPrefix>> PREFIX_POOL = Arrays.asList(
         new EquipmentFactory.Weighted<>(new Ancient(), 0.25),
         new EquipmentFactory.Weighted<>(new Enflamed(), 0.75)

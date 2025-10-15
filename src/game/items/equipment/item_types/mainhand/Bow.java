@@ -12,11 +12,11 @@ import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.item_types.WeaponTypes;
 
-public class Longbow extends Mainhand {
+public class Bow extends Mainhand {
     private static final double DEFAULT_DAMAGE = 10.0;
 
     // central constructor 
-    public Longbow(String name,
+    public Bow(String name,
                    double value,
                    boolean isTwoHanded,
                    Attributes attributes,
@@ -26,7 +26,7 @@ public class Longbow extends Mainhand {
         super(
             name,
             value,
-            WeaponTypes.LONGBOW,
+            WeaponTypes.BOW,
             true,
             attributes,
             resistances,
@@ -36,19 +36,19 @@ public class Longbow extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public Bow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
         this(name, value, true, attributes, resistances, abilities, damage);
     }
 
-    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    public Bow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
         this(name, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
-    public Longbow(String name, double value, Attributes attributes, Resistances resistances) {
+    public Bow(String name, double value, Attributes attributes, Resistances resistances) {
         this(name, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
     }
 
-    public Longbow(String name, double value) {
+    public Bow(String name, double value) {
         this(name, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
     }
 

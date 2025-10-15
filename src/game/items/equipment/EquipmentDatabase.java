@@ -43,17 +43,17 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
-                EquipmentKey.LONGSWORD.key(),
-                EquipmentRegistry.get(EquipmentKey.LONGSWORD.key()),
-                LongswordPools.PREFIX_POOL, 0.5,
-                LongswordPools.SUFFIX_POOL, 0.5
+                EquipmentKey.SWORD.key(),
+                EquipmentRegistry.get(EquipmentKey.SWORD.key()),
+                SwordPools.PREFIX_POOL, 0.5,
+                SwordPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
-                EquipmentKey.LONGBOW.key(),
-                EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
-                LongbowPools.PREFIX_POOL, 0.5,
-                LongbowPools.SUFFIX_POOL, 0.5
+                EquipmentKey.BOW.key(),
+                EquipmentRegistry.get(EquipmentKey.BOW.key()),
+                BowPools.PREFIX_POOL, 0.5,
+                BowPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(
