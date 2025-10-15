@@ -8,15 +8,11 @@ import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.types.CombatActor;
 import characters.Character;
-import characters.Party;
-import ui.CombatUIStrings;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
-import handlers.ability.AbilityHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public abstract class Enemy extends CombatActor {
     public List<Ability> abilities;

@@ -5,7 +5,6 @@ import java.util.Random;
 import abilities.Ability;
 import abilities.ability_types.WeaponAbility;
 import characters.Character;
-import enemies.Enemy;
 import handlers.ability.AbilityHandler;
 import actors.types.CombatActor;
 

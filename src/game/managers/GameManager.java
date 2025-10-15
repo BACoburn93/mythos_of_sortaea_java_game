@@ -1,7 +1,6 @@
 package managers;
 
 import containers.GameContainer;
-import enemies.Enemy;
 import enemies.EnemyDatabase;
 import events.EnemyDeathEvent;
 import events.EventBus;
