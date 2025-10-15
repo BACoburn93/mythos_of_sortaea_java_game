@@ -14,13 +14,17 @@ import items.equipment.Equipment;
 import items.equipment.item_types.WeaponTypes;
 
 public class Longsword extends Mainhand {
-    
-    public Longsword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    private static final double DEFAULT_DAMAGE = 8.0;
+
+    // central constructor
+    public Longsword(String name, double value, boolean isTwoHanded,
+                     Attributes attributes, Resistances resistances,
+                     List<Ability> abilities, double damage) {
         super(
             name,
             value,
             WeaponTypes.LONGSWORD,
-            false,
+            isTwoHanded,
             attributes,
             resistances,
             Equipment.combineWithAbilities(AbilityDatabase.STAB, abilities),
@@ -28,21 +32,21 @@ public class Longsword extends Mainhand {
         );
     }
 
+    // convenience overloads delegate to the central constructor
+    public Longsword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, value, false, attributes, resistances, abilities, damage);
+    }
+
     public Longsword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(
-            name,
-            value,
-            WeaponTypes.LONGSWORD,
-            false,
-            attributes,
-            resistances,
-            Equipment.combineWithAbilities(AbilityDatabase.STAB, abilities),
-            6.0
-        );
+        this(name, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
     public Longsword(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, WeaponTypes.LONGSWORD, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
+        this(name, value, false, attributes, resistances, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
+    }
+
+    public Longsword(String name, double value) {
+        this(name, value, false, null, null, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

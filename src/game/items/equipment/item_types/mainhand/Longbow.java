@@ -9,24 +9,47 @@ import abilities.damages.physical.PhysicalPiercingDamage;
 import abilities.database.AbilityDatabase;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
+import items.equipment.Equipment;
 import items.equipment.item_types.WeaponTypes;
 
 public class Longbow extends Mainhand {
-    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    private static final double DEFAULT_DAMAGE = 10.0;
+
+    // central constructor 
+    public Longbow(String name,
+                   double value,
+                   boolean isTwoHanded,
+                   Attributes attributes,
+                   Resistances resistances,
+                   List<Ability> abilities,
+                   double damage) {
         super(
-            name, 
-            value, 
-            WeaponTypes.LONGBOW, 
-            true, 
-            attributes, 
-            resistances, 
-            combineWithAbilities(AbilityDatabase.SHOOT, abilities),
-            10.0
+            name,
+            value,
+            WeaponTypes.LONGBOW,
+            true,
+            attributes,
+            resistances,
+            Equipment.combineWithAbilities(AbilityDatabase.SHOOT, abilities),
+            damage
         );
     }
 
+    // convenience overloads delegate to the central constructor
+    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, value, true, attributes, resistances, abilities, damage);
+    }
+
+    public Longbow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    }
+
     public Longbow(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, WeaponTypes.LONGBOW, true, attributes, resistances, List.of(AbilityDatabase.SHOOT), 10.0);
+        this(name, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
+    }
+
+    public Longbow(String name, double value) {
+        this(name, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
     }
 
     @Override

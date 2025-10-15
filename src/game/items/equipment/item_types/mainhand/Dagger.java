@@ -14,13 +14,21 @@ import items.equipment.Equipment;
 import items.equipment.item_types.WeaponTypes;
 
 public class Dagger extends Mainhand {
+    private static final double DEFAULT_DAMAGE = 6.0;
 
-    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    // central constructor
+    public Dagger(String name,
+                  double value,
+                  boolean isTwoHanded,
+                  Attributes attributes,
+                  Resistances resistances,
+                  List<Ability> abilities,
+                  double damage) {
         super(
             name,
             value,
             WeaponTypes.DAGGER,
-            false,
+            isTwoHanded,
             attributes,
             resistances,
             Equipment.combineWithAbilities(AbilityDatabase.STAB, abilities),
@@ -28,25 +36,21 @@ public class Dagger extends Mainhand {
         );
     }
 
+    // convenience overloads delegate to the central constructor
+    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, value, false, attributes, resistances, abilities, damage);
+    }
+
     public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(
-            name,
-            value,
-            WeaponTypes.DAGGER,
-            false,
-            attributes,
-            resistances,
-            Equipment.combineWithAbilities(AbilityDatabase.STAB, abilities),
-            6.0
-        );
+        this(name, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
     public Dagger(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, WeaponTypes.DAGGER, false, attributes, resistances, List.of(AbilityDatabase.STAB), 6.0);
+        this(name, value, false, attributes, resistances, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
     }
 
     public Dagger(String name, double value) {
-        super(name, value, WeaponTypes.DAGGER, false, null, null, List.of(AbilityDatabase.STAB), 6.0);
+        this(name, value, false, null, null, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {
@@ -57,5 +61,4 @@ public class Dagger extends Mainhand {
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalPiercingDamage(min, max);
     }
-
 }

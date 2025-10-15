@@ -4,6 +4,7 @@ import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.item_types.WeaponTypes;
+import items.equipment.Equipment;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -13,26 +14,37 @@ import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.database.AbilityDatabase; 
 
 public class Staff extends Mainhand {
+    private static final double DEFAULT_DAMAGE = 5.0;
 
-    public Staff(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    // central constructor
+    public Staff(String name, double value, boolean isTwoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
         super(
             name, 
             value, 
             WeaponTypes.STAFF, 
-            false, 
+            isTwoHanded, 
             attributes, 
             resistances, 
-            combineWithAbilities(AbilityDatabase.MAGIC_DART, abilities),
-            6.0
+            Equipment.combineWithAbilities(AbilityDatabase.MAGIC_DART, abilities),
+            damage
         );
     }
 
+    // convenience overloads delegate to the central constructor
+    public Staff(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, value, false, attributes, resistances, abilities, damage);
+    }
+
+    public Staff(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    }
+
     public Staff(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, WeaponTypes.STAFF, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), 6.0);
+        this(name, value, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), DEFAULT_DAMAGE);
     }
 
     public Staff(String name, double value) {
-        this(name, value, null, null, List.of(AbilityDatabase.MAGIC_DART));
+        this(name, value, null, null, List.of(AbilityDatabase.MAGIC_DART), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {
