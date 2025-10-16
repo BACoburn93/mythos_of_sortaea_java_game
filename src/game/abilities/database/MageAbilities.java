@@ -12,63 +12,62 @@ import status_conditions.Burn;
 import status_conditions.StatusCondition;
 
 public class MageAbilities {
-    public static final TargetingAbility FIREBALL = new TargetingAbility(
-        "Fireball",
-        12, 1,
-        new Damage[]{
-                new MagicalFireDamage(
-                        10,
-                        18,
-                        new StatusCondition[]{new Burn(10, 100, 2)}
-                ),
+    public static final TargetingAbility FIREBALL = new TargetingAbility.Builder(
+            "Fireball",
+            new Damage[]{
+                new MagicalFireDamage(10, 18, new StatusCondition[]{ new Burn(10, 100, 2) }),
                 new SpiritualFireDamage(3, 5)
-        },
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        2,
-        2,
-        "A sphere of flames that explodes wherever it lands."
-    );
+            })
+        .levelRequirement(12)
+        .manaCost(1)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .leftRange(2)
+        .rightRange(2)
+        .tier(3)
+        .description("A sphere of flames that explodes wherever it lands.")
+        .build();
 
-    public static final TargetingAbility ICE_SPIKE = new TargetingAbility(
-        "Ice Spike",
-        13, 1,
-        new Damage[]{
-                new MagicalIceDamage(
-                        4,
-                        8,
-                        new StatusCondition[]{new Burn(10, 100, 2)}
-                ),
+    public static final TargetingAbility ICE_SPIKE = new TargetingAbility.Builder(
+            "Ice Spike",
+            new Damage[]{
+                new MagicalIceDamage(4, 8, new StatusCondition[]{ new Burn(10, 100, 2) }),
                 new MagicalPiercingDamage(12, 14)
-        },
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        "An ice spire that guides itself to impale it's target."
-    );
+            })
+        .levelRequirement(13)
+        .manaCost(1)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .description("An ice spire that guides itself to impale it's target.")
+        .build();
 
-    public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility(
-        "Lightning Bolt",
-        10, 1,
-        new Damage[]{new MagicalLightningDamage(15, 22)},
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        "A streak of cackling plasma going forth to electrocute a target."
-    );
+    public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility.Builder(
+            "Lightning Bolt",
+            new Damage[]{ new MagicalLightningDamage(15, 22) })
+        .levelRequirement(10)
+        .manaCost(1)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .description("A streak of cackling plasma going forth to electrocute a target.")
+        .build();
 
+    public static final TargetingAbility FIRE_STORM = new TargetingAbility.Builder(
+            "Fire Storm",
+            new Damage[]{ new MagicalFireDamage(15, 30), new SpiritualFireDamage(5, 10) })
+        .manaCost(30)
+        .actionCost(0)
+        .levelRequirement(1)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .leftRange(3)
+        .rightRange(3)
+        .description("Summon a storm of fire to engulf a moderate area.")
+        .build();
 
-    // to do - change values after testing equipment prefixes/suffixes
-    public static final TargetingAbility FIRE_STORM = new TargetingAbility(
-        "Fire Storm",
-        30, 0, 1,
-        new Damage[]{new MagicalFireDamage(15, 30), new SpiritualFireDamage(5, 10)},
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        3, 3,
-        "Summon a storm of fire to engulf a moderate area."
-    );
-
-    public static final TargetingAbility METEOR_SWARM = new TargetingAbility(
-        "Meteor Swarm",
-        3, 10, 1,
-        new Damage[]{new MagicalFireDamage(20, 120), new SpiritualFireDamage(20, 120)},
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        8, 8,
-        "Summon a swarm of meteors to pummel a large area."
-    );
+    public static final TargetingAbility METEOR_SWARM = new TargetingAbility.Builder(
+            "Meteor Swarm",
+            new Damage[]{ new MagicalFireDamage(20, 120), new SpiritualFireDamage(20, 120) })
+        .manaCost(3)
+        .actionCost(10)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .leftRange(8)
+        .rightRange(8)
+        .description("Summon a swarm of meteors to pummel a large area.")
+        .build();
 }

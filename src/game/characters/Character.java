@@ -195,7 +195,14 @@ public class Character extends CombatActor {
             return selected;
         }
 
-        return new TargetingAbility("pass", 0, 0, null, "Conserve or recuperate.");
+        return new TargetingAbility.Builder(
+            "pass", 
+            null)
+            .levelRequirement(0)
+            .manaCost(0)
+            .leftRange(0)
+            .rightRange(0)
+            .description("Conserve or recuperate.").build();
     }
 
 
@@ -367,7 +374,7 @@ public class Character extends CombatActor {
             baseDamage.addBonus(attrToDamageBonus); 
             damages[i] = baseDamage;
         }
-        WeaponAbility ability = new WeaponAbility(damages);
+        WeaponAbility ability = new WeaponAbility.Builder("Attack", damages).build();
 
         target.takeDamage(this, ability);
     }

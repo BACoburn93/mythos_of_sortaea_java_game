@@ -11,49 +11,54 @@ import status_conditions.Bleed;
 import status_conditions.StatusCondition;
 
 public class WeaponAbilities {
-        public static final WeaponAbility SLASH = new WeaponAbility(
-        "Slash", 
-        new Damage[]{new PhysicalSlashingDamage(11, 19)}, 
-        1.8,
-        AbilityPrerequisites.SLASHING_WEAPONS,
-        "A powerful slash."
-    );
+    public static final WeaponAbility SLASH = new WeaponAbility.Builder(
+            "Slash",
+            new Damage[]{ new PhysicalSlashingDamage(11, 19) }
+        )
+        .multiplier(1.8)
+        .weaponTypes(AbilityPrerequisites.SLASHING_WEAPONS)
+        .description("A powerful slash.")
+        .build();
 
-    public static final WeaponAbility STAB = new WeaponAbility(
-        "Stab", 
-        new Damage[]{new PhysicalPiercingDamage(10, 20)}, 
-        1.5,
-        AbilityPrerequisites.PIERCING_WEAPONS,
-        "A precise piercing attack."
-    );
+    public static final WeaponAbility STAB = new WeaponAbility.Builder(
+            "Stab",
+            new Damage[]{ new PhysicalPiercingDamage(10, 20) }
+        )
+        .multiplier(1.5)
+        .weaponTypes(AbilityPrerequisites.PIERCING_WEAPONS)
+        .description("A precise piercing attack.")
+        .build();
 
-    public static final WeaponAbility BASH = new WeaponAbility(
-        "Bash", 
-        new Damage[]{new PhysicalBludgeoningDamage(12, 18)}, 
-        1.6,
-        AbilityPrerequisites.BLUDGEONING_WEAPONS,
-        "A powerful bash."
-    );
+    public static final WeaponAbility BASH = new WeaponAbility.Builder(
+            "Bash",
+            new Damage[]{ new PhysicalBludgeoningDamage(12, 18) }
+        )
+        .multiplier(1.6)
+        .weaponTypes(AbilityPrerequisites.BLUDGEONING_WEAPONS)
+        .description("A powerful bash.")
+        .build();
 
-    public static final WeaponAbility SHOOT = new WeaponAbility(
-        "Shoot", 
-        new Damage[]{
-            new PhysicalPiercingDamage(
-                6, 
-                15, 
-                new StatusCondition[]{new Bleed(5, 50, 2)}
-            ),
-        }, 
-        1.4,
-        AbilityPrerequisites.RANGED_WEAPONS,
-        "A ranged attack using a bow or crossbow."
-    );
+    public static final WeaponAbility SHOOT = new WeaponAbility.Builder(
+            "Shoot",
+            new Damage[]{
+                new PhysicalPiercingDamage(
+                    6,
+                    15,
+                    new StatusCondition[]{ new Bleed(5, 50, 2) }
+                )
+            }
+        )
+        .multiplier(1.4)
+        .weaponTypes(AbilityPrerequisites.RANGED_WEAPONS)
+        .description("A ranged attack using a bow or crossbow.")
+        .build();
 
-    public static final WeaponAbility MAGIC_DART = new WeaponAbility(
-        "Magic Dart", 
-        new Damage[]{new MagicalPiercingDamage(11, 19)}, 
-        0,
-        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
-        "A basic magical attack."
-    );
+    public static final WeaponAbility MAGIC_DART = new WeaponAbility.Builder(
+            "Magic Dart",
+            new Damage[]{ new MagicalPiercingDamage(11, 19) }
+        )
+        .multiplier(0)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .description("A basic magical attack.")
+        .build();
 }

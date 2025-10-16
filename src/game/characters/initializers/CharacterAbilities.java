@@ -11,16 +11,29 @@ import java.util.ArrayList;
 public class CharacterAbilities {
     public static ArrayList<Ability> getAbilities() {
         ArrayList<Ability> abilities = new ArrayList<>();
-        abilities.add(new TargetingAbility("Kill",
-                0, 3,
-                new Damage[]{new PhysicalBludgeoningDamage(9999, 99999)},
-                "Instant death to all who fall victim."));
-        abilities.add(new TargetingAbility("Pinnacle of Existence",
-                0, 1,
-                new Damage[]{new SpiritualLightDamage(9999, 99999)},
-                99,
-                99,
-                "The ultimate expression of power."));
+
+        abilities.add(new TargetingAbility.Builder(
+                "Kill",
+                new Damage[]{ new PhysicalBludgeoningDamage(9999, 99999) }
+            )
+            .levelRequirement(0)
+            .manaCost(3)
+            .description("Instant death to all who fall victim.")
+            .build()
+        );
+
+        abilities.add(new TargetingAbility.Builder(
+                "Pinnacle of Existence",
+                new Damage[]{ new SpiritualLightDamage(9999, 99999) }
+            )
+            .levelRequirement(0)
+            .manaCost(1)
+            .leftRange(99)
+            .rightRange(99)
+            .description("The ultimate expression of power.")
+            .build()
+        );
+
         return abilities;
     }
 }

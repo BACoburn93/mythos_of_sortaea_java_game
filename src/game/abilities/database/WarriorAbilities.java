@@ -6,18 +6,22 @@ import abilities.damages.Damage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 
 public class WarriorAbilities {
-    public static final WeaponAbility SHIELD_BASH = new WeaponAbility(
+    public static final WeaponAbility SHIELD_BASH = new WeaponAbility.Builder(
         "Shield Bash",
-        2, 1,
-        new Damage[]{new PhysicalBludgeoningDamage(15, 22)},
-        1.25,
-        "A bash with a shield that stuns the target."
-    ).withOffhand();
+        new Damage[]{new PhysicalBludgeoningDamage(15, 22)}
+    )
+    .levelRequirement(2)
+    .manaCost(1)
+    .description("A bash with a shield that stuns the target.")
+    .withOffhand()
+    .build();
 
-    public static final TargetingAbility CHARGE = new TargetingAbility(
+    public static final TargetingAbility CHARGE = new TargetingAbility.Builder(
         "Charge",
-        5, 2,
-        new Damage[]{new PhysicalBludgeoningDamage(15, 22)},
-        "A charging attack that deals heavy damage."
-    );
+        new Damage[]{new PhysicalBludgeoningDamage(15, 22)}
+    )
+    .levelRequirement(5)
+    .manaCost(2)
+    .description("A charging attack that deals heavy damage.")
+    .build();
 }
