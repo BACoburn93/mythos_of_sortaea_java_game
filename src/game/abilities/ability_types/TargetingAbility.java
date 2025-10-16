@@ -32,9 +32,12 @@ public class TargetingAbility extends Ability {
 
     // Builder
     public static class Builder {
+        // Required
         private final String name;
         private Damage[] damages;
-        private int levelRequirement = 1;
+
+        // Optional/Defaults
+        private int levelRequirement = Math.max(this.tier * 2 - 1, 1);
         private int manaCost = 0;
         private int actionCost = 1;
         private ArmorTypes[] armorTypes = null;

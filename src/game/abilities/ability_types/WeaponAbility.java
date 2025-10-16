@@ -21,6 +21,7 @@ public class WeaponAbility extends TargetingAbility {
                          WeaponTypes[] weaponTypes,
                          int leftRange,
                          int rightRange,
+                         int tier,
                          String description) {
         // armorTypes and shieldTypes are null for weapon abilities, tier defaults to 0
         super(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponTypes, leftRange, rightRange, 0, description);
@@ -38,18 +39,19 @@ public class WeaponAbility extends TargetingAbility {
 
     // Builder for WeaponAbility
     public static class Builder {
-        // required
+        // Required
         private final String name;
         private final Damage[] damages;
 
-        // optional / defaults
-        private int levelRequirement = 1;
+        // Optional/Defaults
+        private int levelRequirement = Math.max(this.tier * 2 - 1, 1);
         private int manaCost = 0;
         private int actionCost = 1;
         private double multiplier = 1.0;
         private items.equipment.item_types.WeaponTypes[] weaponTypes = null;
         private int leftRange = 0;
         private int rightRange = 0;
+        private int tier = 0;
         private String description = "";
         private boolean offhand = false;
 
@@ -65,6 +67,7 @@ public class WeaponAbility extends TargetingAbility {
         public Builder weaponTypes(items.equipment.item_types.WeaponTypes[] v) { this.weaponTypes = v; return this; }
         public Builder leftRange(int v) { this.leftRange = v; return this; }
         public Builder rightRange(int v) { this.rightRange = v; return this; }
+        public Builder tier(int v) { this.tier = v; return this; }
         public Builder description(String v) { this.description = v; return this; }
         public Builder withOffhand() { this.offhand = true; return this; }
 
@@ -79,6 +82,7 @@ public class WeaponAbility extends TargetingAbility {
                 weaponTypes,
                 leftRange,
                 rightRange,
+                tier,
                 description
             );
             if (offhand) wa.withOffhand();

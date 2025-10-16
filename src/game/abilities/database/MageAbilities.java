@@ -30,12 +30,13 @@ public class MageAbilities {
     public static final TargetingAbility ICE_SPIKE = new TargetingAbility.Builder(
             "Ice Spike",
             new Damage[]{
-                new MagicalIceDamage(4, 8, new StatusCondition[]{ new Burn(10, 100, 2) }),
+                new MagicalIceDamage(4, 8),
                 new MagicalPiercingDamage(12, 14)
             })
         .levelRequirement(13)
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .tier(4)
         .description("An ice spire that guides itself to impale it's target.")
         .build();
 
@@ -45,6 +46,7 @@ public class MageAbilities {
         .levelRequirement(10)
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .tier(3)
         .description("A streak of cackling plasma going forth to electrocute a target.")
         .build();
 
@@ -57,6 +59,7 @@ public class MageAbilities {
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .leftRange(3)
         .rightRange(3)
+        .tier(5)
         .description("Summon a storm of fire to engulf a moderate area.")
         .build();
 
@@ -68,6 +71,7 @@ public class MageAbilities {
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .leftRange(8)
         .rightRange(8)
+        .tier(9)
         .description("Summon a swarm of meteors to pummel a large area.")
         .build();
 }

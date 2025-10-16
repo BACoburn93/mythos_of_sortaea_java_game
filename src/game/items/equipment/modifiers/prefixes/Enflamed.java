@@ -25,6 +25,8 @@ public class Enflamed implements EquipmentPrefix {
         target.getResistances().multiplyIce(4.0);
         target.getResistances().multiplyFire(6.0);
 
+        // to do - create a dynamic class that adds ability based on the item's tier
+        // do the same for enemys based on their level
         target.getAbilities().add(AbilityDatabase.FIRE_STORM);
     }
 

@@ -18,7 +18,7 @@ public abstract class Equipment implements Comparator<Equipment> {
     private Attributes attributes;
     private Resistances resistances;
 
-        // Helper factories that produce zero/default objects
+    // Helper factories that produce zero/default objects
     private static Attributes defaultAttributes() {
         return new Attributes(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     }
@@ -27,6 +27,8 @@ public abstract class Equipment implements Comparator<Equipment> {
         return new Resistances(0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
+    // to do - add in a tier property that might affect value, attributes, resistances, abilities, etc
+    // also convert all Equipment to utilize the Builder pattern
     protected Equipment(String name,
                         double value,
                         EquipmentTypes equipmentType,
