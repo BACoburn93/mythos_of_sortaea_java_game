@@ -47,6 +47,14 @@ public final class EnemyDatabase {
                 GoblinPools.SUFFIX_POOL, 0.5
         );
 
+        registerPrototype(
+            EnemyKey.ORC.key(),
+                1, 
+                OrcPools.PREFIX_POOL, 0.5,
+                OrcPools.SUFFIX_POOL, 0.5
+        );
+
+        // Loot tables
         LootManager.registerDropTable(EnemyKey.GOBLIN.key(),
             new DropTable()
                 .add(new LootEntry(EquipmentKey.DAGGER.key(), 1.0, 0.25, 1, 1, 0))
@@ -54,11 +62,26 @@ public final class EnemyDatabase {
                 .add(LootEntry.gold(5, 0.9))
         );
 
-        registerPrototype(
-            EnemyKey.ORC.key(),
-                1, 
-                OrcPools.PREFIX_POOL, 0.5,
-                OrcPools.SUFFIX_POOL, 0.5
+        LootManager.registerDropTable(EnemyKey.ORC.key(),
+            new DropTable()
+                .add(new LootEntry(EquipmentKey.SWORD.key(), 1.0, 0.15, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.TOWER_SHIELD.key(), 1.0, 0.05, 1, 1, 0))
+                .add(LootEntry.gold(25, 0.9))
+        );
+
+        LootManager.registerDropTable(EnemyKey.MARLBORO.key(),
+            new DropTable()
+                .add(new LootEntry(EquipmentKey.STAFF.key(), 1.0, 0.35, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.AMULET.key(), 1.0, 0.15, 1, 1, 0))
+                .add(LootEntry.gold(125, 0.9))
+        );
+
+        LootManager.registerDropTable(EnemyKey.DRAGON.key(),
+            new DropTable()
+                .add(new LootEntry(EquipmentKey.GREAT_STAFF.key(), 1.0, 0.5, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.PLATE_ARMOR.key(), 1.0, 0.35, 1, 1, 0))
+                .add(new LootEntry(EquipmentKey.RING.key(), 1.0, 0.25, 1, 1, 0))
+                .add(LootEntry.gold(250, 0.9))
         );
     }
 

@@ -1,5 +1,8 @@
 package items.equipment.modifiers.prefixes;
 
+import java.util.List;
+
+import abilities.database.AbilityDatabase;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
@@ -21,6 +24,8 @@ public class Enflamed implements EquipmentPrefix {
 
         target.getResistances().multiplyIce(4.0);
         target.getResistances().multiplyFire(6.0);
+
+        target.getAbilities().add(AbilityDatabase.FIRE_STORM);
     }
 
     @Override

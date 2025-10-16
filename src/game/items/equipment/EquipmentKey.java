@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 
 public enum EquipmentKey {
     LESSER_STAFF("lesserstaff"),
+    STAFF("staff"),
+    GREAT_STAFF("greatstaff"),
     DAGGER("dagger"),
     TOWER_SHIELD("towershield"),
     SWORD("sword"),

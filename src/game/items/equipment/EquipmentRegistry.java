@@ -29,9 +29,29 @@ public final class EquipmentRegistry {
     static {
         // Register suppliers with reasonably complete default prototype constructors.
         // These suppliers should produce a base prototype item (Database may flavor it).
+        
         SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
                 "Lesser Staff",
-                10
+                20
+        ));
+
+        SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
+                "Staff",
+                400,
+                new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
+                new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
+                java.util.List.of(AbilityDatabase.FIREBALL),
+                8.0
+        ));
+
+        SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> new Staff(
+                "Great Staff",
+                3000,
+                true,
+                new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
+                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
+                java.util.List.of(AbilityDatabase.FIREBALL),
+                12.0
         ));
 
         SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(

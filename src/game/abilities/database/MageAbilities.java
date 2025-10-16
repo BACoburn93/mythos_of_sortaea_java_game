@@ -52,10 +52,21 @@ public class MageAbilities {
         "A streak of cackling plasma going forth to electrocute a target."
     );
 
+
+    // to do - change values after testing equipment prefixes/suffixes
+    public static final TargetingAbility FIRE_STORM = new TargetingAbility(
+        "Fire Storm",
+        30, 0, 1,
+        new Damage[]{new MagicalFireDamage(15, 30), new SpiritualFireDamage(5, 10)},
+        AbilityPrerequisites.SPELL_CASTING_WEAPONS,
+        3, 3,
+        "Summon a storm of fire to engulf a moderate area."
+    );
+
     public static final TargetingAbility METEOR_SWARM = new TargetingAbility(
         "Meteor Swarm",
         3, 10, 1,
-        new Damage[]{new MagicalFireDamage(20, 120), new MagicalFireDamage(20, 120)},
+        new Damage[]{new MagicalFireDamage(20, 120), new SpiritualFireDamage(20, 120)},
         AbilityPrerequisites.SPELL_CASTING_WEAPONS,
         8, 8,
         "Summon a swarm of meteors to pummel a large area."

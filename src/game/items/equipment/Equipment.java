@@ -113,7 +113,11 @@ public abstract class Equipment implements Comparator<Equipment> {
         this.resistances = resistances;
     }
 
-    protected static List<Ability> combineWithAbilities(Ability baseAbility, List<Ability> abilities) {
+    public List<Ability> getAbilities() {
+        return new ArrayList<>();
+    }
+
+    public static List<Ability> combineWithAbilities(Ability baseAbility, List<Ability> abilities) {
         List<Ability> result = new ArrayList<>();
         if (baseAbility != null) result.add(baseAbility);
         if (abilities != null) result.addAll(abilities);

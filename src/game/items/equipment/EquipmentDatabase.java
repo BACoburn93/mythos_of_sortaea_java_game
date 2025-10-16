@@ -24,8 +24,22 @@ public class EquipmentDatabase {
         factory.registerPrototype(
                 EquipmentKey.LESSER_STAFF.key(),
                 EquipmentRegistry.get(EquipmentKey.LESSER_STAFF.key()),
-                LesserStaffPools.PREFIX_POOL, 0.5,
-                LesserStaffPools.SUFFIX_POOL, 0.5
+                StaffPools.PREFIX_POOL, 1,
+                StaffPools.SUFFIX_POOL, 0.25
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.STAFF.key(),
+                EquipmentRegistry.get(EquipmentKey.STAFF.key()),
+                StaffPools.PREFIX_POOL, 0.4,
+                StaffPools.SUFFIX_POOL, 0.4
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.GREAT_STAFF.key(),
+                EquipmentRegistry.get(EquipmentKey.GREAT_STAFF.key()),
+                StaffPools.PREFIX_POOL, 0.65,
+                StaffPools.SUFFIX_POOL, 0.65
         );
 
         factory.registerPrototype(
