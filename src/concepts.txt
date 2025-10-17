@@ -3,9 +3,13 @@ Gameflow Concepts
 Story
     Cliche Demon Lord or Archdevil impending doom scenario (Multiple options available)
         The final boss won't be initially known unless some time is spent investigating which one it is.
-    His/Her generals have already been dispersed across the land in preparation for his summoning
-    He will be summoned in (Time to Summon here)
-    The party must spend time wisely to prepare to defeat the final boss (savign the world).
+    His/Her generals have already been dispersed across the land in preparation for his/her summoning
+    He/She will be summoned in (Established Game Time)
+    The party must spend time wisely to prepare to defeat the final boss (saving the world).
+        There will be various options to choose from depending on where you are
+            Combat, Skills, Travelling, Exploring, Dungeons, Ruins, Resting, Hidden Bosses, etc.
+            These will each provide various benefits or could be detrimental
+            The higher the risk, the higher the potential reward
     
 Timebased Events - Week-based? Day-based?
     Total time before final boss? Time from game start to game finish.
@@ -13,30 +17,33 @@ Timebased Events - Week-based? Day-based?
     What should the total time of each game loop be?
     How many choices should there be before the endgame.
         Less than 50? Less than 100? Less than 500?
+        How many is too many and how many is too few?
+        What is considered a choice and how long does it take?
+        How long should a cocmpleted run take? 
+            2 hours? 3 hours? 5 hours? More?
 
-    Bosses spawn at specific times or when travelling to specific places?
+    Should bosses spawn at specific times or when travelling to specific places?
         Should regions be travelled linearly or going from A to B should just be time-based.
         Should all Non-Final Bosses have similar power levels, or have strength based on the order you fight them.
-        Should they be required to fight the final boss, or just make the final boss fight more managable?
+        Should they be required to defeat before facing the final boss, or just make the final boss fight more managable?
             I.E. Obtain relics that weaken the final boss.
 
-    Add in noncombat skills which take time to improve per character to help in different scenarios
-        I.E. 
-            Spend x time in town working for a merchant to better appraise objects while travelling
-                Think finding higher potential quality or quantity of loot when excavating ruins
-            Spend time working for an Apothecary to improve potionmaking from resources gathered while travelling
+    Add in noncombat skills which take time to improve per character to help in different scenarios?
+        Spend x time in town working for a merchant to better appraise objects while travelling
+            Think finding higher potential quality or quantity of loot when excavating ruins
+        Spend time working for an Apothecary to improve potionmaking from resources gathered while travelling
 
 Account-based Concepts
     Database? 
         Free?
             Local - Single Player?
-                SQLite
-            Cloudbased - Multiplayer?
+                SQLite (Might start with this at the very least)
+            Cloudbased - Multiplayer? 
                 Relational Database?
                     PostgreSQL or MySQL
-                Document-Oriented?
+                Document-Oriented? (No-SQL DB)
                     MongoDB or Firebase
-        Paid? (Only if I forecast profits to offset price of Database)
+        Paid? (Only if I forecast profits to offset price of Database. All viable for Multiplayer game mode)
             Amazon Aurora
             Firebase - Paid Tier
             Azure Database with PostgreSQL
@@ -44,10 +51,11 @@ Account-based Concepts
         Create a table to store game session data
             Use as many factors as possible without inflating the information displayed
             Compendium
-                Base items and Enemies that are discovered
+                Base items and enemies that are discovered
                     Modifiers for those items and enemies
                 Discovered abilities
                 Discovered hidden characters with secret or specialized jobs
+                    Altair? Valcor? Azrileth?
         When a party wins a run, create account bound party slots that save the builds
             All character items, equipment, abilities, etc.
             Saved to play in different game modes 

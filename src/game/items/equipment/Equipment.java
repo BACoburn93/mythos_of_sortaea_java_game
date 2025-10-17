@@ -17,6 +17,7 @@ public abstract class Equipment implements Comparator<Equipment> {
     private ItemType itemType;
     private Attributes attributes;
     private Resistances resistances;
+    private List<Ability> abilities;
 
     // Helper factories that produce zero/default objects
     private static Attributes defaultAttributes() {
@@ -42,10 +43,13 @@ public abstract class Equipment implements Comparator<Equipment> {
         this.itemType = itemType;
         this.attributes = (attributes == null) ? defaultAttributes() : attributes;
         this.resistances = (resistances == null) ? defaultResistances() : resistances;
+        if (abilities == null) this.abilities = new ArrayList<>();
+        else if (abilities instanceof ArrayList) this.abilities = abilities;
+        else this.abilities = new ArrayList<>(abilities);
     }
 
     protected Equipment(String name, double value, EquipmentTypes equipmentType, Attributes attributes, Resistances resistances) {
-        this(name, value, equipmentType, null, attributes, resistances, null);
+        this(name, value, equipmentType, null, attributes, resistances, new ArrayList<>());
     }
 
     public Equipment(String name, int value, EquipmentTypes equipmentType,
@@ -64,7 +68,7 @@ public abstract class Equipment implements Comparator<Equipment> {
     }
 
     protected Equipment(String name, double value, EquipmentTypes equipmentType) {
-        this(name, value, equipmentType, null, null, null, null);
+        this(name, value, equipmentType, null, null, null, new ArrayList<>());
     }
 
     public String getName() {
@@ -116,7 +120,13 @@ public abstract class Equipment implements Comparator<Equipment> {
     }
 
     public List<Ability> getAbilities() {
-        return new ArrayList<>();
+        return abilities;
+    }
+
+    public void setAbilities(List<Ability> abilities) {
+        if (abilities == null) this.abilities = new ArrayList<>();
+        else if (abilities instanceof ArrayList) this.abilities = abilities;
+        else this.abilities = new ArrayList<>(abilities);
     }
 
     public static List<Ability> combineWithAbilities(Ability baseAbility, List<Ability> abilities) {

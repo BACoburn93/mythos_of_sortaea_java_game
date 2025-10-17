@@ -1,7 +1,7 @@
 package abilities.ability_types;
 
 import abilities.damages.Damage;
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class WeaponAbility extends TargetingAbility {
     private double multiplier;
@@ -48,7 +48,7 @@ public class WeaponAbility extends TargetingAbility {
         private int manaCost = 0;
         private int actionCost = 1;
         private double multiplier = 1.0;
-        private items.equipment.item_types.WeaponTypes[] weaponTypes = null;
+        private items.equipment.item_types.enums.WeaponTypes[] weaponTypes = null;
         private int leftRange = 0;
         private int rightRange = 0;
         private int tier = 0;
@@ -64,7 +64,7 @@ public class WeaponAbility extends TargetingAbility {
         public Builder manaCost(int v) { this.manaCost = v; return this; }
         public Builder actionCost(int v) { this.actionCost = v; return this; }
         public Builder multiplier(double v) { this.multiplier = v; return this; }
-        public Builder weaponTypes(items.equipment.item_types.WeaponTypes[] v) { this.weaponTypes = v; return this; }
+        public Builder weaponTypes(items.equipment.item_types.enums.WeaponTypes[] v) { this.weaponTypes = v; return this; }
         public Builder leftRange(int v) { this.leftRange = v; return this; }
         public Builder rightRange(int v) { this.rightRange = v; return this; }
         public Builder tier(int v) { this.tier = v; return this; }

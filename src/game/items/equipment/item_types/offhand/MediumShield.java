@@ -8,7 +8,7 @@ import abilities.damages.Damage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
-import items.equipment.item_types.ShieldTypes;
+import items.equipment.item_types.enums.ShieldTypes;
 
 public class MediumShield extends Offhand {
 

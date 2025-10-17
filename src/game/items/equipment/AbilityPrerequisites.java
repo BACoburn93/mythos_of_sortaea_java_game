@@ -1,6 +1,6 @@
 package items.equipment;
 
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class AbilityPrerequisites {
     

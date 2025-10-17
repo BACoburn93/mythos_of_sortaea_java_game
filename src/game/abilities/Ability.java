@@ -1,9 +1,9 @@
 package abilities;
 
 import abilities.damages.Damage;
-import items.equipment.item_types.ArmorTypes;
-import items.equipment.item_types.ShieldTypes;
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.ArmorTypes;
+import items.equipment.item_types.enums.ShieldTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 import java.util.Arrays;
 

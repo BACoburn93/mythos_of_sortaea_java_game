@@ -11,6 +11,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import items.equipment.item_types.ItemType;
+import items.equipment.item_types.enums.AccessoryTypes;
 import status_conditions.StatusConditions;
 
 import java.util.ArrayList;
@@ -33,7 +34,14 @@ public abstract class Job implements DamageTypeProvider {
     private AttributeTypes unarmedDamageAttr;
     private int hits;
 
+    private static Set<ItemType> defaultEquipmentProficiencies = Set.of(
+            AccessoryTypes.RING,
+            AccessoryTypes.NECK,
+            AccessoryTypes.WRIST
+    );
+
     protected abstract JobTypes getJobType();
+
 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, ArrayList<Ability> jobAbilities, 
@@ -45,12 +53,13 @@ public abstract class Job implements DamageTypeProvider {
         this.resistances = resistances;
         this.statusConditions = new StatusConditions();
         this.jobAbilities = jobAbilities;
-        this.equippableItemTypes = equippableItemTypes;
+        this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
+        if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
     }
-
+ 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
                StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
@@ -62,12 +71,13 @@ public abstract class Job implements DamageTypeProvider {
         this.resistances = resistances;
         this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
-        this.equippableItemTypes = equippableItemTypes;
+        this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
+        if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
     }
-
+ 
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
                StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
@@ -79,7 +89,8 @@ public abstract class Job implements DamageTypeProvider {
         this.resistances = resistances;
         this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
-        this.equippableItemTypes = equippableItemTypes;
+        this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
+        if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
         this.unarmedDamage = unarmedDamage;
         this.unarmedDamageAttr = AttributeTypes.STRENGTH;
         this.hits = 1;
@@ -171,7 +182,7 @@ public abstract class Job implements DamageTypeProvider {
 
     public List<Ability> getPoolAbilities() {
         AbilityPool pool = getAbilityPool();
-        return pool != null ? pool.getAbilities() : List.of();
+        return pool != null ? pool.getAbilities() : new ArrayList<>(List.of());
     }
 
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {

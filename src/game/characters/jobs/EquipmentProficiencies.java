@@ -2,6 +2,9 @@ package characters.jobs;
 
 import java.util.Set;
 import items.equipment.item_types.*;
+import items.equipment.item_types.enums.ArmorTypes;
+import items.equipment.item_types.enums.ShieldTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class EquipmentProficiencies {
     public static final Set<ItemType> mageAllowed = Set.of(

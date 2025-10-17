@@ -2,9 +2,9 @@ package abilities.ability_types;
 
 import abilities.Ability;
 import abilities.damages.Damage;
-import items.equipment.item_types.ArmorTypes;
-import items.equipment.item_types.ShieldTypes;
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.ArmorTypes;
+import items.equipment.item_types.enums.ShieldTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class TargetingAbility extends Ability {
     private int leftRange;

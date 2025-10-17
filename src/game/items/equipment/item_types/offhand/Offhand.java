@@ -1,5 +1,6 @@
 package items.equipment.item_types.offhand;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -20,7 +21,7 @@ public abstract class Offhand extends Equipment implements DamageTypeProvider, W
     private double damage;
 
     public Offhand(String name, double value, ItemType itemType, Attributes attributes, Resistances resistances) {
-        super(name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances, null);
+        super(name, value, EquipmentTypes.OFFHAND, itemType, attributes, resistances, new ArrayList<>());
         this.abilities = null;
         this.damage = 0;
     }

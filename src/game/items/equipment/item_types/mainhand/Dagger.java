@@ -1,5 +1,6 @@
 package items.equipment.item_types.mainhand;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -11,7 +12,7 @@ import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class Dagger extends Mainhand {
     private static final double DEFAULT_DAMAGE = 6.0;
@@ -46,11 +47,11 @@ public class Dagger extends Mainhand {
     }
 
     public Dagger(String name, double value, Attributes attributes, Resistances resistances) {
-        this(name, value, false, attributes, resistances, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
+        this(name, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
     }
 
     public Dagger(String name, double value) {
-        this(name, value, false, null, null, List.of(AbilityDatabase.STAB), DEFAULT_DAMAGE);
+        this(name, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

@@ -1,6 +1,9 @@
 Prioritized Workload Notes
+--------------------------
 
-also convert all Equipment to utilize the Builder pattern
+Fix characters not being able to equip ring and neck slot items
+
+Convert all Equipment to utilize the Builder pattern
 
 add in a tier property that might affect value, attributes, resistances, abilities, etc
 

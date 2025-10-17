@@ -3,8 +3,10 @@ package items.equipment.item_types.mainhand;
 import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
-import items.equipment.item_types.WeaponTypes;
 import items.equipment.Equipment;
+import items.equipment.item_types.enums.WeaponTypes;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -40,11 +42,11 @@ public class Staff extends Mainhand {
     }
 
     public Staff(String name, double value, Attributes attributes, Resistances resistances) {
-        this(name, value, false, attributes, resistances, List.of(AbilityDatabase.MAGIC_DART), DEFAULT_DAMAGE);
+        this(name, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
     }
 
     public Staff(String name, double value) {
-        this(name, value, null, null, List.of(AbilityDatabase.MAGIC_DART), DEFAULT_DAMAGE);
+        this(name, value, null, null, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

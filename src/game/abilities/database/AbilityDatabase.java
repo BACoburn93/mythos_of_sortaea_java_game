@@ -1,5 +1,6 @@
 package abilities.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import abilities.Ability;
@@ -50,26 +51,26 @@ public class AbilityDatabase {
 
     // Class Ability Getters
     public static List<Ability> getMageAbilities() {
-        return List.of(
+        return new ArrayList<>(List.of(
             MageAbilities.FIREBALL,
             MageAbilities.ICE_SPIKE,
             MageAbilities.LIGHTNING_BOLT,
             MageAbilities.METEOR_SWARM
-        );
+        ));
     }
 
     public static List<Ability> getWarriorAbilities() {
-        return List.of(
+        return new ArrayList<>(List.of(
             WarriorAbilities.SHIELD_BASH,
             WarriorAbilities.CHARGE
-        );
+        ));
     }
 
     public static List<Ability> getRogueAbilities() {
-        return List.of(
+        return new ArrayList<>(List.of(
             RogueAbilities.BACKSTAB,
             RogueAbilities.POISON_DART,
             RogueAbilities.SHADOW_STEP
-        );
+        ));
     }
 }

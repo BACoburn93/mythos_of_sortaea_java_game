@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import items.equipment.item_types.*;
+import items.equipment.item_types.enums.ArmorTypes;
+import items.equipment.item_types.enums.ShieldTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class AbilityHandler {
     private GameScanner scanner;
@@ -51,7 +54,7 @@ public class AbilityHandler {
         registerExecutor(TargetingAbility.class, new TargetingAbilityExecutor());
         // keep executors list for fallback supports()
         executors.clear();
-        executors.addAll(List.of(new WeaponAbilityExecutor(), new TargetingAbilityExecutor()));
+        executors.addAll(new ArrayList<>(List.of(new WeaponAbilityExecutor(), new TargetingAbilityExecutor())));
     }
 
     public AbilityHandler(GameScanner scanner, Party party, ArrayList<CombatActor> actors, ArrayList<Enemy> enemies) {

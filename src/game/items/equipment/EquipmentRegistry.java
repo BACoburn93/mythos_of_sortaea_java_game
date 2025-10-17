@@ -1,6 +1,8 @@
 package items.equipment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -40,7 +42,7 @@ public final class EquipmentRegistry {
                 400,
                 new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
                 new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
-                java.util.List.of(AbilityDatabase.FIREBALL),
+                new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
                 8.0
         ));
 
@@ -50,7 +52,7 @@ public final class EquipmentRegistry {
                 true,
                 new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-                java.util.List.of(AbilityDatabase.FIREBALL),
+                new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
                 12.0
         ));
 
@@ -59,7 +61,7 @@ public final class EquipmentRegistry {
                 100,
                 new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-                java.util.List.of()
+                new ArrayList<>(List.of())
         ));
 
         SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
@@ -67,7 +69,7 @@ public final class EquipmentRegistry {
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
                 new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
-                java.util.List.of(AbilityDatabase.SHIELD_BASH)
+                new ArrayList<>(List.of(AbilityDatabase.SHIELD_BASH))
         ));
 
         SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
@@ -75,7 +77,7 @@ public final class EquipmentRegistry {
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-                java.util.List.of(AbilityDatabase.SLASH)
+                new ArrayList<>(List.of(AbilityDatabase.SLASH))
         ));
 
         SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
@@ -83,7 +85,7 @@ public final class EquipmentRegistry {
                 800,
                 new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-                java.util.List.of(AbilityDatabase.POISON_DART)
+                new ArrayList<>(List.of(AbilityDatabase.POISON_DART))
         ));
 
         SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () -> new HeavyTorso(

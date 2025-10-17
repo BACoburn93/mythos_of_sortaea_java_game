@@ -10,7 +10,7 @@ import abilities.database.AbilityDatabase;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
-import items.equipment.item_types.WeaponTypes;
+import items.equipment.item_types.enums.WeaponTypes;
 
 public class Bow extends Mainhand {
     private static final double DEFAULT_DAMAGE = 10.0;
