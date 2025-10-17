@@ -31,14 +31,9 @@ public abstract class Equipment implements Comparator<Equipment> {
 
     // to do - add in a tier property that might affect value, attributes, resistances, abilities, etc
     // also convert all Equipment to utilize the Builder pattern
-    protected Equipment(String name,
-                        int tier,
-                        double value,
-                        EquipmentTypes equipmentType,
-                        ItemType itemType,
-                        Attributes attributes,
-                        Resistances resistances,
-                        List<Ability> abilities) {
+    protected Equipment(String name, int tier, double value, EquipmentTypes equipmentType,
+                        ItemType itemType, Attributes attributes, Resistances resistances,
+                        java.util.List<Ability> abilities) {
         this.name = name;
         this.tier = Math.max(0, tier);
         this.value = value;
@@ -50,32 +45,6 @@ public abstract class Equipment implements Comparator<Equipment> {
         else if (abilities instanceof ArrayList) this.abilities = abilities;
         else this.abilities = new ArrayList<>(abilities);
     }
-
-    // Remove all other constructors in favor of the primary one above
-    // All subclasses MIGHT use a Builder to create Equipment objects
-
-    // protected Equipment(String name, double value, EquipmentTypes equipmentType, Attributes attributes, Resistances resistances) {
-    //     this(name, value, equipmentType, null, attributes, resistances, new ArrayList<>());
-    // }
-
-    // public Equipment(String name, int value, EquipmentTypes equipmentType,
-    //                  ItemType itemType, Attributes attributes, Resistances resistances) {
-    //     this.name = name;
-    //     this.value = value;
-    //     this.equipmentType = equipmentType;
-    //     this.itemType = itemType;
-    //     this.attributes = attributes;
-    //     this.resistances = resistances;
-    // }
-
-    // public Equipment(String name, int value, EquipmentTypes equipmentType,
-    //                  Attributes attributes, Resistances resistances) {
-    //     this(name, value, equipmentType, null, attributes, resistances);
-    // }
-
-    // protected Equipment(String name, double value, EquipmentTypes equipmentType) {
-    //     this(name, value, equipmentType, null, null, null, new ArrayList<>());
-    // }
 
     public String getName() {
         return name;
@@ -231,5 +200,29 @@ public abstract class Equipment implements Comparator<Equipment> {
             (int) res.getDarkness().getValue(),
             (int) res.getLight().getValue()
         );
+    }
+
+    // Generic self-typed builder for shared Equipment fields
+    public static abstract class Builder<T extends Builder<T>> {
+        protected String name;
+        protected int tier = 0;
+        protected double value = 0.0;
+        protected EquipmentTypes equipmentType;
+        protected ItemType itemType;
+        protected Attributes attributes;
+        protected Resistances resistances;
+        protected java.util.List<Ability> abilities;
+
+        protected abstract T self();
+        public abstract Equipment build();
+
+        public T name(String name) { this.name = name; return self(); }
+        public T tier(int tier) { this.tier = Math.max(0, tier); return self(); }
+        public T value(double value) { this.value = value; return self(); }
+        public T equipmentType(EquipmentTypes t) { this.equipmentType = t; return self(); }
+        public T itemType(ItemType it) { this.itemType = it; return self(); }
+        public T attributes(Attributes a) { this.attributes = a; return self(); }
+        public T resistances(Resistances r) { this.resistances = r; return self(); }
+        public T abilities(java.util.List<Ability> ab) { this.abilities = ab; return self(); }
     }
 }

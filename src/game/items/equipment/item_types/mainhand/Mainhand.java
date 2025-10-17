@@ -58,4 +58,15 @@ public abstract class Mainhand extends Equipment implements DamageTypeProvider, 
     public void setDamage(double damage) {
         this.damage = damage;
     }
+
+    // Builder for Mainhand-specific fields; concrete mainhand items extend this
+    public static abstract class Builder<T extends Builder<T>> extends Equipment.Builder<T> {
+        protected boolean twoHanded = false;
+        protected double damage = 0.0;
+        protected ItemType itemType;
+
+        public T twoHanded(boolean b) { this.twoHanded = b; return self(); }
+        public T damage(double d) { this.damage = d; return self(); }
+        public T itemType(ItemType it) { this.itemType = it; return self(); }
+    }
 }

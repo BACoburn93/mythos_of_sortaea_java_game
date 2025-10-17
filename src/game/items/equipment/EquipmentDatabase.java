@@ -50,6 +50,13 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
+                EquipmentKey.KNIFE.key(),
+                EquipmentRegistry.get(EquipmentKey.KNIFE.key()),
+                DaggerPools.PREFIX_POOL, 0.5,
+                DaggerPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
                 EquipmentKey.TOWER_SHIELD.key(),
                 EquipmentRegistry.get(EquipmentKey.TOWER_SHIELD.key()),
                 TowerShieldPools.PREFIX_POOL, 0.5,

@@ -12,6 +12,7 @@ import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
+import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 public class Dagger extends Mainhand {
@@ -66,4 +67,23 @@ public class Dagger extends Mainhand {
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalPiercingDamage(min, max);
     }
+
+    public static class Builder extends Mainhand.Builder<Builder> {
+        public Builder() {
+            this.itemType = WeaponTypes.DAGGER; 
+            this.equipmentType = EquipmentTypes.MAINHAND;
+            this.value = 10.0;
+            this.damage = 6.0;
+        }
+
+        @Override protected Builder self() { return this; }
+
+        public Dagger build() {
+            List<Ability> abs = (abilities == null) ? new ArrayList<>() :
+                (abilities instanceof ArrayList ? abilities : new ArrayList<>(abilities));
+            return new Dagger(name, tier, value, twoHanded, attributes, resistances, abs, damage);
+        }
+    }
+
+    public static Builder builder() { return new Builder(); }
 }

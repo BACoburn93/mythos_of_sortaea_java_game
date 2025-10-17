@@ -68,6 +68,10 @@ public final class EquipmentRegistry {
                 new ArrayList<>(List.of())
         ));
 
+        // Testing the Builder option
+        Dagger knife = Dagger.builder().name("Knife").tier(2).damage(7).build();
+        SUPPLIERS.put(EquipmentKey.KNIFE.key(), () -> knife);
+
         SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
                 "Tower Shield",
                 2,

@@ -109,7 +109,8 @@ public class GameManager {
         String[] keys = {
             EquipmentKey.LESSER_STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
             EquipmentKey.SWORD.key(), EquipmentKey.BOW.key(), EquipmentKey.PLATE_ARMOR.key(),
-            EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
+            EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key(),
+            EquipmentKey.STAFF.key(), EquipmentKey.GREAT_STAFF.key(), EquipmentKey.KNIFE.key()
         };
 
         for (int i=0;i<10;i++) {

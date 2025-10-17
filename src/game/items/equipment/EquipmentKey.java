@@ -6,6 +6,7 @@ public enum EquipmentKey {
     LESSER_STAFF("lesserstaff"),
     STAFF("staff"),
     GREAT_STAFF("greatstaff"),
+    KNIFE("knife"),
     DAGGER("dagger"),
     TOWER_SHIELD("towershield"),
     SWORD("sword"),
