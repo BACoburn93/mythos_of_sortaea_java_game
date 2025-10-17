@@ -12,16 +12,16 @@ import items.equipment.item_types.enums.ShieldTypes;
 
 public class SmallShield extends Offhand {
 
-    public SmallShield(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ShieldTypes.SMALL, attributes, resistances);
+    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ShieldTypes.SMALL, attributes, resistances);
     }
 
-    public SmallShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, value, ShieldTypes.SMALL, attributes, resistances, abilities);
+    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities);
     }
 
-    public SmallShield(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        super(name, value, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
+    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
     }
 
     @Override

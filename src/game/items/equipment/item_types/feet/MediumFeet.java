@@ -5,7 +5,7 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class MediumFeet extends Feet {
-    public MediumFeet(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ArmorTypes.MEDIUM, attributes, resistances);
+    public MediumFeet(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ArmorTypes.MEDIUM, attributes, resistances);
     }
 }

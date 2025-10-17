@@ -18,15 +18,19 @@ public class Dagger extends Mainhand {
     private static final double DEFAULT_DAMAGE = 6.0;
 
     // central constructor
-    public Dagger(String name,
-                  double value,
-                  boolean isTwoHanded,
-                  Attributes attributes,
-                  Resistances resistances,
-                  List<Ability> abilities,
-                  double damage) {
+    public Dagger(
+            String name,
+            int tier,   
+            double value,
+            boolean isTwoHanded,
+            Attributes attributes,
+            Resistances resistances,
+            List<Ability> abilities,
+            double damage
+        ) {
         super(
             name,
+            tier,
             value,
             WeaponTypes.DAGGER,
             isTwoHanded,
@@ -38,20 +42,20 @@ public class Dagger extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, value, false, attributes, resistances, abilities, damage);
+    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, tier, value, false, attributes, resistances, abilities, damage);
     }
 
-    public Dagger(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
-    public Dagger(String name, double value, Attributes attributes, Resistances resistances) {
-        this(name, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
+    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
     }
 
-    public Dagger(String name, double value) {
-        this(name, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
+    public Dagger(String name, int tier, double value) {
+        this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

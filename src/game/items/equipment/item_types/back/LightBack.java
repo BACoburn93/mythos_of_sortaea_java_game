@@ -5,8 +5,8 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class LightBack extends Back {
-    public LightBack(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ArmorTypes.LIGHT, attributes, resistances);
+    public LightBack(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
 }

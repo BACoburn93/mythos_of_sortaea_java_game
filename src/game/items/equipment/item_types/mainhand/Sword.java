@@ -18,11 +18,12 @@ public class Sword extends Mainhand {
     private static final double DEFAULT_DAMAGE = 8.0;
 
     // central constructor
-    public Sword(String name, double value, boolean isTwoHanded,
+    public Sword(String name, int tier, double value, boolean isTwoHanded,
                      Attributes attributes, Resistances resistances,
                      List<Ability> abilities, double damage) {
         super(
             name,
+            tier,
             value,
             WeaponTypes.SWORD,
             isTwoHanded,
@@ -34,20 +35,20 @@ public class Sword extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Sword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, value, false, attributes, resistances, abilities, damage);
+    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, tier, value, false, attributes, resistances, abilities, damage);
     }
 
-    public Sword(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
-    public Sword(String name, double value, Attributes attributes, Resistances resistances) {
-        this(name, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
+    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
     }
 
-    public Sword(String name, double value) {
-        this(name, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
+    public Sword(String name, int tier, double value) {
+        this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
     }
 
     public AttributeTypes getWeaponDamageAttr() {

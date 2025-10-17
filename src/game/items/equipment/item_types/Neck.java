@@ -9,8 +9,8 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.AccessoryTypes;
 
 public class Neck extends Equipment {
-    public Neck(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, EquipmentTypes.NECK, AccessoryTypes.NECK, attributes, resistances, new ArrayList<>());
+    public Neck(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, EquipmentTypes.NECK, AccessoryTypes.NECK, attributes, resistances, new ArrayList<>());
     }
 
 }

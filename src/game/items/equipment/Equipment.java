@@ -12,6 +12,7 @@ import actors.resistances.Resistances;
 
 public abstract class Equipment implements Comparator<Equipment> {
     private String name;
+    private int tier;
     private double value;
     private EquipmentTypes equipmentType;
     private ItemType itemType;
@@ -31,6 +32,7 @@ public abstract class Equipment implements Comparator<Equipment> {
     // to do - add in a tier property that might affect value, attributes, resistances, abilities, etc
     // also convert all Equipment to utilize the Builder pattern
     protected Equipment(String name,
+                        int tier,
                         double value,
                         EquipmentTypes equipmentType,
                         ItemType itemType,
@@ -38,6 +40,7 @@ public abstract class Equipment implements Comparator<Equipment> {
                         Resistances resistances,
                         List<Ability> abilities) {
         this.name = name;
+        this.tier = Math.max(0, tier);
         this.value = value;
         this.equipmentType = equipmentType;
         this.itemType = itemType;
@@ -48,28 +51,31 @@ public abstract class Equipment implements Comparator<Equipment> {
         else this.abilities = new ArrayList<>(abilities);
     }
 
-    protected Equipment(String name, double value, EquipmentTypes equipmentType, Attributes attributes, Resistances resistances) {
-        this(name, value, equipmentType, null, attributes, resistances, new ArrayList<>());
-    }
+    // Remove all other constructors in favor of the primary one above
+    // All subclasses MIGHT use a Builder to create Equipment objects
 
-    public Equipment(String name, int value, EquipmentTypes equipmentType,
-                     ItemType itemType, Attributes attributes, Resistances resistances) {
-        this.name = name;
-        this.value = value;
-        this.equipmentType = equipmentType;
-        this.itemType = itemType;
-        this.attributes = attributes;
-        this.resistances = resistances;
-    }
+    // protected Equipment(String name, double value, EquipmentTypes equipmentType, Attributes attributes, Resistances resistances) {
+    //     this(name, value, equipmentType, null, attributes, resistances, new ArrayList<>());
+    // }
 
-    public Equipment(String name, int value, EquipmentTypes equipmentType,
-                     Attributes attributes, Resistances resistances) {
-        this(name, value, equipmentType, null, attributes, resistances);
-    }
+    // public Equipment(String name, int value, EquipmentTypes equipmentType,
+    //                  ItemType itemType, Attributes attributes, Resistances resistances) {
+    //     this.name = name;
+    //     this.value = value;
+    //     this.equipmentType = equipmentType;
+    //     this.itemType = itemType;
+    //     this.attributes = attributes;
+    //     this.resistances = resistances;
+    // }
 
-    protected Equipment(String name, double value, EquipmentTypes equipmentType) {
-        this(name, value, equipmentType, null, null, null, new ArrayList<>());
-    }
+    // public Equipment(String name, int value, EquipmentTypes equipmentType,
+    //                  Attributes attributes, Resistances resistances) {
+    //     this(name, value, equipmentType, null, attributes, resistances);
+    // }
+
+    // protected Equipment(String name, double value, EquipmentTypes equipmentType) {
+    //     this(name, value, equipmentType, null, null, null, new ArrayList<>());
+    // }
 
     public String getName() {
         return name;
@@ -77,6 +83,18 @@ public abstract class Equipment implements Comparator<Equipment> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTier() {
+        return tier;
+    }
+
+    public void setTier(int tier) {
+        this.tier = Math.max(0, tier);
+    }
+
+    public Rarity getRarity() {
+        return Rarity.fromTier(this.tier);
     }
 
     public double getGoldValue() {

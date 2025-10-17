@@ -34,20 +34,23 @@ public final class EquipmentRegistry {
         
         SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
                 "Lesser Staff",
+                0,
                 20
         ));
 
         SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
                 "Staff",
+                1,
                 400,
                 new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
                 new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
-                new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
+                new ArrayList<>(),
                 8.0
         ));
 
         SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> new Staff(
                 "Great Staff",
+                3,
                 3000,
                 true,
                 new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
@@ -58,6 +61,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(
                 "Dagger",
+                0,
                 100,
                 new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
@@ -66,6 +70,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
                 "Tower Shield",
+                2,
                 200,
                 new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
                 new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
@@ -74,6 +79,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
                 "Sword",
+                1,
                 500,
                 new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
@@ -82,6 +88,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
                 "Bow",
+                1,
                 800,
                 new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
@@ -90,6 +97,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () -> new HeavyTorso(
                 "Plate Armor",
+                3,
                 1000,
                 new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
                 new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
@@ -97,6 +105,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () -> new LightTorso(
                 "Leather Armor",
+                1,
                 200,
                 new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),
                 new Resistances(1,1,1,1,1,1,1,1,1,1,1,1)
@@ -104,6 +113,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.RING.key(), () -> new Ring(
                 "Ring",
+                0,
                 2000,
                 new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,10.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
@@ -111,6 +121,7 @@ public final class EquipmentRegistry {
 
         SUPPLIERS.put(EquipmentKey.AMULET.key(), () -> new Neck(
                 "Amulet",
+                0,
                 2000,
                 new Attributes(10.0,0.0,0.0,0.0,0.0,0.0,0.0),
                 new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)

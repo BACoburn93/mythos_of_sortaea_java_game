@@ -9,8 +9,8 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.AccessoryTypes;
 
 public class Ring extends Equipment {
-    public Ring(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, EquipmentTypes.RING, AccessoryTypes.RING, attributes, resistances, new ArrayList<>());
+    public Ring(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, EquipmentTypes.RING, AccessoryTypes.RING, attributes, resistances, new ArrayList<>());
     }
 
 }

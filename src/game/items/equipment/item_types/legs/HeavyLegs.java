@@ -5,8 +5,8 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class HeavyLegs extends Legs {
-    public HeavyLegs(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ArmorTypes.HEAVY, attributes, resistances);
+    public HeavyLegs(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ArmorTypes.HEAVY, attributes, resistances);
     }
 
 }

@@ -16,15 +16,18 @@ public class Bow extends Mainhand {
     private static final double DEFAULT_DAMAGE = 10.0;
 
     // central constructor 
-    public Bow(String name,
-                   double value,
-                   boolean isTwoHanded,
-                   Attributes attributes,
-                   Resistances resistances,
-                   List<Ability> abilities,
+    public Bow(
+        String name,
+        int tier,
+        double value,
+        boolean isTwoHanded,
+        Attributes attributes,
+        Resistances resistances,
+        List<Ability> abilities,
                    double damage) {
         super(
             name,
+            tier,
             value,
             WeaponTypes.BOW,
             true,
@@ -36,20 +39,20 @@ public class Bow extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Bow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, value, true, attributes, resistances, abilities, damage);
+    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+        this(name, tier, value, true, attributes, resistances, abilities, damage);
     }
 
-    public Bow(String name, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+        this(name, tier, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
     }
 
-    public Bow(String name, double value, Attributes attributes, Resistances resistances) {
-        this(name, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
+    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        this(name, tier, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
     }
 
-    public Bow(String name, double value) {
-        this(name, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
+    public Bow(String name, int tier, double value) {
+        this(name, tier, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
     }
 
     @Override

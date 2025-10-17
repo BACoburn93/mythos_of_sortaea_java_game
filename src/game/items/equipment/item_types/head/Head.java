@@ -9,7 +9,7 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class Head extends Equipment {
-    public Head(String name, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
-        super(name, value, EquipmentTypes.HEAD, itemType, attributes, resistances, new ArrayList<>());
+    public Head(String name, int tier, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, EquipmentTypes.HEAD, itemType, attributes, resistances, new ArrayList<>());
     }
 }

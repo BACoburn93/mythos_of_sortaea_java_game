@@ -25,7 +25,10 @@ public class Enflamed implements EquipmentPrefix {
 
         // to do - create a dynamic class that adds ability based on the item's tier
         // do the same for enemys based on their level
-        target.getAbilities().add(AbilityDatabase.FIRE_STORM);
+        if(target.getTier() > 2) {
+            target.getAbilities().add(AbilityDatabase.FIRE_STORM);
+        }
+        
     }
 
     @Override

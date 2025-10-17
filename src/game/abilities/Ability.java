@@ -45,38 +45,39 @@ public abstract class Ability {
     }
 
     // Convenience constructors delegate to primary constructor
+    // Reaction is currently using this one
     public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
         this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, 0, description);
     }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, 0, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, 0, description);
+    // }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, 0, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, 0, description);
+    // }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, 0, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, 0, description);
+    // }
 
-    // Tier-aware convenience constructors
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, int tier, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, tier, description);
-    }
+    // // Tier-aware convenience constructors
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, int tier, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, tier, description);
+    // }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, int tier, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, tier, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, int tier, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, tier, description);
+    // }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, int tier, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, tier, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, int tier, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, tier, description);
+    // }
 
-    public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, int tier, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, tier, description);
-    }
+    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, int tier, String description) {
+    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, tier, description);
+    // }
 
     public int getTier() {
         return tier;

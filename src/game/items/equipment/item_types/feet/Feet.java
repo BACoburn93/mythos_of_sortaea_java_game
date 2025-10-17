@@ -9,8 +9,8 @@ import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class Feet extends Equipment {
-    public Feet(String name, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
-        super(name, value, EquipmentTypes.FEET, itemType, attributes, resistances, new ArrayList<>());
+    public Feet(String name, int tier, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, EquipmentTypes.FEET, itemType, attributes, resistances, new ArrayList<>());
     }
 
 }

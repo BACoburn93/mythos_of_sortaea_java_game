@@ -5,8 +5,8 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class LightTorso extends Torso {
-    public LightTorso(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ArmorTypes.LIGHT, attributes, resistances);
+    public LightTorso(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
 }

@@ -5,7 +5,7 @@ import actors.resistances.Resistances;
 import items.equipment.item_types.enums.ArmorTypes;
 
 public class LightFeet extends Feet {
-    public LightFeet(String name, double value, Attributes attributes, Resistances resistances) {
-        super(name, value, ArmorTypes.LIGHT, attributes, resistances);
+    public LightFeet(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+        super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 }
