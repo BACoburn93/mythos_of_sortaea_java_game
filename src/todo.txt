@@ -1,0 +1,6 @@
+Prioritized Workload Notes
+
+create a dynamic class that adds ability based on the item's tier
+
+add in a tier property that might affect value, attributes, resistances, abilities, etc
+also convert all Equipment to utilize the Builder pattern
