@@ -1,7 +1,5 @@
 package items.equipment.modifiers.prefixes;
 
-import java.util.List;
-
 import abilities.database.AbilityDatabase;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
