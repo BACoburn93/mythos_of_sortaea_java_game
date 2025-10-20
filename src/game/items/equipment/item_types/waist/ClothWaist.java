@@ -9,4 +9,25 @@ public class ClothWaist extends Waist {
         super(name, tier, value, ArmorTypes.CLOTH, attributes, resistances);
     }
 
+    public static class Builder extends WaistBuilder {
+        public Builder() {
+            this.name = "Cloth Belt";
+            this.tier = 0;
+            this.value = 5.0;
+            this.armorType = ArmorTypes.CLOTH;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public ClothWaist build() {
+            return new ClothWaist(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

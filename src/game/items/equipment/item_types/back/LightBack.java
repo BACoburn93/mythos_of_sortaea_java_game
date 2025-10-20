@@ -9,4 +9,25 @@ public class LightBack extends Back {
         super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
+    public static class Builder extends BackBuilder {
+        public Builder() {
+            this.name = "Light Cloak";
+            this.tier = 0;
+            this.value = 3.0;
+            this.armorType = ArmorTypes.LIGHT;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public LightBack build() {
+            return new LightBack(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

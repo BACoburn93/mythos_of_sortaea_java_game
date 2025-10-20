@@ -15,6 +15,7 @@ import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import items.equipment.item_types.ItemType;
+import items.equipment.item_types.enums.AccessoryTypes;
 import items.equipment.item_types.enums.ArmorTypes;
 import items.equipment.item_types.enums.ShieldTypes;
 import items.equipment.item_types.enums.WeaponTypes;
@@ -221,19 +222,25 @@ public class Character extends CombatActor {
     }
 
     // Helper to map EquipmentTypes to display names
-    private static final Map<EquipmentTypes, String> equipmentTypeToDisplayName = Map.of(
+    private static final Map<Enum<?>, String> equipmentTypeToDisplayName = Map.of(
         EquipmentTypes.HEAD, "Head",
         EquipmentTypes.MAINHAND, "Mainhand",
         EquipmentTypes.OFFHAND, "Offhand",
         EquipmentTypes.LEGS, "Legs",
         EquipmentTypes.TORSO, "Torso",
         EquipmentTypes.FEET, "Feet",
-        EquipmentTypes.NECK, "Neck",
-        EquipmentTypes.RING, "Ring"
+        AccessoryTypes.NECK, "Neck",
+        AccessoryTypes.RING, "Ring"
     );
 
     public boolean equipItem(Equipment item) {
-        String slotKey = equipmentTypeToDisplayName.get(item.getEquipmentType());
+        String slotKey;
+        
+        if(item.getEquipmentType() == EquipmentTypes.ACCESSORY) {
+            slotKey = equipmentTypeToDisplayName.get(item.getItemType());
+        } else {
+            slotKey = equipmentTypeToDisplayName.get(item.getEquipmentType());
+        }
 
         if ("Ring".equals(slotKey)) {
             System.out.println("Equip ring to [L]eft or [R]ight ring?");

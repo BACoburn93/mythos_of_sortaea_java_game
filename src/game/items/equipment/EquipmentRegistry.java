@@ -1,82 +1,47 @@
 package items.equipment;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import abilities.database.AbilityDatabase;
-import actors.attributes.Attributes;
-import actors.resistances.Resistances;
+import items.equipment.item_types.mainhand.*;
+import items.equipment.item_types.offhand.*;
+import items.equipment.item_types.back.*;
+import items.equipment.item_types.feet.*;
+import items.equipment.item_types.head.*;
+import items.equipment.item_types.legs.*;
+import items.equipment.item_types.torso.*;
+import items.equipment.item_types.waist.*;
 import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;
-import items.equipment.item_types.mainhand.Dagger;
-import items.equipment.item_types.mainhand.Bow;
-import items.equipment.item_types.mainhand.Sword;
-import items.equipment.item_types.mainhand.Staff;
-import items.equipment.item_types.offhand.LargeShield;
-import items.equipment.item_types.offhand.MediumShield;
-import items.equipment.item_types.offhand.SmallShield;
-import items.equipment.item_types.torso.HeavyTorso;
-import items.equipment.item_types.torso.LightTorso;
+
 
 /**
  * Catalog of Suppliers for concrete equipment prototypes.
  * Database uses these suppliers when wiring the Factory.
  */
 public final class EquipmentRegistry {
+
     private static final Map<String, Supplier<Equipment>> SUPPLIERS = new HashMap<>();
 
-    private EquipmentRegistry() {}
+    public static Map<String, Supplier<Equipment>> getAllSuppliers() {
+        return Collections.unmodifiableMap(SUPPLIERS);
+    }
 
     static {
-        // Register suppliers with reasonably complete default prototype constructors.
-        // These suppliers should produce a base prototype item (Database may flavor it).
-        
-        // SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
-        //         "Lesser Staff",
-        //         0,
-        //         20
-        // ));
+        // register placeholders for every enum entry (preserves declaration order)
+        for (EquipmentKey key : EquipmentKey.values()) {
+            SUPPLIERS.put(key.key(), () -> {
+                throw new UnsupportedOperationException("No supplier registered for: " + key);
+            });
+        }
 
-        // SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
-        //         "Staff",
-        //         1,
-        //         400,
-        //         new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
-        //         new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
-        //         new ArrayList<>(),
-        //         8.0
-        // ));
-
-        // SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> new Staff(
-        //         "Great Staff",
-        //         3,
-        //         3000,
-        //         true,
-        //         new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
-        //         new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-        //         new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
-        //         12.0
-        // ));
-
-        // SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(
-        //         "Dagger",
-        //         0,
-        //         100,
-        //         new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        //         new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-        //         new ArrayList<>(List.of())
-        // ));
-
-        // Testing the Builder option
-
-        // If I go with the Template Approach
-        // Dagger knife = Mainhand.template().name("Knife").tier(2).damage(7).buildInto(Dagger.class);
+        // Replace placeholders with real suppliers for implemented items.
+        // Each lambda creates a fresh instance (builder.build()) to avoid shared mutable prototypes.
 
         // Staves
-        SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> 
+        SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () ->
             new Staff.Builder()
                 .name("Lesser Staff")
                 .tier(0)
@@ -84,52 +49,62 @@ public final class EquipmentRegistry {
                 .build()
         );
 
-        SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> 
+        SUPPLIERS.put(EquipmentKey.STAFF.key(), () ->
             new Staff.Builder()
                 .name("Staff")
                 .tier(1)
                 .value(400)
-                .attributes(new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0))
+                .attributes(new actors.attributes.Attributes(0.0,0.0,5.0,0.0,0.0,0.0,0.0))
                 .damage(8.0)
                 .build()
         );
 
-        SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> 
+        SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () ->
             new Staff.Builder()
                 .name("Great Staff")
                 .tier(3)
                 .value(3000)
                 .damage(12.0)
-                .attributes(new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0))
-                .abilities(new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART, AbilityDatabase.FIREBALL)))
+                .attributes(new actors.attributes.Attributes(0.0,0.0,30.0,0.0,0.0,0.0,0.0))
+                .abilities(new java.util.ArrayList<>(java.util.List.of(abilities.database.AbilityDatabase.MAGIC_DART, abilities.database.AbilityDatabase.FIREBALL)))
                 .build()
         );
 
-
-        // Daggers
+        // Daggers / Knives
         SUPPLIERS.put(EquipmentKey.DAGGER.key(), () ->
             new Dagger.Builder()
                 .name("Dagger")
                 .tier(0)
                 .value(100)
-                .attributes(new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0))
+                .attributes(new actors.attributes.Attributes(0.0,10.0,0.0,0.0,0.0,0.0,0.0))
                 .build()
         );
 
         SUPPLIERS.put(EquipmentKey.KNIFE.key(), () ->
             new Dagger.Builder()
                 .name("Knife")
+                .tier(0)
+                .value(50)
                 .build()
         );
 
         // Bows
+        SUPPLIERS.put(EquipmentKey.BOW.key(), () ->
+            new Bow.Builder()
+                .name("Bow")
+                .tier(1)
+                .value(300)
+                .damage(10.0)
+                .build()
+        );
+
         SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () ->
             new Bow.Builder()
                 .name("Longbow")
                 .tier(1)
                 .value(600)
-                .attributes(new Attributes(0.0,3.0,0.0,0.0,0.0,0.0,2.0))
                 .damage(12.0)
+                .attributes(new actors.attributes.Attributes(0.0,3.0,0.0,0.0,0.0,0.0,2.0))
                 .build()
         );
 
@@ -139,101 +114,90 @@ public final class EquipmentRegistry {
                 .name("Sword")
                 .tier(1)
                 .value(500)
-                .attributes(new Attributes(10.0, 0.0, 0.0, 30.0, 0.0, 0.0, 0.0))
+                .attributes(new actors.attributes.Attributes(10.0,0.0,0.0,30.0,0.0,0.0,0.0))
                 .build()
         );
 
-        // Large shields
-        SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () ->
-            new LargeShield.Builder()
-                .name("Tower Shield")
-                .tier(2)
-                .value(200)
-                .attributes(new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0))
+        // Shields / Offhand
+        SUPPLIERS.put(EquipmentKey.BUCKLER.key(), () ->
+            new SmallShield.Builder()
+                .name("Buckler")
+                .tier(0)
+                .value(40)
                 .build()
         );
-
-
-        // Medium shields
 
         SUPPLIERS.put(EquipmentKey.ROUND_SHIELD.key(), () ->
             new MediumShield.Builder()
                 .name("Round Shield")
                 .tier(1)
-                .value(150)
-                .attributes(new Attributes(0.0, 0.0, 0.0, 3.0, 1.0, 0.0, 0.0))
+                .value(120)
                 .build()
         );
 
-        // Small shields
-
-        SUPPLIERS.put(EquipmentKey.BUCKLER.key(), () ->
-            new SmallShield.Builder()
-                .name("Buckler")
-                .tier(0)
-                .value(75)
-                .attributes(new Attributes(0.0, 0.0, 0.0, 1.0, 0.5, 0.0, 0.0))
+        SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () ->
+            new LargeShield.Builder()
+                .name("Tower Shield")
+                .tier(2)
+                .value(200)
                 .build()
         );
 
-        // SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
-        //         "Tower Shield",
-        //         2,
-        //         200,
-        //         new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
-        //         new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
-        //         new ArrayList<>(List.of(AbilityDatabase.SHIELD_BASH))
-        // ));
+        // Head
+        SUPPLIERS.put(EquipmentKey.JESTER_HAT.key(), () ->
+            new ClothHead.Builder().name("Jester Hat").tier(0).value(5).build()
+        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_CAP.key(), () ->
+            new ClothHead.Builder().name("Leather Cap").tier(0).value(10).build()
+        );
 
-        // SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
-        //         "Sword",
-        //         1,
-        //         500,
-        //         new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
-        //         new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-        //         new ArrayList<>(List.of(AbilityDatabase.SLASH))
-        // ));
+        // Back
+        SUPPLIERS.put(EquipmentKey.CLOAK.key(), () ->
+            new ClothBack.Builder().name("Cloak").tier(0).value(15).build()
+        );
+        SUPPLIERS.put(EquipmentKey.CHAINLINK_MANTLE.key(), () ->
+            new MediumBack.Builder().name("Chainlink Mantle").tier(1).value(80).build()
+        );
 
-        // SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
-        //         "Bow",
-        //         1,
-        //         800,
-        //         new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
-        //         new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-        //         new ArrayList<>(List.of(AbilityDatabase.POISON_DART))
-        // ));
+        // Torso
+        SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () ->
+            new HeavyTorso.Builder().name("Plate Armor").tier(3).value(2000).build()
+        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () ->
+            new HeavyTorso.Builder().name("Leather Armor").tier(0).value(100).build()
+        );
 
-        SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () -> new HeavyTorso(
-                "Plate Armor",
-                3,
-                1000,
-                new Attributes(20.0,20.0,20.0,20.0,20.0,20.0,0.0),
-                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10)
-        ));
+        // Waist
+        SUPPLIERS.put(EquipmentKey.LEATHER_BELT.key(), () ->
+            new LightWaist.Builder().name("Leather Belt").tier(0).value(5).build()
+        );
+        SUPPLIERS.put(EquipmentKey.SASH.key(), () ->
+            new ClothWaist.Builder().name("Sash").tier(0).value(3).build()
+        );
 
-        SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () -> new LightTorso(
-                "Leather Armor",
-                1,
-                200,
-                new Attributes(2.0,2.0,2.0,2.0,2.0,2.0,2.0),
-                new Resistances(1,1,1,1,1,1,1,1,1,1,1,1)
-        ));
+        // Legs
+        SUPPLIERS.put(EquipmentKey.CHAIN_LEGGINGS.key(), () ->
+            new MediumLegs.Builder().name("Chain Leggings").tier(1).value(150).build()
+        );
+        SUPPLIERS.put(EquipmentKey.PLATE_LEGGINGS.key(), () ->
+            new HeavyLegs.Builder().name("Plate Leggings").tier(3).value(900).build()
+        );
 
-        SUPPLIERS.put(EquipmentKey.RING.key(), () -> new Ring(
-                "Ring",
-                0,
-                2000,
-                new Attributes(0.0,0.0,0.0,0.0,0.0,0.0,10.0),
-                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
-        ));
+        // Feet
+        SUPPLIERS.put(EquipmentKey.LEATHER_BOOTS.key(), () ->
+            new LightFeet.Builder().name("Leather Boots").tier(0).value(20).build()
+        );
+        SUPPLIERS.put(EquipmentKey.IRON_GREAVES.key(), () ->
+            new HeavyFeet.Builder().name("Iron Greaves").tier(2).value(250).build()
+        );
 
-        SUPPLIERS.put(EquipmentKey.AMULET.key(), () -> new Neck(
-                "Amulet",
-                0,
-                2000,
-                new Attributes(10.0,0.0,0.0,0.0,0.0,0.0,0.0),
-                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0)
-        ));
+        // Accessories - Might create Accessory Abstract Class to negate need for NeckBuilder and RingBuilder
+        SUPPLIERS.put(EquipmentKey.RING.key(), () ->
+            new Ring.RingBuilder().name("Ring").tier(0).value(50).build()
+        );
+        SUPPLIERS.put(EquipmentKey.AMULET.key(), () ->
+            new Neck.NeckBuilder().name("Amulet").tier(0).value(80).build()
+        );
     }
 
     public static Supplier<Equipment> get(EquipmentKey key) {

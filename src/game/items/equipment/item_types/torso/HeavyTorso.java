@@ -9,4 +9,25 @@ public class HeavyTorso extends Torso {
         super(name, tier, value, ArmorTypes.HEAVY, attributes, resistances);
     }
 
+    public static class Builder extends TorsoBuilder {
+        public Builder() {
+            this.name = "Plate Armor";
+            this.tier = 3;
+            this.value = 1000.0;
+            this.armorType = ArmorTypes.HEAVY;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public HeavyTorso build() {
+            return new HeavyTorso(
+                name,
+                tier,
+                value,
+                attributes,
+                resistances
+            );
+        }
+    }
 }

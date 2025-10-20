@@ -9,4 +9,25 @@ public class LightLegs extends Legs {
         super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
+    public static class Builder extends LegsBuilder {
+        public Builder() {
+            this.name = "Leather Pants";
+            this.tier = 0;
+            this.value = 15.0;
+            this.armorType = ArmorTypes.LIGHT;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public LightLegs build() {
+            return new LightLegs(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

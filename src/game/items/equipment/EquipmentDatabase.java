@@ -85,6 +85,13 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
+                EquipmentKey.BOW.key(),
+                EquipmentRegistry.get(EquipmentKey.BOW.key()),
+                BowPools.PREFIX_POOL, 0.5,
+                BowPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
                 EquipmentKey.LONGBOW.key(),
                 EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
                 BowPools.PREFIX_POOL, 0.5,
@@ -103,6 +110,76 @@ public class EquipmentDatabase {
                 EquipmentRegistry.get(EquipmentKey.LEATHER_ARMOR.key()),
                 LeatherArmorPools.PREFIX_POOL, 0.5,
                 LeatherArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.JESTER_HAT.key(),
+                EquipmentRegistry.get(EquipmentKey.JESTER_HAT.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.LEATHER_CAP.key(),
+                EquipmentRegistry.get(EquipmentKey.LEATHER_CAP.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.CLOAK.key(),
+                EquipmentRegistry.get(EquipmentKey.CLOAK.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.CHAINLINK_MANTLE.key(),
+                EquipmentRegistry.get(EquipmentKey.CHAINLINK_MANTLE.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.LEATHER_BELT.key(),
+                EquipmentRegistry.get(EquipmentKey.LEATHER_BELT.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.SASH.key(),
+                EquipmentRegistry.get(EquipmentKey.SASH.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.CHAIN_LEGGINGS.key(),
+                EquipmentRegistry.get(EquipmentKey.CHAIN_LEGGINGS.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.PLATE_LEGGINGS.key(),
+                EquipmentRegistry.get(EquipmentKey.PLATE_LEGGINGS.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.LEATHER_BOOTS.key(),
+                EquipmentRegistry.get(EquipmentKey.LEATHER_BOOTS.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.IRON_GREAVES.key(),
+                EquipmentRegistry.get(EquipmentKey.IRON_GREAVES.key()),
+                PlateArmorPools.PREFIX_POOL, 0.5,
+                PlateArmorPools.SUFFIX_POOL, 0.5
         );
 
         factory.registerPrototype(

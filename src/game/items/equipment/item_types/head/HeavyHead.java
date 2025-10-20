@@ -9,4 +9,25 @@ public class HeavyHead extends Head {
         super(name, tier, value, ArmorTypes.HEAVY, attributes, resistances);
     }
 
+    public static class Builder extends HeadBuilder {
+        public Builder() {
+            this.name = "Steel Helm";
+            this.tier = 2;
+            this.value = 300.0;
+            this.armorType = ArmorTypes.HEAVY;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public HeavyHead build() {
+            return new HeavyHead(
+                name,
+                tier,
+                value,
+                attributes,
+                resistances
+            );
+        }
+    }
 }

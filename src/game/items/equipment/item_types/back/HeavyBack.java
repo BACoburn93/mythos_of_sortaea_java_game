@@ -9,4 +9,25 @@ public class HeavyBack extends Back {
         super(name, tier, value, ArmorTypes.HEAVY, attributes, resistances);
     }
 
+    public static class Builder extends BackBuilder {
+        public Builder() {
+            this.name = "Heavy Cloak";
+            this.tier = 0;
+            this.value = 4.0;
+            this.armorType = ArmorTypes.HEAVY;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public HeavyBack build() {
+            return new HeavyBack(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

@@ -9,4 +9,25 @@ public class ClothTorso extends Torso {
         super(name, tier, value, ArmorTypes.CLOTH, attributes, resistances);
     }
 
+    public static class Builder extends TorsoBuilder {
+        public Builder() {
+            this.name = "Cloth Robe";
+            this.tier = 0;
+            this.value = 8.0;
+            this.armorType = ArmorTypes.CLOTH;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public ClothTorso build() {
+            return new ClothTorso(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

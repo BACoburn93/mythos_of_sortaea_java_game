@@ -9,4 +9,25 @@ public class ClothLegs extends Legs {
         super(name, tier, value, ArmorTypes.CLOTH, attributes, resistances);
     }
 
+    public static class Builder extends LegsBuilder {
+        public Builder() {
+            this.name = "Cloth Pants";
+            this.tier = 0;
+            this.value = 8.0;
+            this.armorType = ArmorTypes.CLOTH;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public ClothLegs build() {
+            return new ClothLegs(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

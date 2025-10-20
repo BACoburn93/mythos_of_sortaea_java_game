@@ -28,7 +28,14 @@ public class Torso extends Equipment {
         protected TorsoBuilder self() { return this; }
 
         public Torso build() {
-            return new Torso(name, tier, value, armorType, attributes, resistances);
+            return new Torso(
+                name, 
+                tier, 
+                value, 
+                armorType, 
+                attributes, 
+                resistances
+            );
         }
     }
 }

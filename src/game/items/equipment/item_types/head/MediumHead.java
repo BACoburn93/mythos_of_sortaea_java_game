@@ -9,4 +9,25 @@ public class MediumHead extends Head {
         super(name, tier, value, ArmorTypes.MEDIUM, attributes, resistances);
     }
 
+    public static class Builder extends HeadBuilder {
+        public Builder() {
+            this.name = "Chainmail Coif";
+            this.tier = 1;
+            this.value = 150.0;
+            this.armorType = ArmorTypes.MEDIUM;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public MediumHead build() {
+            return new MediumHead(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

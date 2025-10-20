@@ -9,4 +9,25 @@ public class LightHead extends Head {
         super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
+    public static class Builder extends HeadBuilder {
+        public Builder() {
+            this.name = "Leather Cap";
+            this.tier = 0;
+            this.value = 10.0;
+            this.armorType = ArmorTypes.LIGHT;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public LightHead build() {
+            return new LightHead(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

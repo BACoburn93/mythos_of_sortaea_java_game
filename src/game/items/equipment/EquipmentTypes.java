@@ -9,6 +9,5 @@ public enum EquipmentTypes {
     WAIST,
     MAINHAND,
     OFFHAND,
-    NECK,
-    RING
+    ACCESSORY
 }

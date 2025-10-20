@@ -9,4 +9,25 @@ public class MediumTorso extends Torso {
         super(name, tier, value, ArmorTypes.MEDIUM, attributes, resistances);
     }
 
+    public static class Builder extends TorsoBuilder {
+        public Builder() {
+            this.name = "Chainmail Armor";
+            this.tier = 2;
+            this.value = 300.0;
+            this.armorType = ArmorTypes.MEDIUM;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public MediumTorso build() {
+            return new MediumTorso(
+                name,
+                tier,
+                value,
+                attributes,
+                resistances
+            );
+        }
+    }
 }

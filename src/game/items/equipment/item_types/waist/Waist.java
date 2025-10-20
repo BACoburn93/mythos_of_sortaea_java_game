@@ -23,9 +23,9 @@ public class Waist extends Equipment {
     public static abstract class WaistBuilder extends Builder<WaistBuilder> {
         public WaistBuilder() {
             // defaults
-            this.name = "Belt";
+            this.name = "Sash";
             this.tier = 0;
-            this.value = 5.0;
+            this.value = 1.0;
             this.armorType = ArmorTypes.CLOTH;
         }
 
@@ -33,7 +33,14 @@ public class Waist extends Equipment {
         protected WaistBuilder self() { return this; }
 
         public Waist build() {
-            return new Waist(name, tier, value, armorType, attributes, resistances);
+            return new Waist(
+                name, 
+                tier, 
+                value, 
+                armorType, 
+                attributes, 
+                resistances
+            );
         }
     }
 }

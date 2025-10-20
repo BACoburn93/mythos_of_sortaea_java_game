@@ -8,5 +8,26 @@ public class ClothBack extends Back {
     public ClothBack(String name, int tier, double value, Attributes attributes, Resistances resistances) {
         super(name, tier, value, ArmorTypes.CLOTH, attributes, resistances);
     }
-    
+
+    public static class Builder extends BackBuilder {
+        public Builder() {
+            this.name = "Cloth Cape";
+            this.tier = 0;
+            this.value = 2.0;
+            this.armorType = ArmorTypes.CLOTH;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public ClothBack build() {
+            return new ClothBack(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

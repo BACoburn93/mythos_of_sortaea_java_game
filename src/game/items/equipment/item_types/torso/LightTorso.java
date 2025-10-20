@@ -9,4 +9,25 @@ public class LightTorso extends Torso {
         super(name, tier, value, ArmorTypes.LIGHT, attributes, resistances);
     }
 
+    public static class Builder extends TorsoBuilder {
+        public Builder() {
+            this.name = "Leather Armor";
+            this.tier = 1;
+            this.value = 50.0;
+            this.armorType = ArmorTypes.LIGHT;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public LightTorso build() {
+            return new LightTorso(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }

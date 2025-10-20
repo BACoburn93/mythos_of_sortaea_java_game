@@ -106,17 +106,28 @@ public class GameManager {
         Character testRogue = new Character(gameScanner, "Test Rogue", new RogueJob());
 
         List<Equipment> shared = new ArrayList<>();
-        String[] keys = {
-            EquipmentKey.LESSER_STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
-            EquipmentKey.SWORD.key(), EquipmentKey.PLATE_ARMOR.key(), EquipmentKey.BUCKLER.key(),
-            EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key(),
-            EquipmentKey.STAFF.key(), EquipmentKey.GREAT_STAFF.key(), EquipmentKey.KNIFE.key(),
-            EquipmentKey.LONGBOW.key(), EquipmentKey.ROUND_SHIELD.key()
-        };
+        // String[] keys = {
+        //     EquipmentKey.LESSER_STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
+        //     EquipmentKey.SWORD.key(), EquipmentKey.PLATE_ARMOR.key(), EquipmentKey.BUCKLER.key(),
+        //     EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key(),
+        //     EquipmentKey.STAFF.key(), EquipmentKey.GREAT_STAFF.key(), EquipmentKey.KNIFE.key(),
+        //     EquipmentKey.LONGBOW.key(), EquipmentKey.ROUND_SHIELD.key(), EquipmentKey.JESTER_HAT.key(),
+        //     EquipmentKey.LEATHER_CAP.key(), EquipmentKey.CLOAK.key(), EquipmentKey.CHAIN_LINK_MANTLE.key(),
+        //     EquipmentKey.LEATHER_BELT.key(), EquipmentKey.SASH.key(), EquipmentKey.CHAIN_LEGGINGS.key(),
+        //     EquipmentKey.PLATE_LEGGINGS.key(), EquipmentKey.LEATHER_BOOTS.key(), EquipmentKey.IRON_GREAVES.key()
+        // };
 
-        for (int i=0;i<10;i++) {
-            String key = keys[new Random().nextInt(keys.length)];
-            shared.add(FactoryRegistry.getEquipmentFactory().createRandomByKey(key, null, null));
+        // for (int i=0;i<10;i++) {
+        //     String key = keys[new Random().nextInt(keys.length)];
+        //     shared.add(FactoryRegistry.getEquipmentFactory().createRandomByKey(key, null, null));
+        // }
+
+        EquipmentKey[] keys = EquipmentKey.values();
+        Random rnd = new Random();
+
+        for (int i = 0; i < 30; i++) {
+            EquipmentKey chosen = keys[rnd.nextInt(keys.length)];
+            shared.add(FactoryRegistry.getEquipmentFactory().createRandomByKey(chosen.key(), null, null));
         }
         
         ArrayList<Character> testCharacters = new ArrayList<>();

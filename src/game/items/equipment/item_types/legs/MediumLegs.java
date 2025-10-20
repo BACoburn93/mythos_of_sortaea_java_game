@@ -9,4 +9,25 @@ public class MediumLegs extends Legs {
         super(name, tier, value, ArmorTypes.MEDIUM, attributes, resistances);
     }
 
+    public static class Builder extends LegsBuilder {
+        public Builder() {
+            this.name = "Chain Leggings";
+            this.tier = 1;
+            this.value = 150.0;
+            this.armorType = ArmorTypes.MEDIUM;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public MediumLegs build() {
+            return new MediumLegs(
+                name,
+                tier,
+                value,
+                attributes,
+                resistances
+            );
+        }
+    }
 }

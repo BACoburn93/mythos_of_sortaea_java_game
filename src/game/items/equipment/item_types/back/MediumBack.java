@@ -9,4 +9,25 @@ public class MediumBack extends Back {
         super(name, tier, value, ArmorTypes.MEDIUM, attributes, resistances);
     }
 
+    public static class Builder extends BackBuilder {
+        public Builder() {
+            this.name = "Medium Cloak";
+            this.tier = 1;
+            this.value = 4.0;
+            this.armorType = ArmorTypes.MEDIUM;
+        }
+
+        @Override
+        protected Builder self() { return this; }
+
+        public MediumBack build() {
+            return new MediumBack(
+                name, 
+                tier, 
+                value, 
+                attributes, 
+                resistances
+            );
+        }
+    }
 }
