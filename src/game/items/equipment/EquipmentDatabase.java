@@ -64,18 +64,25 @@ public class EquipmentDatabase {
         );
 
         factory.registerPrototype(
+                EquipmentKey.ROUND_SHIELD.key(),
+                EquipmentRegistry.get(EquipmentKey.ROUND_SHIELD.key()),
+                TowerShieldPools.PREFIX_POOL, 0.5,
+                TowerShieldPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
+                EquipmentKey.BUCKLER.key(),
+                EquipmentRegistry.get(EquipmentKey.BUCKLER.key()),
+                TowerShieldPools.PREFIX_POOL, 0.5,
+                TowerShieldPools.SUFFIX_POOL, 0.5
+        );
+
+        factory.registerPrototype(
                 EquipmentKey.SWORD.key(),
                 EquipmentRegistry.get(EquipmentKey.SWORD.key()),
                 SwordPools.PREFIX_POOL, 0.5,
                 SwordPools.SUFFIX_POOL, 0.5
         );
-
-        // factory.registerPrototype(
-        //         EquipmentKey.BOW.key(),
-        //         EquipmentRegistry.get(EquipmentKey.BOW.key()),
-        //         BowPools.PREFIX_POOL, 0.5,
-        //         BowPools.SUFFIX_POOL, 0.5
-        // );
 
         factory.registerPrototype(
                 EquipmentKey.LONGBOW.key(),

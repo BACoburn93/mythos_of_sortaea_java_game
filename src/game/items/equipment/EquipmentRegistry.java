@@ -16,6 +16,8 @@ import items.equipment.item_types.mainhand.Bow;
 import items.equipment.item_types.mainhand.Sword;
 import items.equipment.item_types.mainhand.Staff;
 import items.equipment.item_types.offhand.LargeShield;
+import items.equipment.item_types.offhand.MediumShield;
+import items.equipment.item_types.offhand.SmallShield;
 import items.equipment.item_types.torso.HeavyTorso;
 import items.equipment.item_types.torso.LightTorso;
 
@@ -148,6 +150,29 @@ public final class EquipmentRegistry {
                 .tier(2)
                 .value(200)
                 .attributes(new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0))
+                .build()
+        );
+
+
+        // Medium shields
+
+        SUPPLIERS.put(EquipmentKey.ROUND_SHIELD.key(), () ->
+            new MediumShield.Builder()
+                .name("Round Shield")
+                .tier(1)
+                .value(150)
+                .attributes(new Attributes(0.0, 0.0, 0.0, 3.0, 1.0, 0.0, 0.0))
+                .build()
+        );
+
+        // Small shields
+
+        SUPPLIERS.put(EquipmentKey.BUCKLER.key(), () ->
+            new SmallShield.Builder()
+                .name("Buckler")
+                .tier(0)
+                .value(75)
+                .attributes(new Attributes(0.0, 0.0, 0.0, 1.0, 0.5, 0.0, 0.0))
                 .build()
         );
 

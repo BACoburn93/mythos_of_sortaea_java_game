@@ -42,21 +42,21 @@ public class Dagger extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, tier, value, false, attributes, resistances, abilities, damage);
-    }
+    // public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, damage);
+    // }
 
-    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
-    }
+    // public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    // }
 
-    public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
-    }
+    // public Dagger(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
+    // }
 
-    public Dagger(String name, int tier, double value) {
-        this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
-    }
+    // public Dagger(String name, int tier, double value) {
+    //     this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.STAB)), DEFAULT_DAMAGE);
+    // }
 
     public AttributeTypes getWeaponDamageAttr() {
         return AttributeTypes.AGILITY;
@@ -72,7 +72,7 @@ public class Dagger extends Mainhand {
             this.name = "Dagger";
             this.tier = 0;
             this.value = 5.0;
-            this.damage = 4.0;
+            this.damage = DEFAULT_DAMAGE;
             this.itemType = WeaponTypes.DAGGER;
             this.twoHanded = false;
             this.abilities = new ArrayList<>();

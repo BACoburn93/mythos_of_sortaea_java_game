@@ -13,36 +13,50 @@ import items.equipment.item_types.enums.ShieldTypes;
 
 public class SmallShield extends Offhand {
 
-    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        super(name, tier, value, ShieldTypes.SMALL, attributes, resistances);
-    }
-
-    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities);
-    }
-
-    public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public SmallShield(
+        String name, 
+        int tier, 
+        double value, 
+        Attributes attributes, 
+        Resistances resistances, 
+        List<Ability> abilities, 
+        double damage) 
+    {
         super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
     }
+
+    // public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     super(name, tier, value, ShieldTypes.SMALL, attributes, resistances);
+    // }
+
+    // public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities);
+    // }
+
+    // public SmallShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     super(name, tier, value, ShieldTypes.SMALL, attributes, resistances, abilities, damage);
+    // }
 
     @Override
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalBludgeoningDamage(min, max);
     }
 
-    // public static class Builder extends Offhand.Builder<Builder> {
-    //     public Builder() {
-    //         this.itemType = ShieldTypes.SMALL;
-    //         this.equipmentType = EquipmentTypes.OFFHAND;
-    //         this.value = 5.0;
-    //         this.damage = 0.0;
-    //     }
+    public static class Builder extends Offhand.Builder<Builder> {
+        private double damage;
 
-    //     @Override protected Builder self() { return this; }
+        public Builder() {
+            this.itemType = ShieldTypes.SMALL;
+            this.equipmentType = EquipmentTypes.OFFHAND;
+            this.value = 5.0;
+            this.damage = 0.0;
+        }
 
-    //     @Override
-    //     public SmallShield build() {
-    //         return new SmallShield( name, tier, value, attributes, resistances, abilities, damage );
-    //     }
-    // }
+        @Override protected Builder self() { return this; }
+
+        @Override
+        public SmallShield build() {
+            return new SmallShield( name, tier, value, attributes, resistances, abilities, damage );
+        }
+    }
 }

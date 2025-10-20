@@ -13,17 +13,29 @@ import items.equipment.item_types.enums.ShieldTypes;
 
 public class LargeShield extends Offhand {
 
-    public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        super(name, tier, value, ShieldTypes.LARGE, attributes, resistances);
-    }
-
-    public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        super(name, tier, value, ShieldTypes.LARGE, attributes, resistances, abilities);
-    }
-
-    public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public LargeShield(
+        String name, 
+        int tier, 
+        double value, 
+        Attributes attributes, 
+        Resistances resistances, 
+        List<Ability> abilities, 
+        double damage) 
+    {
         super(name, tier, value, ShieldTypes.LARGE, attributes, resistances, abilities, damage);
     }
+
+    // public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     super(name, tier, value, ShieldTypes.LARGE, attributes, resistances);
+    // }
+
+    // public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     super(name, tier, value, ShieldTypes.LARGE, attributes, resistances, abilities);
+    // }
+
+    // public LargeShield(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     super(name, tier, value, ShieldTypes.LARGE, attributes, resistances, abilities, damage);
+    // }
 
     @Override
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {

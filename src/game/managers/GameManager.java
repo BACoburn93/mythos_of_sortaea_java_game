@@ -108,10 +108,10 @@ public class GameManager {
         List<Equipment> shared = new ArrayList<>();
         String[] keys = {
             EquipmentKey.LESSER_STAFF.key(), EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
-            EquipmentKey.SWORD.key(), EquipmentKey.PLATE_ARMOR.key(),
+            EquipmentKey.SWORD.key(), EquipmentKey.PLATE_ARMOR.key(), EquipmentKey.BUCKLER.key(),
             EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key(),
             EquipmentKey.STAFF.key(), EquipmentKey.GREAT_STAFF.key(), EquipmentKey.KNIFE.key(),
-            EquipmentKey.LONGBOW.key()
+            EquipmentKey.LONGBOW.key(), EquipmentKey.ROUND_SHIELD.key()
         };
 
         for (int i=0;i<10;i++) {

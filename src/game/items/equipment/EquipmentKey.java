@@ -8,6 +8,8 @@ public enum EquipmentKey {
     GREAT_STAFF("greatstaff"),
     KNIFE("knife"),
     DAGGER("dagger"),
+    BUCKLER("buckler"),
+    ROUND_SHIELD("roundshield"),
     TOWER_SHIELD("towershield"),
     SWORD("sword"),
     BOW("bow"),

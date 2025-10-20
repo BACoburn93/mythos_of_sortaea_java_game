@@ -36,21 +36,21 @@ public class Sword extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, tier, value, false, attributes, resistances, abilities, damage);
-    }
+    // public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, damage);
+    // }
 
-    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
-    }
+    // public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    // }
 
-    public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
-    }
+    // public Sword(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
+    // }
 
-    public Sword(String name, int tier, double value) {
-        this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
-    }
+    // public Sword(String name, int tier, double value) {
+    //     this(name, tier, value, false, null, null, new ArrayList<>(List.of(AbilityDatabase.SLASH)), DEFAULT_DAMAGE);
+    // }
 
     public AttributeTypes getWeaponDamageAttr() {
         return AttributeTypes.STRENGTH;
@@ -65,7 +65,8 @@ public class Sword extends Mainhand {
 
         public Builder() {
             this.value = 20.0;
-            this.damage = 10.0;
+            this.damage = DEFAULT_DAMAGE;
+            this.twoHanded = false;
             this.itemType = WeaponTypes.SWORD;
             this.equipmentType = EquipmentTypes.MAINHAND;
         }
@@ -81,7 +82,7 @@ public class Sword extends Mainhand {
             (abilities instanceof ArrayList ? 
             abilities : new ArrayList<>(abilities));
 
-            return new Sword( name, tier, value, attrs, resists, abils, damage );
+            return new Sword( name, tier, value, twoHanded, attrs, resists, abils, damage );
         }
     }
 }

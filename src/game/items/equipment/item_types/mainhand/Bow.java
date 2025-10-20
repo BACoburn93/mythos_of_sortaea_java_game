@@ -22,11 +22,11 @@ public class Bow extends Mainhand {
         String name,
         int tier,
         double value,
-        boolean isTwoHanded,
+        // boolean isTwoHanded,
         Attributes attributes,
         Resistances resistances,
         List<Ability> abilities,
-                   double damage) {
+        double damage) {
         super(
             name,
             tier,
@@ -41,21 +41,21 @@ public class Bow extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, tier, value, true, attributes, resistances, abilities, damage);
-    }
+    // public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     this(name, tier, value, true, attributes, resistances, abilities, damage);
+    // }
 
-    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, tier, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
-    }
+    // public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     this(name, tier, value, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    // }
 
-    public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        this(name, tier, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
-    }
+    // public Bow(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     this(name, tier, value, attributes, resistances, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
+    // }
 
-    public Bow(String name, int tier, double value) {
-        this(name, tier, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
-    }
+    // public Bow(String name, int tier, double value) {
+    //     this(name, tier, value, null, null, List.of(AbilityDatabase.SHOOT), DEFAULT_DAMAGE);
+    // }
 
     @Override
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
@@ -66,7 +66,7 @@ public class Bow extends Mainhand {
 
         public Builder() {
             this.value = 20.0;
-            this.damage = 10.0;
+            this.damage = DEFAULT_DAMAGE;
             this.itemType = WeaponTypes.BOW;
             this.equipmentType = EquipmentTypes.MAINHAND;
         }

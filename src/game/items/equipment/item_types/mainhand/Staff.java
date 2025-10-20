@@ -20,7 +20,15 @@ public class Staff extends Mainhand {
     private static final double DEFAULT_DAMAGE = 5.0;
 
     // central constructor
-    public Staff(String name, int tier, double value, boolean isTwoHanded, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    public Staff(
+        String name, 
+        int tier, 
+        double value, 
+        boolean isTwoHanded, 
+        Attributes attributes, 
+        Resistances resistances, 
+        List<Ability> abilities, 
+        double damage) {
         super(
             name,
             tier,
@@ -35,21 +43,21 @@ public class Staff extends Mainhand {
     }
 
     // convenience overloads delegate to the central constructor
-    public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
-        this(name, tier, value, false, attributes, resistances, abilities, damage);
-    }
+    // public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities, double damage) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, damage);
+    // }
 
-    public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
-        this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
-    }
+    // public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances, List<Ability> abilities) {
+    //     this(name, tier, value, false, attributes, resistances, abilities, DEFAULT_DAMAGE);
+    // }
 
-    public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances) {
-        this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
-    }
+    // public Staff(String name, int tier, double value, Attributes attributes, Resistances resistances) {
+    //     this(name, tier, value, false, attributes, resistances, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
+    // }
 
-    public Staff(String name, int tier, double value) {
-        this(name, tier, value, null, null, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
-    }
+    // public Staff(String name, int tier, double value) {
+    //     this(name, tier, value, null, null, new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART)), DEFAULT_DAMAGE);
+    // }
 
     public AttributeTypes getWeaponDamageAttr() {
         return AttributeTypes.KNOWLEDGE; 
@@ -64,7 +72,8 @@ public class Staff extends Mainhand {
 
         public Builder() {
             this.value = 20.0;
-            this.damage = 10.0;
+            this.damage = DEFAULT_DAMAGE;
+            this.twoHanded = false;
             this.itemType = WeaponTypes.STAFF;
             this.equipmentType = EquipmentTypes.MAINHAND;
         }
@@ -80,7 +89,7 @@ public class Staff extends Mainhand {
             (abilities instanceof ArrayList ? 
             abilities : new ArrayList<>(abilities));
 
-            return new Staff( name, tier, value, attrs, resists, abils, damage );
+            return new Staff( name, tier, value, twoHanded, attrs, resists, abils, damage );
         }
     }
 }
