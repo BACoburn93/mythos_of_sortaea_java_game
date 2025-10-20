@@ -32,72 +32,151 @@ public final class EquipmentRegistry {
         // Register suppliers with reasonably complete default prototype constructors.
         // These suppliers should produce a base prototype item (Database may flavor it).
         
-        SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
-                "Lesser Staff",
-                0,
-                20
-        ));
+        // SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> new Staff(
+        //         "Lesser Staff",
+        //         0,
+        //         20
+        // ));
 
-        SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
-                "Staff",
-                1,
-                400,
-                new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
-                new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
-                new ArrayList<>(),
-                8.0
-        ));
+        // SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> new Staff(
+        //         "Staff",
+        //         1,
+        //         400,
+        //         new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0),
+        //         new Resistances(3,3,3,3,3,3,3,3,3,3,3,3),
+        //         new ArrayList<>(),
+        //         8.0
+        // ));
 
-        SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> new Staff(
-                "Great Staff",
-                3,
-                3000,
-                true,
-                new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
-                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-                new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
-                12.0
-        ));
+        // SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> new Staff(
+        //         "Great Staff",
+        //         3,
+        //         3000,
+        //         true,
+        //         new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0),
+        //         new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
+        //         new ArrayList<>(List.of(AbilityDatabase.FIREBALL)),
+        //         12.0
+        // ));
 
-        SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(
-                "Dagger",
-                0,
-                100,
-                new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-                new ArrayList<>(List.of())
-        ));
+        // SUPPLIERS.put(EquipmentKey.DAGGER.key(), () -> new Dagger(
+        //         "Dagger",
+        //         0,
+        //         100,
+        //         new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+        //         new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
+        //         new ArrayList<>(List.of())
+        // ));
 
         // Testing the Builder option
-        Dagger knife = Dagger.builder().name("Knife").tier(2).damage(7).build();
-        SUPPLIERS.put(EquipmentKey.KNIFE.key(), () -> knife);
 
-        SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
-                "Tower Shield",
-                2,
-                200,
-                new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
-                new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
-                new ArrayList<>(List.of(AbilityDatabase.SHIELD_BASH))
-        ));
+        // If I go with the Template Approach
+        // Dagger knife = Mainhand.template().name("Knife").tier(2).damage(7).buildInto(Dagger.class);
 
-        SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
-                "Sword",
-                1,
-                500,
-                new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
-                new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
-                new ArrayList<>(List.of(AbilityDatabase.SLASH))
-        ));
+        // Staves
+        SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () -> 
+            new Staff.Builder()
+                .name("Lesser Staff")
+                .tier(0)
+                .value(20)
+                .build()
+        );
 
-        SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
-                "Bow",
-                1,
-                800,
-                new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
-                new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
-                new ArrayList<>(List.of(AbilityDatabase.POISON_DART))
-        ));
+        SUPPLIERS.put(EquipmentKey.STAFF.key(), () -> 
+            new Staff.Builder()
+                .name("Staff")
+                .tier(1)
+                .value(400)
+                .attributes(new Attributes(0.0,0.0,5.0,0.0,0.0, 0.0, 0.0))
+                .damage(8.0)
+                .build()
+        );
+
+        SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () -> 
+            new Staff.Builder()
+                .name("Great Staff")
+                .tier(3)
+                .value(3000)
+                .damage(12.0)
+                .attributes(new Attributes(0.0,0.0,30.0,0.0,0.0, 0.0, 0.0))
+                .abilities(new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART, AbilityDatabase.FIREBALL)))
+                .build()
+        );
+
+
+        // Daggers
+        SUPPLIERS.put(EquipmentKey.DAGGER.key(), () ->
+            new Dagger.Builder()
+                .name("Dagger")
+                .tier(0)
+                .value(100)
+                .attributes(new Attributes(0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0))
+                .build()
+        );
+
+        SUPPLIERS.put(EquipmentKey.KNIFE.key(), () ->
+            new Dagger.Builder()
+                .name("Knife")
+                .build()
+        );
+
+        // Bows
+        SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () ->
+            new Bow.Builder()
+                .name("Longbow")
+                .tier(1)
+                .value(600)
+                .attributes(new Attributes(0.0,3.0,0.0,0.0,0.0,0.0,2.0))
+                .damage(12.0)
+                .build()
+        );
+
+        // Swords
+        SUPPLIERS.put(EquipmentKey.SWORD.key(), () ->
+            new Sword.Builder()
+                .name("Sword")
+                .tier(1)
+                .value(500)
+                .attributes(new Attributes(10.0, 0.0, 0.0, 30.0, 0.0, 0.0, 0.0))
+                .build()
+        );
+
+        // Large shields
+        SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () ->
+            new LargeShield.Builder()
+                .name("Tower Shield")
+                .tier(2)
+                .value(200)
+                .attributes(new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0))
+                .build()
+        );
+
+        // SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () -> new LargeShield(
+        //         "Tower Shield",
+        //         2,
+        //         200,
+        //         new Attributes(0.0,0.0,0.0,5.0,2.0,0.0,0.0),
+        //         new Resistances(2,2,2,0,0,0,0,0,0,0,0,0),
+        //         new ArrayList<>(List.of(AbilityDatabase.SHIELD_BASH))
+        // ));
+
+        // SUPPLIERS.put(EquipmentKey.SWORD.key(), () -> new Sword(
+        //         "Sword",
+        //         1,
+        //         500,
+        //         new Attributes(50.0,0.0,0.0,20.0,20.0,20.0,0.0),
+        //         new Resistances(10,10,10,10,10,10,10,10,10,10,10,10),
+        //         new ArrayList<>(List.of(AbilityDatabase.SLASH))
+        // ));
+
+        // SUPPLIERS.put(EquipmentKey.BOW.key(), () -> new Bow(
+        //         "Bow",
+        //         1,
+        //         800,
+        //         new Attributes(0.0,60.0,0.0,0.0,0.0,0.0,5.0),
+        //         new Resistances(0,0,0,0,0,0,0,0,0,0,0,0),
+        //         new ArrayList<>(List.of(AbilityDatabase.POISON_DART))
+        // ));
 
         SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () -> new HeavyTorso(
                 "Plate Armor",

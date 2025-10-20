@@ -1,5 +1,6 @@
 package items.equipment.item_types.mainhand;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -10,6 +11,7 @@ import abilities.database.AbilityDatabase;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
+import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 public class Bow extends Mainhand {
@@ -58,5 +60,29 @@ public class Bow extends Mainhand {
     @Override
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalPiercingDamage(min, max);
+    }
+
+    public static class Builder extends Mainhand.MainhandBuilder<Builder> {
+
+        public Builder() {
+            this.value = 20.0;
+            this.damage = 10.0;
+            this.itemType = WeaponTypes.BOW;
+            this.equipmentType = EquipmentTypes.MAINHAND;
+        }
+        
+        @Override protected Builder self() { return this; }
+
+        @Override
+        public Bow build() {
+            Attributes attrs = (attributes != null) ? new Attributes() : null;
+            Resistances resists = (this.resistances != null) ? new Resistances() : null;
+            List<Ability> abils = (abilities == null) ?
+            new ArrayList<Ability>(List.of(AbilityDatabase.SHOOT)) :
+            (abilities instanceof ArrayList ? 
+            abilities : new ArrayList<>(abilities));
+
+            return new Bow( name, tier, value, attrs, resists, abils, damage );
+        }
     }
 }

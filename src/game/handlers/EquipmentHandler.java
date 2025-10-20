@@ -151,7 +151,6 @@ public class EquipmentHandler {
         });
     }
 
-    // to do - Fix the abilities not being removed when unequipping an item
     private void removeEquipmentAbilities(Character character, Equipment eq) {
         if (eq == null) return;
         List<Ability> abilitiesToRemove = null;

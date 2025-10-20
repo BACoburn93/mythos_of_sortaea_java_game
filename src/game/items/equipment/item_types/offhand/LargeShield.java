@@ -8,6 +8,7 @@ import abilities.damages.Damage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
+import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.ShieldTypes;
 
 public class LargeShield extends Offhand {
@@ -29,4 +30,21 @@ public class LargeShield extends Offhand {
         return (min, max) -> new PhysicalBludgeoningDamage(min, max);
     }
 
+    public static class Builder extends Offhand.Builder<Builder> {
+        private double damage;
+
+        public Builder() {
+            this.itemType = ShieldTypes.LARGE;
+            this.equipmentType = EquipmentTypes.OFFHAND;
+            this.value = 15.0;
+            this.damage = 0.0;
+        }
+
+        @Override protected Builder self() { return this; }
+
+        @Override
+        public LargeShield build() {
+            return new LargeShield( name, tier, value, attributes, resistances, abilities, damage );
+        }
+    }
 }

@@ -11,6 +11,7 @@ public enum EquipmentKey {
     TOWER_SHIELD("towershield"),
     SWORD("sword"),
     BOW("bow"),
+    LONGBOW("longbow"),
     PLATE_ARMOR("platearmor"),
     LEATHER_ARMOR("leatherarmor"),
     RING("ring"),

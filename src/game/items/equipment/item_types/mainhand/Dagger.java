@@ -12,7 +12,6 @@ import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 public class Dagger extends Mainhand {
@@ -68,22 +67,31 @@ public class Dagger extends Mainhand {
         return (min, max) -> new PhysicalPiercingDamage(min, max);
     }
 
-    public static class Builder extends Mainhand.Builder<Builder> {
+    public static class Builder extends Mainhand.MainhandBuilder<Builder> {
         public Builder() {
-            this.itemType = WeaponTypes.DAGGER; 
-            this.equipmentType = EquipmentTypes.MAINHAND;
-            this.value = 10.0;
-            this.damage = 6.0;
+            this.name = "Dagger";
+            this.tier = 0;
+            this.value = 5.0;
+            this.damage = 4.0;
+            this.itemType = WeaponTypes.DAGGER;
+            this.twoHanded = false;
+            this.abilities = new ArrayList<>();
         }
 
-        @Override protected Builder self() { return this; }
+        @Override
+        protected Builder self() { return this; }
 
         public Dagger build() {
-            List<Ability> abs = (abilities == null) ? new ArrayList<>() :
-                (abilities instanceof ArrayList ? abilities : new ArrayList<>(abilities));
-            return new Dagger(name, tier, value, twoHanded, attributes, resistances, abs, damage);
+            // Defensive copy of all parameters to pass to Dagger constructor
+            Attributes attrs = (attributes != null) ? new Attributes() : null;
+            Resistances resists = (this.resistances != null) ? new Resistances() : null;
+            List<Ability> abils = (abilities == null) ?
+            new ArrayList<Ability>(List.of(AbilityDatabase.STAB)) :
+            (abilities instanceof ArrayList ? 
+            abilities : new ArrayList<>(abilities));
+
+            // Defensive copy of all parameters to pass to Dagger constructor
+            return new Dagger(name, tier, value, twoHanded, attrs, resists, abils, damage);
         }
     }
-
-    public static Builder builder() { return new Builder(); }
 }

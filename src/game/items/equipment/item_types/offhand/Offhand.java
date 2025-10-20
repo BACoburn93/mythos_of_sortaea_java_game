@@ -15,6 +15,9 @@ import items.equipment.EquipmentTypes;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
+import items.equipment.item_types.enums.ArmorTypes;
+import items.equipment.item_types.enums.ShieldTypes;
+import items.equipment.item_types.torso.Torso;
 
 public abstract class Offhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider, MutableWeaponDamage {
     private List<Ability> abilities;
@@ -61,5 +64,39 @@ public abstract class Offhand extends Equipment implements DamageTypeProvider, W
     @Override
     public void setDamage(double damage) {
         this.damage = damage;
+    }
+
+    // public static abstract class Builder<T extends Builder<T>> extends Equipment.Builder<T> {
+    //     protected double damage = 0.0;
+    //     protected ItemType itemType;
+
+    //     public T damage(double d) { this.damage = d; return self(); }
+    //     public T itemType(ItemType it) { this.itemType = it; return self(); }
+    // }
+
+    public static abstract class OffhandBuilder extends Builder<OffhandBuilder> {
+        protected double damage = 0.0;
+
+        public OffhandBuilder() {
+            // defaults
+            this.name = "Shield";
+            this.tier = 0;
+            this.value = 3.0;
+            this.damage = 0.0;
+            this.itemType = ShieldTypes.SMALL;
+            this.abilities = new ArrayList<>();
+        }
+
+        @Override
+        protected OffhandBuilder self() { return this; }
+
+        public Offhand build() {
+            return new Offhand(name, tier, value, itemType, attributes, resistances, abilities, damage) {
+                @Override
+                public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
+                    return (min, max) -> null;
+                }
+            };
+        }
     }
 }

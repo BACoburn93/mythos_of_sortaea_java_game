@@ -70,9 +70,16 @@ public class EquipmentDatabase {
                 SwordPools.SUFFIX_POOL, 0.5
         );
 
+        // factory.registerPrototype(
+        //         EquipmentKey.BOW.key(),
+        //         EquipmentRegistry.get(EquipmentKey.BOW.key()),
+        //         BowPools.PREFIX_POOL, 0.5,
+        //         BowPools.SUFFIX_POOL, 0.5
+        // );
+
         factory.registerPrototype(
-                EquipmentKey.BOW.key(),
-                EquipmentRegistry.get(EquipmentKey.BOW.key()),
+                EquipmentKey.LONGBOW.key(),
+                EquipmentRegistry.get(EquipmentKey.LONGBOW.key()),
                 BowPools.PREFIX_POOL, 0.5,
                 BowPools.SUFFIX_POOL, 0.5
         );

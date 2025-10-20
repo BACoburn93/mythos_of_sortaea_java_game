@@ -4,6 +4,7 @@ import actors.attributes.AttributeTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import items.equipment.Equipment;
+import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 import java.util.ArrayList;
@@ -57,5 +58,29 @@ public class Staff extends Mainhand {
     @Override
     public BiFunction<Integer, Integer, Damage> getBaseDamageType() {
         return (min, max) -> new PhysicalBludgeoningDamage(min, max);
+    }
+
+    public static class Builder extends Mainhand.MainhandBuilder<Builder> {
+
+        public Builder() {
+            this.value = 20.0;
+            this.damage = 10.0;
+            this.itemType = WeaponTypes.STAFF;
+            this.equipmentType = EquipmentTypes.MAINHAND;
+        }
+        
+        @Override protected Builder self() { return this; }
+
+        @Override
+        public Staff build() {
+            Attributes attrs = (attributes != null) ? new Attributes() : null;
+            Resistances resists = (this.resistances != null) ? new Resistances() : null;
+            List<Ability> abils = (abilities == null) ?
+            new ArrayList<Ability>(List.of(AbilityDatabase.MAGIC_DART)) :
+            (abilities instanceof ArrayList ? 
+            abilities : new ArrayList<>(abilities));
+
+            return new Staff( name, tier, value, attrs, resists, abils, damage );
+        }
     }
 }
