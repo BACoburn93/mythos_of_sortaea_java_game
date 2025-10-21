@@ -2,6 +2,8 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
-Add in a tier property that might affect value, attributes, resistances, abilities, etc
-
-Create a dynamic class that adds ability based on the item's tier
+Create a dynamic class that adds ability based on the item's tier/enemy level
+    Pull from a pool of abilities and select a number of abilities that are <= item tier
+        This will be for Prefix/Suffix logic
+    Consider doing the same for Enemy logic when determining abilities gained from Prefix/Suffix
+        Enemy level (after prefix/suffix application) will be considered, as opposed to item tier
