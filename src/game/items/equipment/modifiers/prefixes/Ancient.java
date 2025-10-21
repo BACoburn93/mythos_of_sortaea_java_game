@@ -19,6 +19,8 @@ public class Ancient implements EquipmentPrefix {
 
         target.getAttributes().multiplyStrength(10);
 
+        // Add in ability based on item tier
+
     }
 
     @Override
