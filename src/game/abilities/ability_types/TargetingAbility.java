@@ -37,7 +37,7 @@ public class TargetingAbility extends Ability {
         private Damage[] damages;
 
         // Optional/Defaults
-        private int levelRequirement = Math.max(this.tier * 2 - 1, 1);
+        private int levelRequirement = -1;
         private int manaCost = 0;
         private int actionCost = 1;
         private ArmorTypes[] armorTypes = null;
@@ -65,9 +65,11 @@ public class TargetingAbility extends Ability {
         public Builder description(String v) { this.description = v; return this; }
 
         public TargetingAbility build() {
+            int resolvedLevelReq = (levelRequirement >= 0) ? levelRequirement : abilities.Ability.defaultLevelForTier(tier);
+
             return new TargetingAbility(
                 name,
-                levelRequirement,
+                resolvedLevelReq,
                 manaCost,
                 actionCost,
                 damages,

@@ -2,8 +2,6 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
-Convert all Equipment to utilize the Builder pattern
-
 Add in a tier property that might affect value, attributes, resistances, abilities, etc
 
 Create a dynamic class that adds ability based on the item's tier

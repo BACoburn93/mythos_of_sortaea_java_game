@@ -27,7 +27,6 @@ import actors.types.CombatActor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import items.equipment.item_types.*;
 import items.equipment.item_types.enums.ArmorTypes;
 import items.equipment.item_types.enums.ShieldTypes;
 import items.equipment.item_types.enums.WeaponTypes;

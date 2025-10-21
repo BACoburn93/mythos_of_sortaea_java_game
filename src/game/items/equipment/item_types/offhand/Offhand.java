@@ -15,9 +15,7 @@ import items.equipment.EquipmentTypes;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
-import items.equipment.item_types.enums.ArmorTypes;
 import items.equipment.item_types.enums.ShieldTypes;
-import items.equipment.item_types.torso.Torso;
 
 public abstract class Offhand extends Equipment implements DamageTypeProvider, WeaponDamageProvider, MutableWeaponDamage {
     private List<Ability> abilities;

@@ -6,8 +6,11 @@ import items.equipment.item_types.enums.ShieldTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 import java.util.Arrays;
+import java.util.function.IntUnaryOperator;
 
 public abstract class Ability {
+    private static IntUnaryOperator defaultLevelFunc = tier -> Math.max(tier * 2 - 1, 1);
+    
     private String name;
     private int manaCost;
     private int actionCost;
@@ -93,6 +96,14 @@ public abstract class Ability {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static int defaultLevelForTier(int tier) {
+        return defaultLevelFunc.applyAsInt(tier);
+    }
+
+    public static void setDefaultLevelFunction(IntUnaryOperator fn) {
+        if (fn != null) defaultLevelFunc = fn;
     }
 
     public int getLevelRequirement() {

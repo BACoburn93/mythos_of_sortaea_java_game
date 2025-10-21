@@ -7,7 +7,6 @@ import actors.resistances.Resistances;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
 import items.equipment.item_types.enums.ArmorTypes;
-import items.equipment.item_types.feet.Feet;
 
 public class Back extends Equipment {
     public Back(String name, int tier, double value, ArmorTypes itemType, Attributes attributes, Resistances resistances) {
