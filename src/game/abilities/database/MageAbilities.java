@@ -2,12 +2,14 @@ package abilities.database;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
+import abilities.damages.DamageTypes;
 import abilities.damages.magical.MagicalFireDamage;
 import abilities.damages.magical.MagicalIceDamage;
 import abilities.damages.magical.MagicalLightningDamage;
 import abilities.damages.magical.MagicalPiercingDamage;
 import abilities.damages.spiritual.SpiritualFireDamage;
 import items.equipment.AbilityPrerequisites;
+import items.equipment.item_types.enums.WeaponTypes;
 import status_conditions.Burn;
 import status_conditions.StatusCondition;
 
@@ -25,6 +27,7 @@ public class MageAbilities {
         .rightRange(2)
         .tier(3)
         .description("A sphere of flames that explodes wherever it lands.")
+        .allowedEquipmentTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .build();
 
     public static final TargetingAbility ICE_SPIKE = new TargetingAbility.Builder(
@@ -38,6 +41,7 @@ public class MageAbilities {
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .tier(4)
         .description("An ice spire that guides itself to impale it's target.")
+        .allowedEquipmentTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .build();
 
     public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility.Builder(
@@ -61,6 +65,7 @@ public class MageAbilities {
         .rightRange(3)
         .tier(5)
         .description("Summon a storm of fire to engulf a moderate area.")
+        .allowedEquipmentTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .build();
 
     public static final TargetingAbility METEOR_SWARM = new TargetingAbility.Builder(
@@ -73,5 +78,6 @@ public class MageAbilities {
         .rightRange(8)
         .tier(9)
         .description("Summon a swarm of meteors to pummel a large area.")
+        .allowedEquipmentTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .build();
 }

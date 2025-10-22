@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import abilities.database.AbilityDatabase;
 import items.equipment.item_types.mainhand.*;
 import items.equipment.item_types.offhand.*;
 import items.equipment.item_types.back.*;
@@ -62,11 +63,11 @@ public final class EquipmentRegistry {
         SUPPLIERS.put(EquipmentKey.GREAT_STAFF.key(), () ->
             new Staff.Builder()
                 .name("Great Staff")
-                .tier(3)
+                .tier(5)
                 .value(3000)
                 .damage(12.0)
                 .attributes(new actors.attributes.Attributes(0.0,0.0,30.0,0.0,0.0,0.0,0.0))
-                .abilities(new java.util.ArrayList<>(java.util.List.of(abilities.database.AbilityDatabase.MAGIC_DART, abilities.database.AbilityDatabase.FIREBALL)))
+                .abilities(new java.util.ArrayList<>(java.util.List.of(AbilityDatabase.MAGIC_DART, AbilityDatabase.LIGHTNING_BOLT)))
                 .build()
         );
 
@@ -115,6 +116,15 @@ public final class EquipmentRegistry {
                 .tier(1)
                 .value(500)
                 .attributes(new actors.attributes.Attributes(10.0,0.0,0.0,30.0,0.0,0.0,0.0))
+                .build()
+        );
+
+        SUPPLIERS.put(EquipmentKey.SWORD.key(), () ->
+            new Sword.Builder()
+                .name("Excalibur")
+                .tier(7)
+                .value(5000)
+                .attributes(new actors.attributes.Attributes(77.0,77.0,77.0,77.0,77.0, 77.0, 77.0))
                 .build()
         );
 

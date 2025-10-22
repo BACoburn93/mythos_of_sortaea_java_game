@@ -7,8 +7,8 @@ import abilities.database.AbilityDatabase;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
-import items.equipment.modifiers.ChooseAbilities;
 import items.equipment.modifiers.EquipmentPrefix;
+import utils.ChooseAbilities;
 
 public class Enflamed implements EquipmentPrefix, ChooseAbilities {
     private static final ArrayList<Ability> possibleAbilities = new ArrayList<>();
@@ -16,6 +16,7 @@ public class Enflamed implements EquipmentPrefix, ChooseAbilities {
     static {
         possibleAbilities.add(AbilityDatabase.FIREBALL);
         possibleAbilities.add(AbilityDatabase.FIRE_STORM);
+        possibleAbilities.add(AbilityDatabase.FLAME_SLASH);
         possibleAbilities.add(AbilityDatabase.METEOR_SWARM);
     }
     
@@ -35,17 +36,10 @@ public class Enflamed implements EquipmentPrefix, ChooseAbilities {
         target.getResistances().multiplyIce(4.0);
         target.getResistances().multiplyFire(6.0);
 
-        // to do - create a dynamic class that adds ability based on the item's tier
-        // do the same for enemys based on their level
-
-        // Compare the target tier to the list of available abilities and add appropriate ones
-        // To accomplish this, use the targets tier and the list of obtainable abilities from AbilityDatabase for the target type
+        // Choose abilities based on item type as well as tier
+        // An enflamed sword should not get fireball, for example.
 
         chooseAbilities(target, possibleAbilities);
-
-        // if(target.getTier() > 2) {
-        //     target.getAbilities().add(AbilityDatabase.FIRE_STORM);
-        // }
         
     }
 

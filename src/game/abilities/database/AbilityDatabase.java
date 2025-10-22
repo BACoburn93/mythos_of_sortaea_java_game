@@ -43,6 +43,7 @@ public class AbilityDatabase {
     // Warrior Abilities
     public static final WeaponAbility SHIELD_BASH = WarriorAbilities.SHIELD_BASH;
     public static final TargetingAbility CHARGE = WarriorAbilities.CHARGE;
+    public static final TargetingAbility FLAME_SLASH = WarriorAbilities.FLAME_SLASH;
 
     // Rogue Abilities
     public static final TargetingAbility BACKSTAB = RogueAbilities.BACKSTAB;

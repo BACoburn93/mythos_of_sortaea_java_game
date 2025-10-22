@@ -1,11 +1,20 @@
 package abilities;
 
 import abilities.damages.Damage;
+import abilities.damages.DamageTypes;
+import items.equipment.Equipment;
+import items.equipment.EquipmentTypes;
+import items.equipment.interfaces.WeaponDamageProvider;
+import items.equipment.item_types.ItemType;
 import items.equipment.item_types.enums.ArmorTypes;
 import items.equipment.item_types.enums.ShieldTypes;
 import items.equipment.item_types.enums.WeaponTypes;
 
 import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.IntUnaryOperator;
 
 public abstract class Ability {
@@ -22,6 +31,9 @@ public abstract class Ability {
     private Damage[] damages;
     private String description;
 
+    protected Set<ItemType> allowedEquipmentTypes;
+    protected Set<DamageTypes> allowedDamageTypes;
+
     // Primary constructor
     public Ability(
         String name,
@@ -33,7 +45,8 @@ public abstract class Ability {
         ShieldTypes[] shieldRequirement,
         WeaponTypes[] weaponRequirement,
         int tier,
-        String description
+        String description,
+        BuilderBase<?> b
     ) {
         this.name = name;
         this.levelRequirement = levelRequirement;
@@ -45,42 +58,49 @@ public abstract class Ability {
         this.weaponRequirement = weaponRequirement;
         this.description = description;
         this.tier = tier;
+
+        this.allowedEquipmentTypes = (b == null || b.allowedEquipmentTypes == null)
+            ? new HashSet<ItemType>()
+            : new HashSet<ItemType>(b.allowedEquipmentTypes);
+        
+        this.allowedDamageTypes = (b == null || b.allowedDamageTypes == null)
+            ? EnumSet.noneOf(DamageTypes.class)
+            : EnumSet.copyOf(b.allowedDamageTypes);
+    }
+
+    public boolean isApplicableTo(Equipment e) {
+        if (e == null) return false;
+
+        // requires explicitly allowed types
+        if (allowedEquipmentTypes.isEmpty() && allowedDamageTypes.isEmpty()) {
+            return false;
+        }
+
+        if (!allowedEquipmentTypes.isEmpty()) {
+            ItemType itemType = e.getItemType();
+            boolean eqOk = (itemType != null && allowedEquipmentTypes.contains(itemType));
+            if (!eqOk) return false;
+        }
+
+        if (!allowedDamageTypes.isEmpty() && (e instanceof items.equipment.interfaces.WeaponDamageProvider wdp)) {
+            java.util.function.BiFunction<Integer,Integer,abilities.damages.Damage> baseFn = wdp.getBaseDamageType();
+            abilities.damages.Damage sample = null;
+            if (baseFn != null) {
+                int low = 1, high = Math.max(1, (int)Math.ceil(wdp.getDamage()));
+                try { sample = baseFn.apply(low, high); } catch (Throwable t){}
+            }
+            abilities.damages.DamageTypes dt = (sample == null) ? null : sample.getDamageType();
+            if (dt == null || !allowedDamageTypes.contains(dt)) return false;
+        }
+
+        return true;
     }
 
     // Convenience constructors delegate to primary constructor
-    // Reaction is currently using this one
+    // Reaction is currently using this one (might change Reaction later to use full constructor)
     public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, 0, description);
+        this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, 0, description, null);
     }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, 0, description);
-    // }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, 0, description);
-    // }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, 0, description);
-    // }
-
-    // // Tier-aware convenience constructors
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, int tier, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, tier, description);
-    // }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ArmorTypes[] armorRequirement, int tier, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, armorRequirement, null, null, tier, description);
-    // }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, ShieldTypes[] shieldRequirement, int tier, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, null, shieldRequirement, null, tier, description);
-    // }
-
-    // public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, WeaponTypes[] weaponRequirement, int tier, String description) {
-    //     this(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponRequirement, tier, description);
-    // }
 
     public int getTier() {
         return tier;
@@ -192,6 +212,18 @@ public abstract class Ability {
         ));
         sb.append(divider);
         return sb.toString();
+    }
+
+    protected static abstract class BuilderBase<T extends BuilderBase<T>> {
+        protected int minTier = 0;
+        protected HashSet<ItemType> allowedEquipmentTypes;
+        protected EnumSet<DamageTypes> allowedDamageTypes;
+
+        public T minTier(int v) { this.minTier = v; return self(); }
+        public T allowedEquipmentTypes(HashSet<ItemType> s) { this.allowedEquipmentTypes = new HashSet<ItemType>(s); return self(); }
+        public T allowedDamageTypes(Set<DamageTypes> s) { this.allowedDamageTypes = EnumSet.copyOf(s); return self(); }
+
+        protected abstract T self();
     }
 }
 

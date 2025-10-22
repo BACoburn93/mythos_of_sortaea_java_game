@@ -197,8 +197,8 @@ public class EquipmentDatabase {
         );
 
         // sample items for quick debugging
-        EQUIPMENT_LIST.add(factory.createByKey(EquipmentKey.LESSER_STAFF.key(), null, null));
-        EQUIPMENT_LIST.add(factory.createRandomByKey(EquipmentKey.DAGGER.key(), null, null));
+        // EQUIPMENT_LIST.add(factory.createByKey(EquipmentKey.LESSER_STAFF.key(), null, null));
+        // EQUIPMENT_LIST.add(factory.createRandomByKey(EquipmentKey.DAGGER.key(), null, null));
     }
 
     public static List<Equipment> getEquipmentList() {
