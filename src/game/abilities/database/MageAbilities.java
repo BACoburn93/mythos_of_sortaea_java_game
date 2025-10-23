@@ -18,7 +18,6 @@ public class MageAbilities {
                 new MagicalFireDamage(10, 18, new StatusCondition[]{ new Burn(10, 100, 2) }),
                 new SpiritualFireDamage(3, 5)
             })
-        .levelRequirement(12)
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .leftRange(2)
@@ -33,7 +32,6 @@ public class MageAbilities {
                 new MagicalIceDamage(4, 8),
                 new MagicalPiercingDamage(12, 14)
             })
-        .levelRequirement(13)
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .tier(4)
@@ -43,7 +41,6 @@ public class MageAbilities {
     public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility.Builder(
             "Lightning Bolt",
             new Damage[]{ new MagicalLightningDamage(15, 22) })
-        .levelRequirement(10)
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .tier(3)
@@ -55,7 +52,6 @@ public class MageAbilities {
             new Damage[]{ new MagicalFireDamage(15, 30), new SpiritualFireDamage(5, 10) })
         .manaCost(30)
         .actionCost(0)
-        .levelRequirement(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .leftRange(3)
         .rightRange(3)

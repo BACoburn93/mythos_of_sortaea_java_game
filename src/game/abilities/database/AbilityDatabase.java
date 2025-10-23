@@ -54,25 +54,28 @@ public class AbilityDatabase {
     // Class Ability Getters
     public static List<Ability> getMageAbilities() {
         return new ArrayList<>(List.of(
-            MageAbilities.FIREBALL,
-            MageAbilities.ICE_SPIKE,
-            MageAbilities.LIGHTNING_BOLT,
-            MageAbilities.METEOR_SWARM
+            FIREBALL,
+            ICE_SPIKE,
+            LIGHTNING_BOLT,
+            FIRE_STORM,
+            METEOR_SWARM
         ));
     }
 
     public static List<Ability> getWarriorAbilities() {
         return new ArrayList<>(List.of(
-            WarriorAbilities.SHIELD_BASH,
-            WarriorAbilities.CHARGE
+            SHIELD_BASH,
+            CHARGE,
+            FLAME_SLASH,
+            FROST_WIND_SLASH
         ));
     }
 
     public static List<Ability> getRogueAbilities() {
         return new ArrayList<>(List.of(
-            RogueAbilities.BACKSTAB,
-            RogueAbilities.POISON_DART,
-            RogueAbilities.SHADOW_STEP
+            BACKSTAB,
+            POISON_DART,
+            SHADOW_STEP
         ));
     }
 }

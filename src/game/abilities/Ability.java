@@ -39,7 +39,7 @@ public abstract class Ability {
         String description
     ) {
         this.name = name;
-        this.levelRequirement = levelRequirement;
+        this.levelRequirement = this.tier = (levelRequirement >= 0) ? levelRequirement : defaultLevelForTier(tier);
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;

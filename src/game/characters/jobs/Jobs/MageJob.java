@@ -7,17 +7,12 @@ import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import characters.jobs.Job;
 import characters.jobs.JobTypes;
-import items.equipment.item_types.*;
-import items.equipment.item_types.enums.ArmorTypes;
-import items.equipment.item_types.enums.WeaponTypes;
 import status_conditions.StatusConditions;
 import characters.jobs.EquipmentProficiencies;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class MageJob extends Job {
-    Set<ItemType> mageAllowed = Set.of(WeaponTypes.STAFF, WeaponTypes.WAND, WeaponTypes.TOME, ArmorTypes.LIGHT);
 
     public MageJob() {
         super(

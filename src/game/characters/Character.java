@@ -580,7 +580,7 @@ public class Character extends CombatActor {
     public void levelUp() {
         this.level++;
         if(this.level % 4 == 0) this.maxActionPoints++;
-        StringUtils.stringDivider(this.getName() + " has leveled up!", "* ", 10);
+        StringUtils.stringDivider(this.getName() + " is now level " + this.level, "* ", 10);
         allocateAttributePoints();
         learnNewAbility();
     }
