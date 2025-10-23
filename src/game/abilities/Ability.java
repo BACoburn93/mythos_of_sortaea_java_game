@@ -1,24 +1,12 @@
 package abilities;
 
-import abilities.damages.Damage;
-import abilities.damages.DamageTypes;
+import abilities.damages.*;
 import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;
-import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.item_types.ItemType;
-import items.equipment.item_types.enums.ArmorTypes;
-import items.equipment.item_types.enums.ShieldTypes;
-import items.equipment.item_types.enums.WeaponTypes;
+import items.equipment.item_types.enums.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.IntUnaryOperator;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.*;
 
 public abstract class Ability {
     private static IntUnaryOperator defaultLevelFunc = tier -> Math.max(tier * 2 - 1, 1);

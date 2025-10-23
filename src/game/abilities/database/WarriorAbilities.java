@@ -3,7 +3,6 @@ package abilities.database;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
-import abilities.damages.DamageTypes;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.damages.physical.PhysicalFireDamage;
 import abilities.damages.physical.PhysicalIceDamage;

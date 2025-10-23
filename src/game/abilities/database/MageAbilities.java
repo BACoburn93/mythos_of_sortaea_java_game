@@ -2,7 +2,6 @@ package abilities.database;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
-import abilities.damages.DamageTypes;
 import abilities.damages.magical.MagicalFireDamage;
 import abilities.damages.magical.MagicalIceDamage;
 import abilities.damages.magical.MagicalLightningDamage;
