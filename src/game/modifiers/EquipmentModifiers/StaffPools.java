@@ -13,12 +13,12 @@ import items.equipment.modifiers.suffixes.OfTheNorthWind;
 
 public class StaffPools {
     public static final List<EquipmentFactory.Weighted<EquipmentPrefix>> PREFIX_POOL = Arrays.asList(
-        new EquipmentFactory.Weighted<>(new Ancient(), 0.25),
-        new EquipmentFactory.Weighted<>(new Enflamed(), 0.75)
+        new EquipmentFactory.Weighted<>(new Ancient(), 0.1),
+        new EquipmentFactory.Weighted<>(new Enflamed(), 0.9)
     );
 
     public static final List<EquipmentFactory.Weighted<EquipmentSuffix>> SUFFIX_POOL = Arrays.asList(
-        new EquipmentFactory.Weighted<>(new OfTheNorthWind(), 0.5),
-        new EquipmentFactory.Weighted<>(new OfFortitude(), 0.5)
+        new EquipmentFactory.Weighted<>(new OfTheNorthWind(), 0.9),
+        new EquipmentFactory.Weighted<>(new OfFortitude(), 0.1)
     );
 }

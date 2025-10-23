@@ -6,6 +6,9 @@ import abilities.damages.Damage;
 import abilities.damages.DamageTypes;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.damages.physical.PhysicalFireDamage;
+import abilities.damages.physical.PhysicalIceDamage;
+import abilities.damages.physical.PhysicalSlashingDamage;
+import items.equipment.AbilityPrerequisites;
 
 public class WarriorAbilities {
     public static final WeaponAbility SHIELD_BASH = new WeaponAbility.Builder(
@@ -30,13 +33,26 @@ public class WarriorAbilities {
     public static final TargetingAbility FLAME_SLASH = new TargetingAbility.Builder(
         "Flame Slash",
         new Damage[]{
-            new PhysicalBludgeoningDamage(8, 13),
+            new PhysicalSlashingDamage(8, 13),
             new PhysicalFireDamage(6, 10)
         }
     )
     .tier(2)
     .manaCost(3)
+    .weaponTypes(AbilityPrerequisites.SLASHING_WEAPONS)
     .description("A fiery slash that deals burns and cuts.")
-    .allowedDamageTypes(DamageTypes.SLASHING)
+    .build();
+
+    public static final TargetingAbility FROST_WIND_SLASH = new TargetingAbility.Builder(
+        "Frost Wind Slash",
+        new Damage[]{
+            new PhysicalSlashingDamage(8, 13),
+            new PhysicalIceDamage(6, 10)
+        }
+    )
+    .tier(2)
+    .manaCost(3)
+    .weaponTypes(AbilityPrerequisites.SLASHING_WEAPONS)
+    .description("A chilling slash wounds deeply with numbing frost.")
     .build();
 }

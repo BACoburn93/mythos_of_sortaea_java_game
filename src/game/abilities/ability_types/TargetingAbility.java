@@ -7,7 +7,6 @@ import java.util.Set;
 import abilities.Ability;
 import abilities.damages.Damage;
 import abilities.damages.DamageTypes;
-import items.equipment.EquipmentTypes;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.enums.AccessoryTypes;
 import items.equipment.item_types.enums.ArmorTypes;
@@ -17,7 +16,6 @@ import items.equipment.item_types.enums.WeaponTypes;
 public class TargetingAbility extends Ability {
     private int leftRange;
     private int rightRange;
-    private Set<ItemType> itemTypes = new HashSet<>();
 
     // Primary constructor
     public TargetingAbility(
@@ -34,7 +32,7 @@ public class TargetingAbility extends Ability {
         int tier,
         String description
     ) {
-        super(name, levelRequirement, manaCost, actionCost, damages, armorTypes, shieldTypes, weaponTypes, tier, description, null);
+        super(name, levelRequirement, manaCost, actionCost, damages, armorTypes, shieldTypes, weaponTypes, tier, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }
@@ -57,8 +55,9 @@ public class TargetingAbility extends Ability {
         private int tier = 0;
         private String description = "";
 
-        public EnumSet<DamageTypes> allowedDamageTypes = EnumSet.noneOf(DamageTypes.class);
-        public Set<ItemType> allowedEquipmentTypes = new HashSet<>();
+        // optional explicit overrides
+        private EnumSet<DamageTypes> allowedDamageTypes = null;
+        private Set<ItemType> allowedEquipmentTypes = null;
 
         public Builder(String name, Damage[] damages) {
             this.name = name;
@@ -66,16 +65,15 @@ public class TargetingAbility extends Ability {
         }
 
         public Builder allowedDamageTypes(DamageTypes... types) {
-            if (types == null || types.length == 0) { this.allowedDamageTypes = null; }
-            else {
-                this.allowedDamageTypes = EnumSet.noneOf(DamageTypes.class);
-                for (DamageTypes t : types) this.allowedDamageTypes.add(t);
-            }
+            if (types == null || types.length == 0) { this.allowedDamageTypes = null; return this; }
+            this.allowedDamageTypes = EnumSet.noneOf(DamageTypes.class);
+            for (DamageTypes t : types) this.allowedDamageTypes.add(t);
             return this;
         }
 
-        public Builder allowedEquipmentTypes(ItemType... types) { // EquipmentType
-            if (types == null || types.length == 0) { this.allowedEquipmentTypes = new HashSet<>(); return this; }
+        public Builder allowedEquipmentTypes(ItemType... types) {
+            if (types == null || types.length == 0) { this.allowedEquipmentTypes = null; return this; }
+            if (this.allowedEquipmentTypes == null) this.allowedEquipmentTypes = new HashSet<>();
             for (ItemType t : types) this.allowedEquipmentTypes.add(t);
             return this;
         }
@@ -88,13 +86,7 @@ public class TargetingAbility extends Ability {
         private <E extends Enum<?>> Builder addEnumsToAllowed(E[] types) {
             if (types == null || types.length == 0) { this.allowedEquipmentTypes = null; return this; }
             if (this.allowedEquipmentTypes == null) this.allowedEquipmentTypes = new HashSet<>();
-            for (E e : types) {
-                if (e instanceof ItemType) {
-                    this.allowedEquipmentTypes.add((ItemType) e);
-                } else {
-                    // enums that don't implement ItemType are ignored
-                }
-            }
+            for (E e : types) if (e instanceof ItemType) this.allowedEquipmentTypes.add((ItemType)e);
             return this;
         }
 
@@ -127,8 +119,13 @@ public class TargetingAbility extends Ability {
                 description
             );
 
-            ta.setAllowedDamageTypes(this.allowedDamageTypes);
-            ta.setAllowedEquipmentTypes(this.allowedEquipmentTypes);
+            // apply explicit overrides (if any) — otherwise Ability's constructor defaults remain
+            if (this.allowedDamageTypes != null && !this.allowedDamageTypes.isEmpty()) {
+                ta.setAllowedDamageTypes(this.allowedDamageTypes);
+            }
+            if (this.allowedEquipmentTypes != null && !this.allowedEquipmentTypes.isEmpty()) {
+                ta.setAllowedEquipmentTypes(this.allowedEquipmentTypes);
+            }
 
             return ta;
         }

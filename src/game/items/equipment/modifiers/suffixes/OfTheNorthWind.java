@@ -1,11 +1,23 @@
 package items.equipment.modifiers.suffixes;
 
+import java.util.ArrayList;
+
+import abilities.Ability;
+import abilities.database.AbilityDatabase;
 import items.equipment.Equipment;
 import items.equipment.interfaces.MutableWeaponDamage;
 import items.equipment.interfaces.WeaponDamageProvider;
 import items.equipment.modifiers.EquipmentSuffix;
+import utils.ChooseAbilities;
 
-public class OfTheNorthWind implements EquipmentSuffix {
+public class OfTheNorthWind implements EquipmentSuffix, ChooseAbilities {
+    private static final ArrayList<Ability> possibleAbilities = new ArrayList<>();
+    
+    static {
+        possibleAbilities.add(AbilityDatabase.ICE_SPIKE);
+        possibleAbilities.add(AbilityDatabase.FROST_WIND_SLASH);
+    }
+
     @Override
     public void apply(Equipment target) {
         target.setGoldValue(target.getGoldValue() * 3);
@@ -22,6 +34,9 @@ public class OfTheNorthWind implements EquipmentSuffix {
 
         target.getResistances().multiplyIce(3.0);
         target.getResistances().multiplyFire(5.0);
+
+        chooseAbilities(target, possibleAbilities);
+
     }
 
     @Override
