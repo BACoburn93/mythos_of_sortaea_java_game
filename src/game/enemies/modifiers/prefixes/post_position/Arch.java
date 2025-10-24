@@ -1,4 +1,4 @@
-package enemies.modifiers.prefixes;
+package enemies.modifiers.prefixes.post_position;
 
 import enemies.Enemy;
 import enemies.modifiers.EnemyPrefix;
