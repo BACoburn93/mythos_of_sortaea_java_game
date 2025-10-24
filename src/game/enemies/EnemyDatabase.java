@@ -54,6 +54,13 @@ public final class EnemyDatabase {
                 OrcPools.SUFFIX_POOL, 0.5
         );
 
+        registerPrototype(
+            EnemyKey.DRAGON.key(),
+                1, 
+                DragonPools.PREFIX_POOL, 1,
+                null, 0.0 
+        );
+
         // Loot tables
         LootManager.registerDropTable(EnemyKey.GOBLIN.key(),
             new DropTable()

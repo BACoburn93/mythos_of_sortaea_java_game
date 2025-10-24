@@ -2,8 +2,14 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
-Create a dynamic class that adds ability based on the item's tier/enemy level
-    Pull from a pool of abilities and select a number of abilities that are <= item tier
+Create a dynamic class that adds ability based on the item's tier/enemy level (done)
+    Pull from a pool of abilities and select a number of abilities that are <= item tier (done)
         This will be for Prefix/Suffix logic
-    Consider doing the same for Enemy logic when determining abilities gained from Prefix/Suffix
-        Enemy level (after prefix/suffix application) will be considered, as opposed to item tier
+    Consider doing the same for Enemy logic when determining abilities gained from Prefix/Suffix (done)
+        Enemy level (after prefix/suffix application) will be considered, as opposed to item tier (done)
+        Find a way to restrict abilities to specific enemy base types (Working on)
+            I.E. Only a Dragon base type will have access to Dragonbreath of a certain type
+                The Prefix/Suffix which includes specific types of Dragonbreath abilities can only be 
+                applied to a Dragon base type
+                Red when applied to Dragon will provide a Dragonfire Breath attack
+                When applied to anything else, the ability will be ignored for consideration

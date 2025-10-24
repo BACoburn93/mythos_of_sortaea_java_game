@@ -6,6 +6,11 @@ import utils.MathUtils;
 
 public class Arch implements EnemyPrefix {
     @Override
+    public EnemyPrefix.Position getPosition() {
+        return EnemyPrefix.Position.POST;
+    }
+
+    @Override
     public void apply(Enemy enemy) {
         double factor = MathUtils.randomInRange(2.15, 0.35);
 
