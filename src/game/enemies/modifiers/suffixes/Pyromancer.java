@@ -15,14 +15,14 @@ public class Pyromancer implements EnemySuffix, ChooseAbilities {
         // Register Pyromancer abilities
         possibleAbilities.add(AbilityDatabase.MOTE_OF_FIRE); // Tier 0
         possibleAbilities.add(AbilityDatabase.DANCING_CINDERS); // Tier 1
-        possibleAbilities.add(AbilityDatabase.FIREBALL); // Tier 2
-        possibleAbilities.add(AbilityDatabase.SPHERE_OF_FLAMES); // Tier 3
-        possibleAbilities.add(AbilityDatabase.PYROCLASM); // Tier 4
+        possibleAbilities.add(AbilityDatabase.FIREBALL); // Tier 3
+        possibleAbilities.add(AbilityDatabase.SPHERE_OF_FLAMES); // Tier 4
+        possibleAbilities.add(AbilityDatabase.PYROCLASM); // Tier 5
     }
 
     @Override
     public void apply(Enemy enemy) {
-        enemy.updateLevelAndExperience(enemy.getLevel() * 1.5);
+        enemy.updateLevelAndExperience(enemy.getLevel() * 0.5);
 
         enemy.getAttributes().multiplyKnowledge(1.3);
         enemy.getManaValues().multiplyMaxAndSetToMax(1.5);

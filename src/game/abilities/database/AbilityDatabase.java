@@ -27,7 +27,10 @@ public class AbilityDatabase {
     public static final TargetingAbility ROTTING_TENTACLE = EnemyAbilities.ROTTING_TENTACLE;
     public static final TargetingAbility VENOM_MAW = EnemyAbilities.VENOM_MAW;
     public static final TargetingAbility POISON_MIST = EnemyAbilities.POISON_MIST;
+    public static final TargetingAbility FROST_BOLT = EnemyAbilities.FROST_BOLT;
+    public static final TargetingAbility WINTERS_GRASP = EnemyAbilities.WINTERS_GRASP;
     public static final TargetingAbility IMPALING_ICE = EnemyAbilities.IMPALING_ICE;
+    public static final TargetingAbility BLACK_FROST_ABYSS = EnemyAbilities.BLACK_FROST_ABYSS;
     public static final TargetingAbility MOTE_OF_FIRE = EnemyAbilities.MOTE_OF_FIRE;
     public static final TargetingAbility DANCING_CINDERS = EnemyAbilities.DANCING_CINDERS;
     public static final TargetingAbility FIRE_BREATH = EnemyAbilities.FIRE_BREATH;

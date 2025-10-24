@@ -35,7 +35,7 @@ public class TargetSelector {
             StringUtils.printOptionsGrid(
                 enemies,
                 e -> e.getName() + 
-                " (SIZE " + ((Enemy) e).getSpawnWeight() + ")" + " HP: " + 
+                " (LVL " + ((Enemy) e).getLevel() + ")" + " HP: " + 
                 (int) e.getHealthValues().getValue() + "/" + (int) e.getHealthValues().getMaxValue(),
                 2,
                 4

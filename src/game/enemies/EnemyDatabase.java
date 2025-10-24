@@ -85,9 +85,9 @@ public final class EnemyDatabase {
         );
     }
 
-    public static void registerPrototype(String key,
-                                         int spawnWeight,
-                                         List<Weighted<EnemyPrefix>> prefixes, double pChance,
+    public static void registerPrototype(String key, // Goblin
+                                         int spawnWeight, // 1
+                                         List<Weighted<EnemyPrefix>> prefixes, double pChance, 
                                          List<Weighted<EnemySuffix>> suffixes, double sChance) {
         if (key == null) return;
         String k = key.trim().toLowerCase();

@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import abilities.Ability;
-import abilities.database.AbilityDatabase;
 import enemies.Enemy;
 import items.equipment.Equipment;
 
