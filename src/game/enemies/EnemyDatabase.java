@@ -44,7 +44,7 @@ public final class EnemyDatabase {
             EnemyKey.GOBLIN.key(),
                 1, 
                 GoblinPools.PREFIX_POOL, 0.5,
-                GoblinPools.SUFFIX_POOL, 0.5
+                GoblinPools.SUFFIX_POOL, 0.95
         );
 
         registerPrototype(

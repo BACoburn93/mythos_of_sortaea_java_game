@@ -18,6 +18,8 @@ public class EnemyHandler {
         ArrayList<Character> validTargets = targets.validTargetsInParty();
 
         if (validTargets.isEmpty() || enemy.getAbilities() == null || enemy.getAbilities().isEmpty()) return plan;
+        // to do - remove after debugging
+        System.out.println(enemy.getAbilities());
 
         Random rnd = new Random();
         int remainingActions = enemy.getActionsPerTurn(); 

@@ -16,7 +16,7 @@ public class GoblinPools {
     );
 
     public static final List<EnemyDatabase.Weighted<EnemySuffix>> SUFFIX_POOL = Arrays.asList(
-        new EnemyDatabase.Weighted<>(new Cryomancer(), 0.6),
-        new EnemyDatabase.Weighted<>(new Pyromancer(), 0.4)
+        new EnemyDatabase.Weighted<>(new Cryomancer(), 0.01),
+        new EnemyDatabase.Weighted<>(new Pyromancer(), 0.99)
     );
 }

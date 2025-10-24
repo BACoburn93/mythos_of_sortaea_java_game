@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import abilities.Ability;
+import abilities.database.AbilityDatabase;
 import enemies.Enemy;
 import items.equipment.Equipment;
 
@@ -31,7 +32,7 @@ public interface ChooseAbilities {
 
     public default void chooseAbilities(Enemy target, ArrayList<Ability> abilityPool) {
         int maxTier = target.getLevel() / 9;
-        chooseAbilitiesImpl(maxTier, abilityPool, ability -> target.getAbilities().add(ability));
+        chooseAbilitiesImpl(maxTier, abilityPool, ability -> target.addAbility(ability));
     }
     
 }

@@ -10,17 +10,14 @@ Story
             Combat, Skills, Travelling, Exploring, Dungeons, Ruins, Resting, Hidden Bosses, etc.
             These will each provide various benefits or could be detrimental
             The higher the risk, the higher the potential reward
+
     
 Timebased Events - Week-based? Day-based?
     Total time before final boss? Time from game start to game finish.
         Months? Years?
     What should the total time of each game loop be?
-    How many choices should there be before the endgame.
-        Less than 50? Less than 100? Less than 500?
-        How many is too many and how many is too few?
-        What is considered a choice and how long does it take?
-        How long should a cocmpleted run take? 
-            2 hours? 3 hours? 5 hours? More?
+        Stages
+            37 min / nodes (substages)
 
     Should bosses spawn at specific times or when travelling to specific places?
         Should regions be travelled linearly or going from A to B should just be time-based.
@@ -66,6 +63,19 @@ Account-based Concepts
             Playing on harder difficulties raises the stakes, but also the potential capstone
                 This could lead to more powerful saved parties
             The account-bound boosts can help increase chances of winning on higher unlocked difficulties
+
+
+
+
+
+
+
+(Party) -> First Boss -> End
+    Win -> New Run (Continuation)
+    Lose -> New Party (Start from this stage)
+    Each Stage 30 - 45 minutes.
+    How many total stages?
+        Stages = Cap / Progress
 
         
 

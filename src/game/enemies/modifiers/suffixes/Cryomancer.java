@@ -12,6 +12,8 @@ public class Cryomancer implements EnemySuffix {
         enemy.getAttributes().increaseKnowledge(15);
         
         enemy.addAbility(AbilityDatabase.IMPALING_ICE);
+
+        
     }
 
     @Override

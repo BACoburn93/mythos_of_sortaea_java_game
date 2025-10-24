@@ -2,6 +2,8 @@ package abilities.enemy;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
+import abilities.damages.magical.MagicalEarthDamage;
+import abilities.damages.magical.MagicalFireDamage;
 import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.damages.physical.PhysicalDarknessDamage;
 import abilities.damages.physical.PhysicalEarthDamage;
@@ -139,9 +141,51 @@ public class EnemyAbilities {
             "Fire Breath",
             new Damage[]{ new SpiritualFireDamage(25, 35) }
         )
-        .manaCost(30)
+        .tier(2)
+        .manaCost(16)
         .leftRange(2)
         .rightRange(2)
         .description("A cone of fire that scorches all in its path.")
+        .build();
+
+    public static final TargetingAbility SPHERE_OF_FLAMES = new TargetingAbility.Builder(
+            "Sphere of Flames",
+            new Damage[]{ new MagicalFireDamage(28, 38) }
+        )
+        .tier(3)
+        .manaCost(18)
+        .leftRange(4)
+        .rightRange(4)
+        .description("A flaming sphere that engulfs all in its path.")
+        .build();
+
+    public static final TargetingAbility PYROCLASM = new TargetingAbility.Builder(
+            "Pyroclasm",
+            new Damage[]{ new MagicalFireDamage(35, 50), new PhysicalBludgeoningDamage(5, 10) }
+        )
+        .tier(4)
+        .manaCost(30)
+        .leftRange(5)
+        .rightRange(5)
+        .description("A devastating eruption of fire that incinerates everything in its wake.")
+        .build();
+
+    public static final TargetingAbility MOTE_OF_FIRE = new TargetingAbility.Builder(
+            "Mote of Fire",
+            new Damage[]{ new MagicalFireDamage(3, 8) }
+        )
+        .tier(0)
+        .manaCost(1)
+        .description("A small mote of fire that deals minor damage.")
+        .build();
+
+    public static final TargetingAbility DANCING_CINDERS = new TargetingAbility.Builder(
+            "Dancing Cinders",
+            new Damage[]{ new SpiritualFireDamage(4, 6), new MagicalEarthDamage(3, 4) }
+        )
+        .tier(1)
+        .leftRange(1)
+        .manaCost(1)
+        .description("A small burst of cinders than burn a target and the target to the left of it.")
         .build();
 }

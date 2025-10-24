@@ -86,6 +86,7 @@ public class CombatManager {
                         // e.chooseEnemyAbility(party);
 
                         var plan = enemyHandler.planActions(e, party);
+                        
                         for (ActionRequest req : plan) {
                             if (req.enemy.getHealth() <= 0) break;
                             if (req.target.getHealth() <= 0) continue;

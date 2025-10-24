@@ -132,8 +132,10 @@ public abstract class Enemy extends CombatActor {
     //     }
     // }
 
-    public void updateLevelAndExperience(int level) {
-        this.setLevel(this.level + level);
+    public void updateLevelAndExperience(double level) {
+        // Convert double to int to allow for multiplicative level setting without changing level to be a double
+        int levelInt = (int) Math.floor(level);
+        this.setLevel(this.level + levelInt);
 
         if (spawnWeight > 0) {
             this.experience = getLevel() * (5 * (this.spawnWeight * this.spawnWeight));

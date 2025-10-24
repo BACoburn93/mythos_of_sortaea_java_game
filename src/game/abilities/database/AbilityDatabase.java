@@ -28,7 +28,11 @@ public class AbilityDatabase {
     public static final TargetingAbility VENOM_MAW = EnemyAbilities.VENOM_MAW;
     public static final TargetingAbility POISON_MIST = EnemyAbilities.POISON_MIST;
     public static final TargetingAbility IMPALING_ICE = EnemyAbilities.IMPALING_ICE;
+    public static final TargetingAbility MOTE_OF_FIRE = EnemyAbilities.MOTE_OF_FIRE;
+    public static final TargetingAbility DANCING_CINDERS = EnemyAbilities.DANCING_CINDERS;
     public static final TargetingAbility FIRE_BREATH = EnemyAbilities.FIRE_BREATH;
+    public static final TargetingAbility SPHERE_OF_FLAMES = EnemyAbilities.SPHERE_OF_FLAMES;
+    public static final TargetingAbility PYROCLASM = EnemyAbilities.PYROCLASM;
     public static final TargetingAbility TAIL = EnemyAbilities.TAIL;
 
     // Character Abilities
