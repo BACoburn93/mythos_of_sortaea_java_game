@@ -31,7 +31,21 @@ public interface ChooseAbilities {
 
     public default void chooseAbilities(Enemy target, ArrayList<Ability> abilityPool) {
         int maxTier = target.getLevel() / 9;
-        chooseAbilitiesImpl(maxTier, abilityPool, ability -> target.addAbility(ability));
+
+        if(target.getTypeKey() != null && !target.getTypeKey().isEmpty()) {
+            List<Ability> candidates = abilityPool.stream()
+            .filter(a -> a.isApplicableToActorType(target.getTypeKey()))
+            .collect(Collectors.toList());
+
+            System.out.println("Choosing abilities for enemy type key: " + target.getTypeKey());
+            System.out.println("Candidate abilities: " + candidates.stream().map(Ability::getName).collect(Collectors.joining(", ")));
+
+            chooseAbilitiesImpl(maxTier, candidates, ability -> target.addAbility(ability));
+        } else {
+            System.out.println("Choosing abilities for enemy with no type key set.");
+
+            chooseAbilitiesImpl(maxTier, abilityPool, ability -> target.addAbility(ability));
+        }
     }
     
 }

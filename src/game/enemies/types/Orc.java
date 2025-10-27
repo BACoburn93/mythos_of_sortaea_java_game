@@ -7,6 +7,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import enemies.Enemy;
+import enemies.EnemyKey;
 
 public class Orc extends Enemy {
     public Orc(String name) {
@@ -19,6 +20,7 @@ public class Orc extends Enemy {
             new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             3
         );
+        setTypeKey(EnemyKey.ORC.key());
     }
 }
 

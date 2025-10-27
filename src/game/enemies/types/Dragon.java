@@ -7,6 +7,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import enemies.Enemy;
+import enemies.EnemyKey;
 
 public class Dragon extends Enemy {
     public Dragon(String name) {
@@ -21,6 +22,8 @@ public class Dragon extends Enemy {
             25,
             3
         );
+
         setActionsPerTurn(3);
+        setTypeKey(EnemyKey.DRAGON.key());
     }
 }

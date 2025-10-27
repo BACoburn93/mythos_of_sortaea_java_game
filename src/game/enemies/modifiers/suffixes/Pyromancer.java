@@ -18,6 +18,7 @@ public class Pyromancer implements EnemySuffix, ChooseAbilities {
         possibleAbilities.add(AbilityDatabase.FIREBALL); // Tier 3
         possibleAbilities.add(AbilityDatabase.SPHERE_OF_FLAMES); // Tier 4
         possibleAbilities.add(AbilityDatabase.PYROCLASM); // Tier 5
+        possibleAbilities.add(AbilityDatabase.FIRE_BREATH); // Tier 6 (Dragon only ability)
     }
 
     @Override

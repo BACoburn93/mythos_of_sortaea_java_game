@@ -55,6 +55,7 @@ public abstract class Enemy extends CombatActor {
     }
 
     protected void setTypeKey(String key) {
+        System.out.println("Setting type key to: " + key);
         this.typeKey = (key == null) ? null : key.trim().toLowerCase();
     }
 
@@ -65,10 +66,10 @@ public abstract class Enemy extends CombatActor {
     public void setSuffix(EnemySuffix suffix) { this.suffix = suffix; }
 
     public int getSpawnWeight() { return spawnWeight; }
-    public void setSpawnWeight(int weight) { this.spawnWeight = weight; }
+    public void setSpawnWeight(int weight) { this.spawnWeight = Math.max(1, weight); }
 
     public int getActionsPerTurn() { return actionsPerTurn; }
-    public void setActionsPerTurn(int actions) { this.actionsPerTurn = actions; }
+    public void setActionsPerTurn(int actions) { this.actionsPerTurn = Math.max(1, actions); }
 
     public void addAbility(Ability ability) {
         if (!abilities.contains(ability)) {
@@ -89,48 +90,6 @@ public abstract class Enemy extends CombatActor {
 
         ui.CombatUIStrings.printHitPointsRemaining(target);
     }   
-
-    // public void chooseEnemyAbility(Party targetsToChooseFrom) {
-    //     ArrayList<Character> validTargets = targetsToChooseFrom.validTargetsInParty();
-
-    //     boolean abilityChosen = false;
-    //     Random random = new Random();
-
-    //     double abilityRoll = random.nextDouble(1, 100);
-    //     int targetRoll = random.nextInt(0, validTargets.size());
-
-    //     while (actionsPerTurn > 0) {
-    //         for (Ability ability : this.abilities) {
-    //             if (abilityRoll < (double) 100 / this.abilities.size() &&
-    //                     this.getManaValues().getValue() >= ability.getManaCost()) {
-    //                 Character target = validTargets.get(targetRoll);
-
-    //                 boolean missedTarget = random.nextInt(100) < this.getStatusConditions().getBlind().getValue();
-
-    //                 if(!missedTarget) {
-    //                     this.attack(target, ability);
-    //                 } else {
-    //                     CombatUIStrings.printMissedAttack(this, target, ability);
-    //                 }
-
-    //                 this.spendMana(ability);
-    //                 abilityChosen = true;
-
-    //                 CombatUIStrings.printHitPointsRemaining(target);
-
-    //                 break;
-    //             } else {
-    //                 abilityRoll -= (double) 100 / this.abilities.size();
-    //             }
-    //         }
-
-    //         actionsPerTurn--;
-    //     }
-
-    //     if(abilityRoll <= 0 && !abilityChosen) {
-    //         System.out.println(this.getName() + " has insufficient mana.");
-    //     }
-    // }
 
     public void updateLevelAndExperience(double level) {
         // Convert double to int to allow for multiplicative level setting without changing level to be a double

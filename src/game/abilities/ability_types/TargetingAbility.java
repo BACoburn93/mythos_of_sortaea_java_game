@@ -58,6 +58,7 @@ public class TargetingAbility extends Ability {
         // optional explicit overrides
         private EnumSet<DamageTypes> allowedDamageTypes = null;
         private Set<ItemType> allowedEquipmentTypes = null;
+        private Set<String> allowedActorTypes = null;
 
         public Builder(String name, Damage[] damages) {
             this.name = name;
@@ -75,6 +76,13 @@ public class TargetingAbility extends Ability {
             if (types == null || types.length == 0) { this.allowedEquipmentTypes = null; return this; }
             if (this.allowedEquipmentTypes == null) this.allowedEquipmentTypes = new HashSet<>();
             for (ItemType t : types) this.allowedEquipmentTypes.add(t);
+            return this;
+        }
+
+        public Builder allowedActorTypes(String... keys) {
+            if (keys == null || keys.length == 0) { this.allowedActorTypes = null; return this; }
+            if (this.allowedActorTypes == null) this.allowedActorTypes = new HashSet<>();
+            for (String k : keys) if (k != null) this.allowedActorTypes.add(k.toLowerCase());
             return this;
         }
 
@@ -125,6 +133,9 @@ public class TargetingAbility extends Ability {
             }
             if (this.allowedEquipmentTypes != null && !this.allowedEquipmentTypes.isEmpty()) {
                 ta.setAllowedEquipmentTypes(this.allowedEquipmentTypes);
+            }
+            if (this.allowedActorTypes != null && !this.allowedActorTypes.isEmpty()) {
+                ta.setAllowedActorTypes(this.allowedActorTypes);
             }
 
             return ta;

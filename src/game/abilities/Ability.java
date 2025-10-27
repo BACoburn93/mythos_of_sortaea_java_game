@@ -24,6 +24,7 @@ public abstract class Ability {
 
     protected Set<ItemType> allowedEquipmentTypes;
     protected Set<DamageTypes> allowedDamageTypes;
+    protected Set<String> allowedActorTypes;
 
     // Primary constructor
     public Ability(
@@ -131,6 +132,13 @@ public abstract class Ability {
         return result;
     }
 
+    public boolean isApplicableToActorType(String typeKey) {
+        if (allowedActorTypes != null && !allowedActorTypes.isEmpty()) {
+            return typeKey != null && allowedActorTypes.contains(typeKey);
+        }
+        return true;
+    }
+
     // Convenience constructors delegate to primary constructor
     // Reaction is currently using this one (might change Reaction later to use full constructor)
     public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
@@ -201,6 +209,14 @@ public abstract class Ability {
 
     public WeaponTypes[] getWeaponRequirement() {
         return weaponRequirement;
+    }
+
+    public void setAllowedActorTypes(Set<String> keys) {
+        this.allowedActorTypes = (keys == null) ? null : new HashSet<>(keys);
+    }
+
+    public Set<String> getAllowedActorTypesView() {
+        return (allowedActorTypes == null) ? java.util.Collections.emptySet() : java.util.Collections.unmodifiableSet(allowedActorTypes);
     }
 
     @Override

@@ -5,8 +5,8 @@ import java.util.List;
 
 import enemies.EnemyDatabase;
 import enemies.modifiers.EnemyPrefix;
-import enemies.modifiers.prefixes.Young;
 import enemies.modifiers.prefixes.post_position.Red;
+import enemies.modifiers.prefixes.pre_position.Young;
 
 public class DragonPools {
     public static final List<EnemyDatabase.Weighted<EnemyPrefix>> PREFIX_POOL = Arrays.asList(

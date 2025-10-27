@@ -5,6 +5,7 @@ import abilities.damages.Damage;
 import abilities.damages.magical.*;
 import abilities.damages.physical.*;
 import abilities.damages.spiritual.*;
+import enemies.EnemyKey;
 import status_conditions.Blind;
 import status_conditions.Confused;
 import status_conditions.Envenom;
@@ -167,6 +168,7 @@ public class EnemyAbilities {
         .leftRange(2)
         .rightRange(2)
         .description("A cone of fire that scorches all in its path.")
+        .allowedActorTypes(EnemyKey.DRAGON.key())
         .build();
 
         

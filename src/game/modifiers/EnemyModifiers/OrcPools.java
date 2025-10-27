@@ -6,7 +6,7 @@ import java.util.List;
 import enemies.EnemyDatabase;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
-import enemies.modifiers.prefixes.Wrathful;
+import enemies.modifiers.prefixes.pre_position.Wrathful;
 import enemies.modifiers.suffixes.Cryomancer;
 import enemies.modifiers.suffixes.Pyromancer;
 

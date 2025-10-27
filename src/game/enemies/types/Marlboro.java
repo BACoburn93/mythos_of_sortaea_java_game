@@ -7,6 +7,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import enemies.Enemy;
+import enemies.EnemyKey;
 
 public class Marlboro extends Enemy {
     public Marlboro(String name) {
@@ -26,6 +27,7 @@ public class Marlboro extends Enemy {
             2
         );
         setActionsPerTurn(2);
+        setTypeKey(EnemyKey.MARLBORO.key());
     }
 }
 
