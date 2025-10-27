@@ -37,8 +37,8 @@ public interface ChooseAbilities {
             .filter(a -> a.isApplicableToActorType(target.getTypeKey()))
             .collect(Collectors.toList());
 
-            System.out.println("Choosing abilities for enemy type key: " + target.getTypeKey());
-            System.out.println("Candidate abilities: " + candidates.stream().map(Ability::getName).collect(Collectors.joining(", ")));
+            System.out.println("Candidate abilities for " + target.getName() + ": " + 
+            candidates.stream().map(Ability::getName).collect(Collectors.joining(", ")));
 
             chooseAbilitiesImpl(maxTier, candidates, ability -> target.addAbility(ability));
         } else {

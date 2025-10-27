@@ -107,52 +107,46 @@ public class Attributes {
     public void divideSpirit(double divisor) { spirit.setValue(spirit.getValue() / divisor); }
     public void divideLuck(double divisor) { luck.setValue(luck.getValue() / divisor ); }
 
-
-    public void increaseDefense(int amount) {
-        defense.setValue(defense.getValue() + amount);
+    // Combine methods
+    public void increaseAll(double amount) {
+        increaseStrength(amount);
+        increaseAgility(amount);
+        increaseKnowledge(amount);
+        increaseDefense(amount);
+        increaseResilience(amount);
+        increaseSpirit(amount);
+        increaseLuck(amount);
     }
 
-    public void increaseResilience(int amount) {
-        resilience.setValue(resilience.getValue() + amount);
+    public void decreaseAll(double amount) {
+        decreaseStrength(amount);
+        decreaseAgility(amount);
+        decreaseKnowledge(amount);
+        decreaseDefense(amount);
+        decreaseResilience(amount);
+        decreaseSpirit(amount);
+        decreaseLuck(amount);
     }
 
-    public void increaseSpirit(int amount) {
-        spirit.setValue(spirit.getValue() + amount);
+    public void multiplyAll(double factor) {
+        multiplyStrength(factor);
+        multiplyAgility(factor);
+        multiplyKnowledge(factor);
+        multiplyDefense(factor);
+        multiplyResilience(factor);
+        multiplySpirit(factor);
+        multiplyLuck(factor);
     }
 
-    public void increaseLuck(int amount) {
-        luck.setValue(luck.getValue() + amount);
+    public void divideAll(double divisor) {
+        divideStrength(divisor);
+        divideAgility(divisor);
+        divideKnowledge(divisor);
+        divideDefense(divisor);
+        divideResilience(divisor);
+        divideSpirit(divisor);
+        divideLuck(divisor);
     }
-
-    // Decrease methods
-    public void decreaseStrength(int amount) {
-        strength.setValue(strength.getValue() - amount);
-    }
-
-    public void decreaseAgility(int amount) {
-        agility.setValue(agility.getValue() - amount);
-    }
-
-    public void decreaseKnowledge(int amount) {
-        knowledge.setValue(knowledge.getValue() - amount);
-    }
-
-    public void decreaseDefense(int amount) {
-        defense.setValue(defense.getValue() - amount);
-    }
-
-    public void decreaseResilience(int amount) {
-        resilience.setValue(resilience.getValue() - amount);
-    }
-
-    public void decreaseSpirit(int amount) {
-        spirit.setValue(spirit.getValue() - amount);
-    }
-
-    public void decreaseLuck(int amount) {
-        luck.setValue(luck.getValue() - amount);
-    }
-
 
     public void add(Attributes other) {
         this.strength.setValue(this.strength.getValue() + other.strength.getValue());

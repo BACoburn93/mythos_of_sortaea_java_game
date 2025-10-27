@@ -16,26 +16,8 @@ public class Arch implements EnemyPrefix {
 
         enemy.updateLevelAndExperience(enemy.getLevel());
 
-        enemy.getAttributes().multiplyStrength(factor);
-        enemy.getAttributes().multiplyAgility(factor);
-        enemy.getAttributes().multiplyDefense(factor);
-        enemy.getAttributes().multiplyKnowledge(factor);
-        enemy.getAttributes().multiplyResilience(factor);
-        enemy.getAttributes().multiplySpirit(factor);
-        enemy.getAttributes().multiplyLuck(factor);
-
-        enemy.getResistances().multiplyBludgeoning(factor);
-        enemy.getResistances().multiplyPiercing(factor);
-        enemy.getResistances().multiplySlashing(factor);
-        enemy.getResistances().multiplyEarth(factor);
-        enemy.getResistances().multiplyFire(factor);
-        enemy.getResistances().multiplyIce(factor);
-        enemy.getResistances().multiplyLightning(factor);
-        enemy.getResistances().multiplyVenom(factor);
-        enemy.getResistances().multiplyWater(factor);
-        enemy.getResistances().multiplyWind(factor);
-        enemy.getResistances().multiplyDarkness(factor);
-        enemy.getResistances().multiplyLight(factor);
+        enemy.getAttributes().multiplyAll(factor);
+        enemy.getResistances().multiplyAll(factor);
 
         enemy.getHealthValues().multiplyMaxAndSetToMax(factor);
         enemy.getManaValues().multiplyMaxAndSetToMax(factor);

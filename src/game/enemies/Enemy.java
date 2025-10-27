@@ -55,7 +55,6 @@ public abstract class Enemy extends CombatActor {
     }
 
     protected void setTypeKey(String key) {
-        System.out.println("Setting type key to: " + key);
         this.typeKey = (key == null) ? null : key.trim().toLowerCase();
     }
 

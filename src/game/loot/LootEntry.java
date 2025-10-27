@@ -17,6 +17,15 @@ public final class LootEntry {
         this.goldAmount = goldAmount;
     }
 
+    public LootEntry(String itemKey, double weight, double chance, int minQty, int maxQty) {
+        this.itemKey = itemKey;
+        this.weight = weight;
+        this.chance = chance;
+        this.minQty = Math.max(1, minQty);
+        this.maxQty = Math.max(this.minQty, maxQty);
+        this.goldAmount = 0;
+    }
+
     public static LootEntry gold(int amount, double chance) {
         return new LootEntry(null, 1.0, chance, 1, 1, amount);
     }
