@@ -45,7 +45,7 @@ public enum EquipmentKey {
     EquipmentKey(String key) { this.key = key; }
     public String key() { return key; }
 
-    /** helper that fetches the supplier from the registry (convenience only) */
+    // Helper that fetches the supplier from the registry (convenience only)
     public Supplier<Equipment> supplier() { return EquipmentRegistry.get(this); }
 
     @Override public String toString() { return key; }

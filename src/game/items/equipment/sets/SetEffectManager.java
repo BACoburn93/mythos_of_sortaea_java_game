@@ -6,7 +6,6 @@ import characters.managers.AttributeSetBonusApplier;
 
 
 public class SetEffectManager {
-
     static {
         // Ensure applier is installed once at class load / game startup.
         SetManager.getInstance().setApplier(new AttributeSetBonusApplier());

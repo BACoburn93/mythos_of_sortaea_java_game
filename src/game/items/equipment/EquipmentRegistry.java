@@ -1,8 +1,11 @@
 package items.equipment;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import abilities.database.AbilityDatabase;
@@ -21,10 +24,7 @@ import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;
 
 
-/**
- * Catalog of Suppliers for concrete equipment prototypes.
- * Database uses these suppliers when wiring the Factory.
- */
+// Registry of all Equipment suppliers by key.
 public final class EquipmentRegistry {
 
     private static final Map<String, Supplier<Equipment>> SUPPLIERS = new HashMap<>();
@@ -70,7 +70,7 @@ public final class EquipmentRegistry {
                 .value(3000)
                 .damage(12.0)
                 .attributes(new actors.attributes.Attributes(0.0,0.0,30.0,0.0,0.0,0.0,0.0))
-                .abilities(new java.util.ArrayList<>(java.util.List.of(AbilityDatabase.MAGIC_DART, AbilityDatabase.LIGHTNING_BOLT)))
+                .abilities(new ArrayList<>(List.of(AbilityDatabase.MAGIC_DART, AbilityDatabase.LIGHTNING_BOLT)))
                 .build()
         );
 
@@ -160,9 +160,11 @@ public final class EquipmentRegistry {
         SUPPLIERS.put(EquipmentKey.JESTER_HAT.key(), () ->
             new ClothHead.Builder().name("Jester Hat").tier(0).value(5).build()
         );
-        SUPPLIERS.put(EquipmentKey.LEATHER_CAP.key(), () ->
-            new ClothHead.Builder().name("Leather Cap").tier(0).value(10).build()
-        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_CAP.key(), () -> {
+            var item = new ClothHead.Builder().name("Leather Cap").tier(0).value(10).build();
+            item.setSetTags(Set.of("leather"));
+            return item;
+        });
 
         // Back
         SUPPLIERS.put(EquipmentKey.CLOAK.key(), () ->
@@ -182,14 +184,16 @@ public final class EquipmentRegistry {
                 .tier(0)
                 .value(100)
                 .build();
-            item.setSetTags(java.util.Set.of("leather"));
+            item.setSetTags(Set.of("leather"));
             return item;
         });
 
         // Waist
-        SUPPLIERS.put(EquipmentKey.LEATHER_BELT.key(), () ->
-            new LightWaist.Builder().name("Leather Belt").tier(0).value(5).build()
-        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_BELT.key(), () -> {
+            var item = new LightWaist.Builder().name("Leather Belt").tier(0).value(5).build();
+            item.setSetTags(Set.of("leather"));
+            return item;
+        });
         SUPPLIERS.put(EquipmentKey.SASH.key(), () ->
             new ClothWaist.Builder().name("Sash").tier(0).value(3).build()
         );
@@ -209,7 +213,7 @@ public final class EquipmentRegistry {
                 .tier(0)
                 .value(20)
                 .build();
-            item.setSetTags(java.util.Set.of("leather"));
+            item.setSetTags(Set.of("leather"));
             return item;
         });
         SUPPLIERS.put(EquipmentKey.IRON_GREAVES.key(), () ->
@@ -245,8 +249,8 @@ public final class EquipmentRegistry {
         return SUPPLIERS.get(key.trim().toLowerCase());
     }
 
-    public static java.util.Set<String> allKeys() {
-        return java.util.Collections.unmodifiableSet(SUPPLIERS.keySet());
+    public static Set<String> allKeys() {
+        return Collections.unmodifiableSet(SUPPLIERS.keySet());
     }
 
     public static void register(String key, Supplier<Equipment> supplier) {

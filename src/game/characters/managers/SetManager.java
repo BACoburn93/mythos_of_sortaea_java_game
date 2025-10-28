@@ -1,12 +1,10 @@
 package characters.managers;
 
 import characters.Character;
-import characters.managers.AttributeSetBonusApplier;
 import items.equipment.equipment_slots.EquipmentSlot;
 import items.equipment.sets.SetBonus;
 import items.equipment.sets.SetBonusRegistry;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

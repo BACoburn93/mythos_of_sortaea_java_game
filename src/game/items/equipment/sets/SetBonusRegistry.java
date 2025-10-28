@@ -6,10 +6,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-/**
- * Registry mapping tag -> threshold -> SetBonus.
- * Register your set bonuses at game startup.
- */
+// Registry of set bonuses by tag and threshold.
+// Example: "leather" -> (2 -> SetBonus, 4 -> SetBonus)
 public class SetBonusRegistry {
     private static final Map<String, TreeMap<Integer, SetBonus>> registry = new HashMap<>();
 
