@@ -13,10 +13,9 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Collections;
 
-/**
- * Responsible only for creation / RNG / applying flavors.
- * Prototypes and pools are registered by EquipmentDatabase (using EquipmentRegistry suppliers).
- */
+
+// Responsible only for creation / RNG / applying flavors.
+// Prototypes and pools are registered by EquipmentDatabase (using EquipmentRegistry suppliers).
 
 public final class EquipmentFactory implements Factory<Equipment, EquipmentPrefix, EquipmentSuffix> {
     private Random rng = new Random();

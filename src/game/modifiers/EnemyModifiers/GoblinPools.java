@@ -6,9 +6,8 @@ import java.util.List;
 import enemies.EnemyDatabase;
 import enemies.modifiers.EnemyPrefix;
 import enemies.modifiers.EnemySuffix;
-import enemies.modifiers.prefixes.*;
-import enemies.modifiers.prefixes.post_position.Arch;
-import enemies.modifiers.prefixes.pre_position.Wrathful;
+import enemies.modifiers.prefixes.post_position.*;
+import enemies.modifiers.prefixes.pre_position.*;
 import enemies.modifiers.suffixes.*;
 
 public class GoblinPools {
