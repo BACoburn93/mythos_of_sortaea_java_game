@@ -11,6 +11,7 @@ import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
+import characters.managers.EquipmentManager;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
@@ -32,6 +33,7 @@ import characters.initializers.*;
 
 public class Character extends CombatActor {
     private final Job job;
+    private final EquipmentManager equipmentManager;
     private int level;
     private int experience;
     private int experienceToLevel = 100;
@@ -68,6 +70,7 @@ public class Character extends CombatActor {
         this.items = CharacterItems.getItems();
         this.abilities.addAll(this.job.getJobAbilities());
         
+        this.equipmentManager = new EquipmentManager(this, this.equipmentSlots);
     }
 
     public void addExperience(int expToAdd) {
@@ -199,10 +202,6 @@ public class Character extends CombatActor {
         return new TargetingAbility.Builder(
             "pass", 
             null)
-            .levelRequirement(0)
-            .manaCost(0)
-            .leftRange(0)
-            .rightRange(0)
             .description("Conserve or recuperate.").build();
     }
 
@@ -234,68 +233,41 @@ public class Character extends CombatActor {
     );
 
     public boolean equipItem(Equipment item) {
-        String slotKey;
-        
-        if(item.getEquipmentType() == EquipmentTypes.ACCESSORY) {
-            slotKey = equipmentTypeToDisplayName.get(item.getItemType());
-        } else {
-            slotKey = equipmentTypeToDisplayName.get(item.getEquipmentType());
-        }
+        if (item == null) return false;
+
+        // preserve interactive choice for rings but delegate actual equip logic to EquipmentManager
+        String slotKey = (item.getEquipmentType() == EquipmentTypes.ACCESSORY)
+                ? equipmentTypeToDisplayName.get(item.getItemType())
+                : equipmentTypeToDisplayName.get(item.getEquipmentType());
 
         if ("Ring".equals(slotKey)) {
             System.out.println("Equip ring to [L]eft or [R]ight ring?");
-
             String choice = gameScanner.nextLine().trim().toUpperCase();
             if (choice.equals("L") || choice.equals("LEFT")) {
-                slotKey = "Left Ring";
+                return equipmentManager.equipToSlot(item, "Left Ring");
             } else if (choice.equals("R") || choice.equals("RIGHT")) {
-                slotKey = "Right Ring";
+                return equipmentManager.equipToSlot(item, "Right Ring");
             } else {
                 System.out.println("Invalid choice. Cancelling equip.");
                 return false;
             }
         }
 
-        EquipmentSlot slot = equipmentSlots.get(slotKey);
-
-        if (slot != null && slot.canEquip(item)) {
-            Equipment currentlyEquipped = slot.getEquippedItem();
-            if (currentlyEquipped != null) {
-                unequipItem(slotKey);
-            }
-            slot.setEquippedItem(item);
-            addItemAttributesAndResistances(item);
-            return true;
-        } else {
-            System.out.println("Cannot equip " + item.getName() + " in slot " + slotKey);
-        }
-        return false;
+        // non-ring equip: let manager choose slot / replace existing if needed
+        return equipmentManager.equip(item);
     }
 
     public void unequipItem(String slotKey) {
-        EquipmentSlot slot = equipmentSlots.get(slotKey);
-        if (slot != null && slot.getEquippedItem() != null) {
-            Equipment item = slot.getEquippedItem();
-            System.out.println("Unequipping " + item.getName());
-            removeItemAttributesAndResistances(item);
-            slot.unequip();
-        }
+        equipmentManager.unequip(slotKey);
     }
 
     public boolean unequipItemByName(String itemName) {
-        for (EquipmentSlot slot : equipmentSlots.values()) {
-            Equipment item = slot.getEquippedItem();
-            if (item != null && item.getName().equalsIgnoreCase(itemName)) {
-                unequipItem(slot.getName().toUpperCase());
-                return true;
-            }
-        }
-        return false;
+        return equipmentManager.unequipByName(itemName);
     }
 
     public List<String> getEquippedItems() {
         List<String> equipped = new ArrayList<>();
-        for (Map.Entry<String, EquipmentSlot> entry : equipmentSlots.entrySet()) {
+        for (Map.Entry<String, EquipmentSlot> entry : equipmentManager.getSlots().entrySet()) {
             Equipment item = entry.getValue().getEquippedItem();
             if (item != null) {
                 equipped.add(entry.getKey() + ": " + item.getName());
@@ -305,7 +277,7 @@ public class Character extends CombatActor {
     }
 
     public Mainhand getEquippedMainHand() {
-        EquipmentSlot mainhandSlot = equipmentSlots.get("Mainhand");
+        EquipmentSlot mainhandSlot = equipmentManager.getSlots().get("Mainhand");
         if (mainhandSlot != null && mainhandSlot.getEquippedItem() instanceof Mainhand mainHand) {
             return mainHand;
         }
@@ -313,7 +285,7 @@ public class Character extends CombatActor {
     }
 
     public boolean hasWeaponEquipped() {
-        return getEquippedMainHand() != null;
+        return equipmentManager.hasWeaponEquipped();
     }
 
     public List<Ability> getAbilities() {
@@ -352,16 +324,6 @@ public class Character extends CombatActor {
 
     public void handlePostCombat() {
         this.actionPoints = this.maxActionPoints;
-    }
-
-    private void addItemAttributesAndResistances(Equipment item) {
-        this.getAttributes().add(item.getAttributes());
-        this.getResistances().add(item.getResistances());
-    }
-
-    private void removeItemAttributesAndResistances(Equipment item) {
-        this.getAttributes().subtract(item.getAttributes());
-        this.getResistances().subtract(item.getResistances());
     }
 
     public void attack(CombatActor target, Supplier<Damage> damageSupplier, AttributeTypes attrDamageBonus) {
@@ -529,7 +491,7 @@ public class Character extends CombatActor {
         System.out.println();
 
         for (EquipmentTypes slot : slots) {
-            EquipmentSlot equipmentSlot = this.equipmentSlots.get(slot.name());
+            EquipmentSlot equipmentSlot = this.equipmentManager.getSlots().get(slot.name());
             Equipment equipment = equipmentSlot != null ? equipmentSlot.getEquippedItem() : null;
             if (equipment != null) {
                 System.out.println("You currently have a " + equipment.getItemType() + " equipped in your " + slot.name().toLowerCase() + ".");
@@ -601,7 +563,7 @@ public class Character extends CombatActor {
     }
 
     public Map<String, EquipmentSlot> getEquipmentSlots() {
-        return equipmentSlots;
+        return equipmentManager.getSlots();
     }
 
     public int getActionPoints() {

@@ -2,6 +2,8 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
+Refactor Character class to delegate responsibilities
+
 Implement item set effects
     Utilize items that have matching set items to create passive buffs
         The buffs can scale with the number of matching set items
