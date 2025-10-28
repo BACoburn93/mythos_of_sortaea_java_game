@@ -112,6 +112,10 @@ public class EquipmentManager {
             owner.addItemAbilities(item.getAbilities());
         }
 
+        // Ensure sets are recomputed and log
+        System.out.println("[EquipmentManager] calling SetManager.reconcile for owner=" + owner.getName());
+        SetManager.getInstance().reconcile(owner);
+
         return true;
     }
 

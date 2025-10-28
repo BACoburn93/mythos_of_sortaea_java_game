@@ -3,8 +3,10 @@ package items.equipment;
 import items.equipment.item_types.ItemType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import abilities.Ability;
 import actors.attributes.Attributes;
@@ -19,6 +21,7 @@ public abstract class Equipment implements Comparator<Equipment> {
     private Attributes attributes;
     private Resistances resistances;
     private List<Ability> abilities;
+    private Set<String> setTags = Collections.emptySet();
 
     // Helper factories that produce zero/default objects
     private static Attributes defaultAttributes() {
@@ -29,7 +32,14 @@ public abstract class Equipment implements Comparator<Equipment> {
         return new Resistances(0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
-    // to do - add in a tier property that might affect value, attributes, resistances, abilities, etc
+    public Set<String> getSetTags() {
+        return (setTags == null) ? Collections.emptySet() : Collections.unmodifiableSet(setTags);
+    }
+
+    public void setSetTags(Set<String> tags) {
+        this.setTags = (tags == null) ? Collections.emptySet() : Set.copyOf(tags);
+    }
+
     // also convert all Equipment to utilize the Builder pattern
     protected Equipment(String name, int tier, double value, EquipmentTypes equipmentType,
                         ItemType itemType, Attributes attributes, Resistances resistances,
@@ -147,6 +157,7 @@ public abstract class Equipment implements Comparator<Equipment> {
             getName(),
             equipmentType != null ? equipmentType.toString() : "None",
             itemType != null ? itemType.toString() : "None",
+            setTags.isEmpty() ? "No Set" : String.join(",", setTags),
             "Value: " + getGoldValue()
         );
         for (String line : utils.StringUtils.wrapText(firstRow, contentWidth)) {

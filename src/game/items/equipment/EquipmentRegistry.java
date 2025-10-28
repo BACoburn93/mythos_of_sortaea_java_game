@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import abilities.database.AbilityDatabase;
+import actors.Stat;
 import items.equipment.item_types.mainhand.*;
 import items.equipment.item_types.offhand.*;
 import items.equipment.item_types.back.*;
@@ -14,6 +15,8 @@ import items.equipment.item_types.head.*;
 import items.equipment.item_types.legs.*;
 import items.equipment.item_types.torso.*;
 import items.equipment.item_types.waist.*;
+import items.equipment.sets.SetBonus;
+import items.equipment.sets.SetBonusRegistry;
 import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;
 
@@ -173,9 +176,15 @@ public final class EquipmentRegistry {
         SUPPLIERS.put(EquipmentKey.PLATE_ARMOR.key(), () ->
             new HeavyTorso.Builder().name("Plate Armor").tier(3).value(2000).build()
         );
-        SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () ->
-            new HeavyTorso.Builder().name("Leather Armor").tier(0).value(100).build()
-        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () -> {
+            var item = new HeavyTorso.Builder()
+                .name("Leather Armor")
+                .tier(0)
+                .value(100)
+                .build();
+            item.setSetTags(java.util.Set.of("leather"));
+            return item;
+        });
 
         // Waist
         SUPPLIERS.put(EquipmentKey.LEATHER_BELT.key(), () ->
@@ -194,9 +203,15 @@ public final class EquipmentRegistry {
         );
 
         // Feet
-        SUPPLIERS.put(EquipmentKey.LEATHER_BOOTS.key(), () ->
-            new LightFeet.Builder().name("Leather Boots").tier(0).value(20).build()
-        );
+        SUPPLIERS.put(EquipmentKey.LEATHER_BOOTS.key(), () -> {
+            var item = new LightFeet.Builder()
+                .name("Leather Boots")
+                .tier(0)
+                .value(20)
+                .build();
+            item.setSetTags(java.util.Set.of("leather"));
+            return item;
+        });
         SUPPLIERS.put(EquipmentKey.IRON_GREAVES.key(), () ->
             new HeavyFeet.Builder().name("Iron Greaves").tier(2).value(250).build()
         );
@@ -208,6 +223,17 @@ public final class EquipmentRegistry {
         SUPPLIERS.put(EquipmentKey.AMULET.key(), () ->
             new Neck.NeckBuilder().name("Amulet").tier(0).value(80).build()
         );
+
+    // --- Register leather set bonuses (example) ---
+        // 2-piece: +500% RES
+        SetBonus leather2 = new SetBonus();
+        leather2.addPercent(Stat.RESILIENCE, .2);
+        SetBonusRegistry.register("leather", 2, leather2);
+
+        // 4-piece: +2 STR
+        SetBonus leather4 = new SetBonus();
+        leather4.addFlat(Stat.STRENGTH, 2.0);
+        SetBonusRegistry.register("leather", 4, leather4);
     }
 
     public static Supplier<Equipment> get(EquipmentKey key) {

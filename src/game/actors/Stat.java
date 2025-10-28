@@ -1,0 +1,17 @@
+package actors;
+
+public enum Stat {
+    STRENGTH,
+    AGILITY,
+    KNOWLEDGE,
+    DEFENSE,
+    RESILIENCE,
+    SPIRIT,
+    LUCK,
+    MAX_HEALTH,
+    MAX_MANA,
+    HEALTH_REGEN,
+    MANA_REGEN,
+    CRITICAL_CHANCE,
+    CRITICAL_DAMAGE_MULTIPLIER
+}
