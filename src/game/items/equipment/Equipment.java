@@ -40,6 +40,17 @@ public abstract class Equipment implements Comparator<Equipment> {
         this.setTags = (tags == null) ? Collections.emptySet() : Set.copyOf(tags);
     }
 
+    public void addSetTag(String tag) {
+        if (tag == null || tag.isBlank()) return;
+        if (this.setTags.isEmpty()) {
+            this.setTags = Set.of(tag);
+        } else {
+            Set<String> newTags = new java.util.HashSet<>(this.setTags);
+            newTags.add(tag);
+            this.setTags = Set.copyOf(newTags);
+        }
+    }
+
     // also convert all Equipment to utilize the Builder pattern
     protected Equipment(String name, int tier, double value, EquipmentTypes equipmentType,
                         ItemType itemType, Attributes attributes, Resistances resistances,
@@ -151,33 +162,40 @@ public abstract class Equipment implements Comparator<Equipment> {
         StringBuilder sb = new StringBuilder();
         sb.append(divider);
 
-        // First row: name, type, item type, value
-        String firstRow = String.format(
-            "%s | %s | %s | %s",
-            getName(),
-            equipmentType != null ? equipmentType.toString() : "None",
-            itemType != null ? itemType.toString() : "None",
-            setTags.isEmpty() ? "No Set" : String.join(",", setTags),
-            "Value: " + getGoldValue()
-        );
-        for (String line : utils.StringUtils.wrapText(firstRow, contentWidth)) {
-            sb.append(String.format("| %-86s |\n", line));
-        }
-        sb.append(divider);
+       // Row 1: Name | EquipmentType | Value
+       String valueText = String.format("Value: %s", getGoldValue());
+       String row1 = String.format("%s | %s | %s | %s",
+               getName(),
+               equipmentType != null ? equipmentType.toString() : "None",
+               itemType != null ? itemType.toString() : "None",
+               valueText
+       );
+       for (String line : utils.StringUtils.wrapText(row1, contentWidth)) {
+           sb.append(String.format("| %-86s |\n", line));
+       }
+       sb.append(divider);
 
-        // Second row: Attributes (as integers)
-        String attrText = "Attributes: " + (attributes != null ? attributesToIntString(attributes) : "None");
-        for (String line : utils.StringUtils.wrapText(attrText, contentWidth)) {
-            sb.append(String.format("| %-86s |\n", line));
-        }
-        sb.append(divider);
+       // Row 2: Set tags
+       String tagDisplay = setTags == null || setTags.isEmpty() ? "No Set" : String.join(", ", setTags).toUpperCase();
+       String row2 = "Set: " + tagDisplay;
+       for (String line : utils.StringUtils.wrapText(row2, contentWidth)) {
+           sb.append(String.format("| %-86s |\n", line));
+       }
+       sb.append(divider);
 
-        // Third row: Resistances (as integers)
-        String resText = "Resistances: " + (resistances != null ? resistancesToIntString(resistances) : "None");
-        for (String line : utils.StringUtils.wrapText(resText, contentWidth)) {
-            sb.append(String.format("| %-86s |\n", line));
-        }
-        sb.append(divider);
+       // Row 3: Attributes (as integers)
+       String attrText = "Attributes: " + (attributes != null ? attributesToIntString(attributes) : "None");
+       for (String line : utils.StringUtils.wrapText(attrText, contentWidth)) {
+           sb.append(String.format("| %-86s |\n", line));
+       }
+       sb.append(divider);
+
+       // Row 4: Resistances (as integers)
+       String resText = "Resistances: " + (resistances != null ? resistancesToIntString(resistances) : "None");
+       for (String line : utils.StringUtils.wrapText(resText, contentWidth)) {
+           sb.append(String.format("| %-86s |\n", line));
+       }
+       sb.append(divider);
 
         return sb.toString();
     }

@@ -8,6 +8,7 @@ public class Ancient implements EquipmentPrefix {
    
     @Override
     public void apply(Equipment target) {
+        target.addSetTag("ancient");
         target.setGoldValue(target.getGoldValue() * 5);
 
         if (target instanceof WeaponDamageProvider wp) {
