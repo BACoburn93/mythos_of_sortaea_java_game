@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import abilities.database.AbilityDatabase;
-import actors.Stat;
 import items.equipment.item_types.mainhand.*;
 import items.equipment.item_types.offhand.*;
 import items.equipment.item_types.back.*;
@@ -18,8 +17,6 @@ import items.equipment.item_types.head.*;
 import items.equipment.item_types.legs.*;
 import items.equipment.item_types.torso.*;
 import items.equipment.item_types.waist.*;
-import items.equipment.sets.SetBonus;
-import items.equipment.sets.SetBonusRegistry;
 import items.equipment.sets.SetRegistrar;
 import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;

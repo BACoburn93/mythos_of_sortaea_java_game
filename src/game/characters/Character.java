@@ -96,6 +96,7 @@ public class Character extends CombatActor {
 
         Collections.shuffle(potentialAbilities);
 
+        // to do - create a skill to influence minimum number of choices
         int numChoices = Math.min(3, potentialAbilities.size());
         List<Ability> choices = potentialAbilities.subList(0, numChoices);
 

@@ -14,8 +14,9 @@ public class OfTheNorthWind implements EquipmentSuffix, ChooseAbilities {
     private static final ArrayList<Ability> possibleAbilities = new ArrayList<>();
     
     static {
-        possibleAbilities.add(AbilityDatabase.ICE_SPIKE);
-        possibleAbilities.add(AbilityDatabase.FROST_WIND_SLASH);
+        possibleAbilities.add(AbilityDatabase.FROST_WIND_SLASH); // tier 2
+        possibleAbilities.add(AbilityDatabase.ICE_SPIKE); // tier 3
+        possibleAbilities.add(AbilityDatabase.BLIZZARD); // tier 7
     }
 
     @Override
@@ -30,10 +31,10 @@ public class OfTheNorthWind implements EquipmentSuffix, ChooseAbilities {
         }
 
         target.getResistances().addIce(1.0);
-        target.getResistances().addFire(3.0);
+        target.getResistances().addWind(2.0);
 
         target.getResistances().multiplyIce(3.0);
-        target.getResistances().multiplyFire(5.0);
+        target.getResistances().multiplyWind(3.0);
 
         chooseAbilities(target, possibleAbilities);
 

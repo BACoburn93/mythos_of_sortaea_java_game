@@ -43,6 +43,7 @@ public class AbilityDatabase {
     // Mage Abilities
     public static final TargetingAbility FIREBALL = MageAbilities.FIREBALL;
     public static final TargetingAbility ICE_SPIKE = MageAbilities.ICE_SPIKE;
+    public static final TargetingAbility BLIZZARD = MageAbilities.BLIZZARD;
     public static final TargetingAbility LIGHTNING_BOLT = MageAbilities.LIGHTNING_BOLT;
     public static final TargetingAbility FIRE_STORM = MageAbilities.FIRE_STORM;
     public static final TargetingAbility METEOR_SWARM = MageAbilities.METEOR_SWARM;
@@ -63,6 +64,7 @@ public class AbilityDatabase {
         return new ArrayList<>(List.of(
             FIREBALL,
             ICE_SPIKE,
+            BLIZZARD,
             LIGHTNING_BOLT,
             FIRE_STORM,
             METEOR_SWARM

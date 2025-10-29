@@ -4,7 +4,18 @@ Prioritized Workload Notes - todo to do Todo
 
 Refactor Character class to delegate responsibilities
 
-Implement item set effects
+Create a skills list to influence certain aspects of the game
+
+Create optional races to choose from
+
+Start modeling subclasses and subclass logic
+
+Create advanced classes similar to paragon paths/epic destinies from DnD
+    I.E. Archmage, Demigod, Lich, Seraph, etc.
+    Each one should have strict prerequisites (class, subclass, attributes, special node chosen/quest completed, etc)
+    Will include custom buffs, unique abilities, and potential flaws
+
+Implement item set effects (Finished)
     Utilize items that have matching set items to create passive buffs
         The buffs can scale with the number of matching set items 
         Have prefix/suffix apply set effects as well

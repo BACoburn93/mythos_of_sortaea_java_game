@@ -7,6 +7,7 @@ import abilities.damages.physical.PhysicalBludgeoningDamage;
 import abilities.damages.physical.PhysicalFireDamage;
 import abilities.damages.physical.PhysicalIceDamage;
 import abilities.damages.physical.PhysicalSlashingDamage;
+import abilities.damages.physical.PhysicalWindDamage;
 import items.equipment.AbilityPrerequisites;
 
 public class WarriorAbilities {
@@ -45,8 +46,9 @@ public class WarriorAbilities {
     public static final TargetingAbility FROST_WIND_SLASH = new TargetingAbility.Builder(
         "Frost Wind Slash",
         new Damage[]{
-            new PhysicalSlashingDamage(8, 13),
-            new PhysicalIceDamage(6, 10)
+            new PhysicalWindDamage(3, 5),
+            new PhysicalSlashingDamage(5, 8),
+            new PhysicalIceDamage(6, 10),
         }
     )
     .tier(2)

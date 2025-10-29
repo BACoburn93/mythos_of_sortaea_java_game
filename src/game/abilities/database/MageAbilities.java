@@ -6,6 +6,8 @@ import abilities.damages.magical.MagicalFireDamage;
 import abilities.damages.magical.MagicalIceDamage;
 import abilities.damages.magical.MagicalLightningDamage;
 import abilities.damages.magical.MagicalPiercingDamage;
+import abilities.damages.magical.MagicalWindDamage;
+import abilities.damages.physical.PhysicalIceDamage;
 import abilities.damages.spiritual.SpiritualFireDamage;
 import items.equipment.AbilityPrerequisites;
 import status_conditions.Burn;
@@ -34,8 +36,23 @@ public class MageAbilities {
             })
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
-        .tier(4)
+        .tier(3)
         .description("An ice spire that guides itself to impale it's target.")
+        .build();
+
+    public static final TargetingAbility BLIZZARD = new TargetingAbility.Builder(
+            "Blizzard",
+            new Damage[]{
+                new PhysicalIceDamage(10, 40),
+                new MagicalIceDamage(10, 40),
+                new MagicalWindDamage(10, 30)
+            })
+        .manaCost(18)
+        .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
+        .leftRange(12)
+        .rightRange(12)
+        .tier(7)
+        .description("A blizzard that engulfs a massive area in freezing winds.")
         .build();
 
     public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility.Builder(
