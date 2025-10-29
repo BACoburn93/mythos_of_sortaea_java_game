@@ -1,6 +1,7 @@
 package characters.initializers;
 
 import items.consumables.Consumable;
+import items.equipment.equipment_slots.BackSlot;
 import items.equipment.equipment_slots.EquipmentSlot;
 import items.equipment.equipment_slots.FeetSlot;
 import items.equipment.equipment_slots.HeadSlot;
@@ -11,6 +12,7 @@ import items.equipment.equipment_slots.NeckSlot;
 import items.equipment.equipment_slots.OffHandSlot;
 import items.equipment.equipment_slots.RightRingSlot;
 import items.equipment.equipment_slots.TorsoSlot;
+import items.equipment.equipment_slots.WaistSlot;
 
 import java.util.LinkedHashMap;
 
@@ -36,8 +38,10 @@ public class CharacterItems {
             equipmentSlots.put("Head", new HeadSlot());
             equipmentSlots.put("Mainhand", new MainHandSlot());
             equipmentSlots.put("Offhand", new OffHandSlot());
-            equipmentSlots.put("Legs", new LegsSlot());
             equipmentSlots.put("Torso", new TorsoSlot());
+            equipmentSlots.put("Back", new BackSlot());
+            equipmentSlots.put("Legs", new LegsSlot());
+            equipmentSlots.put("Waist", new WaistSlot());
             equipmentSlots.put("Feet", new FeetSlot());
             equipmentSlots.put("Neck", new NeckSlot());
             equipmentSlots.put("Left Ring", new LeftRingSlot());

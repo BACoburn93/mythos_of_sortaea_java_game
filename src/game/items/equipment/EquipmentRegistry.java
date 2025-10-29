@@ -20,6 +20,7 @@ import items.equipment.item_types.torso.*;
 import items.equipment.item_types.waist.*;
 import items.equipment.sets.SetBonus;
 import items.equipment.sets.SetBonusRegistry;
+import items.equipment.sets.SetRegistrar;
 import items.equipment.item_types.Neck;
 import items.equipment.item_types.Ring;
 
@@ -46,11 +47,7 @@ public final class EquipmentRegistry {
 
         // Staves
         SUPPLIERS.put(EquipmentKey.LESSER_STAFF.key(), () ->
-            new Staff.Builder()
-                .name("Lesser Staff")
-                .tier(0)
-                .value(20)
-                .build()
+            new Staff.Builder().name("Lesser Staff").tier(0).value(20).build()
         );
 
         SUPPLIERS.put(EquipmentKey.STAFF.key(), () ->
@@ -85,21 +82,12 @@ public final class EquipmentRegistry {
         );
 
         SUPPLIERS.put(EquipmentKey.KNIFE.key(), () ->
-            new Dagger.Builder()
-                .name("Knife")
-                .tier(0)
-                .value(50)
-                .build()
+            new Dagger.Builder().name("Knife").tier(0).value(50).build()
         );
 
         // Bows
         SUPPLIERS.put(EquipmentKey.BOW.key(), () ->
-            new Bow.Builder()
-                .name("Bow")
-                .tier(1)
-                .value(300)
-                .damage(10.0)
-                .build()
+            new Bow.Builder().name("Bow").tier(1).value(300).damage(10.0).build()
         );
 
         SUPPLIERS.put(EquipmentKey.LONGBOW.key(), () ->
@@ -133,19 +121,11 @@ public final class EquipmentRegistry {
 
         // Shields / Offhand
         SUPPLIERS.put(EquipmentKey.BUCKLER.key(), () ->
-            new SmallShield.Builder()
-                .name("Buckler")
-                .tier(0)
-                .value(40)
-                .build()
+            new SmallShield.Builder().name("Buckler").tier(0).value(40).build()
         );
 
         SUPPLIERS.put(EquipmentKey.ROUND_SHIELD.key(), () ->
-            new MediumShield.Builder()
-                .name("Round Shield")
-                .tier(1)
-                .value(120)
-                .build()
+            new MediumShield.Builder().name("Round Shield").tier(1).value(120).build()
         );
 
         SUPPLIERS.put(EquipmentKey.TOWER_SHIELD.key(), () ->
@@ -179,11 +159,7 @@ public final class EquipmentRegistry {
             new HeavyTorso.Builder().name("Plate Armor").tier(3).value(2000).build()
         );
         SUPPLIERS.put(EquipmentKey.LEATHER_ARMOR.key(), () -> {
-            var item = new HeavyTorso.Builder()
-                .name("Leather Armor")
-                .tier(0)
-                .value(100)
-                .build();
+            var item = new HeavyTorso.Builder().name("Leather Armor").tier(0).value(100).build();
             item.setSetTags(Set.of("leather"));
             return item;
         });
@@ -208,14 +184,11 @@ public final class EquipmentRegistry {
 
         // Feet
         SUPPLIERS.put(EquipmentKey.LEATHER_BOOTS.key(), () -> {
-            var item = new LightFeet.Builder()
-                .name("Leather Boots")
-                .tier(0)
-                .value(20)
-                .build();
+            var item = new LightFeet.Builder().name("Leather Boots").tier(0).value(20).build();
             item.setSetTags(Set.of("leather"));
             return item;
         });
+        
         SUPPLIERS.put(EquipmentKey.IRON_GREAVES.key(), () ->
             new HeavyFeet.Builder().name("Iron Greaves").tier(2).value(250).build()
         );
@@ -228,16 +201,7 @@ public final class EquipmentRegistry {
             new Neck.NeckBuilder().name("Amulet").tier(0).value(80).build()
         );
 
-    // --- Register leather set bonuses (example) ---
-        // 2-piece: +500% RES
-        SetBonus leather2 = new SetBonus();
-        leather2.addPercent(Stat.RESILIENCE, .2);
-        SetBonusRegistry.register("leather", 2, leather2);
-
-        // 4-piece: +2 STR
-        SetBonus leather4 = new SetBonus();
-        leather4.addFlat(Stat.STRENGTH, 2.0);
-        SetBonusRegistry.register("leather", 4, leather4);
+        SetRegistrar.init();
     }
 
     public static Supplier<Equipment> get(EquipmentKey key) {

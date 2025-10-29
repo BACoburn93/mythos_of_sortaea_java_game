@@ -27,8 +27,10 @@ public class EquipmentManager {
         EquipmentTypes.HEAD, "Head",
         EquipmentTypes.MAINHAND, "Mainhand",
         EquipmentTypes.OFFHAND, "Offhand",
-        EquipmentTypes.LEGS, "Legs",
         EquipmentTypes.TORSO, "Torso",
+        EquipmentTypes.BACK, "Back",
+        EquipmentTypes.LEGS, "Legs",
+        EquipmentTypes.WAIST, "Waist",
         EquipmentTypes.FEET, "Feet",
         AccessoryTypes.NECK, "Neck",
         AccessoryTypes.RING, "Ring"

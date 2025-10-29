@@ -6,5 +6,6 @@ Refactor Character class to delegate responsibilities
 
 Implement item set effects
     Utilize items that have matching set items to create passive buffs
-        The buffs can scale with the number of matching set items
+        The buffs can scale with the number of matching set items 
+        Have prefix/suffix apply set effects as well
         

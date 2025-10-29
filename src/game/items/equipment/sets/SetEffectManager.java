@@ -9,7 +9,6 @@ public class SetEffectManager {
     static {
         // Ensure applier is installed once at class load / game startup.
         SetManager.getInstance().setApplier(new AttributeSetBonusApplier());
-        System.out.println("[SetEffectManager] AttributeSetBonusApplier registered");
     }
 
     public static void updateCharacterSets(Character c) {
