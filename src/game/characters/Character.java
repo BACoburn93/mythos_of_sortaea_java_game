@@ -12,6 +12,7 @@ import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
 import characters.managers.EquipmentManager;
+import characters.managers.LevelManager;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
 import items.equipment.EquipmentTypes;
@@ -225,8 +226,10 @@ public class Character extends CombatActor {
         EquipmentTypes.HEAD, "Head",
         EquipmentTypes.MAINHAND, "Mainhand",
         EquipmentTypes.OFFHAND, "Offhand",
-        EquipmentTypes.LEGS, "Legs",
         EquipmentTypes.TORSO, "Torso",
+        EquipmentTypes.BACK, "Back",
+        EquipmentTypes.LEGS, "Legs",
+        EquipmentTypes.WAIST, "Waist",
         EquipmentTypes.FEET, "Feet",
         AccessoryTypes.NECK, "Neck",
         AccessoryTypes.RING, "Ring"
@@ -540,11 +543,13 @@ public class Character extends CombatActor {
 
     // to do -- Perk Tree, Subclass, Paragon Path, Epic Destiny 
     public void levelUp() {
-        this.level++;
-        if(this.level % 4 == 0) this.maxActionPoints++;
+        LevelManager.getInstance().levelUp(this);
+    }
+
+    public int getLevel() { return this.level; }
+    public void incrementLevel() { this.level++; }
+    public void notifyLevelUp() {
         StringUtils.stringDivider(this.getName() + " is now level " + this.level, "* ", 10);
-        allocateAttributePoints();
-        learnNewAbility();
     }
 
     // Getters

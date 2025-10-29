@@ -22,7 +22,7 @@ public class Enflamed implements EquipmentPrefix, ChooseAbilities {
     
     public void apply(Equipment target) {
         target.addSetTag("enflamed");
-        target.setGoldValue(target.getGoldValue() * 3);
+        target.setGoldValue(target.getGoldValue() * 5);
 
         if (target instanceof WeaponDamageProvider wp) {
             double newDamage = wp.getDamage() * 1.5;
