@@ -75,13 +75,8 @@ public class Character extends CombatActor {
     }
 
     public void addExperience(int expToAdd) {
-        this.experience += expToAdd;
 
-        while(this.experience >= this.experienceToLevel) {
-            this.experience -= this.experienceToLevel;
-            this.experienceToLevel = (int) (this.experienceToLevel * 1.25);
-            levelUp();
-        }
+        LevelManager.getInstance().addExperience(this, expToAdd);
     }
 
     public void learnNewAbility() {
@@ -541,7 +536,6 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
-    // to do -- Perk Tree, Subclass, Paragon Path, Epic Destiny 
     public void levelUp() {
         LevelManager.getInstance().levelUp(this);
     }
@@ -569,6 +563,22 @@ public class Character extends CombatActor {
 
     public Map<String, EquipmentSlot> getEquipmentSlots() {
         return equipmentManager.getSlots();
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public int getExperienceToLevel() {
+        return experienceToLevel;
+    }
+
+    public void setExperienceToLevel(int experienceToLevel) {
+        this.experienceToLevel = experienceToLevel;
     }
 
     public int getActionPoints() {
