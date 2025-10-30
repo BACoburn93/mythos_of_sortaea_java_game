@@ -11,7 +11,9 @@ import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
+import characters.managers.AbilityManager;
 import characters.managers.EquipmentManager;
+import characters.managers.InventoryManager;
 import characters.managers.LevelManager;
 import items.consumables.Consumable;
 import items.equipment.Equipment;
@@ -79,53 +81,40 @@ public class Character extends CombatActor {
         LevelManager.getInstance().addExperience(this, expToAdd);
     }
 
+    // Learn new ability
     public void learnNewAbility() {
-        List<Ability> allAbilities = this.job.getPoolAbilities();
+        var choicesPool = AbilityManager.getInstance().getLearnableAbilities(this);
 
-        List<Ability> potentialAbilities = new ArrayList<>(this.job.getJobAbilities());
-        potentialAbilities.removeAll(this.abilities);
-
-        for (Ability ability : allAbilities) {
-            boolean alreadyKnown = this.abilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
-            boolean itemKnown = this.itemAbilities.stream().anyMatch(a -> a.getName().equals(ability.getName()));
-            boolean levelOk = ability.getLevelRequirement() <= this.level;
-            if (!alreadyKnown && !itemKnown && levelOk) {
-                potentialAbilities.add(ability);
-            }
-        }
-
-        Collections.shuffle(potentialAbilities);
-
-        // to do - create a skill to influence minimum number of choices
-        int numChoices = Math.min(3, potentialAbilities.size());
-        List<Ability> choices = potentialAbilities.subList(0, numChoices);
-
-        if (choices.isEmpty()) {
+        if (choicesPool.isEmpty()) {
             System.out.println("No new abilities available to learn.");
             return;
         }
 
+        List<Ability> choices = AbilityManager.getInstance().randomChoices(choicesPool, 3);
+
         StringUtils.stringDivider("Choose a new ability to learn:", " ", 10);
-        StringUtils.printOptionsGrid(
-            choices,
-            Ability::getName,
-            3,
-            choices.size()
-        );
+        StringUtils.printOptionsGrid(choices, Ability::getName, 3, choices.size());
 
         String abilityChoice = gameScanner.nextLine();
         Ability selectedAbility = InputHandler.getItemByInput(abilityChoice, choices, Ability::getName);
 
         if (selectedAbility != null) {
-            this.abilities.add(selectedAbility);
-            System.out.println("You have learned a new ability: " + selectedAbility.getName());
+            if (AbilityManager.getInstance().learnAbility(this, selectedAbility)) {
+                System.out.println("You have learned a new ability: " + selectedAbility.getName());
+            }
         } else {
             System.out.println("Invalid selection. No ability learned.");
             if (choices.size() == 1) {
-                this.abilities.add(choices.get(0));
-                System.out.println("Automatically learned the only available ability: " + choices.get(0).getName());
+                if (AbilityManager.getInstance().learnAbility(this, choices.get(0))) {
+                    System.out.println("Automatically learned the only available ability: " + choices.get(0).getName());
+                }
             }
         }
+    }
+    
+    public void addAbility(Ability ability) {
+        if (ability == null) return;
+        this.abilities.add(ability);
     }
 
     public void allocateAttributePoints() {
@@ -217,7 +206,7 @@ public class Character extends CombatActor {
         return pass;
     }
 
-    // Helper to map EquipmentTypes to display names
+    // Helper to map Equipment to display names
     private static final Map<Enum<?>, String> equipmentTypeToDisplayName = Map.of(
         EquipmentTypes.HEAD, "Head",
         EquipmentTypes.MAINHAND, "Mainhand",
@@ -288,7 +277,7 @@ public class Character extends CombatActor {
     }
 
     public List<Ability> getAbilities() {
-        List<Ability> all = new ArrayList<>(this.abilities); // or whatever your base abilities field is called
+        List<Ability> all = new ArrayList<>(this.abilities);
         all.addAll(itemAbilities);
         return all;
     }
@@ -351,21 +340,19 @@ public class Character extends CombatActor {
         this.changeStance(Stances.DEFENDING);
     }
 
+    // Use an item from inventory
     public void handleItem(String action) {
-        // List Items
-        if(Objects.equals(action.toLowerCase(), "item")) {
-            for (int i = 0; i < this.getItems().length; i++) {
-                StringUtils.stringDivider(String.valueOf(this.getItems()[i]), "-", 50);
+        if (action == null) return;
+        if ("item".equalsIgnoreCase(action)) {
+            for (Consumable c : InventoryManager.getInstance().listConsumables(this)) {
+                StringUtils.stringDivider(String.valueOf(c), "-", 50);
             }
+            return;
         }
-        // Use getItems().Consumable
-        for(int i = 0; i < this.getItems().length; i++) {
-            if(Objects.equals(action.toLowerCase(), this.getItems()[i].getName().toLowerCase()) &&
-                    this.getItems()[i].getQuantity() > 0 && this.getActionPoints() >= 1) {
-                this.actionPoints -= 1;
-                this.getItems()[i].useConsumable(this, this.getItems()[i]);
-                System.out.println(this.getItems()[i]);
-            }
+        // Attempt to use named consumable via InventoryManager
+        boolean used = InventoryManager.getInstance().useConsumable(this, action);
+        if (!used) {
+            System.out.println("No such usable item or insufficient action points.");
         }
     }
 
@@ -537,6 +524,7 @@ public class Character extends CombatActor {
         return validReactions.contains(reaction.toLowerCase()) || isValidItem;
     }
 
+    // Level up methods
     public void levelUp() {
         LevelManager.getInstance().levelUp(this);
     }
