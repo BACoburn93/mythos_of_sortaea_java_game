@@ -1,8 +1,7 @@
 package characters;
 
 import abilities.Ability;
-import abilities.ability_types.TargetingAbility;
-import abilities.ability_types.WeaponAbility;
+import abilities.ability_types.*;
 import abilities.damages.Damage;
 import abilities.reactions.*;
 import actors.ActorTypes;
@@ -11,23 +10,14 @@ import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
-import characters.managers.AbilityManager;
-import characters.managers.EquipmentManager;
-import characters.managers.InventoryManager;
-import characters.managers.LevelManager;
+import characters.managers.*;
 import items.consumables.Consumable;
-import items.equipment.Equipment;
-import items.equipment.EquipmentTypes;
+import items.equipment.*;
 import items.equipment.item_types.ItemType;
-import items.equipment.item_types.enums.AccessoryTypes;
-import items.equipment.item_types.enums.ArmorTypes;
-import items.equipment.item_types.enums.ShieldTypes;
-import items.equipment.item_types.enums.WeaponTypes;
+import items.equipment.item_types.enums.*;
 import items.equipment.item_types.mainhand.Mainhand;
 import items.equipment.equipment_slots.*;
-import utils.GameScanner;
-import utils.InputHandler;
-import utils.StringUtils;
+import utils.*;
 
 import java.util.*;
 import java.util.function.Supplier;
