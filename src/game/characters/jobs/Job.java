@@ -26,8 +26,10 @@ public abstract class Job implements DamageTypeProvider {
     private ManaValues manaValues;
     private Attributes attributes;
     private Resistances resistances;
-    private StatusConditions statusConditions;
+
     // Need to bind status conditions to jobs so that they affect character statistics
+    // private StatusConditions statusConditions;
+    
     private ArrayList<Ability> jobAbilities;
     private Set<ItemType> equippableItemTypes;
     private double unarmedDamage;
@@ -51,7 +53,7 @@ public abstract class Job implements DamageTypeProvider {
         this.manaValues = manaValues;
         this.attributes = attributes;
         this.resistances = resistances;
-        this.statusConditions = new StatusConditions();
+        // this.statusConditions = new StatusConditions();
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -69,7 +71,7 @@ public abstract class Job implements DamageTypeProvider {
         this.manaValues = manaValues;
         this.attributes = attributes;
         this.resistances = resistances;
-        this.statusConditions = statusConditions;
+        // this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -87,7 +89,7 @@ public abstract class Job implements DamageTypeProvider {
         this.manaValues = manaValues;
         this.attributes = attributes;
         this.resistances = resistances;
-        this.statusConditions = statusConditions;
+        // this.statusConditions = statusConditions;
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -136,13 +138,13 @@ public abstract class Job implements DamageTypeProvider {
         this.resistances = resistances;
     }
 
-    public StatusConditions getStatusConditions() {
-        return statusConditions;
-    }
+    // public StatusConditions getStatusConditions() {
+    //     return statusConditions;
+    // }
 
-    public void setStatusConditions(StatusConditions statusConditions) {
-        this.statusConditions = statusConditions;
-    }
+    // public void setStatusConditions(StatusConditions statusConditions) {
+    //     this.statusConditions = statusConditions;
+    // }
 
     public double getUnarmedDamage() {
         return unarmedDamage;

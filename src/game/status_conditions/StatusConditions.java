@@ -72,7 +72,7 @@ public class StatusConditions {
     // Default constructor initializing all status conditions with default values set to 0
     public StatusConditions() {
         this.bleed = new Bleed(0, 0);
-        this.blind = new Blind(0, 100);
+        this.blind = new Blind(0, 0);
         this.burn = new Burn(0, 0);
         this.confused = new Confused(0, 0);
         this.dry = new Dry(0, 0);

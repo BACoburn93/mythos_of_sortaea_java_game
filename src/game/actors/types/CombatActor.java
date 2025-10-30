@@ -8,12 +8,12 @@ import abilities.damages.DamageClassificationTypes;
 import actors.Actor;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
+import actors.managers.StatusManager;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.stances.Stances;
 import interfaces.ActorInterface;
-import status_conditions.DamageOverTime;
 import status_conditions.StatusCondition;
 import status_conditions.StatusConditions;
 import ui.CombatUIStrings;
@@ -226,24 +226,7 @@ public class CombatActor extends Actor {
             throw new IllegalArgumentException("Attacker must be a CombatActor.");
         }
 
-        for (StatusCondition status : damage.getStatusConditions()) {
-            Random random = new Random();
-            int roll = random.nextInt(1, 101);
-            boolean trigger = status.getChanceToTrigger() >= roll;
-
-            StatusCondition currStatus = statusConditions.getStatus(status.getName());
-
-            int attackerRoll = random.nextInt(Math.max(1, (int) a.attributes.getLuck().getValue()));
-            int targetRoll = random.nextInt(
-                    Math.max(1, (int) (attributes.getResilience().getValue() * 2.0 + currStatus.getResistance()))
-            );
-
-            if (trigger && attackerRoll > targetRoll) {
-                System.out.println(super.getName() + statusConditions.getStatusAffectedText(status.getName()));
-                currStatus.setValue(status.getValue());
-                currStatus.setDuration(status.getDuration());
-            }
-        }
+        StatusManager.getInstance().applyOnHit(a, this, damage);
     }
 
     public void takeDamage(StatusCondition statusCondition) {
@@ -269,21 +252,6 @@ public class CombatActor extends Actor {
         }
     }
 
-    public void handleStatusConditions() {
-        for (StatusCondition condition : statusConditions.getAll()) {
-            if (condition.getDuration() > 0) {
-                condition.setDuration(condition.getDuration() - 1);
-                if (condition instanceof DamageOverTime dot) {
-                    dot.applyDamage(this);
-                } else {
-                    condition.applyEffect(this);
-                }
-            } else {
-                condition.endEffect(this);
-            }
-        }
-    }
-
     public void handleStartTurn() {
         StringUtils.stringDivider(super.getName() + "'s turn has started.", "=", 50);
 
@@ -295,11 +263,13 @@ public class CombatActor extends Actor {
             manaValues.setValue(manaValues.getValue() + manaValues.getRegenValue());
         }
 
+        StatusManager.getInstance().handleStartTurn(this);
+
         preventOverloadingResourceValues();
     }
 
     public void handleEndTurn() {
-        handleStatusConditions();
+        StatusManager.getInstance().handleEndTurn(this);
         StringUtils.stringDivider(super.getName() + "'s turn has ended.", "=", 50);
     }
 
