@@ -6,6 +6,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.species.*;
 import enemies.Enemy;
 import enemies.EnemyKey;
 
@@ -20,6 +21,8 @@ public class Orc extends Enemy {
             new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             3
         );
+
+        this.addSpecies(new SpeciesType(SpeciesCategory.HUMANOID, "Orc"));
         setTypeKey(EnemyKey.ORC.key());
     }
 }

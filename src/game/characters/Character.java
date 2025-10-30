@@ -373,7 +373,7 @@ public class Character extends CombatActor {
             CombatActor selected = InputHandler.getItemByInput(action, combatActors, CombatActor::getName);
 
             if (selected != null) {
-                ui.CombatUIStrings.printCombatActorStats(selected);
+                System.out.println(selected);
             } else {
                 System.out.println("No such target found.");
             }
@@ -612,6 +612,7 @@ public class Character extends CombatActor {
         String divider = "+--------------------------+------------------------------------------+\n";
         sb.append(divider);
         sb.append(String.format("| %-24s | %-40s |\n", "Name", this.getName()));
+        sb.append(String.format("| %-24s | %-40s |\n", "Species", this.getSpeciesTypes()));
         sb.append(String.format("| %-24s | %-40s |\n", "Job", this.getJob()));
         sb.append(String.format("| %-24s | %-40s |\n", "Level", this.level));
         sb.append(String.format("| %-24s | %-40s |\n", "Experience", this.experience + " / " + this.experienceToLevel));

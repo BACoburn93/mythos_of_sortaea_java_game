@@ -6,6 +6,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.species.*;
 import enemies.Enemy;
 import enemies.EnemyKey;
 
@@ -23,6 +24,7 @@ public class Dragon extends Enemy {
             3
         );
 
+        this.addSpecies(new SpeciesType(SpeciesCategory.DRAGON, "Wyrm"));
         setActionsPerTurn(3);
         setTypeKey(EnemyKey.DRAGON.key());
     }

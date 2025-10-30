@@ -6,6 +6,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.species.*;
 import enemies.Enemy;
 import enemies.EnemyKey;
 
@@ -20,7 +21,8 @@ public class Goblin extends Enemy {
             new TargetingAbility[]{ AbilityDatabase.FLASH_BANG },
             1
         );
-        
+
+        this.addSpecies(new SpeciesType(SpeciesCategory.HUMANOID, "Goblin"));
         setTypeKey(EnemyKey.GOBLIN.key());
     }
 

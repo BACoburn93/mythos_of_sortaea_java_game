@@ -107,7 +107,8 @@ public abstract class Enemy extends CombatActor {
         String divider = "+--------------------------+------------------------------------------+\n";
         sb.append(divider);
         sb.append(String.format("| %-24s | %-40s |\n", "Name", this.getName()));
-        sb.append(String.format("| %-24s | %-40s |\n", "Type", "Enemy"));
+        sb.append(String.format("| %-24s | %-40s |\n", "Type", this.getTypeKey()));
+        sb.append(String.format("| %-24s | %-40s |\n", "Species", this.getSpeciesTypes()));
         sb.append(String.format("| %-24s | %-40s |\n", "Experience", this.experience));
         sb.append(divider);
     

@@ -18,6 +18,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import actors.species.SubspeciesRegistry;
+import actors.species.SpeciesCategory;
+import actors.species.SpeciesType;
+import actors.species.SpeciesBuffApplier;
+
 public class CharacterCreator {
 
     private final GameScanner gameScanner;
@@ -47,10 +52,10 @@ public class CharacterCreator {
 
         String[] keys = {
             EquipmentKey.GREAT_STAFF.key(), 
-            // EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
+            EquipmentKey.DAGGER.key(), EquipmentKey.TOWER_SHIELD.key(),
             EquipmentKey.SWORD.key(), 
-            // EquipmentKey.BOW.key(), EquipmentKey.PLATE_ARMOR.key(),
-            // EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
+            EquipmentKey.BOW.key(), EquipmentKey.PLATE_ARMOR.key(),
+            EquipmentKey.LEATHER_ARMOR.key(), EquipmentKey.RING.key(), EquipmentKey.AMULET.key()
         };
 
         for (int i=0;i<10;i++) {
@@ -60,8 +65,19 @@ public class CharacterCreator {
 
         for (int i = 1; i <= numCharacters; i++) {
             String name = getUniqueCharacterName(i, characterNames);
+            // choose species first (must be Humanoid)
+            SpeciesType species = chooseSpeciesForCharacter(name);
+
+            // then choose job/class
             Job job = chooseJobForCharacter(name);
-            characterParty.add(new Character(gameScanner, name, job));
+
+            // create character, attach species and apply species buffs
+            Character created = new Character(gameScanner, name, job);
+            created.addSpecies(species);
+            SpeciesBuffApplier.applySpeciesBuff(created, species);
+
+            System.out.println(created);
+            characterParty.add(created);
         }
 
         return new Party(characterParty, startingEq);
@@ -144,5 +160,33 @@ public class CharacterCreator {
         }
 
         return job;
+    }
+
+    private SpeciesType chooseSpeciesForCharacter(String name) {
+        // force Humanoid subspecies selection
+        List<String> subs = new ArrayList<>(SubspeciesRegistry.getInstance().getForCategory(SpeciesCategory.HUMANOID));
+        if (subs.isEmpty()) {
+            // fallback to generic Humanoid if registry empty
+            return new SpeciesType(SpeciesCategory.HUMANOID, "Human");
+        }
+
+        System.out.println("Choose " + name + "'s heritage (humanoid subspecies):");
+        StringUtils.printOptionsGrid(subs, s -> s, 4, 5);
+
+        String choice = null;
+        boolean ok = false;
+        while (!ok) {
+            choice = gameScanner.nextLine();
+            String selected = InputHandler.getItemByInput(choice, subs, s -> s);
+            if (selected != null) {
+                ok = true;
+                return new SpeciesType(SpeciesCategory.HUMANOID, selected);
+            } else {
+                System.out.println(choice + " is not a valid selection. Please try again.");
+                StringUtils.printOptionsGrid(subs, s -> s, 4, 5);
+            }
+        }
+        // unreachable but required by compiler
+        return new SpeciesType(SpeciesCategory.HUMANOID, subs.get(0));
     }
 }

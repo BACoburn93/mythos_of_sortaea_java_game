@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import actors.species.SpeciesRegistrar;
 import actors.types.CombatActor;
 import characters.Character;
 import characters.Party;
@@ -37,6 +38,7 @@ public class GameManager {
 
     public void start() {
         MenuUIStrings.titleScreen();
+        SpeciesRegistrar.init();
         EquipmentDatabase.init();
         EnemyDatabase.init();
 

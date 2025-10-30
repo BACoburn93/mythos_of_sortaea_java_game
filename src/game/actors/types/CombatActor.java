@@ -1,6 +1,9 @@
 package actors.types;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import abilities.Ability;
 import abilities.damages.Damage;
@@ -12,6 +15,8 @@ import actors.managers.StatusManager;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.species.SpeciesCategory;
+import actors.species.SpeciesType;
 import actors.stances.Stances;
 import interfaces.ActorInterface;
 import status_conditions.StatusCondition;
@@ -21,6 +26,7 @@ import utils.StringUtils;
 
 public class CombatActor extends Actor {
     private ActorTypes actorType;
+    
     private HealthValues healthValues;
     private ManaValues manaValues;
     private Attributes attributes;
@@ -28,6 +34,9 @@ public class CombatActor extends Actor {
     private StatusConditions statusConditions;
     private Stances stance;
     protected int level;
+
+    // allow multiple species/subspecies per actor
+    private final Set<SpeciesType> speciesTypes = new HashSet<>();
 
     public CombatActor(String name, HealthValues healthValues, ManaValues manaValues, Attributes attributes,
                     Resistances resistances, StatusConditions statusConditions, int level) {
@@ -271,6 +280,37 @@ public class CombatActor extends Actor {
     public void handleEndTurn() {
         StatusManager.getInstance().handleEndTurn(this);
         StringUtils.stringDivider(super.getName() + "'s turn has ended.", "=", 50);
+    }
+
+    // convenience: ensure at least a HUMANOID entry if you want a default
+    public void ensureDefaultSpecies() {
+        if (speciesTypes.isEmpty()) {
+            speciesTypes.add(new SpeciesType(SpeciesCategory.HUMANOID));
+        }
+    }
+
+    public Set<SpeciesType> getSpeciesTypes() {
+        return Collections.unmodifiableSet(speciesTypes);
+    }
+
+    public boolean addSpecies(SpeciesType st) {
+        if (st == null) return false;
+        return speciesTypes.add(st);
+    }
+
+    public boolean removeSpecies(SpeciesType st) {
+        if (st == null) return false;
+        return speciesTypes.remove(st);
+    }
+
+    public boolean hasSpecies(SpeciesCategory cat) {
+        return speciesTypes.stream().anyMatch(s -> s.getSpecies() == cat);
+    }
+
+    public boolean hasSubspecies(String sub) {
+        if (sub == null || sub.isBlank()) return false;
+        String subU = sub.trim();
+        return speciesTypes.stream().anyMatch(s -> subU.equalsIgnoreCase(s.getSubSpecies()));
     }
 
     @Override
