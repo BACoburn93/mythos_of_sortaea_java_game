@@ -26,6 +26,8 @@ public abstract class Ability {
     protected Set<DamageTypes> allowedDamageTypes;
     protected Set<String> allowedActorTypes;
 
+    private Map<String, Double> speciesDamageModifiers = new HashMap<>();
+
     // Primary constructor
     public Ability(
         String name,
@@ -137,6 +139,35 @@ public abstract class Ability {
             return typeKey != null && allowedActorTypes.contains(typeKey);
         }
         return true;
+    }
+
+    public void addSpeciesDamageModifier(String speciesKey, double fractionalBonus) {
+        if (speciesKey == null || speciesKey.isBlank()) return;
+        speciesDamageModifiers.put(speciesKey.trim().toUpperCase(), fractionalBonus);
+    }
+
+    public void removeSpeciesDamageModifier(String speciesKey) {
+        if (speciesKey == null) return;
+        speciesDamageModifiers.remove(speciesKey.trim().toUpperCase());
+    }
+
+    public Map<String, Double> getSpeciesDamageModifiers() {
+        return Collections.unmodifiableMap(speciesDamageModifiers);
+    }
+
+
+    public double getSpeciesMultiplierFor(Collection<actors.species.SpeciesType> targetSpecies) {
+        if (targetSpecies == null || targetSpecies.isEmpty() || speciesDamageModifiers.isEmpty()) return 1.0;
+        double mult = 1.0;
+        for (var st : targetSpecies) {
+            if (st == null) continue;
+            String exact = st.key().toUpperCase();        // e.g. "DRAGON:WYRM"
+            String cat = st.getSpecies().name();         // e.g. "DRAGON"
+            Double v = speciesDamageModifiers.get(exact);
+            if (v == null) v = speciesDamageModifiers.get(cat);
+            if (v != null) mult *= (1.0 + v);
+        }
+        return mult;
     }
 
     // Convenience constructors delegate to primary constructor
@@ -264,40 +295,6 @@ public abstract class Ability {
         sb.append(divider);
         return sb.toString();
     }
-
-    // protected static abstract class BuilderBase<T extends BuilderBase<T>> {
-    //     protected int minTier = 0;
-    //     protected HashSet<ItemType> allowedEquipmentTypes;
-    //     protected ArmorTypes[] armorRequirement;
-    //     protected ShieldTypes[] shieldRequirement;
-    //     protected WeaponTypes[] weaponRequirement;
-    //     protected EnumSet<DamageTypes> allowedDamageTypes;
-
-    //     public T minTier(int v) { this.minTier = v; return self(); }
-    //     public T allowedEquipmentTypes(Set<ItemType> s) { this.allowedEquipmentTypes = (s == null) ? null : new HashSet<ItemType>(s); return self(); }
-    //     public T allowedDamageTypes(Set<DamageTypes> s) { this.allowedDamageTypes = (s == null) ? null : EnumSet.copyOf(s); return self(); }
-    //     public T armorRequirement(ArmorTypes[] v) { this.armorRequirement = v; return self(); }
-    //     public T shieldRequirement(ShieldTypes[] v) { this.shieldRequirement = v; return self(); }
-    //     public T weaponRequirement(WeaponTypes[] v) { this.weaponRequirement = v; return self(); }
-
-    //     // Computes allowed equipment types based on explicit set or inferred from requirements
-    //     public Set<ItemType> computeAllowedEquipmentTypes() {
-    //         if (this.allowedEquipmentTypes != null && !this.allowedEquipmentTypes.isEmpty()) {
-    //             return new HashSet<ItemType>(this.allowedEquipmentTypes);
-    //         }
-    //         Set<ItemType> result = new HashSet<>();
-    //         System.out.println("Computing allowed equipment types from requirements..." + 
-    //             " armor=" + Arrays.toString(armorRequirement) +
-    //             " shield=" + Arrays.toString(shieldRequirement) +
-    //             " weapon=" + Arrays.toString(weaponRequirement)
-    //         );
-    //         if (weaponRequirement != null) for (WeaponTypes w : weaponRequirement) if (w instanceof ItemType) result.add((ItemType) w);
-    //         if (armorRequirement  != null) for (ArmorTypes a : armorRequirement)   if (a instanceof ItemType) result.add((ItemType) a);
-    //         if (shieldRequirement != null) for (ShieldTypes s : shieldRequirement) if (s instanceof ItemType) result.add((ItemType) s);
-    //         return result;
-    //     }
-
-    //     protected abstract T self();
-    // }
+    
 }
 

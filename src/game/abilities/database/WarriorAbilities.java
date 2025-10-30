@@ -8,6 +8,7 @@ import abilities.damages.physical.PhysicalFireDamage;
 import abilities.damages.physical.PhysicalIceDamage;
 import abilities.damages.physical.PhysicalSlashingDamage;
 import abilities.damages.physical.PhysicalWindDamage;
+import actors.species.SpeciesCategory;
 import items.equipment.AbilityPrerequisites;
 
 public class WarriorAbilities {
@@ -55,5 +56,17 @@ public class WarriorAbilities {
     .manaCost(3)
     .weaponTypes(AbilityPrerequisites.SLASHING_WEAPONS)
     .description("A chilling slash wounds deeply with numbing frost.")
+    .build();
+
+    public static final TargetingAbility DRAGONBANE_STRIKE = new TargetingAbility.Builder(
+        "Dragonbane Strike",
+        new Damage[]{
+            new PhysicalSlashingDamage(5, 8),
+        }
+    )
+    .tier(0)
+    .manaCost(3)
+    .speciesDamageModifier("DRAGON", 2.50) // +250% vs any DRAGON
+    .description("A powerful strike that deals extra damage to dragons.")
     .build();
 }

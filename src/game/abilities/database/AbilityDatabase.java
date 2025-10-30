@@ -53,6 +53,7 @@ public class AbilityDatabase {
     public static final TargetingAbility CHARGE = WarriorAbilities.CHARGE;
     public static final TargetingAbility FLAME_SLASH = WarriorAbilities.FLAME_SLASH;
     public static final TargetingAbility FROST_WIND_SLASH = WarriorAbilities.FROST_WIND_SLASH;
+    public static final TargetingAbility DRAGONBANE_STRIKE = WarriorAbilities.DRAGONBANE_STRIKE;
 
     // Rogue Abilities
     public static final TargetingAbility BACKSTAB = RogueAbilities.BACKSTAB;
@@ -76,7 +77,8 @@ public class AbilityDatabase {
             SHIELD_BASH,
             CHARGE,
             FLAME_SLASH,
-            FROST_WIND_SLASH
+            FROST_WIND_SLASH,
+            DRAGONBANE_STRIKE
         ));
     }
 

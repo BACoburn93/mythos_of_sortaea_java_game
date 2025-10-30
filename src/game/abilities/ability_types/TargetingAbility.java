@@ -1,7 +1,9 @@
 package abilities.ability_types;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import abilities.Ability;
@@ -42,6 +44,7 @@ public class TargetingAbility extends Ability {
         // Required
         private final String name;
         private Damage[] damages;
+        private Map<String, Double> speciesDamageModifiers = new HashMap<>();
 
         // Optional/Defaults
         private int levelRequirement = -1;
@@ -98,6 +101,12 @@ public class TargetingAbility extends Ability {
             return this;
         }
 
+        public Builder speciesDamageModifier(String speciesKey, double fractionalBonus) {
+            if (speciesKey == null || speciesKey.isBlank()) return this;
+            this.speciesDamageModifiers.put(speciesKey.trim().toUpperCase(), fractionalBonus);
+            return this;
+        }
+
         public Builder levelRequirement(int v) { this.levelRequirement = v; return this; }
         public Builder manaCost(int v) { this.manaCost = v; return this; }
         public Builder actionCost(int v) { this.actionCost = v; return this; }
@@ -136,6 +145,10 @@ public class TargetingAbility extends Ability {
             }
             if (this.allowedActorTypes != null && !this.allowedActorTypes.isEmpty()) {
                 ta.setAllowedActorTypes(this.allowedActorTypes);
+            }
+
+            if (!this.speciesDamageModifiers.isEmpty()) {
+                this.speciesDamageModifiers.forEach(ta::addSpeciesDamageModifier);
             }
 
             return ta;

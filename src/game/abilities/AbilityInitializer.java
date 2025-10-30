@@ -20,8 +20,7 @@ public class AbilityInitializer {
 
 
         List<TargetingAbility> warriorAbilities = new ArrayList<>();
-        warriorAbilities.add(AbilityDatabase.SLASH);
-        warriorAbilities.add(AbilityDatabase.SHIELD_BASH);
+        warriorAbilities.add(AbilityDatabase.DRAGONBANE_STRIKE);
         warriorAbilities.add(AbilityDatabase.CHARGE);
         jobAbilities.put(JobTypes.WARRIOR, warriorAbilities);
 

@@ -220,7 +220,8 @@ public class CombatActor extends Actor {
             int baseDamage = (int) (Math.floor(Math.random() * (damage.getMaxDamage() - damage.getMinDamage()))
                     + damage.getMinDamage());
 
-            int totalDamage = Math.max(baseDamage - damageToMitigate + damageToAdd, 0);
+            double speciesDamageBonus = ability.getSpeciesMultiplierFor(this.getSpeciesTypes());
+            int totalDamage = (int) Math.max((baseDamage - damageToMitigate + damageToAdd) * speciesDamageBonus, 0);
             healthValues.setValue(Math.max(healthValues.getValue() - totalDamage, 0));
 
             CombatUIStrings.appendDamageMessage(damageMessage, attacker, this, ability, damage, totalDamage, isFirstDamage);
