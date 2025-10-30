@@ -621,13 +621,13 @@ public class Character extends CombatActor {
         // Attributes
         sb.append(String.format("| %-24s | %-40s |\n", "Attributes", ""));
         Attributes attrs = this.getAttributes();
-        sb.append(String.format("|   %-22s | %-40s |\n", "Strength", attrs.getStrength().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Agility", attrs.getAgility().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Knowledge", attrs.getKnowledge().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Defense", attrs.getDefense().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Resilience", attrs.getResilience().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Spirit", attrs.getSpirit().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Luck", attrs.getLuck().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Strength", (int) attrs.getStrength().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Agility", (int) attrs.getAgility().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Knowledge", (int) attrs.getKnowledge().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Defense", (int) attrs.getDefense().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Resilience", (int) attrs.getResilience().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Spirit", (int) attrs.getSpirit().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Luck", (int) attrs.getLuck().getValue()));
         sb.append(divider);
     
         // Equipment
