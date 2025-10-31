@@ -101,7 +101,7 @@ public final class SpeciesRegistrar {
         // Ooze subspecies
         reg.register(SpeciesCategory.OOZE, "Black Pudding");
         reg.register(SpeciesCategory.OOZE, "Gelatinous Cube");
-        reg.register(SpeciesCategory.OOZE, "Gray Ooze");
+        reg.register(SpeciesCategory.OOZE, "Stoathe");
         reg.register(SpeciesCategory.OOZE, "Slime");
 
         // Plant subspecies

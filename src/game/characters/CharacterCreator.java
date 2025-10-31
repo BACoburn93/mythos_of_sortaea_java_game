@@ -21,7 +21,6 @@ import java.util.Set;
 import actors.species.SubspeciesRegistry;
 import actors.species.SpeciesCategory;
 import actors.species.SpeciesType;
-import actors.species.SpeciesBuffApplier;
 
 public class CharacterCreator {
 
@@ -74,9 +73,7 @@ public class CharacterCreator {
             // create character, attach species and apply species buffs
             Character created = new Character(gameScanner, name, job);
             created.addSpecies(species);
-            SpeciesBuffApplier.applySpeciesBuff(created, species);
 
-            System.out.println(created);
             characterParty.add(created);
         }
 

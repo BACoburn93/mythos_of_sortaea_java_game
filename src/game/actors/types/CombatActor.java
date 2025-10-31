@@ -15,6 +15,7 @@ import actors.managers.StatusManager;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.species.SpeciesBuffApplier;
 import actors.species.SpeciesCategory;
 import actors.species.SpeciesType;
 import actors.stances.Stances;
@@ -296,6 +297,7 @@ public class CombatActor extends Actor {
 
     public boolean addSpecies(SpeciesType st) {
         if (st == null) return false;
+        SpeciesBuffApplier.applySpeciesBuff(this, st);
         return speciesTypes.add(st);
     }
 
