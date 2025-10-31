@@ -1,6 +1,5 @@
 package actors.resistances;
 
-
 import abilities.damages.DamageTypes;
 
 public class Resistances {

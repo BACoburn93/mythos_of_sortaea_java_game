@@ -123,7 +123,24 @@ public abstract class Enemy extends CombatActor {
         sb.append(String.format("|   %-22s | %-40s |\n", "Spirit", (int) attrs.getSpirit().getValue()));
         sb.append(String.format("|   %-22s | %-40s |\n", "Luck", (int) attrs.getLuck().getValue()));
         sb.append(divider);
-    
+
+        // Resistances
+        sb.append(String.format("| %-24s | %-40s |\n", "Resistances", ""));
+        Resistances res = this.getResistances();
+        sb.append(String.format("|   %-22s | %-40s |\n", "Bludgeoning", (int) res.getBludgeoning().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Slashing", (int) res.getSlashing().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Piercing", (int) res.getPiercing().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Fire", (int) res.getFire().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Ice", (int) res.getIce().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Lightning", (int) res.getLightning().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Water", (int) res.getWater().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Venom", (int) res.getVenom().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Earth", (int) res.getEarth().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Air", (int) res.getWind().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Light", (int) res.getLight().getValue()));
+        sb.append(String.format("|   %-22s | %-40s |\n", "Darkness", (int) res.getDarkness().getValue()));
+
+
         // Abilities
         sb.append(String.format("| %-24s | %-40s |\n", "Abilities", ""));
         if (this.abilities != null) {
