@@ -8,33 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.function.Function;
+// import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import abilities.enemy.EnemyAbilityPools;
 
 public class EnemyFactory {
     private static final Random rng = new Random();
-
-    // create with explicit prefix/suffix
-    public static Enemy createEnemy(String baseType, EnemyPrefix prefix, EnemySuffix suffix) {
-        Function<String, Enemy> ctor = EnemyRegistry.getConstructor(baseType);
-        if (ctor == null) throw new IllegalArgumentException("Unknown enemy type: " + baseType);
-
-        // compose display name and instantiate with that name
-        int count = StringUtils.getNextCount(baseType, (prefix != null) ? prefix.getName() : "", (suffix != null) ? suffix.getName() : "");
-        String displayName = StringUtils.formatName(baseType, (prefix != null) ? prefix.getName() : "", (suffix != null) ? suffix.getName() : "", count);
-        Enemy enemy = ctor.apply(displayName);
-
-        // apply modifiers
-        if (prefix != null) prefix.apply(enemy);
-        if (suffix != null) suffix.apply(enemy);
-
-        // assign abilities
-        assignAbilities(enemy, baseType.toLowerCase());
-
-        return enemy;
-    }
 
     // create and roll prefix/suffix using metadata in EnemyDatabase
     public static Enemy createEnemy(String baseType) {
@@ -59,9 +39,16 @@ public class EnemyFactory {
         // If the chosen prefix is a POST prefix, pick an additional PRE prefix (exclude the POST pick).
         EnemyPrefix prePrefix = null;
         EnemyPrefix postPrefix = null;
+
         if (chosenP != null && chosenP.getPosition() == EnemyPrefix.Position.POST) {
             postPrefix = chosenP;
-            prePrefix = pickWeightedExcluding(rng, EnemyDatabase.getPrefixPool(key), postPrefix);
+            // pick a PRE prefix only (exclude any POST entries in the pool)
+            List<EnemyDatabase.Weighted<EnemyPrefix>> fullPool = EnemyDatabase.getPrefixPool(key);
+            List<EnemyDatabase.Weighted<EnemyPrefix>> prePool = fullPool.stream()
+                    .filter(Objects::nonNull)
+                    .filter(w -> w.value != null && w.value.getPosition() == EnemyPrefix.Position.PRE)
+                    .collect(Collectors.toList());
+            prePrefix = (prePool.isEmpty() ? null : pickWeighted(rng, prePool));
         } else {
             // chosenP is PRE (or null) -> use as prePrefix
             prePrefix = chosenP;
@@ -77,63 +64,13 @@ public class EnemyFactory {
         String displayName = StringUtils.formatName(baseType, combinedPrefix, sName, count);
         Enemy enemy = ctor.apply(displayName);
 
+        System.out.println(preName + "|" + postName + "|" + sName);
+
         // apply prefixes in order: PRE then POST
         if (prePrefix != null) prePrefix.apply(enemy);
         if (postPrefix != null) postPrefix.apply(enemy);
 
         if (chosenS != null) chosenS.apply(enemy);
-
-        // assign abilities
-        assignAbilities(enemy, key);
-
-        return enemy;
-    }
-
-    // create with multiple prefixes/suffixes
-    public static Enemy createEnemy(String baseType, List<EnemyPrefix> prefixes, List<EnemySuffix> suffixes) {
-        if (baseType == null) throw new IllegalArgumentException("baseType is null");
-        String key = baseType.trim().toLowerCase();
-
-        Function<String, Enemy> ctor = EnemyRegistry.getConstructor(key);
-        if (ctor == null) {
-            throw new IllegalArgumentException(
-                "Unknown enemy type: " + baseType +
-                " (available: " + String.join(", ", EnemyRegistry.allKeys()) + ")"
-            );
-        }
-
-        String prePName = (prefixes == null || prefixes.isEmpty())
-            ? ""
-            : prefixes.stream().filter(Objects::nonNull)
-                      .filter(p -> p.getPosition() == EnemyPrefix.Position.PRE)
-                      .map(EnemyPrefix::getName)
-                      .collect(Collectors.joining(" "));
-        String postPName = (prefixes == null || prefixes.isEmpty())
-            ? ""
-            : prefixes.stream().filter(Objects::nonNull)
-                      .filter(p -> p.getPosition() == EnemyPrefix.Position.POST)
-                      .map(EnemyPrefix::getName)
-                      .collect(Collectors.joining(" "));
-        String sName = (suffixes == null || suffixes.isEmpty())
-            ? ""
-            : suffixes.stream().filter(Objects::nonNull).map(EnemySuffix::getName).collect(Collectors.joining(" "));
-
-        String combinedPrefix = joinNonEmpty(prePName, postPName);
-        int count = StringUtils.getNextCount(baseType, combinedPrefix, sName);
-        String displayName = StringUtils.formatName(baseType, combinedPrefix, sName, count);
-        Enemy enemy = ctor.apply(displayName);
-
-        // apply prefixes in order: PRE first, then POST
-        if (prefixes != null) {
-            prefixes.stream().filter(Objects::nonNull)
-                    .filter(p -> p.getPosition() == EnemyPrefix.Position.PRE)
-                    .forEach(p -> p.apply(enemy));
-            prefixes.stream().filter(Objects::nonNull)
-                    .filter(p -> p.getPosition() == EnemyPrefix.Position.POST)
-                    .forEach(p -> p.apply(enemy));
-        }
-        // then apply suffixes as before
-        if (suffixes != null) for (EnemySuffix s : suffixes) if (s != null) s.apply(enemy);
 
         // assign abilities
         assignAbilities(enemy, key);
@@ -180,23 +117,96 @@ public class EnemyFactory {
     }
 
     // helper: pick a weighted item from pool but exclude a specified instance (returns null if none available)
-    private static <T> T pickWeightedExcluding(java.util.Random rng, java.util.List<EnemyDatabase.Weighted<T>> pool, T exclude) {
-        if (pool == null || pool.isEmpty()) return null;
-        java.util.List<EnemyDatabase.Weighted<T>> copy = pool.stream()
-            .filter(w -> !Objects.equals(w.value, exclude))
-            .collect(Collectors.toList());
-        if (copy.isEmpty()) return null;
+    // private static <T> T pickWeightedExcluding(Random rng, List<EnemyDatabase.Weighted<T>> pool, T exclude) {
+    //     if (pool == null || pool.isEmpty()) return null;
+    //     List<EnemyDatabase.Weighted<T>> copy = pool.stream()
+    //         .filter(w -> !Objects.equals(w.value, exclude))
+    //         .collect(Collectors.toList());
+    //     if (copy.isEmpty()) return null;
 
-        double total = 0.0;
-        for (var w : copy) total += Math.max(0.0, w.weight);
-        if (total <= 0.0) return copy.get(0).value;
+    //     double total = 0.0;
+    //     for (var w : copy) total += Math.max(0.0, w.weight);
+    //     if (total <= 0.0) return copy.get(0).value;
 
-        double r = rng.nextDouble() * total;
-        double acc = 0.0;
-        for (var w : copy) {
-            acc += Math.max(0.0, w.weight);
-            if (r < acc) return w.value;
-        }
-        return copy.get(copy.size() - 1).value;
-    }
+    //     double r = rng.nextDouble() * total;
+    //     double acc = 0.0;
+    //     for (var w : copy) {
+    //         acc += Math.max(0.0, w.weight);
+    //         if (r < acc) return w.value;
+    //     }
+    //     return copy.get(copy.size() - 1).value;
+    // }
+
+    // create with explicit prefix/suffix
+    // public static Enemy createEnemy(String baseType, EnemyPrefix prefix, EnemySuffix suffix) {
+    //     Function<String, Enemy> ctor = EnemyRegistry.getConstructor(baseType);
+    //     if (ctor == null) throw new IllegalArgumentException("Unknown enemy type: " + baseType);
+
+    //     // compose display name and instantiate with that name
+    //     int count = StringUtils.getNextCount(baseType, (prefix != null) ? prefix.getName() : "", (suffix != null) ? suffix.getName() : "");
+    //     String displayName = StringUtils.formatName(baseType, (prefix != null) ? prefix.getName() : "", (suffix != null) ? suffix.getName() : "", count);
+    //     Enemy enemy = ctor.apply(displayName);
+
+    //     // apply modifiers
+    //     if (prefix != null) prefix.apply(enemy);
+    //     if (suffix != null) suffix.apply(enemy);
+
+    //     // assign abilities
+    //     assignAbilities(enemy, baseType.toLowerCase());
+
+    //     return enemy;
+    // }
+
+
+    // create with multiple prefixes/suffixes
+    // public static Enemy createEnemy(String baseType, List<EnemyPrefix> prefixes, List<EnemySuffix> suffixes) {
+    //     if (baseType == null) throw new IllegalArgumentException("baseType is null");
+    //     String key = baseType.trim().toLowerCase();
+
+    //     Function<String, Enemy> ctor = EnemyRegistry.getConstructor(key);
+    //     if (ctor == null) {
+    //         throw new IllegalArgumentException(
+    //             "Unknown enemy type: " + baseType +
+    //             " (available: " + String.join(", ", EnemyRegistry.allKeys()) + ")"
+    //         );
+    //     }
+
+    //     String prePName = (prefixes == null || prefixes.isEmpty())
+    //         ? ""
+    //         : prefixes.stream().filter(Objects::nonNull)
+    //                   .filter(p -> p.getPosition() == EnemyPrefix.Position.PRE)
+    //                   .map(EnemyPrefix::getName)
+    //                   .collect(Collectors.joining(" "));
+    //     String postPName = (prefixes == null || prefixes.isEmpty())
+    //         ? ""
+    //         : prefixes.stream().filter(Objects::nonNull)
+    //                   .filter(p -> p.getPosition() == EnemyPrefix.Position.POST)
+    //                   .map(EnemyPrefix::getName)
+    //                   .collect(Collectors.joining(" "));
+    //     String sName = (suffixes == null || suffixes.isEmpty())
+    //         ? ""
+    //         : suffixes.stream().filter(Objects::nonNull).map(EnemySuffix::getName).collect(Collectors.joining(" "));
+
+    //     String combinedPrefix = joinNonEmpty(prePName, postPName);
+    //     int count = StringUtils.getNextCount(baseType, combinedPrefix, sName);
+    //     String displayName = StringUtils.formatName(baseType, combinedPrefix, sName, count);
+    //     Enemy enemy = ctor.apply(displayName);
+
+    //     // apply prefixes in order: PRE first, then POST
+    //     if (prefixes != null) {
+    //         prefixes.stream().filter(Objects::nonNull)
+    //                 .filter(p -> p.getPosition() == EnemyPrefix.Position.PRE)
+    //                 .forEach(p -> p.apply(enemy));
+    //         prefixes.stream().filter(Objects::nonNull)
+    //                 .filter(p -> p.getPosition() == EnemyPrefix.Position.POST)
+    //                 .forEach(p -> p.apply(enemy));
+    //     }
+    //     // then apply suffixes as before
+    //     if (suffixes != null) for (EnemySuffix s : suffixes) if (s != null) s.apply(enemy);
+
+    //     // assign abilities
+    //     assignAbilities(enemy, key);
+
+    //     return enemy;
+    // }
 }

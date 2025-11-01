@@ -33,7 +33,7 @@ public class AbilityDatabase {
     public static final TargetingAbility BLACK_FROST_ABYSS = EnemyAbilities.BLACK_FROST_ABYSS;
     public static final TargetingAbility MOTE_OF_FIRE = EnemyAbilities.MOTE_OF_FIRE;
     public static final TargetingAbility DANCING_CINDERS = EnemyAbilities.DANCING_CINDERS;
-    public static final TargetingAbility FIRE_BREATH = EnemyAbilities.FIRE_BREATH;
+    public static final TargetingAbility DRAGON_BREATH = EnemyAbilities.DRAGON_BREATH;
     public static final TargetingAbility SPHERE_OF_FLAMES = EnemyAbilities.SPHERE_OF_FLAMES;
     public static final TargetingAbility PYROCLASM = EnemyAbilities.PYROCLASM;
     public static final TargetingAbility TAIL = EnemyAbilities.TAIL;

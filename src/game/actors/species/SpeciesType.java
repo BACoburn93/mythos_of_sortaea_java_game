@@ -1,5 +1,7 @@
 package actors.species;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class SpeciesType {
@@ -20,6 +22,15 @@ public final class SpeciesType {
 
     public String key() {
         return subSpecies.isEmpty() ? species.name() : (species.name() + ":" + subSpecies.toUpperCase());
+    }
+
+    public List<String> lookupKeys() {
+        var keys = new ArrayList<String>();
+        if (!subSpecies.isEmpty()) {
+            keys.add(species.name() + ":" + subSpecies.toUpperCase());
+        }
+        keys.add(species.name());
+        return keys;
     }
 
     @Override

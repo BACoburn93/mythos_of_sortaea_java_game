@@ -107,6 +107,9 @@ public class TargetingAbility extends Ability {
             return this;
         }
 
+        // to do: create a method that will overload values based on the actor using it
+        // I.E., if a DRAGON uses it, apply dragon-specific damage mods, ranges, etc.
+
         public Builder levelRequirement(int v) { this.levelRequirement = v; return this; }
         public Builder manaCost(int v) { this.manaCost = v; return this; }
         public Builder actionCost(int v) { this.actionCost = v; return this; }

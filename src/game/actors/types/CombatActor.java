@@ -199,8 +199,7 @@ public class CombatActor extends Actor {
     }
 
     public void attack(CombatActor target, Ability ability) {
-            target.takeDamage(this, ability);
-
+        target.takeDamage(this, ability);
     }
 
     public void takeDamage(CombatActor attacker, Ability ability) {

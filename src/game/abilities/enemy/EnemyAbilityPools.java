@@ -20,7 +20,7 @@ public class EnemyAbilityPools {
         orcPool.addWeightedAbility(AbilityDatabase.KICK, 40);
 
         EnemyAbilityPool dragonPool = new EnemyAbilityPool();
-        dragonPool.addExclusiveAbility(AbilityDatabase.FIRE_BREATH);
+        dragonPool.addExclusiveAbility(AbilityDatabase.DRAGON_BREATH);
         dragonPool.addWeightedAbility(AbilityDatabase.BITE, 40);
         dragonPool.addWeightedAbility(AbilityDatabase.TAIL, 30);
         dragonPool.addWeightedAbility(AbilityDatabase.CLAW, 30);

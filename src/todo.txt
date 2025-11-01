@@ -6,7 +6,7 @@ Refactor Character class to delegate responsibilities
 
 Create a skills list to influence certain aspects of the game
 
-Create optional races to choose from
+Create optional races to choose from (Finished)
 
 Start modeling subclasses and subclass logic
 

@@ -159,15 +159,15 @@ public class EnemyAbilities {
         .build();
 
         // FIRE ABILITIES
-    public static final TargetingAbility FIRE_BREATH = new TargetingAbility.Builder(
-            "Fire Breath",
+    public static final TargetingAbility DRAGON_BREATH = new TargetingAbility.Builder(
+            "Dragon Breath",
             new Damage[]{ new SpiritualFireDamage(25, 35) }
         )
         .tier(6)
         .manaCost(16)
-        .leftRange(2)
-        .rightRange(2)
-        .description("A cone of fire that scorches all in its path.")
+        .leftRange(1)
+        .rightRange(1)
+        .description("A cone of a dragons breath that destroys all in its path.")
         .allowedActorTypes(EnemyKey.DRAGON.key())
         .build();
 

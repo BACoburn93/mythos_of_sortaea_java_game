@@ -8,7 +8,6 @@ import abilities.damages.physical.PhysicalFireDamage;
 import abilities.damages.physical.PhysicalIceDamage;
 import abilities.damages.physical.PhysicalSlashingDamage;
 import abilities.damages.physical.PhysicalWindDamage;
-import actors.species.SpeciesCategory;
 import items.equipment.AbilityPrerequisites;
 
 public class WarriorAbilities {

@@ -1,3 +1,3 @@
 To start the application, execute the code in your preferred IDE.
-If you find that it isn;t working in IntelliJ IDE or other similar IDE's, use Visual Studio Code.
+If you find that it isn't working in IntelliJ IDE or other similar IDE's, use Visual Studio Code.
 Simply go to the src/Main.java file and execute the run command displayed near the top (It should look like a play button).
