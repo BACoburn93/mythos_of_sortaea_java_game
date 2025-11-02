@@ -2,10 +2,9 @@ package abilities.database;
 
 import abilities.ability_types.WeaponAbility;
 import abilities.damages.Damage;
-import abilities.damages.magical.MagicalPiercingDamage;
-import abilities.damages.physical.PhysicalBludgeoningDamage;
+import abilities.damages.magical.MagicalDamage;
+import abilities.damages.physical.PhysicalDamage;
 import abilities.damages.physical.PhysicalPiercingDamage;
-import abilities.damages.physical.PhysicalSlashingDamage;
 import items.equipment.AbilityPrerequisites;
 import status_conditions.Bleed;
 import status_conditions.StatusCondition;
@@ -13,7 +12,7 @@ import status_conditions.StatusCondition;
 public class WeaponAbilities {
     public static final WeaponAbility SLASH = new WeaponAbility.Builder(
             "Slash",
-            new Damage[]{ new PhysicalSlashingDamage(11, 19) }
+            new Damage[]{ PhysicalDamage.slashing(11, 19) }
         )
         .multiplier(1.8)
         .weaponTypes(AbilityPrerequisites.SLASHING_WEAPONS)
@@ -22,7 +21,7 @@ public class WeaponAbilities {
 
     public static final WeaponAbility STAB = new WeaponAbility.Builder(
             "Stab",
-            new Damage[]{ new PhysicalPiercingDamage(10, 20) }
+            new Damage[]{ PhysicalDamage.piercing(10, 20) }
         )
         .multiplier(1.5)
         .weaponTypes(AbilityPrerequisites.PIERCING_WEAPONS)
@@ -31,7 +30,7 @@ public class WeaponAbilities {
 
     public static final WeaponAbility BASH = new WeaponAbility.Builder(
             "Bash",
-            new Damage[]{ new PhysicalBludgeoningDamage(12, 18) }
+            new Damage[]{ PhysicalDamage.bludgeoning(12, 18) }
         )
         .multiplier(1.6)
         .weaponTypes(AbilityPrerequisites.BLUDGEONING_WEAPONS)
@@ -55,7 +54,7 @@ public class WeaponAbilities {
 
     public static final WeaponAbility MAGIC_DART = new WeaponAbility.Builder(
             "Magic Dart",
-            new Damage[]{ new MagicalPiercingDamage(11, 19) }
+            new Damage[]{ MagicalDamage.piercing(11, 19) }
         )
         .multiplier(0)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)

@@ -2,14 +2,13 @@ package abilities.database;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
-import abilities.damages.physical.PhysicalEarthDamage;
-import abilities.damages.physical.PhysicalPiercingDamage;
+import abilities.damages.physical.PhysicalDamage;
 import items.equipment.AbilityPrerequisites;
 
 public class RogueAbilities {
     public static final TargetingAbility BACKSTAB = new TargetingAbility.Builder(
         "Backstab",
-        new Damage[]{new PhysicalPiercingDamage(15, 22)}
+        new Damage[]{PhysicalDamage.piercing(15, 22)}
     )
     .levelRequirement(1)
     .manaCost(1)
@@ -19,7 +18,7 @@ public class RogueAbilities {
 
     public static final TargetingAbility POISON_DART = new TargetingAbility.Builder(
         "Poison Dart",
-        new Damage[]{new PhysicalPiercingDamage(3, 6), new PhysicalEarthDamage(10, 15)}
+        new Damage[]{PhysicalDamage.piercing(3, 6), PhysicalDamage.earth(10, 15)}
     )
     .levelRequirement(2)
     .manaCost(1)

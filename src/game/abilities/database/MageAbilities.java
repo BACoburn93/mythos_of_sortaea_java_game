@@ -2,14 +2,10 @@ package abilities.database;
 
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
+import abilities.damages.magical.MagicalDamage;
 import abilities.damages.magical.MagicalFireDamage;
-import abilities.damages.magical.MagicalIceDamage;
-import abilities.damages.magical.MagicalLightningDamage;
-import abilities.damages.magical.MagicalPiercingDamage;
-import abilities.damages.magical.MagicalWindDamage;
-import abilities.damages.physical.PhysicalIceDamage;
-import abilities.damages.physical.PhysicalPiercingDamage;
-import abilities.damages.spiritual.SpiritualFireDamage;
+import abilities.damages.physical.PhysicalDamage;
+import abilities.damages.spiritual.SpiritualDamage;
 import items.equipment.AbilityPrerequisites;
 import status_conditions.Burn;
 import status_conditions.StatusCondition;
@@ -19,7 +15,7 @@ public class MageAbilities {
             "Fireball",
             new Damage[]{
                 new MagicalFireDamage(10, 18, new StatusCondition[]{ new Burn(10, 100, 2) }),
-                new SpiritualFireDamage(3, 5)
+                SpiritualDamage.fire(5, 10)
             })
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
@@ -32,8 +28,8 @@ public class MageAbilities {
     public static final TargetingAbility ICE_SPIKE = new TargetingAbility.Builder(
             "Ice Spike",
             new Damage[]{
-                new MagicalIceDamage(4, 8),
-                new PhysicalPiercingDamage(12, 14)
+                MagicalDamage.ice(4, 8),
+                PhysicalDamage.piercing(8, 12)
             })
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
@@ -44,9 +40,9 @@ public class MageAbilities {
     public static final TargetingAbility BLIZZARD = new TargetingAbility.Builder(
             "Blizzard",
             new Damage[]{
-                new MagicalIceDamage(10, 40),
-                new PhysicalIceDamage(10, 40),
-                new MagicalWindDamage(10, 30)
+                MagicalDamage.ice(10, 40),
+                PhysicalDamage.ice(10, 40),
+                MagicalDamage.wind(10, 30)
             })
         .manaCost(18)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
@@ -58,7 +54,7 @@ public class MageAbilities {
 
     public static final TargetingAbility LIGHTNING_BOLT = new TargetingAbility.Builder(
             "Lightning Bolt",
-            new Damage[]{ new MagicalLightningDamage(15, 22) })
+            new Damage[]{ MagicalDamage.lightning(15, 22) })
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .tier(3)
@@ -67,7 +63,7 @@ public class MageAbilities {
 
     public static final TargetingAbility FIRE_STORM = new TargetingAbility.Builder(
             "Fire Storm",
-            new Damage[]{ new MagicalFireDamage(15, 30), new SpiritualFireDamage(5, 10) })
+            new Damage[]{ MagicalDamage.fire(15, 30), SpiritualDamage.fire(5, 10) })
         .manaCost(30)
         .actionCost(0)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
@@ -79,7 +75,7 @@ public class MageAbilities {
 
     public static final TargetingAbility METEOR_SWARM = new TargetingAbility.Builder(
             "Meteor Swarm",
-            new Damage[]{ new MagicalFireDamage(20, 120), new SpiritualFireDamage(20, 120) })
+            new Damage[]{ MagicalDamage.fire(20, 120), SpiritualDamage.fire(20, 120) })
         .manaCost(3)
         .actionCost(10)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
