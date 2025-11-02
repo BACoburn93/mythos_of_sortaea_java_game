@@ -170,11 +170,19 @@ public class TargetingAbility extends Ability {
     public void setRightRange(int rightRange) { this.rightRange = rightRange; }
 
     public void setPrimaryAttribute(AbilityCategory category) {
-        try {
-            java.lang.reflect.Field f = this.getClass().getSuperclass().getDeclaredField("primaryAttribute");
-            f.setAccessible(true);
-            f.set(this, category);
-        } catch (Throwable ignored) {}
+        Class<?> c = this.getClass();
+        while (c != null) {
+            try {
+                java.lang.reflect.Field f = c.getDeclaredField("primaryAttribute");
+                f.setAccessible(true);
+                f.set(this, category);
+                return;
+            } catch (NoSuchFieldException ignored) {
+                c = c.getSuperclass();
+            } catch (Throwable t) {
+                return;
+            }
+        }
     }
 
     public void setAllowedDamageTypes(EnumSet<DamageTypes> types) {
@@ -202,7 +210,7 @@ public class TargetingAbility extends Ability {
             } catch (Throwable ignored) {}
         }
 
-        // Default to BODY if we can't determine classification
+        // Default to BODY if can't determine classification
         AbilityCategory result = AbilityCategory.BODY;
 
         if (baseDamages != null && baseDamages.length > 0 && baseDamages[0] != null) {

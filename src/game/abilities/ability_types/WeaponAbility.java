@@ -91,6 +91,7 @@ public class WeaponAbility extends TargetingAbility {
                 description
             );
             if (offhand) wa.withOffhand();
+
             wa.determinePrereqPrimaryAttribute();
             return wa;
         }
