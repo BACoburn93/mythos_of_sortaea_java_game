@@ -1,5 +1,6 @@
 package abilities.damages;
 
+import abilities.AbilityCategory;
 import status_conditions.StatusCondition;
 
 public abstract class Damage {

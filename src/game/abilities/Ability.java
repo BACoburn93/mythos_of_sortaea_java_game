@@ -195,6 +195,14 @@ public abstract class Ability {
         this.name = name;
     }
 
+    public AbilityCategory getPrimaryAttribute() {
+        return primaryAttribute;
+    }
+
+    public void setPrimaryAttribute(AbilityCategory primaryAttribute) {
+        this.primaryAttribute = primaryAttribute;
+    }
+
     public static int defaultLevelForTier(int tier) {
         return defaultLevelFunc.applyAsInt(tier);
     }

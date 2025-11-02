@@ -8,6 +8,7 @@ import abilities.damages.magical.MagicalLightningDamage;
 import abilities.damages.magical.MagicalPiercingDamage;
 import abilities.damages.magical.MagicalWindDamage;
 import abilities.damages.physical.PhysicalIceDamage;
+import abilities.damages.physical.PhysicalPiercingDamage;
 import abilities.damages.spiritual.SpiritualFireDamage;
 import items.equipment.AbilityPrerequisites;
 import status_conditions.Burn;
@@ -32,7 +33,7 @@ public class MageAbilities {
             "Ice Spike",
             new Damage[]{
                 new MagicalIceDamage(4, 8),
-                new MagicalPiercingDamage(12, 14)
+                new PhysicalPiercingDamage(12, 14)
             })
         .manaCost(1)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
@@ -43,8 +44,8 @@ public class MageAbilities {
     public static final TargetingAbility BLIZZARD = new TargetingAbility.Builder(
             "Blizzard",
             new Damage[]{
-                new PhysicalIceDamage(10, 40),
                 new MagicalIceDamage(10, 40),
+                new PhysicalIceDamage(10, 40),
                 new MagicalWindDamage(10, 30)
             })
         .manaCost(18)

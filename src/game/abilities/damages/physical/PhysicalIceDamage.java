@@ -1,5 +1,6 @@
 package abilities.damages.physical;
 
+import abilities.AbilityCategory;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;

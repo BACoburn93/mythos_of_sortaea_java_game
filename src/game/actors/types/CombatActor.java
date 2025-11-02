@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 import abilities.Ability;
+import abilities.AbilityCategory;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import actors.Actor;
@@ -158,18 +159,26 @@ public class CombatActor extends Actor {
         }
     }
 
-    private int getDamageToAdd(CombatActor attacker, Damage damage) {
+    private int getDamageToAdd(CombatActor attacker, Damage damage, Ability ability) {
         int damageToAdd = 0;
 
-        if (damage.getDamageClassification() == DamageClassificationTypes.PHYSICAL) {
+        if(ability.getPrimaryAttribute() == AbilityCategory.BODY) {
             damageToAdd += (int) (attacker.attributes.getStrength().getValue() / 2.0);
-        }
-        if (damage.getDamageClassification() == DamageClassificationTypes.MAGICAL) {
+        } else if(ability.getPrimaryAttribute() == AbilityCategory.MIND) {
             damageToAdd += (int) (attacker.attributes.getKnowledge().getValue() / 2.0);
-        }
-        if (damage.getDamageClassification() == DamageClassificationTypes.SPIRITUAL) {
+        } else if(ability.getPrimaryAttribute() == AbilityCategory.SPIRIT) {
             damageToAdd += (int) (attacker.attributes.getSpirit().getValue() / 2.0);
         }
+
+        // if (damage.getDamageClassification() == DamageClassificationTypes.PHYSICAL) {
+        //     damageToAdd += (int) (attacker.attributes.getStrength().getValue() / 2.0);
+        // }
+        // if (damage.getDamageClassification() == DamageClassificationTypes.MAGICAL) {
+        //     damageToAdd += (int) (attacker.attributes.getKnowledge().getValue() / 2.0);
+        // }
+        // if (damage.getDamageClassification() == DamageClassificationTypes.SPIRITUAL) {
+        //     damageToAdd += (int) (attacker.attributes.getSpirit().getValue() / 2.0);
+        // }
 
         return damageToAdd;
     }
@@ -211,7 +220,7 @@ public class CombatActor extends Actor {
         StringBuilder damageMessage = new StringBuilder();
 
         for (Damage damage : ability.getDamages()) {
-            int damageToAdd = getDamageToAdd(attacker, damage);
+            int damageToAdd = getDamageToAdd(attacker, damage, ability);
             boolean isFirstDamage = damage == ability.getDamages()[0];
 
             int resistanceValue = resistances.getResistance(damage.getDamageType()).intValue();
