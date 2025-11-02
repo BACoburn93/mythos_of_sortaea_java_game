@@ -50,15 +50,6 @@ public class CombatUIStrings {
         return sb.toString();
     }
 
-    // public static String formatTargetEnemyList(List<? extends Nameable> list) {
-    //     StringBuilder sb = new StringBuilder();
-    //     for (int i = 0; i < list.size(); i++) {
-    //         var item = list.get(i);
-    //         sb.append(String.format("%d. %-20s%n", i + 1, item.getName()));
-    //     }
-    //     return sb.toString();
-    // }
-
     // Formats a command and its description into a consistent layout
     public static String formatKeyValue(String command, String description) {
         return String.format("%-20s %s%n", command, description);
@@ -279,42 +270,5 @@ public class CombatUIStrings {
         }
         return result;
     }
-
-    // Helper to wrap long grid rows
-    // private static void printWrappedGridRow(String label, String value, int width) {
-    //     List<String> lines = wrapString(value, width);
-    //     for (int i = 0; i < lines.size(); i++) {
-    //         if (i == 0) {
-    //             System.out.printf("| %-14s | %-"+width+"s |%n", label, lines.get(i));
-    //         } else {
-    //             System.out.printf("| %-14s | %-"+width+"s |%n", "", lines.get(i));
-    //         }
-    //     }
-    // }
-
-    // // Simple word wrap helper
-    // private static List<String> wrapString(String text, int width) {
-    //     List<String> lines = new ArrayList<>();
-    //     if (text == null || text.isEmpty()) {
-    //         lines.add("");
-    //         return lines;
-    //     }
-    //     int start = 0;
-    //     while (start < text.length()) {
-    //         int end = Math.min(start + width, text.length());
-    //         // Try to break at last comma or space before width
-    //         if (end < text.length()) {
-    //             int lastComma = text.lastIndexOf(',', end);
-    //             int lastSpace = text.lastIndexOf(' ', end);
-    //             int breakPos = Math.max(lastComma, lastSpace);
-    //             if (breakPos > start) {
-    //                 end = breakPos + 1;
-    //             }
-    //         }
-    //         lines.add(text.substring(start, end).trim());
-    //         start = end;
-    //     }
-    //     return lines;
-    // }
 
 }

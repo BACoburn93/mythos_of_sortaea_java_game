@@ -20,6 +20,7 @@ public abstract class Ability {
     private ShieldTypes[] shieldRequirement;
     private WeaponTypes[] weaponRequirement;
     private Damage[] damages;
+    private AbilityCategory primaryAttribute;
     private String description;
 
     protected Set<ItemType> allowedEquipmentTypes;
@@ -31,6 +32,7 @@ public abstract class Ability {
     // Primary constructor
     public Ability(
         String name,
+        AbilityCategory primaryAttribute,
         int levelRequirement,
         int manaCost,
         int actionCost,
@@ -43,6 +45,7 @@ public abstract class Ability {
     ) {
         this.name = name;
         this.levelRequirement = this.tier = (levelRequirement >= 0) ? levelRequirement : defaultLevelForTier(tier);
+        this.primaryAttribute = primaryAttribute;
         this.manaCost = manaCost;
         this.actionCost = actionCost;
         this.damages = damages;
@@ -173,7 +176,7 @@ public abstract class Ability {
     // Convenience constructors delegate to primary constructor
     // Reaction is currently using this one (might change Reaction later to use full constructor)
     public Ability(String name, int levelRequirement, int manaCost, int actionCost, Damage[] damages, String description) {
-        this(name, levelRequirement, manaCost, actionCost, damages, null, null, null, 0, description);
+        this(name, AbilityCategory.BODY, levelRequirement, manaCost, actionCost, damages, null, null, null, 0, description);
     }
 
     public int getTier() {
@@ -258,23 +261,27 @@ public abstract class Ability {
         sb.append(divider);
 
         // Wrap description to fit within 35 characters
-        String desc = description != null ? description : "";
-        java.util.List<String> descLines = utils.StringUtils.wrapText(desc, 35);
+
+        // String desc = description != null ? description : "";
+        // java.util.List<String> descLines = utils.StringUtils.wrapText(desc, 35);
 
         sb.append(String.format(
             "| %-25s | %-8s | %-8s | %-35s |\n",
             name,
             manaCost + " MP",
             actionCost + " AP",
-            descLines.size() > 0 ? descLines.get(0) : ""
+            primaryAttribute.name()
+            // descLines.size() > 0 ? descLines.get(0) : ""
         ));
 
-        for (int i = 1; i < descLines.size(); i++) {
-            sb.append(String.format(
-                "| %-25s | %-8s | %-8s | %-35s |\n",
-                "", "", "", descLines.get(i)
-            ));
-        }
+        // to do - test the primary attribute automatic setting
+        
+        // for (int i = 1; i < descLines.size(); i++) {
+        //     sb.append(String.format(
+        //         "| %-25s | %-8s | %-8s | %-35s |\n",
+        //         "", "", "", descLines.get(i)
+        //     ));
+        // }
 
         sb.append(divider);
         sb.append(String.format(

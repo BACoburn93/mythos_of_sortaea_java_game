@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import abilities.Ability;
+import abilities.AbilityCategory;
 import abilities.damages.Damage;
+import abilities.damages.DamageClassificationTypes;
 import abilities.damages.DamageTypes;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.enums.AccessoryTypes;
@@ -22,6 +24,7 @@ public class TargetingAbility extends Ability {
     // Primary constructor
     public TargetingAbility(
         String name,
+        AbilityCategory primaryAttribute,
         int levelRequirement,
         int manaCost,
         int actionCost,
@@ -34,7 +37,7 @@ public class TargetingAbility extends Ability {
         int tier,
         String description
     ) {
-        super(name, levelRequirement, manaCost, actionCost, damages, armorTypes, shieldTypes, weaponTypes, tier, description);
+        super(name, primaryAttribute, levelRequirement, manaCost, actionCost, damages, armorTypes, shieldTypes, weaponTypes, tier, description);
         this.leftRange = leftRange;
         this.rightRange = rightRange;
     }
@@ -47,6 +50,7 @@ public class TargetingAbility extends Ability {
         private Map<String, Double> speciesDamageModifiers = new HashMap<>();
 
         // Optional/Defaults
+        private AbilityCategory primaryAttribute = AbilityCategory.BODY;
         private int levelRequirement = -1;
         private int manaCost = 0;
         private int actionCost = 1;
@@ -111,6 +115,7 @@ public class TargetingAbility extends Ability {
         // I.E., if a DRAGON uses it, apply dragon-specific damage mods, ranges, etc.
 
         public Builder levelRequirement(int v) { this.levelRequirement = v; return this; }
+        public Builder primaryAttribute(AbilityCategory v) { this.primaryAttribute = v; return this; }
         public Builder manaCost(int v) { this.manaCost = v; return this; }
         public Builder actionCost(int v) { this.actionCost = v; return this; }
         public Builder armorTypes(ArmorTypes[] v) { this.armorTypes = v; return this; }
@@ -126,6 +131,7 @@ public class TargetingAbility extends Ability {
 
             TargetingAbility ta = new TargetingAbility(
                 name,
+                primaryAttribute,
                 resolvedLevelReq,
                 manaCost,
                 actionCost,
@@ -154,6 +160,8 @@ public class TargetingAbility extends Ability {
                 this.speciesDamageModifiers.forEach(ta::addSpeciesDamageModifier);
             }
 
+            ta.determinePrereqPrimaryAttribute();
+
             return ta;
         }
     }
@@ -164,11 +172,53 @@ public class TargetingAbility extends Ability {
     public int getRightRange() { return rightRange; }
     public void setRightRange(int rightRange) { this.rightRange = rightRange; }
 
+    public void setPrimaryAttribute(AbilityCategory category) {
+        try {
+            java.lang.reflect.Field f = this.getClass().getSuperclass().getDeclaredField("primaryAttribute");
+            f.setAccessible(true);
+            f.set(this, category);
+        } catch (Throwable ignored) {}
+    }
+
     public void setAllowedDamageTypes(EnumSet<DamageTypes> types) {
         this.allowedDamageTypes = (types == null) ? null : EnumSet.copyOf(types);
     }
 
     public void setAllowedEquipmentTypes(Set<ItemType> types) {
         this.allowedEquipmentTypes = (types == null) ? null : new HashSet<ItemType>(types);
+    }
+
+    public void determinePrereqPrimaryAttribute() {
+        Damage[] baseDamages = null;
+        try {
+            java.lang.reflect.Method m = this.getClass().getMethod("getDamages");
+            Object res = m.invoke(this);
+            if (res instanceof Damage[] arr) baseDamages = arr;
+        } catch (Throwable ignored) {}
+
+        if (baseDamages == null) {
+            try {
+                java.lang.reflect.Field f = this.getClass().getSuperclass().getDeclaredField("damages");
+                f.setAccessible(true);
+                Object res = f.get(this);
+                if (res instanceof Damage[] arr) baseDamages = arr;
+            } catch (Throwable ignored) {}
+        }
+
+        // Default to BODY if we can't determine classification
+        AbilityCategory result = AbilityCategory.BODY;
+
+        if (baseDamages != null && baseDamages.length > 0 && baseDamages[0] != null) {
+            var cls = baseDamages[0].getDamageClassification();
+            if (cls == DamageClassificationTypes.PHYSICAL) {
+                result = AbilityCategory.BODY;
+            } else if (cls == DamageClassificationTypes.MAGICAL) {
+                result = AbilityCategory.MIND;
+            } else if (cls == DamageClassificationTypes.SPIRITUAL) {
+                result = AbilityCategory.SPIRIT;
+            }
+        }
+
+        this.setPrimaryAttribute(result);
     }
 }

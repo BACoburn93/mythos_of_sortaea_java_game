@@ -1,5 +1,6 @@
 package abilities.ability_types;
 
+import abilities.AbilityCategory;
 import abilities.damages.Damage;
 import items.equipment.item_types.enums.WeaponTypes;
 
@@ -13,6 +14,7 @@ public class WeaponAbility extends TargetingAbility {
 
     // constructor
     public WeaponAbility(String name,
+                        AbilityCategory primaryAttribute,
                          int levelRequirement,
                          int manaCost,
                          int actionCost,
@@ -24,7 +26,7 @@ public class WeaponAbility extends TargetingAbility {
                          int tier,
                          String description) {
         // armorTypes and shieldTypes are null for weapon abilities, tier defaults to 0
-        super(name, levelRequirement, manaCost, actionCost, damages, null, null, weaponTypes, leftRange, rightRange, 0, description);
+        super(name, primaryAttribute, levelRequirement, manaCost, actionCost, damages, null, null, weaponTypes, leftRange, rightRange, 0, description);
         this.multiplier = multiplier;
     }
 
@@ -44,6 +46,7 @@ public class WeaponAbility extends TargetingAbility {
         private final Damage[] damages;
 
         // Optional/Defaults
+        private AbilityCategory primaryAttribute = AbilityCategory.BODY;
         private int levelRequirement = Math.max(this.tier * 2 - 1, 1);
         private int manaCost = 0;
         private int actionCost = 1;
@@ -60,6 +63,7 @@ public class WeaponAbility extends TargetingAbility {
             this.damages = damages;
         }
 
+        public Builder primaryAttribute(AbilityCategory v) { this.primaryAttribute = v; return this; }
         public Builder levelRequirement(int v) { this.levelRequirement = v; return this; }
         public Builder manaCost(int v) { this.manaCost = v; return this; }
         public Builder actionCost(int v) { this.actionCost = v; return this; }
@@ -74,6 +78,7 @@ public class WeaponAbility extends TargetingAbility {
         public WeaponAbility build() {
             WeaponAbility wa = new WeaponAbility(
                 name,
+                primaryAttribute,
                 levelRequirement,
                 manaCost,
                 actionCost,
