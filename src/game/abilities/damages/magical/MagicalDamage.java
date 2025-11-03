@@ -16,52 +16,40 @@ public class MagicalDamage extends Damage {
         super(minDamage, maxDamage, DamageClassificationTypes.MAGICAL, type, statusConditions);
     }
 
-    // optional: convenience static constructors
-    public static MagicalDamage bludgeoning(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.BLUDGEONING, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.BLUDGEONING));
+    // generic factory methods
+    public static MagicalDamage of(DamageTypes type, int minDamage, int maxDamage) {
+        return new MagicalDamage(type, minDamage, maxDamage, StatusDamageData.getFor(type));
     }
 
-    public static MagicalDamage slashing(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.SLASHING, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.SLASHING));
+    public static MagicalDamage of(DamageTypes type, int minDamage, int maxDamage, StatusCondition[] statusConditions) {
+        return new MagicalDamage(type, minDamage, maxDamage, statusConditions);
     }
 
-    public static MagicalDamage piercing(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.PIERCING, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.PIERCING));
-    }
+    // convenience static constructors
+    public static MagicalDamage bludgeoning(int min, int max) { return of(DamageTypes.BLUDGEONING, min, max); }
+    public static MagicalDamage slashing(int min, int max) { return of(DamageTypes.SLASHING, min, max); }
+    public static MagicalDamage piercing(int min, int max) { return of(DamageTypes.PIERCING, min, max); }
+    public static MagicalDamage earth(int min, int max) { return of(DamageTypes.EARTH, min, max); }
+    public static MagicalDamage fire(int min, int max) { return of(DamageTypes.FIRE, min, max); }
+    public static MagicalDamage ice(int min, int max) { return of(DamageTypes.ICE, min, max); }
+    public static MagicalDamage lightning(int min, int max) { return of(DamageTypes.LIGHTNING, min, max); }
+    public static MagicalDamage venom(int min, int max) { return of(DamageTypes.VENOM, min, max); }
+    public static MagicalDamage water(int min, int max) { return of(DamageTypes.WATER, min, max); }
+    public static MagicalDamage wind(int min, int max) { return of(DamageTypes.WIND, min, max); }
+    public static MagicalDamage light(int min, int max) { return of(DamageTypes.LIGHT, min, max); }
+    public static MagicalDamage darkness(int min, int max) { return of(DamageTypes.DARKNESS, min, max); }
 
-    public static MagicalDamage ice(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.ICE, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.ICE));
-    }
-
-    public static MagicalDamage earth(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.EARTH, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.EARTH));
-    }
-
-    public static MagicalDamage wind(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.WIND, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.WIND));
-    }
-
-    public static MagicalDamage fire(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.FIRE, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.FIRE));
-    }
-
-    public static MagicalDamage water(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.WATER, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.WATER));
-    }
-
-    public static MagicalDamage lightning(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.LIGHTNING, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.LIGHTNING));
-    }
-
-    public static MagicalDamage venom(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.VENOM, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.VENOM));
-    }
-
-    public static MagicalDamage light(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.LIGHT, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.LIGHT));
-    }
-
-    public static MagicalDamage darkness(int minDamage, int maxDamage) {
-        return new MagicalDamage(DamageTypes.DARKNESS, minDamage, maxDamage, StatusDamageData.getFor(DamageTypes.DARKNESS));
-    }
+    // overloads that accept explicit status conditions
+    public static MagicalDamage bludgeoning(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.BLUDGEONING, min, max, statusConditions); }
+    public static MagicalDamage slashing(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.SLASHING, min, max, statusConditions); }
+    public static MagicalDamage piercing(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.PIERCING, min, max, statusConditions); }
+    public static MagicalDamage earth(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.EARTH, min, max, statusConditions); }
+    public static MagicalDamage fire(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.FIRE, min, max, statusConditions); }
+    public static MagicalDamage ice(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.ICE, min, max, statusConditions); }
+    public static MagicalDamage lightning(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.LIGHTNING, min, max, statusConditions); }
+    public static MagicalDamage venom(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.VENOM, min, max, statusConditions); }
+    public static MagicalDamage water(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.WATER, min, max, statusConditions); }
+    public static MagicalDamage wind(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.WIND, min, max, statusConditions); }
+    public static MagicalDamage light(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.LIGHT, min, max, statusConditions); }
+    public static MagicalDamage darkness(int min, int max, StatusCondition[] statusConditions) { return of(DamageTypes.DARKNESS, min, max, statusConditions); }
 }

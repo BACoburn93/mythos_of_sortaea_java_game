@@ -3,7 +3,6 @@ package abilities.database;
 import abilities.ability_types.TargetingAbility;
 import abilities.damages.Damage;
 import abilities.damages.magical.MagicalDamage;
-import abilities.damages.magical.MagicalFireDamage;
 import abilities.damages.physical.PhysicalDamage;
 import abilities.damages.spiritual.SpiritualDamage;
 import items.equipment.AbilityPrerequisites;
@@ -14,7 +13,7 @@ public class MageAbilities {
     public static final TargetingAbility FIREBALL = new TargetingAbility.Builder(
             "Fireball",
             new Damage[]{
-                new MagicalFireDamage(10, 18, new StatusCondition[]{ new Burn(10, 100, 2) }),
+                MagicalDamage.fire(10, 18, new StatusCondition[]{ new Burn(10, 100, 2) }),
                 SpiritualDamage.fire(5, 10)
             })
         .manaCost(1)
