@@ -5,4 +5,8 @@ public class Stealth extends Skill {
         super(SkillTypes.STEALTH);
     }
     
+    public Stealth(int level) {
+        super(SkillTypes.STEALTH);
+        this.setLevel(Math.min(level, this.maxLevel));
+    }
 }

@@ -7,6 +7,7 @@ import abilities.reactions.*;
 import actors.ActorTypes;
 import actors.attributes.Attributes;
 import actors.resistances.Resistances;
+import actors.skills.Skills;
 import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
@@ -54,6 +55,7 @@ public class Character extends CombatActor {
         this.maxActionPoints = 3;
         this.attributePoints = 0;
         this.hits = job.getHits();
+        this.skills = job.getSkills();
         this.actionPoints = this.maxActionPoints;
 
         this.gameScanner = gameScanner;
@@ -541,6 +543,10 @@ public class Character extends CombatActor {
         return job;
     }
 
+    public Skills getSkills() {
+        return this.skills;
+    }
+
     public Map<String, EquipmentSlot> getEquipmentSlots() {
         return equipmentManager.getSlots();
     }
@@ -608,34 +614,62 @@ public class Character extends CombatActor {
         sb.append(String.format("| %-24s | %-40s |\n", "Level", this.level));
         sb.append(String.format("| %-24s | %-40s |\n", "Experience", this.experience + " / " + this.experienceToLevel));
         sb.append(divider);
-    
-        // Attributes
-        sb.append(String.format("| %-24s | %-40s |\n", "Attributes", ""));
+
+        // Compact three-column block: Attributes | Skills | Resistances
+        int colWidth = (leftWidth + rightWidth) / 3 - 1;
+        String threeColDivider = "+" + "-".repeat(colWidth + 2) + "+" + "-".repeat(colWidth + 2) + "+" + "-".repeat(colWidth + 2) + "+\n";
+        sb.append(threeColDivider);
+        sb.append(String.format("| %-"+colWidth+"s | %-"+colWidth+"s | %-"+colWidth+"s |\n",
+                "Attributes", "Skills", "Resistances"));
+        sb.append(threeColDivider);
+
         Attributes attrs = this.getAttributes();
-        sb.append(String.format("|   %-22s | %-40s |\n", "Strength", (int) attrs.getStrength().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Agility", (int) attrs.getAgility().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Knowledge", (int) attrs.getKnowledge().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Defense", (int) attrs.getDefense().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Resilience", (int) attrs.getResilience().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Spirit", (int) attrs.getSpirit().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Luck", (int) attrs.getLuck().getValue()));
-        sb.append(divider);
-        
-        // Resistances
-        sb.append(String.format("| %-24s | %-40s |\n", "Resistances", ""));
+        Skills skills = this.getSkills();
         Resistances res = this.getResistances();
-        sb.append(String.format("|   %-22s | %-40s |\n", "Bludgeoning", (int) res.getBludgeoning().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Slashing", (int) res.getSlashing().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Piercing", (int) res.getPiercing().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Fire", (int) res.getFire().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Ice", (int) res.getIce().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Lightning", (int) res.getLightning().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Water", (int) res.getWater().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Venom", (int) res.getVenom().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Earth", (int) res.getEarth().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Air", (int) res.getWind().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Light", (int) res.getLight().getValue()));
-        sb.append(String.format("|   %-22s | %-40s |\n", "Darkness", (int) res.getDarkness().getValue()));
+
+        List<String> attrLines = Arrays.asList(
+                String.format("Strength: %d", (int) attrs.getStrength().getValue()),
+                String.format("Agility: %d", (int) attrs.getAgility().getValue()),
+                String.format("Knowledge: %d", (int) attrs.getKnowledge().getValue()),
+                String.format("Defense: %d", (int) attrs.getDefense().getValue()),
+                String.format("Resilience: %d", (int) attrs.getResilience().getValue()),
+                String.format("Spirit: %d", (int) attrs.getSpirit().getValue()),
+                String.format("Luck: %d", (int) attrs.getLuck().getValue())
+        );
+
+        List<String> skillLines = Arrays.asList(
+                String.format("Alchemy: %d", skills.getAlchemy().getLevel()),
+                String.format("Arcana: %d", skills.getArcana().getLevel()),
+                String.format("History: %d", skills.getHistory().getLevel()),
+                String.format("Nature: %d", skills.getNature().getLevel()),
+                String.format("Observation: %d", skills.getObservation().getLevel()),
+                String.format("Religion: %d", skills.getReligion().getLevel()),
+                String.format("Stealth: %d", skills.getStealth().getLevel())
+        );
+
+        List<String> resLines = Arrays.asList(
+                String.format("Bludgeoning: %d", (int) res.getBludgeoning().getValue()),
+                String.format("Slashing: %d", (int) res.getSlashing().getValue()),
+                String.format("Piercing: %d", (int) res.getPiercing().getValue()),
+                String.format("Fire: %d", (int) res.getFire().getValue()),
+                String.format("Ice: %d", (int) res.getIce().getValue()),
+                String.format("Lightning: %d", (int) res.getLightning().getValue()),
+                String.format("Water: %d", (int) res.getWater().getValue()),
+                String.format("Venom: %d", (int) res.getVenom().getValue()),
+                String.format("Earth: %d", (int) res.getEarth().getValue()),
+                String.format("Air: %d", (int) res.getWind().getValue()),
+                String.format("Light: %d", (int) res.getLight().getValue()),
+                String.format("Darkness: %d", (int) res.getDarkness().getValue())
+        );
+
+        int maxLines = Math.max(attrLines.size(), Math.max(skillLines.size(), resLines.size()));
+        for (int i = 0; i < maxLines; i++) {
+            String a = (i < attrLines.size()) ? attrLines.get(i) : "";
+            String b = (i < skillLines.size()) ? skillLines.get(i) : "";
+            String c = (i < resLines.size()) ? resLines.get(i) : "";
+            sb.append(String.format("| %-"+colWidth+"s | %-"+colWidth+"s | %-"+colWidth+"s |\n", a, b, c));
+        }
+        sb.append(threeColDivider);
     
         // Equipment
         sb.append(String.format("| %-24s | %-40s |\n", "Equipment", ""));
@@ -655,7 +689,7 @@ public class Character extends CombatActor {
         for (Ability ability : this.getAbilities()) {
             List<String> nameLines = StringUtils.wrapText(ability.getName(), leftWidth - 3);
             List<String> descLines = StringUtils.wrapText(ability.getDescription(), rightWidth);
-            int maxLines = Math.max(nameLines.size(), descLines.size());
+            maxLines = Math.max(nameLines.size(), descLines.size());
             for (int i = 0; i < maxLines; i++) {
                 sb.append(String.format("|   %-22s | %-40s |\n",
                     i < nameLines.size() ? nameLines.get(i) : "",

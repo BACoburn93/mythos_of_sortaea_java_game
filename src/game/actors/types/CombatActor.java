@@ -16,6 +16,7 @@ import actors.managers.StatusManager;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.skills.Skills;
 import actors.species.SpeciesBuffApplier;
 import actors.species.SpeciesCategory;
 import actors.species.SpeciesType;
@@ -33,6 +34,7 @@ public class CombatActor extends Actor {
     private ManaValues manaValues;
     private Attributes attributes;
     private Resistances resistances;
+    public Skills skills;
     private StatusConditions statusConditions;
     private Stances stance;
     protected int level;
@@ -47,6 +49,7 @@ public class CombatActor extends Actor {
         this.manaValues = manaValues;
         this.attributes = attributes;
         this.resistances = resistances;
+        this.skills = new Skills();
         this.statusConditions = statusConditions;
         this.level = level;
     }
@@ -58,6 +61,7 @@ public class CombatActor extends Actor {
         this.manaValues = manaValues;
         this.attributes = attributes;
         this.resistances = resistances;
+        this.skills = new Skills();
         this.statusConditions = statusConditions;
         this.level = 1;
     }

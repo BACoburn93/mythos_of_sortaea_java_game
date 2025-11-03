@@ -3,10 +3,12 @@ package actors.skills;
 public abstract class Skill {
     private final SkillTypes type;
     private int level;
+    protected final int maxLevel;
 
     public Skill(SkillTypes type) {
         this.type = type;
-        this.level = 1; 
+        this.level = 1;
+        this.maxLevel = 5;
     }
 
     public SkillTypes getType() {
@@ -23,8 +25,8 @@ public abstract class Skill {
             return;
         }
 
-        if(level > 5) {
-            level = 5;
+        if(level > maxLevel) {
+            level = maxLevel;
             return;
         }
 

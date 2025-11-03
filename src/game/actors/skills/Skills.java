@@ -19,6 +19,18 @@ public class Skills {
         this.religion = new Religion();
     }
 
+    public Skills(int alchemyLevel, int arcanaLevel, int historyLevel,
+                  int natureLevel, int observationLevel, int religionLevel,
+                  int stealthLevel) {
+        this.alchemy = new Alchemy(alchemyLevel);
+        this.arcana = new Arcana(arcanaLevel);
+        this.history = new History(historyLevel);
+        this.nature = new Nature(natureLevel);
+        this.observation = new Observation(observationLevel);
+        this.religion = new Religion(religionLevel);
+        this.stealth = new Stealth(stealthLevel);
+    }
+
     public Alchemy getAlchemy() { return alchemy; }
     public Arcana getArcana() { return arcana; }
     public History getHistory() { return history; }

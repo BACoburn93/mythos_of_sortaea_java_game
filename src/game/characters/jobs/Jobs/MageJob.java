@@ -5,6 +5,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.skills.Skills;
 import characters.jobs.Job;
 import characters.jobs.JobTypes;
 import status_conditions.StatusConditions;
@@ -23,6 +24,7 @@ public class MageJob extends Job {
                 new Resistances(2, 2, 2, 2, 5, 5, 4,
                         2, 3, 3, 2, 2),
                 new StatusConditions(),
+                new Skills(0, 0, 0,0, 0, 5, 0),
                 new ArrayList<>(AbilityInitializer.getAbilities(JobTypes.MAGE, 2)),
                 EquipmentProficiencies.mageAllowed,
                 1.0,

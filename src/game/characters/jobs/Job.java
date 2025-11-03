@@ -10,6 +10,7 @@ import actors.attributes.Attributes;
 import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
+import actors.skills.Skills;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.enums.AccessoryTypes;
 import status_conditions.StatusConditions;
@@ -26,6 +27,7 @@ public abstract class Job implements DamageTypeProvider {
     private ManaValues manaValues;
     private Attributes attributes;
     private Resistances resistances;
+    private Skills skills;
 
     // Need to bind status conditions to jobs so that they affect character statistics
     // private StatusConditions statusConditions;
@@ -54,6 +56,7 @@ public abstract class Job implements DamageTypeProvider {
         this.attributes = attributes;
         this.resistances = resistances;
         // this.statusConditions = new StatusConditions();
+        this.skills = new Skills();
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -64,7 +67,7 @@ public abstract class Job implements DamageTypeProvider {
  
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
-               StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
+               StatusConditions statusConditions, Skills skills, ArrayList<Ability> jobAbilities,
                Set<ItemType> equippableItemTypes, double unarmedDamage) {
         this.name = name;
         this.healthValues = healthValues;
@@ -72,6 +75,7 @@ public abstract class Job implements DamageTypeProvider {
         this.attributes = attributes;
         this.resistances = resistances;
         // this.statusConditions = statusConditions;
+        this.skills = skills;
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -82,7 +86,7 @@ public abstract class Job implements DamageTypeProvider {
  
     public Job(String name, HealthValues healthValues, ManaValues manaValues,
                Attributes attributes, Resistances resistances, 
-               StatusConditions statusConditions, ArrayList<Ability> jobAbilities,
+               StatusConditions statusConditions, Skills skills, ArrayList<Ability> jobAbilities,
                Set<ItemType> equippableItemTypes, double unarmedDamage, String unarmedDamageAttr) {
         this.name = name;
         this.healthValues = healthValues;
@@ -90,6 +94,7 @@ public abstract class Job implements DamageTypeProvider {
         this.attributes = attributes;
         this.resistances = resistances;
         // this.statusConditions = statusConditions;
+        this.skills = skills;
         this.jobAbilities = jobAbilities;
         this.equippableItemTypes = new java.util.HashSet<>(defaultEquipmentProficiencies);
         if (equippableItemTypes != null) this.equippableItemTypes.addAll(equippableItemTypes);
@@ -145,6 +150,14 @@ public abstract class Job implements DamageTypeProvider {
     // public void setStatusConditions(StatusConditions statusConditions) {
     //     this.statusConditions = statusConditions;
     // }
+
+    public Skills getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Skills skills) {
+        this.skills = skills;
+    }
 
     public double getUnarmedDamage() {
         return unarmedDamage;
