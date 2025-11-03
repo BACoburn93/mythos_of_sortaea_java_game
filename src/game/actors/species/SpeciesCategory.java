@@ -1,20 +1,40 @@
 package actors.species;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public enum SpeciesCategory {
-    ABERRATION, // e.g. MIND FLAYER, MARLBORO, ETC.
-    BEAST, // e.g. WOLF, BEAR, TIGER, ETC.
-    CELESTIAL, // e.g. ANGEL, ARCHON, SOLAR, SERAPH, ETC.
-    CONSTRUCT, // e.g. GOLEM, AUTOMATON, WARFORGED, ETC.
-    DEMON, // 
-    DEVIL, // 
-    DRAGON, // e.g. DRAGON, WYRM, DRAGONTURTLE, ETC.
-    ELEMENTAL, // e.g. AIR ELEMENTAL, EARTH ELEMENTAL, FIRE ELEMENTAL, ETC.
-    FEY, // e.g. PIXIE, SATYR, SIREN, WITCH, ETC.
-    GIANT, // e.g. HILL GIANT, STONE GIANT, CLOUD GIANT, ETC.
-    HUMANOID, // e.g. HUMAN, ELF, DWARF, GOBLIN, ORC, ETC.
-    INSECT, // e.g. ANT, BEETLE, WASP, ETC.
-    LYCANTHROPE, // e.g. WEREWOLF, WEREBEAR, ETC.
-    OOZE, // e.g. GELATINOUS CUBE, BLACK PUDDING, ETC.
-    PLANT, // e.g. SHROOM, VINE, TREANT, ETC.
-    UNDEAD, // e.g. ZOMBIE, SKELETON, VAMPIRE, MUMMY, ETC.
+    ABERRATION(), 
+    BEAST(), 
+    CELESTIAL("religion"), 
+    CONSTRUCT(), 
+    DEMON("religion"), 
+    DEVIL("religion"), 
+    DRAGON(), 
+    ELEMENTAL(), 
+    FEY(), 
+    GIANT(), 
+    HUMANOID("history"),
+    INSECT(), 
+    LYCANTHROPE(), 
+    OOZE(), 
+    PLANT(), 
+    UNDEAD("religion");
+
+    private final Set<String> skillTags;
+
+    SpeciesCategory(String... tags) {
+        if (tags == null || tags.length == 0) {
+            this.skillTags = Collections.emptySet();
+        } else {
+            var s = new HashSet<String>(tags.length);
+            for (String t : tags) if (t != null && !t.trim().isEmpty()) s.add(t.trim().toLowerCase());
+            this.skillTags = Collections.unmodifiableSet(s);
+        }
+    }
+
+    public Set<String> getSkillTags() {
+        return this.skillTags;
+    }
 }
