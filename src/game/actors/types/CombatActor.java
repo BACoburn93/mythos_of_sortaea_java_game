@@ -2,8 +2,10 @@ package actors.types;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import abilities.Ability;
 import abilities.AbilityCategory;
@@ -113,6 +115,10 @@ public class CombatActor extends Actor {
 
     public Resistances getResistances() {
         return resistances;
+    }
+
+    public Skills getSkills() {
+        return skills;
     }
 
     public Stances getStance() {
@@ -240,9 +246,27 @@ public class CombatActor extends Actor {
             boolean critical = false;
 
             if(damage.isCritable()) {
-                double critChance = damage.getBaseCritChance();
-                critChance += (attacker.getAttributes().getLuck().getValue() / 100.0);
-                System.out.println("Calculated Crit Chance: " + String.format("%.2f", critChance * 100) + "%");
+                double baseChance = damage.getBaseCritChance();
+                double luckContribution = 
+                Math.min(
+                    0.20, 
+                    Math.max(1, attacker.attributes.getLuck().getValue() - attributes.getLuck().getValue()) / 333
+                ); // max 20% from luck
+                double tagSkillBonus = 0.0;
+            try {
+                // collect unique tags from the target's species (category defaults + instance tags)
+                Set<String> targetTags = this.getSpeciesTypes().stream()
+                        .filter(Objects::nonNull)
+                        .flatMap(st -> st.getSkillTags().stream())
+                        .map(String::trim)
+                        .filter(s -> !s.isEmpty())
+                        .collect(Collectors.toSet());
+
+                if (!targetTags.isEmpty() && attacker != null && attacker.getSkills() != null) {
+                    tagSkillBonus = attacker.getSkills().getCritChanceBonusForTags(targetTags);
+                }
+            } catch (Throwable ignored) {}
+                double critChance = Math.min(1.0, baseChance + luckContribution + tagSkillBonus);
                 double roll = Math.random();
                 if(roll < critChance) {
                     critical = true;
@@ -316,7 +340,7 @@ public class CombatActor extends Actor {
         StringUtils.stringDivider(super.getName() + "'s turn has ended.", "=", 50);
     }
 
-    // convenience: ensure at least a HUMANOID entry if you want a default
+    // convenience: ensure at least a HUMANOID entry for default species
     public void ensureDefaultSpecies() {
         if (speciesTypes.isEmpty()) {
             speciesTypes.add(new SpeciesType(SpeciesCategory.HUMANOID));

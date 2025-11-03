@@ -5,21 +5,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum SpeciesCategory {
-    ABERRATION(), 
-    BEAST(), 
+    ABERRATION("arcana"), 
+    BEAST("nature"), 
     CELESTIAL("religion"), 
-    CONSTRUCT(), 
+    CONSTRUCT("arcana"), 
     DEMON("religion"), 
     DEVIL("religion"), 
-    DRAGON(), 
-    ELEMENTAL(), 
-    FEY(), 
-    GIANT(), 
+    DRAGON("history"), 
+    ELEMENTAL("arcana"), 
+    FEY("nature"), 
+    GIANT("history"), 
     HUMANOID("history"),
-    INSECT(), 
-    LYCANTHROPE(), 
-    OOZE(), 
-    PLANT(), 
+    INSECT("nature"), 
+    LYCANTHROPE("nature"), 
+    OOZE("arcana"), 
+    PLANT("nature"), 
     UNDEAD("religion");
 
     private final Set<String> skillTags;

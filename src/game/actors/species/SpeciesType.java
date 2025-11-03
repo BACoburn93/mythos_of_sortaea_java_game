@@ -78,10 +78,16 @@ public final class SpeciesType {
 
     @Override
     public String toString() {
-        return subSpecies.isEmpty() ? 
-        species.name().toString().substring(0, 1).toUpperCase() + species.name().toString().substring(1).toLowerCase() 
-            : 
-        species.name().toString().substring(0, 1).toUpperCase() + species.name().toString().substring(1).toLowerCase() + " (" + subSpecies + ")";
+        String base = species.name().substring(0, 1).toUpperCase() + species.name().substring(1).toLowerCase();
+        StringBuilder out = new StringBuilder(base);
+        if (!subSpecies.isEmpty()) {
+            out.append(" (").append(subSpecies).append(")");
+        }
+        Set<String> tags = getSkillTags();
+        if (tags != null && !tags.isEmpty()) {
+            out.append(": {").append(String.join(", ", tags)).append("} ");
+        }
+        return out.toString();
     }
 
     @Override
