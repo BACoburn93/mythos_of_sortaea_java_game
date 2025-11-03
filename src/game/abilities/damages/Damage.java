@@ -1,6 +1,5 @@
 package abilities.damages;
 
-import abilities.AbilityCategory;
 import status_conditions.StatusCondition;
 
 public abstract class Damage {
@@ -23,6 +22,18 @@ public abstract class Damage {
         this.damageClassification = damageClassification;
         this.damageType = damageType;
         this.statusConditions = statusConditions;
+    }
+
+    public boolean isCritable() {
+        return true;
+    }
+
+    public double getCritMultiplier() {
+        return 2.0;
+    }
+
+    public double getBaseCritChance() {
+        return 0.0;
     }
 
     public int getMinDamage() {

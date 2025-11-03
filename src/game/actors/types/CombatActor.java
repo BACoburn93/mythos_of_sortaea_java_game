@@ -230,7 +230,27 @@ public class CombatActor extends Actor {
                     + damage.getMinDamage());
 
             double speciesDamageBonus = ability.getSpeciesMultiplierFor(this.getSpeciesTypes());
-            int totalDamage = (int) Math.max((baseDamage - damageToMitigate + damageToAdd) * speciesDamageBonus, 0);
+            
+            int preCrit = (int) Math.max((baseDamage - damageToMitigate + damageToAdd) * speciesDamageBonus, 0);
+
+            boolean critical = false;
+
+            if(damage.isCritable()) {
+                double critChance = damage.getBaseCritChance();
+                critChance += (attacker.getAttributes().getLuck().getValue() / 100.0);
+                System.out.println("Calculated Crit Chance: " + String.format("%.2f", critChance * 100) + "%");
+                double roll = Math.random();
+                if(roll < critChance) {
+                    critical = true;
+                }
+            }
+
+            System.out.println("Calculated Damage Details: Base Damage = " + baseDamage + ", Damage to Add = " + damageToAdd +
+                    ", Damage to Mitigate = " + damageToMitigate + ", Species Damage Bonus = " + String.format("%.2f", speciesDamageBonus) +
+                    ", Pre-Crit Damage = " + preCrit + ", Critical Hit = " + critical);
+
+            int totalDamage = critical ? (int) (preCrit * damage.getCritMultiplier()) : preCrit;
+
             healthValues.setValue(Math.max(healthValues.getValue() - totalDamage, 0));
 
             CombatUIStrings.appendDamageMessage(damageMessage, attacker, this, ability, damage, totalDamage, isFirstDamage);
