@@ -31,7 +31,7 @@ public abstract class ResourceValues {
         return regenValue;
     }
 
-    public void setRegenValue(int regenValue) {
+    public void setRegenValue(double regenValue) {
         this.regenValue = regenValue;
     }
 

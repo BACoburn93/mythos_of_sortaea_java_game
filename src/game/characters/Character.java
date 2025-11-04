@@ -117,7 +117,7 @@ public class Character extends CombatActor {
 
         Random randomRoll = new Random();
         int minValue = this.level / 4 + 2;
-        int luckBonus = (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 4);
+        int luckBonus = (int) Math.ceil((double) this.getAttributes().getLuck().getValue() / 10);
         int maxValue = minValue + luckBonus + 1;
 
         if (maxValue > minValue) {

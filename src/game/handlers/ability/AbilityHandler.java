@@ -237,6 +237,8 @@ public class AbilityHandler {
     }   
 
     public void handleUseAbility(Character character, Ability chosenAbility) {
+        // Old Ability Handling Logic (pre ability channeling)
+
         // if (chosenAbility.getActionCost() > character.getActionPoints() || !character.canUseAbility(chosenAbility)) {
         //     CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
         // } else {
@@ -275,28 +277,25 @@ public class AbilityHandler {
         int available = character.getActionPoints();
         if (cost > available) {
             // Start channeling: consume all available AP this turn and record remaining cost
-            int used = available;
             character.setActionPoints(0);
-            int remaining = cost - used;
+            int remaining = cost - available;
             // begin channeling toward chosen target (ask for a target first)
             CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
             if (chosenTarget == null) {
-                // if they didn't choose a target, refund AP used this turn (safe fallback)
+                // if they didn't choose a target, refund sAP used this turn (safe fallback)
                 character.setActionPoints(available);
                 return;
             }
             character.startChanneling(chosenAbility, chosenTarget, remaining);
-            System.out.println("You begin channeling " + chosenAbility.getName() + ". Used " + used + " AP this turn. Remaining AP required: " + remaining);
+            System.out.println("You begin channeling " + chosenAbility.getName() + ". Used " + available + " AP this turn. Remaining AP required: " + remaining);
             // Do not spend mana yet; it will be spent only when channeling completes.
             return;
         } else {
-            // full cost available -> standard path
             int left = chosenAbility.getActionCost();
             if (left > character.getActionPoints()) {
                 CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
                 return;
             }
-            // consume mana immediately for standard activation
         }
 
         EquipmentHandler equipmentHandler = new EquipmentHandler(character);

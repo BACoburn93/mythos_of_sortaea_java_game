@@ -108,6 +108,24 @@ public class CombatActor extends Actor {
         this.healthValues = healthValues;
     }
 
+    public void increaseMaxHealth(double amount) {
+        this.healthValues.setMaxValue(this.healthValues.getMaxValue() + amount);
+        this.healthValues.setValue(this.healthValues.getValue() + amount);
+    }
+
+    public void increaseHealthRegen(double amount) {
+        this.healthValues.setRegenValue(this.healthValues.getRegenValue() + amount);
+    }
+
+    public void increaseMaxMana(double amount) {
+        this.manaValues.setMaxValue(this.manaValues.getMaxValue() + amount);
+        this.manaValues.setValue(this.manaValues.getValue() + amount);
+    }
+
+    public void increaseManaRegen(double amount) {
+        this.manaValues.setRegenValue(this.manaValues.getRegenValue() + amount);
+    }
+
     public ManaValues getManaValues() {
         return manaValues;
     }

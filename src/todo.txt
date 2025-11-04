@@ -2,25 +2,38 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
-Refactor Character class to delegate responsibilities
+Create scaling per level attributes/resistances/resource values for each class
+    Maybe create a helper method to use throughout the game
+    I.E. Mage would gain 3 knowledge, 1 luck, 6 hitpoints, 12 mana, 0.25 health regen, 0.5 mana regen, and 
+    1 fire, lightning, and cold resistance each time it levels up.
 
-Create a skills list to influence certain aspects of the game
+Refactor Character class to delegate responsibilities (In Progress)
 
-Create optional races to choose from (Finished)
+Create a skills list to influence certain aspects of the game (In Progress)
+    Have skills designated to imfluence critical hit chance (Currently Finished, might add more later)
+    Work on Observation (Determine enemy statistics, avoid being ambushed, out of combat scenario nodes, etc.)
+    Work on Stealth (Determine out of combat scenario nodes, higher chance to avoid typically forced fights, etc.)
+        More characters = harder chance of success.
+    Work on Alchemy (May need to refactor Consumables first)
+
 
 Start modeling subclasses and subclass logic
+    Subclasses are assigned to a class as private SubJob subjob
+    
 
 Create advanced classes similar to paragon paths/epic destinies from DnD
     I.E. Archmage, Demigod, Lich, Seraph, etc.
     Each one should have strict prerequisites (class, subclass, attributes, special node chosen/quest completed, etc)
     Will include custom buffs, unique abilities, and potential flaws
 
+Create optional races to choose from (Finished)
+
 Implement item set effects (Finished)
     Utilize items that have matching set items to create passive buffs
         The buffs can scale with the number of matching set items 
         Have prefix/suffix apply set effects as well
         
-Implement ability channeling
+Implement ability channeling (Finished - may need further testing)
     If an ability costs more action points than the user has, the user uses all remaining action points when trying 
     to activate an ability. At the beginning of each of the users turns, they will be prompted to either cancel the 
     channeling, or use any ability points that may be remaining to continue channeling the ability. If the remaining
