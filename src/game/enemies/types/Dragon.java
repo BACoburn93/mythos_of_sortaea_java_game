@@ -20,7 +20,7 @@ public class Dragon extends Enemy {
             new Resistances(10, 10, 10, 10, 10, 10,
                     10, 10, 10, 10, 10, 10),
             new TargetingAbility[]{ AbilityDatabase.CLAW, AbilityDatabase.TAIL, AbilityDatabase.BITE },
-            25,
+            250,
             3
         );
 

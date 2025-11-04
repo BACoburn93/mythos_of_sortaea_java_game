@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import abilities.Ability;
 import abilities.AbilityCategory;
+import abilities.ChannelingInfo;
 import abilities.damages.Damage;
 import abilities.damages.DamageClassificationTypes;
 import actors.Actor;
@@ -40,6 +41,8 @@ public class CombatActor extends Actor {
     private StatusConditions statusConditions;
     private Stances stance;
     protected int level;
+
+    private ChannelingInfo channelingInfo;
 
     // allow multiple species/subspecies per actor
     private final Set<SpeciesType> speciesTypes = new HashSet<>();
@@ -319,6 +322,33 @@ public class CombatActor extends Actor {
         }
     }
 
+    // Ability Channeling Logic
+    public ChannelingInfo getChannelingInfo() {
+        return channelingInfo;
+    }
+
+    public boolean isChanneling() {
+        return channelingInfo != null;
+    }
+
+    public void startChanneling(Ability ability, CombatActor target, int remainingCost) {
+        this.channelingInfo = new ChannelingInfo(ability, target, remainingCost);
+    }
+
+    public void cancelChanneling() {
+        this.channelingInfo = null;
+    }
+
+    public void reduceChannelingBy(int ap) {
+        if (channelingInfo == null) return;
+        channelingInfo.reduceRemainingCost(ap);
+    }
+
+    public void completeAndClearChanneling() {
+        this.channelingInfo = null;
+    }
+
+    
     public void handleStartTurn() {
         StringUtils.stringDivider(super.getName() + "'s turn has started.", "=", 50);
 

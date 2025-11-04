@@ -17,6 +17,7 @@ public class MageAbilities {
                 SpiritualDamage.fire(5, 10)
             })
         .manaCost(1)
+        .actionCost(10)
         .weaponTypes(AbilityPrerequisites.SPELL_CASTING_WEAPONS)
         .leftRange(2)
         .rightRange(2)

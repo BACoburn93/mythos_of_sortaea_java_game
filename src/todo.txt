@@ -20,3 +20,18 @@ Implement item set effects (Finished)
         The buffs can scale with the number of matching set items 
         Have prefix/suffix apply set effects as well
         
+Implement ability channeling
+    If an ability costs more action points than the user has, the user uses all remaining action points when trying 
+    to activate an ability. At the beginning of each of the users turns, they will be prompted to either cancel the 
+    channeling, or use any ability points that may be remaining to continue channeling the ability. If the remaining
+    ability points to use the ability becomes 0, then the ability finally triggers. Any the actor is free to use any 
+    remaining ability points it may have.
+        I.E. Meteor Swarm as a cost of 20 Ability Points, but the user only has 7 total and 7 remaining. The user
+        begins channeling Meteor Swarm, which costs 7 ability points. Meteor Swarm has 13 ability points left to 
+        activate it's effect. The actor has another turn come around, then is prompted to continue channeling or
+        to cancel the channeling and use a different action. If the user continues channeling, it uses all action
+        points (which is 7) and reduces the remaining action points to use the ability to 6. The actors next turn 
+        triggers and the actor is then prompted whether it wants to activate the ability it is channeling, which
+        will cost 6 ability points. If the user prompts yes, the ability finally triggers and the resource cost 
+        (if any) is spent. If the user decides not to, the ability cancels and the the actor is free to utilize 
+        all of it's remaining action points.

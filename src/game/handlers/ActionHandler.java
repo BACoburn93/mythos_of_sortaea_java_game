@@ -36,7 +36,9 @@ public class ActionHandler {
     }
 
     public void handleTurn(Character character) {
-        character.setActionPoints(character.getMaxActionPoints());
+        // character.setActionPoints(character.getMaxActionPoints());
+
+        abilityHandler.startTurn(character);
 
         while (character.getActionPoints() > 0) {
             if(enemies.isEmpty()) {

@@ -20,6 +20,7 @@ import handlers.ability.executers.AbilityExecutor;
 import handlers.ability.executers.TargetingAbilityExecutor;
 import handlers.ability.executers.WeaponAbilityExecutor;
 import abilities.Ability;
+import abilities.ChannelingInfo;
 import abilities.ability_types.TargetingAbility;
 import abilities.ability_types.WeaponAbility;
 import actors.types.CombatActor;
@@ -236,52 +237,171 @@ public class AbilityHandler {
     }   
 
     public void handleUseAbility(Character character, Ability chosenAbility) {
-        if (chosenAbility.getActionCost() > character.getActionPoints() || !character.canUseAbility(chosenAbility)) {
+        // if (chosenAbility.getActionCost() > character.getActionPoints() || !character.canUseAbility(chosenAbility)) {
+        //     CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
+        // } else {
+        //     EquipmentHandler equipmentHandler = new EquipmentHandler(character);
+
+        //     boolean meetsWeaponReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getWeaponRequirement(), WeaponTypes.class);
+        //     boolean meetsArmorReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getArmorRequirement(), ArmorTypes.class);
+        //     boolean meetsShieldReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getShieldRequirement(), ShieldTypes.class);
+
+        //     if (!meetsWeaponReq || !meetsArmorReq || !meetsShieldReq) {
+        //         StringUtils.stringDivider("You do not meet the equipment requirements for this ability.", "", 0);
+        //         return;
+        //     }
+
+        //     CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
+
+        //     if (chosenTarget != null) {
+        //         Random random = new Random();
+
+        //         character.spendMana(chosenAbility);
+        //         character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
+
+        //         // Use this to handle different ability types
+        //         executeAbility(character, chosenTarget, chosenAbility, random);
+        //     } else {
+        //         GeneralUIStrings.handleInvalidAction();
+        //     }
+        // }
+
+        if (!character.canUseAbility(chosenAbility)) {
             CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
-        } else {
-            EquipmentHandler equipmentHandler = new EquipmentHandler(character);
+            return;
+        }
 
-            boolean meetsWeaponReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getWeaponRequirement(), WeaponTypes.class);
-            boolean meetsArmorReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getArmorRequirement(), ArmorTypes.class);
-            boolean meetsShieldReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getShieldRequirement(), ShieldTypes.class);
-
-            if (!meetsWeaponReq || !meetsArmorReq || !meetsShieldReq) {
-                StringUtils.stringDivider("You do not meet the equipment requirements for this ability.", "", 0);
+        int cost = chosenAbility.getActionCost();
+        int available = character.getActionPoints();
+        if (cost > available) {
+            // Start channeling: consume all available AP this turn and record remaining cost
+            int used = available;
+            character.setActionPoints(0);
+            int remaining = cost - used;
+            // begin channeling toward chosen target (ask for a target first)
+            CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
+            if (chosenTarget == null) {
+                // if they didn't choose a target, refund AP used this turn (safe fallback)
+                character.setActionPoints(available);
                 return;
             }
-
-            CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
-
-            if (chosenTarget != null) {
-                Random random = new Random();
-
-                character.spendMana(chosenAbility);
-                character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
-
-                // Use this to handle different ability types
-                executeAbility(character, chosenTarget, chosenAbility, random);
-            } else {
-                GeneralUIStrings.handleInvalidAction();
+            character.startChanneling(chosenAbility, chosenTarget, remaining);
+            System.out.println("You begin channeling " + chosenAbility.getName() + ". Used " + used + " AP this turn. Remaining AP required: " + remaining);
+            // Do not spend mana yet; it will be spent only when channeling completes.
+            return;
+        } else {
+            // full cost available -> standard path
+            int left = chosenAbility.getActionCost();
+            if (left > character.getActionPoints()) {
+                CombatUIStrings.printAbilityPointUsage(character, chosenAbility);
+                return;
             }
+            // consume mana immediately for standard activation
         }
+
+        EquipmentHandler equipmentHandler = new EquipmentHandler(character);
+        boolean meetsWeaponReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getWeaponRequirement(), WeaponTypes.class);
+        boolean meetsArmorReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getArmorRequirement(), ArmorTypes.class);
+        boolean meetsShieldReq = equipmentHandler.meetsEquipmentRequirement(chosenAbility.getShieldRequirement(), ShieldTypes.class);
+        if (!meetsWeaponReq || !meetsArmorReq || !meetsShieldReq) {
+            StringUtils.stringDivider("You do not meet the equipment requirements for this ability.", "", 0);
+            return;
+        }
+
+        CombatActor chosenTarget = targetSelector.chooseEnemyTarget(scanner);
+        if (chosenTarget == null) {
+            GeneralUIStrings.handleInvalidAction();
+            return;
+        }
+
+        // full activation path: spend mana, consume AP, execute immediately
+        Random random = new Random();
+        character.spendMana(chosenAbility);
+        character.setActionPoints(character.getActionPoints() - chosenAbility.getActionCost());
+        executeAbility(character, chosenTarget, chosenAbility, random);
     }
 
     private ArrayList<CombatActor> handleKillEnemy(Enemy enemy, Party party) {
 
         EventBus.publish(new EnemyDeathEvent(enemy, party));
 
-        // List<Object> drops = LootManager.generateDrops(enemy);
-        // for (Object o : drops) {
-        //     if (o instanceof Equipment) {
-        //         party.getSharedEquipment().add((Equipment) o);
-        //     } else if (o instanceof Integer) {
-        //         party.addGold((Integer) o);
-        //     }
-        // }
-
         enemies.remove(enemy);
 
         actors.removeIf(a -> a == enemy);
         return actors;
+    }
+
+    public void startTurn(Character character) {
+        if (character == null) return;
+
+        character.setActionPoints(character.getMaxActionPoints());
+
+        ChannelingInfo ci = character.getChannelingInfo();
+        if (ci == null) return;
+
+        // show status
+        System.out.println("You are currently channeling: " + ci.getAbility().getName() +
+                " (remaining AP to finish: " + ci.getRemainingCost() + ")");
+        System.out.println("You have " + character.getActionPoints() + " action points available this turn.");
+        System.out.println("[C]ontinue channeling (use AP), [X] Cancel channeling, [S]kip (do nothing now)");
+
+        String choice = null;
+        try {
+            choice = scanner.nextLine().trim().toLowerCase();
+        } catch (Throwable t) {
+            // fallback: assume skip
+            choice = "s";
+        }
+
+        if ("c".equals(choice) || "continue".equals(choice) || "y".equals(choice) || "yes".equals(choice)) {
+            int ap = character.getActionPoints();
+            if (ap > 0) {
+                if(ap > ci.getRemainingCost()) {
+                    character.setActionPoints(ap - ci.getRemainingCost());
+                } else {
+                    character.setActionPoints(0); // consume all AP this turn to continue channeling
+                }
+                
+                character.reduceChannelingBy(ap);
+                System.out.println("You spend " + ap + " AP channeling " + ci.getAbility().getName() +
+                        ". Remaining to finish: " + ci.getRemainingCost());
+            } else {
+                System.out.println("No action points available to continue channeling this turn.");
+            }
+            // If channeling completed, trigger ability
+            if (ci.isComplete()) {
+                // spend resources now and execute
+                try { character.spendMana(ci.getAbility()); } catch (Throwable ignored) {}
+                System.out.println("Channeling complete — " + ci.getAbility().getName() + " triggers!");
+                executeAbility(character, ci.getTarget(), ci.getAbility(), new Random());
+                character.completeAndClearChanneling();
+            }
+            // else actor may continue using leftover (none) AP this turn
+        } else if ("x".equals(choice) || "cancel".equals(choice) || "n".equals(choice) || "no".equals(choice)) {
+            character.cancelChanneling();
+            System.out.println("Channeling cancelled.");
+        } else {
+            // skip: do nothing, actor proceeds normally (keeps full AP)
+            System.out.println("Channeling left in progress. You may continue later.");
+        }
+        // } else {
+        //     // Enemy / AI: auto-continue using all available AP
+        //     int ap = actor.getActionPoints();
+        //     if (ap > 0) {
+        //         actor.setActionPoints(0);
+        //         actor.reduceChannelingBy(ap);
+        //     }
+        //     if (actor.getChannelingInfo().isComplete()) {
+        //         // execute for enemies: spend resources and fire
+        //         ChannelingInfo ci2 = actor.getChannelingInfo();
+        //         try {
+        //             // enemies may not have mana; only spend if API exists
+        //             actor.getClass().getMethod("spendMana", Ability.class).invoke(actor, ci2.getAbility());
+        //         } catch (Throwable ignored) {}
+        //         System.out.println(actor.getName() + " finishes channeling " + ci2.getAbility().getName() + "!");
+        //         executeAbility(actor, ci2.getTarget(), ci2.getAbility(), new Random());
+        //         actor.completeAndClearChanneling();
+        //     }
+        // }
     }
 }
