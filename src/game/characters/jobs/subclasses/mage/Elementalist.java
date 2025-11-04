@@ -11,6 +11,7 @@ import characters.prerequisites.AttributePrerequisite;
 import characters.prerequisites.ResistancePrerequisite;
 import characters.prerequisites.QuestPrerequisite;
 import characters.prerequisites.CharacterExclusivePrerequisite;
+import characters.prerequisites.JobExclusivePrerequisite;
 import characters.prerequisites.AndPrerequisite;
 import characters.prerequisites.OrPrerequisite;
 
@@ -47,13 +48,18 @@ public class Elementalist extends Subclass {
         setResistances(new Resistances(-1, -1, -1, 4, 4, 4, 4, -1, 4, 4, -1, -1));
 
         // Example prerequisites for prestige upgrades:
-        // Prestige 2: character level >= 5 AND Knowledge >= 30
+        // Prestige 1: character level >= 3 AND character is a Mage
         addPrerequisite(new AndPrerequisite(
-                new LevelPrerequisite(5),
+                new LevelPrerequisite(3),
+                new JobExclusivePrerequisite("Mage")
+        ), 1);
+        // Prestige 2: character level >= 5 AND Knowledge >= 25
+        addPrerequisite(new AndPrerequisite(
+                new LevelPrerequisite(6),
                 new AttributePrerequisite("knowledge", 25)
         ), 2);
 
-        // Prestige 3: level >= 10 AND (Knowledge >= 30 OR complete "elemental_trial" quest)
+        // Prestige 3: level >= 10 AND (Knowledge >= 40 OR complete "elemental_trial" quest)
         addPrerequisite(new AndPrerequisite(
                 new LevelPrerequisite(10),
                 new OrPrerequisite(
