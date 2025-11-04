@@ -19,6 +19,7 @@ Create a skills list to influence certain aspects of the game (In Progress)
 
 Start modeling subclasses and subclass logic
     Subclasses are assigned to a class as private SubJob subjob
+    to do - create a level up manager for character and implement the subclass logic for it
     
 
 Create advanced classes similar to paragon paths/epic destinies from DnD

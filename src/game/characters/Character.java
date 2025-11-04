@@ -518,6 +518,8 @@ public class Character extends CombatActor {
     }
 
     // Level up methods
+    // to do - move level up to a level up manager class
+    // implement subclass choice logic
     public void levelUp() {
         LevelManager.getInstance().levelUp(this);
     }
