@@ -12,6 +12,7 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import characters.managers.AbilityManager;
+import characters.prerequisites.Prerequisite;
 
 public abstract class Subclass {
     private String name;
@@ -23,6 +24,8 @@ public abstract class Subclass {
     private Resistances resistances;
     private final Map<Integer, List<Ability>> abilitiesByPrestige = new HashMap<>();
     private final Map<Integer, String> prestigeNameMap = new HashMap<>();
+    // prerequisites per prestige level
+    private final Map<Integer, List<Prerequisite>> prerequisitesByPrestige = new HashMap<>();
 
     // to do - create a prerequisites system for subclasses
     // e.g. requires level 10 Mage, requires x knowledge, requires specific quest completed, etc.
@@ -198,5 +201,45 @@ public abstract class Subclass {
         String n = prestigeNameMap.get(this.prestigeLevel);
         if (n != null) this.prestigeName = n;
         else this.prestigeName = this.name + " (Prestige " + this.prestigeLevel + ")";
+    }
+
+    // Register a prerequisite required to reach the specified prestige level.
+    public void addPrerequisite(Prerequisite prereq, int forPrestigeLevel) {
+        if (prereq == null) return;
+        int lvl = Math.max(1, forPrestigeLevel);
+        var list = prerequisitesByPrestige.computeIfAbsent(lvl, k -> new ArrayList<>());
+        list.add(prereq);
+    }
+
+    // Return unmet prerequisites for the given character to reach the specified prestige level.
+    public List<Prerequisite> getUnmetPrerequisites(Character character, int targetPrestigeLevel) {
+        List<Prerequisite> unmet = new ArrayList<>();
+        int lvl = Math.max(1, Math.min(targetPrestigeLevel, 50));
+        List<Prerequisite> reqs = prerequisitesByPrestige.get(lvl);
+        if (reqs == null || reqs.isEmpty()) return unmet;
+        for (Prerequisite p : reqs) {
+            if (!p.isMetBy(character)) unmet.add(p);
+        }
+        return unmet;
+    }
+
+    // Returns true if all prerequisites for the target prestige level are met by the character.
+    public boolean canIncreaseTo(Character character, int targetPrestigeLevel) {
+        return getUnmetPrerequisites(character, targetPrestigeLevel).isEmpty();
+    }
+
+    // Attempt to apply the prestige increase only if prerequisites are met.
+    // Returns true if applied, false if prerequisites blocked the increase.
+    public boolean tryApplyPrestigeIncrease(Character character, int newPrestigeLevel) {
+        List<Prerequisite> unmet = getUnmetPrerequisites(character, newPrestigeLevel);
+        if (!unmet.isEmpty()) {
+            // simple console output for the time being
+            System.out.println("Cannot increase prestige to level " + newPrestigeLevel + ". Unmet prerequisites:");
+            for (Prerequisite p : unmet) System.out.println(" - " + p.getDescription());
+            return false;
+        }
+        // all good -> apply
+        applyPrestigeIncrease(character, newPrestigeLevel);
+        return true;
     }
 }
