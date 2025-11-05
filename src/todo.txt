@@ -9,6 +9,18 @@ Create scaling per level attributes/resistances/resource values for each class
 
 Refactor Character class to delegate responsibilities (In Progress)
 
+Allow TargetingAbility to target any targetable actor
+    For enemy AI, it will prioritize character or enemy targeting based on the ability
+        I will have to update the EnemyHandler to improe the AI when more ability types come to fruition
+        I could potentially give the AI varying decision making based on their knowledge attribute
+            Or utilize a skill to handle decision making
+                Such as observation allowing A to learn if the target was affected by an ability or not
+
+Create a class to handle all damage logic? 
+    Might be useful, might be unnecessary
+        Could help reduce logic in CombatActor to prevent it from being too bulky
+        Adds an extra file to navigate through
+
 Create a skills list to influence certain aspects of the game (In Progress)
     Have skills designated to imfluence critical hit chance (Currently Finished, might add more later)
     Work on Observation (Determine enemy statistics, avoid being ambushed, out of combat scenario nodes, etc.)
@@ -22,7 +34,7 @@ Start modeling subclasses and subclass logic
     to do - create a level up manager for character and implement the subclass logic for it
     
 
-Create advanced classes similar to paragon paths/epic destinies from DnD
+Create advanced subclasses similar to paragon paths/epic destinies from DnD
     I.E. Archmage, Demigod, Lich, Seraph, etc.
     Each one should have strict prerequisites (class, subclass, attributes, special node chosen/quest completed, etc)
     Will include custom buffs, unique abilities, and potential flaws
