@@ -99,6 +99,7 @@ public final class LevelScaler {
         }
     }
 
+    // to do - apply level deltas to jobs for testing
     private static void applyDeltaToCharacter(Character c, LevelDelta delta) {
         if (delta == null) return;
         try {

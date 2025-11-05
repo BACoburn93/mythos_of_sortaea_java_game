@@ -12,6 +12,7 @@ import actors.stances.Stances;
 import actors.types.CombatActor;
 import actors.attributes.AttributeTypes;
 import characters.jobs.Job;
+import characters.leveling.LevelManager;
 import characters.managers.*;
 import items.consumables.Consumable;
 import items.equipment.*;
@@ -601,6 +602,11 @@ public class Character extends CombatActor {
 
     public void setMaxActionPoints(int maxActionPoints) {
         this.maxActionPoints = maxActionPoints;
+    }
+
+    public void changeMaxActionPointsBy(int delta) {
+        this.maxActionPoints += delta;
+        this.actionPoints = this.maxActionPoints;
     }
 
 

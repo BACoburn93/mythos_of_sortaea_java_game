@@ -1,4 +1,4 @@
-package characters.managers;
+package characters.leveling;
 
 import characters.Character;
 
@@ -26,15 +26,6 @@ public final class LevelManager {
     public void levelUp(Character c) {
         if(c == null) return;
 
-        c.incrementLevel();
-
-        if(c.getLevel() % 4 == 0) {
-            c.setMaxActionPoints(c.getMaxActionPoints() + 1);
-        }
-
-        c.notifyLevelUp();
-
-        c.allocateAttributePoints();
-        c.learnNewAbility();
+        LevelUpService.getInstance().handleLevelUp(c);
     }
 }

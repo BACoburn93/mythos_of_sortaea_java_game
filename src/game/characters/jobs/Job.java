@@ -11,6 +11,9 @@ import actors.resistances.Resistances;
 import actors.resources.HealthValues;
 import actors.resources.ManaValues;
 import actors.skills.Skills;
+import characters.Character;
+import characters.leveling.LevelScaler;
+import characters.leveling.LevelScaler.LevelProgression;
 import items.equipment.item_types.ItemType;
 import items.equipment.item_types.enums.AccessoryTypes;
 import status_conditions.StatusConditions;
@@ -28,6 +31,7 @@ public abstract class Job implements DamageTypeProvider {
     private Attributes attributes;
     private Resistances resistances;
     private Skills skills;
+    private LevelProgression levelProgression;
 
     // Need to bind status conditions to jobs so that they affect character statistics
     // private StatusConditions statusConditions;
@@ -159,6 +163,23 @@ public abstract class Job implements DamageTypeProvider {
         this.skills = skills;
     }
 
+    public LevelProgression getLevelProgression() {
+        return (levelProgression != null) ? levelProgression : LevelScaler.get(getName());
+    }
+
+    public void setLevelProgression(LevelProgression progression) {
+        this.levelProgression = progression;
+        if (progression != null && getName() != null) {
+            LevelScaler.register(getName(), progression);
+        }
+    }
+
+    public void applyLevelUpToCharacter(Character character, int oldLevel, int newLevel) {
+        LevelProgression prog = getLevelProgression();
+        if (prog == null) return;
+        LevelScaler.applyLevelUp(character, this, oldLevel, newLevel);
+    }
+
     public double getUnarmedDamage() {
         return unarmedDamage;
     }
@@ -192,7 +213,7 @@ public abstract class Job implements DamageTypeProvider {
     }
 
     public AbilityPool getAbilityPool() {
-        return AbilityPoolRegistry.getPool(this.getJobType());
+        return AbilityPoolRegistry.getPool(getJobType());
     }
 
     public List<Ability> getPoolAbilities() {

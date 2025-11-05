@@ -8,13 +8,13 @@ import actors.resources.ManaValues;
 import actors.skills.Skills;
 import characters.jobs.Job;
 import characters.jobs.JobTypes;
+import characters.leveling.LevelScaler;
 import status_conditions.StatusConditions;
 import characters.jobs.EquipmentProficiencies;
 
 import java.util.ArrayList;
 
 public class MageJob extends Job {
-
     public MageJob() {
         super(
                 JobTypes.MAGE.toString(),
@@ -30,7 +30,30 @@ public class MageJob extends Job {
                 1.0,
                 "intelligence"
         );
+
+
+        // Mage Scaling for Attributes, Resistances, Health, and Mana
+        LevelScaler.LevelDelta base = new LevelScaler.LevelDelta(
+            new Attributes(0,0,3,0,0,1,1),
+            new Resistances(0,0,0,1,1,1,0,0,0,0,0,0),
+            new HealthValues(6, 0.25),
+            new ManaValues(12, 0.5)
+        );
+
+        LevelScaler.LevelProgression prog = new LevelScaler.LevelProgression(base)
+            .addNthModifier(new LevelScaler.NthModifier(5,
+                new LevelScaler.LevelDelta(new Attributes(0,0,3,0,1,0,2), null, null, new ManaValues(5, 1))))
+            .overrideLevel(20, new LevelScaler.LevelDelta(
+                new Attributes(0,0,5,0,0,2,1),
+                new Resistances(0,0,0,3,3,3,0,0,0,0,0,0),
+                new HealthValues(30,1.0),
+                new ManaValues(50,2.0)
+            ));
+
+        LevelScaler.register(getName(), prog);
     }
+
+
 
     @Override
     protected JobTypes getJobType() {
