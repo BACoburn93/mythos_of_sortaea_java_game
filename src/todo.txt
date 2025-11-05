@@ -4,12 +4,6 @@ Prioritized Workload Notes - todo to do Todo
 
 Refactor Character class to delegate responsibilities (In Progress)
 
-Create scaling per level attributes/resistances/resource values for each class
-    Maybe create a helper method to use throughout the game
-    I.E. Mage would gain 3 knowledge, 1 luck, 6 hitpoints, 12 mana, 0.25 health regen, 0.5 mana regen, and 
-    1 fire, lightning, and cold resistance each time it levels up.
-        Maybe allow for variation, having it vary on the nth levels
-
 Allow TargetingAbility to target any targetable actor
     For enemy AI, it will prioritize character or enemy targeting based on the ability
         I will have to update the EnemyHandler to improe the AI when more ability types come to fruition
@@ -17,10 +11,12 @@ Allow TargetingAbility to target any targetable actor
             Or utilize a skill to handle decision making
                 Such as observation allowing A to learn if the target was affected by an ability or not
 
+
 Create a class to handle all damage logic? 
     Might be useful, might be unnecessary
         Could help reduce logic in CombatActor to prevent it from being too bulky
         Adds an extra file to navigate through
+
 
 Create a skills list to influence certain aspects of the game (In Progress)
     Have skills designated to imfluence critical hit chance (Currently Finished, might add more later)
@@ -33,20 +29,8 @@ Create a skills list to influence certain aspects of the game (In Progress)
 Start modeling subclasses and subclass logic
     Subclasses are assigned to a class as private SubJob subjob
     to do - create a level up manager for character and implement the subclass logic for it
-    
 
-Create advanced subclasses similar to paragon paths/epic destinies from DnD
-    I.E. Archmage, Demigod, Lich, Seraph, etc.
-    Each one should have strict prerequisites (class, subclass, attributes, special node chosen/quest completed, etc)
-    Will include custom buffs, unique abilities, and potential flaws
 
-Create optional races to choose from (Finished)
-
-Implement item set effects (Finished)
-    Utilize items that have matching set items to create passive buffs
-        The buffs can scale with the number of matching set items 
-        Have prefix/suffix apply set effects as well
-        
 Implement ability channeling (Finished - may need further testing)
     If an ability costs more action points than the user has, the user uses all remaining action points when trying 
     to activate an ability. At the beginning of each of the users turns, they will be prompted to either cancel the 
@@ -62,3 +46,25 @@ Implement ability channeling (Finished - may need further testing)
         will cost 6 ability points. If the user prompts yes, the ability finally triggers and the resource cost 
         (if any) is spent. If the user decides not to, the ability cancels and the the actor is free to utilize 
         all of it's remaining action points.
+
+
+
+=== FINISHED-ISH ===
+
+Create advanced subclasses similar to paragon paths/epic destinies from DnD
+    I.E. Archmage, Demigod, Lich, Seraph, etc.
+    Each one should have strict prerequisites (class, subclass, attributes, special node chosen/quest completed, etc)
+    Will include custom buffs, unique abilities, and potential flaws
+
+Create optional races to choose from (Finished)
+
+Implement item set effects (Finished)
+    Utilize items that have matching set items to create passive buffs
+        The buffs can scale with the number of matching set items 
+        Have prefix/suffix apply set effects as well
+
+Create scaling per level attributes/resistances/resource values for each class (Finished)
+    Maybe create a helper method to use throughout the game
+    I.E. Mage would gain 3 knowledge, 1 luck, 6 hitpoints, 12 mana, 0.25 health regen, 0.5 mana regen, and 
+    1 fire, lightning, and cold resistance each time it levels up.
+        Maybe allow for variation, having it vary on the nth levels
