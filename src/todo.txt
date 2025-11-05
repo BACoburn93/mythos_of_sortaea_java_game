@@ -2,12 +2,13 @@
 Prioritized Workload Notes - todo to do Todo
 --------------------------------------------
 
+Refactor Character class to delegate responsibilities (In Progress)
+
 Create scaling per level attributes/resistances/resource values for each class
     Maybe create a helper method to use throughout the game
     I.E. Mage would gain 3 knowledge, 1 luck, 6 hitpoints, 12 mana, 0.25 health regen, 0.5 mana regen, and 
     1 fire, lightning, and cold resistance each time it levels up.
-
-Refactor Character class to delegate responsibilities (In Progress)
+        Maybe allow for variation, having it vary on the nth levels
 
 Allow TargetingAbility to target any targetable actor
     For enemy AI, it will prioritize character or enemy targeting based on the ability
