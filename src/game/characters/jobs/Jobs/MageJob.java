@@ -41,8 +41,12 @@ public class MageJob extends Job {
         );
 
         LevelScaler.LevelProgression prog = new LevelScaler.LevelProgression(base)
-            .addNthModifier(new LevelScaler.NthModifier(5,
-                new LevelScaler.LevelDelta(new Attributes(0,0,3,0,1,0,2), null, null, new ManaValues(5, 1))))
+            .addNthModifier(new LevelScaler.NthModifier(3,
+                new LevelScaler.LevelDelta(
+                    new Attributes(0,0,3,0,1,0,2), 
+                    null, 
+                    null,
+                    new ManaValues(5, 1))))
             .overrideLevel(20, new LevelScaler.LevelDelta(
                 new Attributes(0,0,5,0,0,2,1),
                 new Resistances(0,0,0,3,3,3,0,0,0,0,0,0),
