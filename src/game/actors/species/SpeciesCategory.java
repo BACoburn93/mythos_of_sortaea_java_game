@@ -6,14 +6,15 @@ import java.util.Set;
 
 public enum SpeciesCategory {
     ABERRATION("arcana"), 
-    BEAST("nature"), 
+    ANIMAL("nature"), 
     CELESTIAL("religion"), 
-    CONSTRUCT("arcana"), 
+    CONSTRUCT("arcana"),
+    DEITY("religion"), 
     DEMON("religion"), 
     DEVIL("religion"), 
     DRAGON("history"), 
     ELEMENTAL("arcana"), 
-    FEY("nature"), 
+    FAERIE("nature"), 
     GIANT("history"), 
     HUMANOID("history"),
     INSECT("nature"), 

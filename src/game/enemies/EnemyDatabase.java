@@ -35,7 +35,7 @@ public final class EnemyDatabase {
 
         // Example registration
         EnemyRegistry.register(EnemyKey.GOBLIN.key(), name -> new Goblin(name));
-        EnemyRegistry.register(EnemyKey.MARLBORO.key(), name -> new Marlboro(name));
+        EnemyRegistry.register(EnemyKey.COGANOS.key(), name -> new Coganos(name));
         EnemyRegistry.register(EnemyKey.DRAGON.key(), name -> new Dragon(name));
         EnemyRegistry.register(EnemyKey.ORC.key(), name -> new Orc(name));
 
@@ -76,7 +76,7 @@ public final class EnemyDatabase {
                 .add(LootEntry.gold(25, 0.9))
         );
 
-        LootManager.registerDropTable(EnemyKey.MARLBORO.key(),
+        LootManager.registerDropTable(EnemyKey.COGANOS.key(),
             new DropTable()
                 .add(new LootEntry(EquipmentKey.STAFF.key(), 1.0, 0.35, 1, 1))
                 .add(new LootEntry(EquipmentKey.AMULET.key(), 1.0, 0.15, 1, 1))

@@ -7,45 +7,56 @@ public final class SpeciesRegistrar {
         var reg = SubspeciesRegistry.getInstance();
 
         // Aberration subspecies
+        reg.register(SpeciesCategory.ABERRATION, "Coganos");
+        reg.register(SpeciesCategory.ABERRATION, "Deep Maw");
         reg.register(SpeciesCategory.ABERRATION, "Hydra");
-        reg.register(SpeciesCategory.ABERRATION, "Marlboro");
-        reg.register(SpeciesCategory.ABERRATION, "Mind Flayer");
+        reg.register(SpeciesCategory.ABERRATION, "Void Horror");
 
-        // Beast subspecies
-        reg.register(SpeciesCategory.BEAST, "Bear");
-        reg.register(SpeciesCategory.BEAST, "Boar");
-        reg.register(SpeciesCategory.BEAST, "Lion");
-        reg.register(SpeciesCategory.BEAST, "Tiger");
-        reg.register(SpeciesCategory.BEAST, "Wolf");
-
+        // Animal subspecies
+        reg.register(SpeciesCategory.ANIMAL, "Bear");
+        reg.register(SpeciesCategory.ANIMAL, "Boar");
+        reg.register(SpeciesCategory.ANIMAL, "Lion");
+        reg.register(SpeciesCategory.ANIMAL, "Tiger");
+        reg.register(SpeciesCategory.ANIMAL, "Wolf");
+        
         // Celestial subspecies
         reg.register(SpeciesCategory.CELESTIAL, "Angel");
         reg.register(SpeciesCategory.CELESTIAL, "Archon");
+        reg.register(SpeciesCategory.CELESTIAL, "Cherub");
+        reg.register(SpeciesCategory.CELESTIAL, "Nephilim");
         reg.register(SpeciesCategory.CELESTIAL, "Seraph");
-        reg.register(SpeciesCategory.CELESTIAL, "Solar");
 
         // Construct subspecies
-        reg.register(SpeciesCategory.CONSTRUCT, "Automaton");
+        reg.register(SpeciesCategory.CONSTRUCT, "Clockwork");
         reg.register(SpeciesCategory.CONSTRUCT, "Golem");
-        reg.register(SpeciesCategory.CONSTRUCT, "Warforged");
+        reg.register(SpeciesCategory.CONSTRUCT, "Mechanoid");
+
+        // Deity subspecies
+        reg.register(SpeciesCategory.DEITY, "Demigod");
+        reg.register(SpeciesCategory.DEITY, "God");
 
         // Demon subspecies
-        reg.register(SpeciesCategory.DEMON, "Balor");
-        reg.register(SpeciesCategory.DEMON, "Glabrezu");
-        reg.register(SpeciesCategory.DEMON, "Hezrou");
-        reg.register(SpeciesCategory.DEMON, "Marilith");
-        reg.register(SpeciesCategory.DEMON, "Quasit");
+        reg.register(SpeciesCategory.DEMON, "Carrionite");
+        reg.register(SpeciesCategory.DEMON, "Demon Lord");
+        reg.register(SpeciesCategory.DEMON, "Fiend");
+        reg.register(SpeciesCategory.DEMON, "Harrowkin");
+        reg.register(SpeciesCategory.DEMON, "Oni");
+        reg.register(SpeciesCategory.DEMON, "Rakshasa");
+        reg.register(SpeciesCategory.DEMON, "Succubus");
+        reg.register(SpeciesCategory.DEMON, "Umbrae");
 
-        // Devils (lawful infernal hierarchy)
-        reg.register(SpeciesCategory.DEVIL, "Barbed");
-        reg.register(SpeciesCategory.DEVIL, "Erinyes");
-        reg.register(SpeciesCategory.DEVIL, "Horned");
+        // Devils
+        reg.register(SpeciesCategory.DEVIL, "Aetherial");
+        reg.register(SpeciesCategory.DEVIL, "Archdevil");
+        reg.register(SpeciesCategory.DEVIL, "Djinn");
         reg.register(SpeciesCategory.DEVIL, "Imp");
-        reg.register(SpeciesCategory.DEVIL, "PitFiend");
+        reg.register(SpeciesCategory.DEVIL, "Infernu");
+        reg.register(SpeciesCategory.DEVIL, "Malachite");
+        reg.register(SpeciesCategory.DEVIL, "Sanguinari");
+        reg.register(SpeciesCategory.DEVIL, "Vexari");
 
         // Dragon subspecies
         reg.register(SpeciesCategory.DRAGON, "Drake");
-        reg.register(SpeciesCategory.DRAGON, "Dragonturtle");
         reg.register(SpeciesCategory.DRAGON, "Wyvern");
         reg.register(SpeciesCategory.DRAGON, "Wyrm");
 
@@ -53,19 +64,19 @@ public final class SpeciesRegistrar {
         reg.register(SpeciesCategory.ELEMENTAL, "Air Elemental");
         reg.register(SpeciesCategory.ELEMENTAL, "Earth Elemental");
         reg.register(SpeciesCategory.ELEMENTAL, "Fire Elemental");
+        reg.register(SpeciesCategory.ELEMENTAL, "Lightning Elemental");
         reg.register(SpeciesCategory.ELEMENTAL, "Water Elemental");
 
-        // Fey subspecies
-        reg.register(SpeciesCategory.FEY, "Dryad");
-        reg.register(SpeciesCategory.FEY, "Fairie");
-        reg.register(SpeciesCategory.FEY, "Satyr");
-        reg.register(SpeciesCategory.FEY, "Siren");
-        reg.register(SpeciesCategory.FEY, "Witch");
+        // Faerie subspecies
+        reg.register(SpeciesCategory.FAERIE, "Dryad");
+        reg.register(SpeciesCategory.FAERIE, "Pixie");
+        reg.register(SpeciesCategory.FAERIE, "Satyr");
+        reg.register(SpeciesCategory.FAERIE, "Siren");
+        reg.register(SpeciesCategory.FAERIE, "Witch");
 
         // Giant subspecies
-        reg.register(SpeciesCategory.GIANT, "Bog Giant");
+        reg.register(SpeciesCategory.GIANT, "Bicranial");
         reg.register(SpeciesCategory.GIANT, "Cyclops");
-        reg.register(SpeciesCategory.GIANT, "Ettin");
         reg.register(SpeciesCategory.GIANT, "Jotuun");
         reg.register(SpeciesCategory.GIANT, "Ogre");
         reg.register(SpeciesCategory.GIANT, "Titan");
@@ -99,14 +110,14 @@ public final class SpeciesRegistrar {
         reg.register(SpeciesCategory.LYCANTHROPE, "Werewolf");
 
         // Ooze subspecies
-        reg.register(SpeciesCategory.OOZE, "Black Pudding");
-        reg.register(SpeciesCategory.OOZE, "Gelatinous Cube");
-        reg.register(SpeciesCategory.OOZE, "Stoathe");
+        reg.register(SpeciesCategory.OOZE, "Amorphous");
+        reg.register(SpeciesCategory.OOZE, "Acidic");
+        reg.register(SpeciesCategory.OOZE, "Plasmoid");
         reg.register(SpeciesCategory.OOZE, "Slime");
 
         // Plant subspecies
         reg.register(SpeciesCategory.PLANT, "Fungi");
-        reg.register(SpeciesCategory.PLANT, "Treant");
+        reg.register(SpeciesCategory.PLANT, "Treefolk");
         reg.register(SpeciesCategory.PLANT, "Vine");
 
         // Undead subspecies

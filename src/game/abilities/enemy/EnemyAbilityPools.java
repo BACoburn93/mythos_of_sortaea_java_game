@@ -25,16 +25,16 @@ public class EnemyAbilityPools {
         dragonPool.addWeightedAbility(AbilityDatabase.TAIL, 30);
         dragonPool.addWeightedAbility(AbilityDatabase.CLAW, 30);
 
-        EnemyAbilityPool marlboroPool = new EnemyAbilityPool();
-        marlboroPool.addWeightedAbility(AbilityDatabase.ROTTING_TENTACLE, 40);
-        marlboroPool.addWeightedAbility(AbilityDatabase.VENOM_MAW, 30);
-        marlboroPool.addWeightedAbility(AbilityDatabase.POISON_MIST, 20);
-        marlboroPool.addWeightedAbility(AbilityDatabase.IMPALING_ICE, 10);
+        EnemyAbilityPool coganosPool = new EnemyAbilityPool();
+        coganosPool.addWeightedAbility(AbilityDatabase.ROTTING_TENTACLE, 40);
+        coganosPool.addWeightedAbility(AbilityDatabase.VENOM_MAW, 30);
+        coganosPool.addWeightedAbility(AbilityDatabase.POISON_MIST, 20);
+        coganosPool.addWeightedAbility(AbilityDatabase.IMPALING_ICE, 10);
 
         pools.put(EnemyKey.GOBLIN.key(), goblinPool);
         pools.put(EnemyKey.ORC.key(), orcPool);
         pools.put(EnemyKey.DRAGON.key(), dragonPool);
-        pools.put(EnemyKey.MARLBORO.key(), marlboroPool);
+        pools.put(EnemyKey.COGANOS.key(), coganosPool);
     }
 
     public static EnemyAbilityPool getPool(String enemyType) {

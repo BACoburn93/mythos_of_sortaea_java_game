@@ -5,7 +5,7 @@ import java.util.function.Function;
 public enum EnemyKey {
     GOBLIN("goblin"),
     ORC("orc"),
-    MARLBORO("marlboro"),
+    COGANOS("coganos"),
     DRAGON("dragon");
 
     private final String key;

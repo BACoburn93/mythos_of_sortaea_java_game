@@ -12,7 +12,7 @@ public final class SpeciesBuffApplier {
     private static final Map<String, Attributes> ATTR_BUFFS = new HashMap<>();
     private static final Map<String, Resistances> RESISTANCE_BUFFS = new HashMap<>();
 
-//  ABERRATION, BEAST, CELESTIAL, CONSTRUCT, DEMON, DEVIL, DRAGON, ELEMENTAL, FEY, GIANT, HUMANOID, INSECT, LYCANTHROPE, OOZE, PLANT, UNDEAD
+//  ABERRATION, ANIMAL, CELESTIAL, CONSTRUCT, DEMON, DEVIL, DRAGON, ELEMENTAL, FAERIE, GIANT, HUMANOID, INSECT, LYCANTHROPE, OOZE, PLANT, UNDEAD
 
     static {
         // Aberration subspecies buffs
@@ -20,15 +20,15 @@ public final class SpeciesBuffApplier {
         ATTR_BUFFS.put("ABERRATION:HYDRA", new Attributes(4, 2, 0, 3, 3, 0, 2)); // +4 STR, +2 AGI, +3 END, +3 KNO, +2 LCK
         RESISTANCE_BUFFS.put("ABERRATION:HYDRA", new Resistances(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0));
 
-        ATTR_BUFFS.put("ABERRATION:MARLBORO", new Attributes(0, -2, 4, 0, 0, 0, 0)); // -2 AGI, +4 END
+        ATTR_BUFFS.put("ABERRATION:COGANOS", new Attributes(0, -2, 4, 0, 0, 0, 0)); // -2 AGI, +4 END
         ATTR_BUFFS.put("ABERRATION:MIND FLAYER", new Attributes(0, 0, 0, 4, 0, 0, 0)); // +4 KNO
 
-        // Beast subspecies buffs
-        ATTR_BUFFS.put("BEAST:BEAR", new Attributes(3, -1, 2, 0, 0, 0, 0)); // +3 STR, -1 AGI, +2 END
-        ATTR_BUFFS.put("BEAST:BOAR", new Attributes(2, 0, 3, 0, 0, 0, 0)); // +2 STR, +3 END
-        ATTR_BUFFS.put("BEAST:LION", new Attributes(2, 2, 0, 0, 0, 0, 0)); // +2 STR, +2 AGI
-        ATTR_BUFFS.put("BEAST:TIGER", new Attributes(1, 3, 0, 0, 0, 0, 0)); // +1 STR, +3 AGI
-        ATTR_BUFFS.put("BEAST:WOLF", new Attributes(0, 3, 0, 0, 0, 0, 0)); // +3 AGI
+        // Animal subspecies buffs
+        ATTR_BUFFS.put("ANIMAL:BEAR", new Attributes(3, -1, 2, 0, 0, 0, 0)); // +3 STR, -1 AGI, +2 END
+        ATTR_BUFFS.put("ANIMAL:BOAR", new Attributes(2, 0, 3, 0, 0, 0, 0)); // +2 STR, +3 END
+        ATTR_BUFFS.put("ANIMAL:LION", new Attributes(2, 2, 0, 0, 0, 0, 0)); // +2 STR, +2 AGI
+        ATTR_BUFFS.put("ANIMAL:TIGER", new Attributes(1, 3, 0, 0, 0, 0, 0)); // +1 STR, +3 AGI
+        ATTR_BUFFS.put("ANIMAL:WOLF", new Attributes(0, 3, 0, 0, 0, 0, 0)); // +3 AGI
 
         // Celestial subspecies buffs
         ATTR_BUFFS.put("CELESTIAL:ANGEL", new Attributes(0, 0, 0, 2, 0, 0, 0)); // +2 KNO
@@ -70,11 +70,11 @@ public final class SpeciesBuffApplier {
         ATTR_BUFFS.put("ELEMENTAL:WATER ELEMENTAL", new Attributes(0, 2, 3, 0, 0, 0, 0)); // +2 AGI, +3 END
 
         // Fey subspecies buffs
-        ATTR_BUFFS.put("FEY:DRYAD", new Attributes(0, 2, 0, 2, 0, 0, 0)); // +2 AGI, +2 KNO
-        ATTR_BUFFS.put("FEY:FAIRIE", new Attributes(-1, 4, 0, 0, 0, 0, 0)); // -1 STR, +4 AGI
-        ATTR_BUFFS.put("FEY:SATYR", new Attributes(1, 3, 0, 1, 0, 0, 0)); // +1 STR, +3 AGI, +1 KNO
-        ATTR_BUFFS.put("FEY:SIREN", new Attributes(0, 3, 0, 2, 0, 0, 0)); // +3 AGI, +2 KNO
-        ATTR_BUFFS.put("FEY:WITCH", new Attributes(0, 0, 0, 4, 0, 0, 0)); // +4 KNO
+        ATTR_BUFFS.put("FAERIE:DRYAD", new Attributes(0, 2, 0, 2, 0, 0, 0)); // +2 AGI, +2 KNO
+        ATTR_BUFFS.put("FAERIE:FAIRIE", new Attributes(-1, 4, 0, 0, 0, 0, 0)); // -1 STR, +4 AGI
+        ATTR_BUFFS.put("FAERIE:SATYR", new Attributes(1, 3, 0, 1, 0, 0, 0)); // +1 STR, +3 AGI, +1 KNO
+        ATTR_BUFFS.put("FAERIE:SIREN", new Attributes(0, 3, 0, 2, 0, 0, 0)); // +3 AGI, +2 KNO
+        ATTR_BUFFS.put("FAERIE:WITCH", new Attributes(0, 0, 0, 4, 0, 0, 0)); // +4 KNO
 
         // Giant subspecies buffs
         ATTR_BUFFS.put("GIANT:BOG GIANT", new Attributes(4, 0, 3, 0, 0, 0, 0)); // +4 STR, +3 END

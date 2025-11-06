@@ -10,6 +10,6 @@ public class ForestInit {
         forestEnemies.put(EnemyKey.GOBLIN.key(), 0.5);
         forestEnemies.put(EnemyKey.ORC.key(), 0.15);
         forestEnemies.put(EnemyKey.DRAGON.key(), 0.18);
-        forestEnemies.put(EnemyKey.MARLBORO.key(), 0.17);
+        forestEnemies.put(EnemyKey.COGANOS.key(), 0.17);
     }
 }

@@ -11,8 +11,8 @@ import actors.species.SpeciesType;
 import enemies.Enemy;
 import enemies.EnemyKey;
 
-public class Marlboro extends Enemy {
-    public Marlboro(String name) {
+public class Coganos extends Enemy {
+    public Coganos(String name) {
         super(
             name,
             new HealthValues(200, 20),
@@ -28,9 +28,9 @@ public class Marlboro extends Enemy {
             20,
             2
         );
-        this.addSpecies(new SpeciesType(SpeciesCategory.ABERRATION, "Marlboro"));
+        this.addSpecies(new SpeciesType(SpeciesCategory.ABERRATION, "Coganos"));
         setActionsPerTurn(2);
-        setTypeKey(EnemyKey.MARLBORO.key());
+        setTypeKey(EnemyKey.COGANOS.key());
     }
 }
 
